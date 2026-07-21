@@ -1,46 +1,63 @@
-# Astro Starter Kit: Basics
+# Barriers — лендинг для шлагбаумов и систем контроля доступа
 
-```sh
-npm create astro@latest -- --template basics
-```
+Это Astro-проект для современного лендинга, посвящённого решениям для школ, объектов и учреждений: шлагбаумы, турникеты, системы контроля доступа и сопутствующие услуги.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Что в проекте
 
-## 🚀 Project Structure
+- одностраничный лендинг с адаптивной структурой;
+- блоки с преимуществами, оборудованием, историей и обратной связью;
+- интеграция с React-компонентами и Tailwind CSS;
+- сборка под статический сайт для публикации на сервере.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Структура проекта
 
 ```text
 /
 ├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── hooks/
+│   ├── layouts/
+│   ├── pages/
+│   └── styles/
+├── astro.config.mjs
+├── package.json
+└── README.md
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Команды
 
-## 🧞 Commands
+Все команды запускаются из корня проекта:
 
-All commands are run from the root of the project, from a terminal:
+| Команда | Действие |
+| :------ | :------- |
+| `npm install` | Установка зависимостей |
+| `npm run dev` | Запуск локального dev-сервера на `http://localhost:4321` |
+| `npm run build` | Сборка production-версии в `dist/` |
+| `npm run preview` | Предпросмотр собранного сайта локально |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Быстрый старт
 
-## 👀 Want to learn more?
+```bash
+npm install
+npm run dev
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Развёртывание
+
+Проект собирается как статический сайт. После выполнения:
+
+```bash
+npm run build
+```
+
+готовые файлы можно публиковать из папки `dist/` или из настроенной директории, если сайт размещается в подкаталоге.
+
+## Технологии
+
+- Astro
+- React
+- TypeScript
+- Tailwind CSS
+- SCSS
