@@ -30,6 +30,7 @@
     "tailwindcss": "^4.1.14"
   },
   "devDependencies": {
+    "baseline-browser-mapping": "^2.10.44",
     "sass": "^1.99.0"
   }
 }
