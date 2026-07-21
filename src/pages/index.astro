@@ -1,0 +1,19 @@
+---
+import Header from '@components/Header.astro';
+import Hero1 from '@components/heros/Hero1.astro';
+import { Heroes } from '../components/Landing'; 
+import { Footer } from '../components/Footer';
+
+import Layout from '../layouts/Layout.astro';
+import "../styles/global.css";
+---
+
+<Layout title="Perco Школа">
+	<section class="relative">
+		<Header />
+	</section>
+	<Hero1 />
+	<Heroes client:load />
+	<Footer />
+</Layout>
+

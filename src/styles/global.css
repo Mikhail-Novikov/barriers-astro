@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+@utility container {
+  margin-inline: auto;
+
+  @media (min-width: 301px) {
+    max-width: calc(100% - 2rem);
+  }
+
+  @media (min-width: 501px) {
+    max-width: calc(100% - 4rem);
+  }
+
+  @media (min-width: 901px) {
+    max-width: calc(100% - 6rem);
+  }
+
+  @media (min-width: 1251px) {
+    max-width: 1048px;
+  }
+
+  @media (min-width: 1401px) {
+    max-width: 1200px;
+  }
+
+  @media (min-width: 1601px) {
+    max-width: 1400px;
+  }
+
+  @media (min-width: 1921px) {
+    max-width: 1600px;
+  }
+}
+
+@theme {
+  --default-font-family: "Geist", sans-serif;
+  --color-white: #FFFFFF;
+  --color-base: #ABE272;
+  --color-black: #2A2A2A;
+  --color-secondary: #86878B;
+  --color-gray-100: #F8F8F8;
+  --color-red: #EF1E1E;
+  --color-tertiary: #BABBBC;
+  --color-grey-200: #E9E9E9;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --tracking-tighter: -1.08px;
+
+   /* Breakpoints */
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 500px;
+  --breakpoint-md: 900px;
+  --breakpoint-lg: 1250px;
+  --breakpoint-xl: 1400px;
+  --breakpoint-2xl: 1600px;
+  --breakpoint-3xl: 1900px;
+
+  /* typography  */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 32px;
+  --text-4xl: 36px;
+  --text-5xl: 48px;
+
+    /* family font */
+  --font-geist: "Geist", sans-serif;
+  --font-geist-medium: "Geist-Medium", sans-serif;
+  --font-geist-bold: "Geist-Bold", sans-serif;
+  --font-geist-semibold: "Geist-SemiBold", sans-serif;
+
+  --font-manrope: "Manrope", sans-serif;
+
+  --transparent-10: rgba(0, 0, 0, .1);
+  --transparent-20: rgba(0, 0, 0, .2);
+  --transparent-30: rgba(0, 0, 0, .3);
+
+  --control-icon: #A8A9B2;
+  --control-icon-active: #ABE272;
+}
+
+@font-face {
+  font-family: 'Geist';
+  src: url('../assets/fonts/Geist/Geist-Regular.otf');
+  src: local('Geist/Geist Regular'), local('Geist-Regular'),
+      url('../assets/fonts/Geist/Geist-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geist-Medium';
+  src: url('../assets/fonts/Geist/Geist-Medium.otf');
+  src: local('Geist/Geist Medium'), local('Geist-Medium'),
+      url('../assets/fonts/Geist/Geist-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geist-Bold';
+  src: url('../assets/fonts/Geist/Geist-Bold.otf');
+  src: local('Geist/Geist Bold'), local('Geist-Bold'),
+      url('../assets/fonts/Geist/Geist-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geist-Semibold';
+  src: local('Geist/Geist Semibold'), local('Geist-Semibold'),
+      url('../assets/fonts/Geist/Geist-Semibold.otf') format('opentype'),
+      url('../assets/fonts/Geist/Geist-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+body {
+  font-family: var(--default-font-family);
+  color: var(--color-black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-width: 375px;
+  overflow-x: hidden;
+}
+
+.fade {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+}
+
+@layer base {
+  b, strong {
+    font-weight: inherit;
+  }
+}

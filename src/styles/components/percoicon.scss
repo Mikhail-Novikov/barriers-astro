@@ -1,0 +1,150 @@
+
+@font-face {
+  font-family: 'Percoicon';
+  src: local('Percoicon'), local('Geist-Bold'),
+      url('../assets/fonts/Percoicon/percoicon.ttf') format('truetype'),
+      url('../assets/fonts/Percoicon/percoicon.woff2') format('woff2'),
+      url('../assets/fonts/Percoicon/percoicon.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: "percoicon" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1em;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  display: inline-block;
+  text-align: center;
+  speak: none;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-telegram:before {
+  content: "\f000";
+}
+
+.icon-building:before {
+  content: "\f001";
+}
+
+.icon-burger:before {
+  content: "\f002";
+}
+
+.icon-close-mobile:before {
+  content: "\f003";
+}
+
+.icon-close:before {
+  content: "\f004";
+}
+
+.icon-link-arrow:before {
+  content: "\f005";
+}
+
+.icon-phone:before {
+  content: "\f006";
+}
+
+.icon-snowflake:before {
+  content: "\f007";
+}
+
+.icon-stopwatch:before {
+  content: "\f008";
+}
+
+.icon-leftright:before {
+  content: "\f009";
+}
+
+.icon-exclamation-danger:before {
+  content: "\f011";
+}
+
+.icon-sync:before {
+  content: "\f00a";
+}
+
+.icon-island:before {
+  content: "\f00b";
+}
+
+.icon-equipment:before {
+  content: "\f00c";
+}
+
+.icon-key:before {
+  content: "\f00d";
+}
+
+.icon-hand-stop:before {
+  content: "\f00e";
+}
+
+.icon-lamp:before {
+  content: "\f00f";
+}
+
+.icon-shield:before {
+  content: "\f010";
+}
+
+.exclamation-not-fill:before {
+  content: "\f012";
+}
+
+.icon-youtube:before {
+  content: "\f014";
+}
+
+.icon-vk-video:before {
+  content: "\f00a";
+}
+
+.icon-vk:before {
+  content: "\f009";
+}
+
+.icon-dzen:before {
+  content: "\f00b";
+}
+
+.icon-max-messenger:before {
+  content: "\f026";
+}
+
+.icon-up-button:before {
+  content: "\f00c";
+}
+
+.icon-durability:before {
+  content: "\F02C";
+}
+
+.icon-question:before {
+  content: "\F02D";
+}
+
+.icon-arrow-gallery:before {
+  content: "\F02E";
+}
