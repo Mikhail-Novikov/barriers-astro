@@ -22,5 +22,5 @@ export default defineConfig({
     },
     plugins: [tailwindcss()]
   },
-  integrations: [react({ jsxImportSource: 'react' })]
+  integrations: [react()]
 });
