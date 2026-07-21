@@ -1,5 +1,4 @@
 import "../styles/global.css";
-import '@styles/styles.scss';
 import "swiper/swiper.css"
 import { FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 

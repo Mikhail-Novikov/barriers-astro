@@ -1,7 +1,6 @@
 import { useIntersectionObserverArray } from "@hooks/useIntersectionObserver";
 
 import "@styles/global.css";
-import "@styles/styles.scss";
 import "swiper/swiper.css";
 
 export const Heroes = () => {

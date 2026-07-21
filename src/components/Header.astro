@@ -1,23 +1,27 @@
 ---
-
 ---
 
-<header class="absolute top-0 left-0 w-full z-50 transition-transform duration-500 translate-y-0">
-  <div class="flex xs:items-center justify-between w-full pt-15">
-    <a
-      href="#"
-      class="ml-[16px] xl:ml-[158px]"
-      aria-label="логотип PERCo"
-    >
-      <img src="" alt="" class="w-[164px] md:w-[267px]" />
-    </a>
-
-    <a
-      href="/login"
-      class="mr-6 xl:mr-[100px] hidden md:block"
-      aria-label="PERCo.Школа в Едином реестре ПО"
-    >
-      <img src="" alt="" />
-    </a>
+<header class="bg-grey-1000">
+  <div class="container">
+    <nav class="flex items-center justify-between h-[90px]">
+      <a href="#" class="flex" aria-label="логотип PERCo">
+        <img src="/logo.svg" alt="логотип PERCo" class="w-[107px] h-[27.5px]" />
+      </a>
+      <ul class="flex items-center gap-20">
+        <li>
+          <a href="#catalog" class="text-white font-semibold">Каталог</a>
+        </li>
+        <li>
+          <a href="#complectation" class="text-white font-semibold">Комплектация</a>
+        </li>
+        <li>
+          <a href="#execution" class="text-white font-semibold">Исполнение</a>
+        </li>
+        <li>
+          <a href="#management" class="text-white font-semibold">Способы управления</a>
+        </li>
+      </ul>
+      <button class="bg-transparent border text-white font-semibold px-8 rounded-4xl h-12 hover:bg-white hover:text-grey-1000 transition-colors cursor-pointer">Подобрать шлагбаум</button>
+    </nav>
   </div>
 </header>

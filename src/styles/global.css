@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@import "./theme.css";
+
+@use "components/percoicon";
+@use "components/button";
 
 @utility container {
   margin-inline: auto;
@@ -30,58 +34,6 @@
   @media (min-width: 1921px) {
     max-width: 1600px;
   }
-}
-
-@theme {
-  --default-font-family: "Geist", sans-serif;
-  --color-white: #FFFFFF;
-  --color-base: #ABE272;
-  --color-black: #2A2A2A;
-  --color-secondary: #86878B;
-  --color-gray-100: #F8F8F8;
-  --color-red: #EF1E1E;
-  --color-tertiary: #BABBBC;
-  --color-grey-200: #E9E9E9;
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --tracking-tighter: -1.08px;
-
-   /* Breakpoints */
-  --breakpoint-xs: 320px;
-  --breakpoint-sm: 500px;
-  --breakpoint-md: 900px;
-  --breakpoint-lg: 1250px;
-  --breakpoint-xl: 1400px;
-  --breakpoint-2xl: 1600px;
-  --breakpoint-3xl: 1900px;
-
-  /* typography  */
-  --text-xs: 12px;
-  --text-sm: 14px;
-  --text-md: 16px;
-  --text-lg: 18px;
-  --text-xl: 20px;
-  --text-2xl: 24px;
-  --text-3xl: 32px;
-  --text-4xl: 36px;
-  --text-5xl: 48px;
-
-    /* family font */
-  --font-geist: "Geist", sans-serif;
-  --font-geist-medium: "Geist-Medium", sans-serif;
-  --font-geist-bold: "Geist-Bold", sans-serif;
-  --font-geist-semibold: "Geist-SemiBold", sans-serif;
-
-  --font-manrope: "Manrope", sans-serif;
-
-  --transparent-10: rgba(0, 0, 0, .1);
-  --transparent-20: rgba(0, 0, 0, .2);
-  --transparent-30: rgba(0, 0, 0, .3);
-
-  --control-icon: #A8A9B2;
-  --control-icon-active: #ABE272;
 }
 
 @font-face {

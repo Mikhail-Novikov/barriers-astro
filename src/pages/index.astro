@@ -1,6 +1,7 @@
 ---
 import Header from '@components/Header.astro';
 import Hero1 from '@components/heros/Hero1.astro';
+import Promo from '@components/Promo.astro';
 import { Heroes } from '../components/Landing'; 
 import { Footer } from '../components/Footer';
 
@@ -9,9 +10,8 @@ import "../styles/global.css";
 ---
 
 <Layout title="Perco Школа">
-	<section class="relative">
-		<Header />
-	</section>
+	<Header />
+	<Promo />
 	<Hero1 />
 	<Heroes client:load />
 	<Footer />
