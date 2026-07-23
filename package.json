@@ -4,11 +4,12 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev --watch:scss --disable:toolbar",
-    "build": "astro build",
+    "build": "node scripts/convert-images.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "compile:scss": "sass src/styles:dist/styles --style=compressed",
     "watch:scss": "sass --watch src/styles:dist/styles",
+    "convert:images": "node scripts/convert-images.mjs",
     "disable:toolbar": "preferences disable --global devToolbar"
   },
   "dependencies": {
@@ -31,6 +32,8 @@
   },
   "devDependencies": {
     "baseline-browser-mapping": "^2.10.44",
-    "sass": "^1.99.0"
+    "glob": "^13.0.6",
+    "sass": "^1.99.0",
+    "sharp": "^0.35.3"
   }
 }

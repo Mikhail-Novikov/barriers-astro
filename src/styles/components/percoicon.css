@@ -1,10 +1,10 @@
 
 @font-face {
   font-family: 'Percoicon';
-  src: local('Percoicon'), local('Geist-Bold'),
-      url('../assets/fonts/Percoicon/percoicon.ttf') format('truetype'),
-      url('../assets/fonts/Percoicon/percoicon.woff2') format('woff2'),
-      url('../assets/fonts/Percoicon/percoicon.woff') format('woff');
+  src: local('Percoicon'), local('Percoicon'),
+      url('../../assets/fonts/Percoicon/percoicon.ttf') format('truetype'),
+      url('../../assets/fonts/Percoicon/percoicon.woff2') format('woff2'),
+      url('../../assets/fonts/Percoicon/percoicon.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }

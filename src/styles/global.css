@@ -1,8 +1,8 @@
 @import "tailwindcss";
 @import "./theme.css";
-
-@use "components/percoicon";
-@use "components/button";
+@import "./components/percoicon";
+@import "./components/button";
+@import "./components/header";
 
 @utility container {
   margin-inline: auto;
@@ -37,37 +37,37 @@
 }
 
 @font-face {
-  font-family: 'Geist';
-  src: url('../assets/fonts/Geist/Geist-Regular.otf');
-  src: local('Geist/Geist Regular'), local('Geist-Regular'),
-      url('../assets/fonts/Geist/Geist-Regular.woff2') format('woff2');
+  font-family: 'Manrope';
+  src: url('../assets/fonts/Manrope/Manrope-Regular.otf');
+  src: local('Manrope/Manrope Regular'), local('Manrope-Regular'),
+      url('../assets/fonts/Manrope/Manrope-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist-Medium';
-  src: url('../assets/fonts/Geist/Geist-Medium.otf');
-  src: local('Geist/Geist Medium'), local('Geist-Medium'),
-      url('../assets/fonts/Geist/Geist-Medium.woff2') format('woff2');
+  font-family: 'Manrope-Medium';
+  src: url('../assets/fonts/Manrope/Manrope-Medium.otf');
+  src: local('Manrope/Manrope Medium'), local('Manrope-Medium'),
+      url('../assets/fonts/Manrope/Manrope-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist-Bold';
-  src: url('../assets/fonts/Geist/Geist-Bold.otf');
-  src: local('Geist/Geist Bold'), local('Geist-Bold'),
-      url('../assets/fonts/Geist/Geist-Bold.woff2') format('woff2');
+  font-family: 'Manrope-Bold';
+  src: url('../assets/fonts/Manrope/Manrope-Bold.otf');
+  src: local('Manrope/Manrope Bold'), local('Manrope-Bold'),
+      url('../assets/fonts/Manrope/Manrope-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist-Semibold';
-  src: local('Geist/Geist Semibold'), local('Geist-Semibold'),
-      url('../assets/fonts/Geist/Geist-Semibold.otf') format('opentype'),
-      url('../assets/fonts/Geist/Geist-Semibold.woff2') format('woff2');
+  font-family: 'Manrope-Semibold';
+  src: local('Manrope/Manrope Semibold'), local('Manrope-Semibold'),
+      url('../assets/fonts/Manrope/Manrope-Semibold.otf') format('opentype'),
+      url('../assets/fonts/Manrope/Manrope-Semibold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
 }

@@ -1,0 +1,11 @@
+.btn {
+  @apply border-1 cursor-pointer shrink-0 ![transition:all_0.3s] text-lg font-normal rounded-2xl min-h-12 pl-9 pr-9 text-white
+}
+
+.btn-up {
+  @apply border-grey-700 hover:border-white cursor-pointer shrink-0 ![transition:all_0.3s] flex items-center bg-transparent w-auto px-6 gap-2 text-lg rounded-2xl h-13
+}
+
+.link--underline {
+  @apply relative after:content-[""] after:absolute after:-bottom-[3px] after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-white after:![transition:width_0.3s_ease-out] hover:after:w-full
+}

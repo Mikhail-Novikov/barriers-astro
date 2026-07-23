@@ -1,0 +1,3 @@
+.h2 {
+  @apply text-[38px] not-italic font-bold text-grey-900 leading-11;
+}

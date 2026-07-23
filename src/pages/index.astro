@@ -1,17 +1,17 @@
 ---
 import Header from '@components/Header.astro';
 import Hero1 from '@components/heros/Hero1.astro';
-import Promo from '@components/Promo.astro';
+import Promo from '@components/Promo';
 import { Heroes } from '../components/Landing'; 
-import { Footer } from '../components/Footer';
+import Footer from '../components/Footer.astro';
 
 import Layout from '../layouts/Layout.astro';
 import "../styles/global.css";
 ---
 
-<Layout title="Perco Школа">
+<Layout title="Шлагбаумы PERCo">
 	<Header />
-	<Promo />
+	<Promo client:load />
 	<Hero1 />
 	<Heroes client:load />
 	<Footer />
