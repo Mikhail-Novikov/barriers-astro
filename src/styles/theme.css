@@ -1,7 +1,14 @@
 @theme {
   --color-grey-1000: #22252F;
   --color-grey-900: #2D333C;
+  --color-grey-800: #7F808A;
   --color-grey-700: #8E8F9E;
+  --color-grey-600: #AEAFBF;
+  --color-grey-500: #CED0DB;
+  --color-grey-400: #E2E3EA;
+  --color-grey-300: #E9EAEF;
+  --color-grey-200: #F3F4F8;
+  --color-grey-100: #FDFDFE;
 
   --default-font-family: "Manrope", sans-serif;
   --color-white: #FFFFFF;
