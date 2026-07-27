@@ -25,7 +25,6 @@ export default function Promo() {
     video.play().catch(() => {});
   }, [isMobile, isMounted]);
 
-  console.log(isMobile);
   const src = isMobile
     ? "/video/promo-mobile.mp4"
     : "/video/promo-desktop.mp4";

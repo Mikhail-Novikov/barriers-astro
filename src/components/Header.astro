@@ -1,17 +1,15 @@
 ---
-import MenuItems from "./MenuItems";
-import BurgerIcon from "./BurgerIcon";
+import Menu from "./Menu/Menu";
 ---
 
-<header class="bg-grey-1000">
+<header class="bg-grey-1000 sticky z-20 top-0 left-0 right-0">
   <div class="container">
-    <nav class="flex items-center justify-between h-[90px]">
-      <a href="#" class="flex" aria-label="логотип PERCo">
+    <nav class="flex items-center justify-between h-[90px] relative">
+      <a href="#" class="flex shrink-0" aria-label="логотип PERCo">
         <img src="/logo.svg" alt="логотип PERCo" class="w-[107px] h-[27.5px]" />
       </a>
-      <BurgerIcon isOpen />
-      <MenuItems />
-      <button class="bg-transparent border text-white font-semibold px-8 rounded-4xl h-12 hover:bg-white hover:text-grey-1000 transition-colors cursor-pointer">Подобрать шлагбаум</button>
+      <Menu client:load />
+      <button class="btn--outline mr-16 lg:mr-0">Подобрать шлагбаум</button>
     </nav>
   </div>
 </header>

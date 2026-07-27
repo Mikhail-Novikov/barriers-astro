@@ -1,4 +1,5 @@
 ---
+import Main from '@components/Main.astro';
 import Header from '@components/Header.astro';
 import Hero1 from '@components/heros/Hero1.astro';
 import Promo from '@components/Promo';
@@ -11,9 +12,11 @@ import "../styles/global.css";
 
 <Layout title="Шлагбаумы PERCo">
 	<Header />
-	<Promo client:load />
-	<Hero1 />
-	<Heroes client:load />
+	<Main>
+		<Promo client:load />
+		<Hero1 />
+		<Heroes client:load />
+	</Main>
 	<Footer />
 </Layout>
 

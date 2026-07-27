@@ -1,0 +1,95 @@
+
+@font-face {
+  font-family: 'Percoicon';
+  src: local('Percoicon'), local('Percoicon'),
+      url('../../assets/fonts/Icons/barriers.ttf') format('truetype'),
+      url('../../assets/fonts/Icons/barriers.woff2') format('woff2'),
+      url('../../assets/fonts/Icons/barriers.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: "percoicon" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1em;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  display: inline-block;
+  text-align: center;
+  speak: none;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-telegram:before {
+  content: "\f01A";
+}
+
+.icon-burger:before {
+  content: "\f016";
+}
+
+.icon-close-mobile:before {
+  content: "\f014";
+}
+
+.icon-close:before {
+  content: "\f015";
+}
+
+.icon-link-arrow:before {
+  content: "\f01D";
+}
+
+.icon-phone:before {
+  content: "\f01B";
+}
+
+.icon-exclamation-danger:before {
+  content: "\f01F";
+}
+
+.exclamation-not-fill:before {
+  content: "\f01E";
+}
+
+.icon-youtube:before {
+  content: "\f017";
+}
+
+.icon-vk-video:before {
+  content: "\f018";
+}
+
+.icon-vk:before {
+  content: "\f019";
+}
+
+.icon-dzen:before {
+  content: "\f013";
+}
+
+.icon-max-messenger2:before {
+  content: "\f01C";
+}
+
+.icon-arrow-up:before {
+  content: "\f004";
+}
+

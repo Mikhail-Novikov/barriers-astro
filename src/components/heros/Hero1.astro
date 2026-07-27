@@ -1,12 +1,75 @@
 ---
-import TextHighlighting from "@components/TextHighlighting";
+const faqItems = [
+  {
+    title: "Как понять, нужно ли устанавливать круглую стрелу?",
+    answer: "Круглые стрелы обычно устанавливаются в регионах с повышенной ветровой нагрузкой. Конкретных рекомендаций по скорости и силе ветра, при которых ставится круглая стрела, нет. Каждая ситуация оценивается экспертом.",
+  },
+  {
+    title: "Как оборудовать шлагбаумами проезд шириной более 6 метров?",
+    answer: "Круглые стрелы обычно устанавливаются в регионах с повышенной ветровой нагрузкой. Конкретных рекомендаций по скорости и силе ветра, при которых ставится круглая стрела, нет. Каждая ситуация оценивается экспертом.",
+  },
+  {
+    title: "Что произойдет, если машина въедет в закрывающуюся стрелу?",
+    answer: "Круглые стрелы обычно устанавливаются в регионах с повышенной ветровой нагрузкой. Конкретных рекомендаций по скорости и силе ветра, при которых ставится круглая стрела, нет. Каждая ситуация оценивается экспертом.",
+  },
+  {
+    title: "Какие гарантии на шлагбаумы предусмотрены?",
+    answer: "Круглые стрелы обычно устанавливаются в регионах с повышенной ветровой нагрузкой. Конкретных рекомендаций по скорости и силе ветра, при которых ставится круглая стрела, нет. Каждая ситуация оценивается экспертом.",
+  },
+  {
+    title: "Как открывать шлагбаум экстренным службам (скорой, МЧС)?",
+    answer: "Круглые стрелы обычно устанавливаются в регионах с повышенной ветровой нагрузкой. Конкретных рекомендаций по скорости и силе ветра, при которых ставится круглая стрела, нет. Каждая ситуация оценивается экспертом.",
+  },
+];
 ---
 
-<section
-  aria-label="Как подобрать шлагбаум?"
-  class="py-10 md:py-15 lg:py-18 xl:py-[120px] bg-gray-100"
->
+<section aria-label="Как подобрать шлагбаум" class="bg-grey-300 pb-30 pt-20">
   <div class="container">
-    <h2 class="h2">Как подобрать шлагбаум?</h2>
+    <div class="flex flex-col gap-8">
+      <h2 class="h2">Как подобрать шлагбаум?</h2>
+
+      <div class="flex flex-col gap-8 lg:flex-row lg:items-start">
+        <div class="relative min-h-[524px] flex-1 overflow-hidden rounded-[25px]">
+          <video
+            class="w-full"
+            muted
+            autoplay
+            preload="auto"
+            playsinline
+            loop
+            poster="/img/preview-faq-video.webp"
+          >
+            <source src="/video/faq-video.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="flex-1 rounded-6 p-[4px]">
+          <div class="flex flex-col gap-3 rounded-6 p-5">
+            {faqItems.map((item) => (
+              <button
+                type="button"
+                class="flex flex-col w-full text-grey-900"
+              >
+                <div class="flex gap-5 pb-3">
+                  <div class="shrink-0">
+                    <i class="icon-plus-circle-outline" />
+                    <i class="icon-minus-circle-outline" />
+                  </div>
+                  <p class="text-lg/6 font-semibold">
+                    {item.title}
+                  </p>
+                </div>
+
+                <div class="pt-3 px-4 pb-2 text-left">
+                  <p class="text-md/6">
+                    {item.answer}
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
