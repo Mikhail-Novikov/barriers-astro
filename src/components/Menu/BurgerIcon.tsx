@@ -3,15 +3,23 @@
  * @param isOpen - признак открытости меню
  * @return {JSX.Element}
  */
-export default function BurgerIcon({ isOpen }: { isOpen?: boolean }): JSX.Element {
+type BurgerIconProps = {
+  isOpen?: boolean;
+  onClick?: () => void;
+};
+
+export default function BurgerIcon({ isOpen, onClick }: BurgerIconProps): JSX.Element {
   return (
-    // <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    //   <path d="M4 6H20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    //   <path d="M4 12H20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    //   <path d="M4 18H20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    // </svg>
-    <div className="text-white text-5xl absolute top-1/2 -translate-y-1/2 right-0">
-      {(isOpen && <i className="icon-close" />) || <i className="icon-burger" />}
-    </div>
+    <button
+      type="button"
+      onClick={onClick}
+      className="absolute top-1/2 -translate-y-1/2 right-0 text-white hover:text-grey-700 text-5xl cursor-pointer transition-all duration-300 ease-out"
+      aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
+      aria-expanded={isOpen}
+    >
+      <span className={`block transition-transform duration-300 ease-out ${isOpen ? "rotate-90" : "rotate-0"}`}>
+        {isOpen ? <i className="icon-close" /> : <i className="icon-burger" />}
+      </span>
+    </button>
   );
 }
