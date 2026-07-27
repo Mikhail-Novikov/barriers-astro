@@ -28,7 +28,7 @@
   }
 
   @media (min-width: 1601px) {
-    max-width: 1400px;
+    max-width: calc(100% - 17rem);
   }
 
   @media (min-width: 1921px) {

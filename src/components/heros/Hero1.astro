@@ -1,4 +1,6 @@
 ---
+import FaqAccordion from "./FaqAccordion";
+
 const faqItems = [
   {
     title: "Как понять, нужно ли устанавливать круглую стрелу?",
@@ -28,8 +30,8 @@ const faqItems = [
     <div class="flex flex-col gap-8">
       <h2 class="h2">Как подобрать шлагбаум?</h2>
 
-      <div class="flex flex-col gap-8 lg:flex-row lg:items-start">
-        <div class="relative min-h-[524px] flex-1 overflow-hidden rounded-[25px]">
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 lg:col-span-6 relative overflow-hidden rounded-6 mb-8 lg:mb-0">
           <video
             class="w-full"
             muted
@@ -43,31 +45,8 @@ const faqItems = [
           </video>
         </div>
 
-        <div class="flex-1 rounded-6 p-[4px]">
-          <div class="flex flex-col gap-3 rounded-6 p-5">
-            {faqItems.map((item) => (
-              <button
-                type="button"
-                class="flex flex-col w-full text-grey-900"
-              >
-                <div class="flex gap-5 pb-3">
-                  <div class="shrink-0">
-                    <i class="icon-plus-circle-outline" />
-                    <i class="icon-minus-circle-outline" />
-                  </div>
-                  <p class="text-lg/6 font-semibold">
-                    {item.title}
-                  </p>
-                </div>
-
-                <div class="pt-3 px-4 pb-2 text-left">
-                  <p class="text-md/6">
-                    {item.answer}
-                  </p>
-                </div>
-              </button>
-            ))}
-          </div>
+        <div class="col-span-12 lg:col-span-5 lg:col-start-8">
+          <FaqAccordion client:load items={faqItems} />
         </div>
       </div>
     </div>

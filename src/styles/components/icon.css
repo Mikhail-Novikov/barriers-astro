@@ -93,3 +93,11 @@
   content: "\f004";
 }
 
+.icon-minus-circle-outline:before {
+  content: "\f012";
+}
+
+.icon-plus-circle-outline:before {
+  content: "\f00D";
+}
+
