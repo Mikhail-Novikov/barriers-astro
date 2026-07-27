@@ -1,0 +1,61 @@
+.lightgallery {
+  .lg-backdrop {
+    background-color: #ffffff;
+  }
+
+  .lg-icon {
+    font-family: 'Percoicon' !important;
+  }
+
+  .lg-prev:after {
+    content: "\f008";
+    padding-right: 3px;
+  }
+
+  .lg-next:before {
+    content: "\f006";
+    padding-left: 3px;
+  }
+
+  .lg-toolbar .lg-close {
+    color: var(--color-black);
+    font-size: 32px;
+    margin-top: 16px;
+    margin-right: 16px;
+
+    &:after {
+      content: "\f015";
+    }
+
+    &:hover {
+      color: var(--color-grey-900);
+    }
+  }
+
+  .lg-prev,
+  .lg-next {
+    font-size: 12px;
+    padding: 0;
+    color: #fff;
+    opacity: 1;
+    background-color: var(--color-grey-800);
+    height: 52px;
+    width: 52px;
+    border-radius: 50%;
+  }
+
+  .lg-prev:hover:not(.disabled),
+  .lg-next:hover:not(.disabled) {
+    color: var(--color-grey-900);
+  }
+
+  .lg-sub-html {
+    color: var(--color-zinc-900);
+    font-size: 20px;
+  }
+
+  .lg-counter {
+    color: var(--color-zinc-900);
+    font-size: 20px;
+  }
+}

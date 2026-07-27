@@ -3,6 +3,8 @@
 @import "./components/icon";
 @import "./components/button";
 @import "./components/header";
+@import "./components/gallery-eq.scss";
+@import "./components/lightgallery.scss";
 
 @utility container {
   margin-inline: auto;

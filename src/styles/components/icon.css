@@ -101,3 +101,19 @@
   content: "\f00D";
 }
 
+.icon-arrow-right-small:before {
+  content: "\f005";
+}
+
+.icon-arrow-left-small:before {
+  content: "\f007";
+}
+
+.icon-arrow-left-big:before {
+  content: "\f008";
+}
+
+.icon-arrow-right-big:before {
+  content: "\f006";
+}
+

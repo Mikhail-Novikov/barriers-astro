@@ -9,6 +9,11 @@ type FaqAccordionProps = {
   items: FaqItem[];
 };
 
+/**
+ * Компонент аккордеона для FAQ
+ * @param items - массив вопросов и ответов
+ * @return {JSX.Element}
+ */
 export default function FaqAccordion({ items }: FaqAccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
