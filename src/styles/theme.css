@@ -52,8 +52,6 @@
   --font-manrope-bold: "Manrope-Bold", sans-serif;
   --font-manrope-semibold: "Manrope-SemiBold", sans-serif;
 
-  --font-manrope: "Manrope", sans-serif;
-
   --transparent-10: rgba(0, 0, 0, .1);
   --transparent-20: rgba(0, 0, 0, .2);
   --transparent-30: rgba(0, 0, 0, .3);
@@ -61,7 +59,8 @@
   --control-icon: #A8A9B2;
   --control-icon-active: #ABE272;
 
-
+  /* Spacing */
+  --spacing-0: 0px;
   --spacing-1: 4px;
   --spacing-2: 8px;
   --spacing-3: 12px;

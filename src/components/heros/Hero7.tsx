@@ -3,6 +3,7 @@ import { useLightGallery } from "@hooks/useLightGallery";
 
 import 'lightgallery/scss/lightgallery.scss';
 import 'lightgallery/scss/lg-zoom.scss';
+import SliderArrow from "@components/SliderArrow";
 
 // Полный набор изображений из папки public/img/gallery
 const galleryAll = [
@@ -179,7 +180,6 @@ const Hero7 = () => {
               className={(layoutClasses[i] ?? "item-gallery cursor-help") + " block border-0 bg-transparent p-0 text-left"}
             >
               <img className="w-full h-auto object-cover" src={getPreviewSrc(item)} alt={item.alt} />
-              {item.moreText && <div className="gallery-equipment__more-item">{item.moreText}</div>}
             </button>
           );
         })}
@@ -191,11 +191,11 @@ const Hero7 = () => {
           </button>
         ))}
       </div>
-      <div className="slider-nav-container">
-        <div className="slider-pagination">{firstPreviewIndex}/{totalItems}</div>
-        <div className="slider-navigation">
-          <i className="icon-arrow-left-big slider-nav-el prev" role="button" onClick={goToPrev}></i>
-          <i className="icon-arrow-right-big slider-nav-el next" role="button" onClick={goToNext}></i>
+      <div className="mt-8 flex justify-between items-center">
+        <div className="min-w-[90px] h-10 p-2 text-grey-800 border border-grey-500 rounded-full text-center">{firstPreviewIndex}/{totalItems}</div>
+        <div className="flex gap-2">
+          <SliderArrow direction="left" onClick={goToPrev} icon="icon-arrow-left-small" theme="!bg-grey-300 !text-grey-800 !size-7 !text-[12px]" />
+          <SliderArrow direction="right" onClick={goToNext} icon="icon-arrow-left-small" />
         </div>
       </div>
     </div>
