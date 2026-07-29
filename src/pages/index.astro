@@ -2,6 +2,7 @@
 import Main from '@components/Main.astro';
 import Header from '@components/Header.astro';
 import Hero1 from '@components/heros/Hero1.astro';
+import Hero3 from '@components/heros/Hero3';
 import Hero7 from '@components/heros/Hero7';
 import Promo from '@components/Promo';
 import { Heroes } from '../components/Landing'; 
@@ -17,6 +18,7 @@ import "../styles/global.css";
 		<Promo client:load />
 		<Hero1 />
 		<Hero7 client:load />
+		<Hero3 client:load />
 		<Heroes client:load />
 	</Main>
 	<Footer />

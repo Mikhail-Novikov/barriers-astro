@@ -179,7 +179,7 @@ const Hero7 = () => {
               onClick={() => openGallery(absoluteIndex)}
               className={(layoutClasses[i] ?? "item-gallery cursor-help") + " block border-0 bg-transparent p-0 text-left"}
             >
-              <img className="w-full h-auto object-cover" src={getPreviewSrc(item)} alt={item.alt} />
+              <img className="w-full h-auto object-cover" src={getPreviewSrc(item)} alt={item.alt} loading="lazy" />
             </button>
           );
         })}
@@ -187,7 +187,7 @@ const Hero7 = () => {
         {/* Скрытые для остальных изображений галереи */}
         {hiddenItems.map((item, i) => (
           <button key={`hidden-${item.index ?? i}`} data-index={item.index ?? visibleCount + i} type="button" onClick={() => openGallery(item.index ?? visibleCount + i)} className="hidden">
-            <img src={item.src} alt={item.alt} />
+            <img src={item.src} alt={item.alt} loading="lazy" />
           </button>
         ))}
       </div>

@@ -101,6 +101,10 @@
   content: "\f00D";
 }
 
+.icon-plus-circle-fill:before {
+  content: "\f00E";
+}
+
 .icon-arrow-right-small:before {
   content: "\f005";
 }
@@ -117,3 +121,10 @@
   content: "\f006";
 }
 
+.icon-radio:before {
+  content: "\f00B";
+}
+
+.icon-no-radio:before {
+  content: "\f010";
+}
