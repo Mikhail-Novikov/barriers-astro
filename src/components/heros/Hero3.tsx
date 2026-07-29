@@ -64,18 +64,22 @@ const radioItemsType = [
   {
     title: 'Прямоугольная',
     img: `${imgPath}options/rectangular.webp`,
+    size: { width: 222, height: 72 },
   },
   {
     title: 'Прямоугольная складная',
     img: `${imgPath}options/rectangular-folding.webp`,
+    size: { width: 222, height: 62 },
   },
   {
     title: 'Круглая',
     img: `${imgPath}options/round.webp`,
+    size: { width: 222, height: 60 },
   },
   {
     title: 'для скоростного шлагбаума',
     img: `${imgPath}options/high-speed.webp`,
+    size: { width: 222, height: 60 },
   },
 ];
 
@@ -83,10 +87,12 @@ const radioItemsDesign = [
   {
     title: 'Стандартное',
     img: `${imgPath}options/standart.webp`,
+    size: { width: 222, height: 170 },
   },
   {
     title: 'Премиум',
     img: `${imgPath}options/premium.webp`,
+    size: { width: 222, height: 170 },
   },
 ];
 
@@ -102,6 +108,10 @@ type OptionCardProps = {
   name: string;
   onSelect: () => void;
   className?: string;
+  size?: {
+    width?: number;
+    height?: number;
+  };
 };
 
 /**
@@ -114,13 +124,13 @@ type OptionCardProps = {
  * @param {string} props.name - Имя группы радио-кнопок.
  * @param {Function} props.onSelect - Функция, вызываемая при выборе опции.
  * @param {string} [props.className] - Дополнительные классы для стилизации.
- * 
+ * @param {Object} [props.size] - Размеры изображения.
  * @return {JSX.Element} JSX-элемент, представляющий карточку с опцией выбора.
  */
-function OptionCard({ item, isActive, name, onSelect, className }: OptionCardProps): JSX.Element {
+function OptionCard({ item, isActive, name, onSelect, className, size }: OptionCardProps): JSX.Element {
   return (
     <label className={`relative bg-white rounded-2xl p-4 flex flex-col justify-between cursor-pointer ${className}`}>
-      <img src={item.img} alt={item.title} />
+      <img src={item.img} alt={item.title} width={size?.width || 100} height={size?.height || 100} />
       <span className="flex items-center gap-2">
         <input
           type="radio"
@@ -182,6 +192,7 @@ export default function Hero3(): JSX.Element {
                         name="type"
                         onSelect={() => setSelectedType(item.title)}
                         className="h-[140px]"
+                        size={item.size}
                       />
                     );
                   })}
@@ -204,7 +215,8 @@ export default function Hero3(): JSX.Element {
                         isActive={isActive}
                         name="design"
                         onSelect={() => setSelectedDesign(item.title)}
-                        className="h-[262px]"
+                        className="md:h-[262px]"
+                        size={item.size}
                       />
                     );
                   })}
@@ -213,15 +225,15 @@ export default function Hero3(): JSX.Element {
             </div>
 
             <div className="col-span-12 lg:col-span-8 xl:ml-11 bg-white rounded-2xl overflow-x-auto">
-              <div className="p-10 gap-4 w-full">
+              <div className="p-4 sm:p-10 gap-4 w-full">
                 <div className="relative">
                   <div
                     role="button"
-                    className="h-13 text-[52px] text-grey-500 hover:text-grey-800 cursor-pointer transition-all duration-300 ease-out"
+                    className="lg:h-13 text-[52px] text-grey-500 hover:text-grey-800 cursor-pointer transition-all duration-300 ease-out"
                   >
-                    <i className="icon-plus-circle-fill float-right" />
+                    <i className="icon-plus-circle-fill lg:float-right" />
                   </div>
-                  <h4 className="text-2xl text-grey-700 text-center">{currentVariant.title}</h4>
+                  <h4 className="text-2xl text-grey-700 lg:text-center">{currentVariant.title}</h4>
                   <img src={currentVariant.img} alt={currentVariant.title} />
                 </div>
               </div>
