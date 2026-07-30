@@ -151,7 +151,7 @@ const Hero7 = () => {
   const { galleryRef, openGallery, totalItems } = useLightGallery({
     items: galleryWithIndexes,
     selector: '.gallery-item',
-    closeOnTap: true,
+    closeOnTap: false,
   });
   const [groupIndex, setGroupIndex] = useState(0);
 

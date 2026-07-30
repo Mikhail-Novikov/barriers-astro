@@ -19,6 +19,7 @@ interface UseLightGalleryOptions {
   download?: boolean;
   counter?: boolean;
   closeOnTap?: boolean;
+  controls?: boolean;
   showCloseIcon?: boolean;
 }
 
@@ -33,6 +34,7 @@ export const useLightGallery = ({
   download = false,
   counter = true,
   closeOnTap = true,
+  controls = true,
   showCloseIcon = true,
 }: UseLightGalleryOptions) => {
   const galleryRef = useRef<HTMLDivElement>(null);
@@ -53,13 +55,16 @@ export const useLightGallery = ({
           ? item.src.src
           : item.img ?? item.thumb;
       const resolvedThumb = item.thumb ?? (typeof resolvedSrc === 'string' ? resolvedSrc : undefined);
-      const resolvedAlt = item.alt ?? '';
+      const resolvedTitle = [item.title, item.alt]
+        .find((value): value is string => typeof value === 'string' && value.trim().length > 0)
+        ?.trim() ?? '';
 
       return {
         ...item,
         src: resolvedSrc,
         thumb: resolvedThumb,
-        subHtml: resolvedAlt ? `<div class="lg-sub-html">${resolvedAlt}</div>` : undefined,
+        subHtml: resolvedTitle ? `<p class="!text-2xl !mb-4">${resolvedTitle}</p>` : undefined,
+        title: resolvedTitle,
       };
     });
 
@@ -68,6 +73,7 @@ export const useLightGallery = ({
       dynamicEl: normalizedItems,
       plugins: [lgZoom],
       download,
+      controls,
       counter,
       closeOnTap,
       showCloseIcon,
@@ -91,13 +97,25 @@ export const useLightGallery = ({
       document.body.classList.remove('lightgallery-on');
     };
 
+    const handleBackdropClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      const isOutsideClick = target === document.body || target === document.documentElement;
+      const isBackdrop = target?.classList.contains('lightgallery-backdrop');
+
+      if (isOutsideClick || isBackdrop) {
+        galleryInstanceRef.current?.closeGallery();
+      }
+    };
+
     galleryElement.addEventListener('lgAfterOpen', handleOpen);
     galleryElement.addEventListener('lgBeforeClose', handleClose);
+    document.addEventListener('click', handleBackdropClick);
 
     return () => {
       document.body.classList.remove('lightgallery-on');
       galleryElement.removeEventListener('lgAfterOpen', handleOpen);
       galleryElement.removeEventListener('lgBeforeClose', handleClose);
+      document.removeEventListener('click', handleBackdropClick);
       galleryInstanceRef.current?.destroy?.();
       galleryInstanceRef.current = null;
     };

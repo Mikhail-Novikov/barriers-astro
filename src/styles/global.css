@@ -116,29 +116,3 @@ body {
     font-weight: inherit;
   }
 }
-
-.internal-container {
-  position: fixed !important;
-  min-height: 900px;
-  top: calc(50% - 450px);
-  z-index: 999999;
-  @apply container;
-}
-
-.internal-container:empty {
-  display: none;
-}
-
-.internal-container:has(.lg-container:not(.lg-show)) {
-  display: none;
-}
-
-.lightgallery-on .lightgallery-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  background-color: rgba(0, 0, 0, 0.4);
-}

@@ -174,12 +174,15 @@ export default function Hero3(): JSX.Element {
     src: item.img,
     thumb: item.img,
     alt: item.title,
+    title: item.title,
   }));
 
   const { galleryRef, openGallery, totalItems } = useLightGallery({
     items: galleryWithIndexes,
     containerSelector: '.internal-container',
     closeOnTap: true,
+    counter: false,
+    controls: false,
   });
 
   const currentIndex = illustrationItems.findIndex(
@@ -261,7 +264,7 @@ export default function Hero3(): JSX.Element {
                     <i className="icon-plus-circle-fill lg:float-right" />
                   </div>
                   <h4 className="text-2xl text-grey-700 lg:text-center">{currentVariant.title}</h4>
-                  <img src={currentVariant.img} alt={currentVariant.title} />
+                  <img src={currentVariant.img} alt={currentVariant.title} title={currentVariant.title} data-iframe-title={currentVariant.title} />
                 </div>
               </div>
             </div>
