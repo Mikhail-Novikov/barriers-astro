@@ -1,3 +1,4 @@
+import { useLightGallery } from '@hooks/useLightGallery';
 import { useMemo, useState } from 'react';
 
 type IllustrationItem = {
@@ -167,6 +168,24 @@ export default function Hero3(): JSX.Element {
     [selectedType, selectedDesign]
   );
 
+  const galleryWithIndexes = illustrationItems.map((item, index) => ({
+    ...item,
+    index,
+    src: item.img,
+    thumb: item.img,
+    alt: item.title,
+  }));
+
+  const { galleryRef, openGallery, totalItems } = useLightGallery({
+    items: galleryWithIndexes,
+    containerSelector: '.internal-container',
+    closeOnTap: true,
+  });
+
+  const currentIndex = illustrationItems.findIndex(
+    (item) => item.type === selectedType && item.design === selectedDesign
+  );
+
   return (
     <section aria-label="Варианты комплектации" className="bg-grey-300 pb-30 pt-20">
       <div className="container">
@@ -229,6 +248,14 @@ export default function Hero3(): JSX.Element {
                 <div className="relative">
                   <div
                     role="button"
+                    tabIndex={0}
+                    onClick={() => openGallery(currentIndex >= 0 ? currentIndex : 0)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openGallery(currentIndex >= 0 ? currentIndex : 0);
+                      }
+                    }}
                     className="lg:h-13 text-[52px] text-grey-500 hover:text-grey-800 cursor-pointer transition-all duration-300 ease-out"
                   >
                     <i className="icon-plus-circle-fill lg:float-right" />
@@ -240,6 +267,8 @@ export default function Hero3(): JSX.Element {
             </div>
           </div>
         </div>
+        <div className="lightgallery-backdrop" />
+        <div className="internal-container" />
       </div>
     </section>
   );

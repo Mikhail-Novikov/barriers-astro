@@ -5,7 +5,7 @@ import type { LightGallery } from 'lightgallery/lightgallery';
 import lgZoom from 'lightgallery/plugins/zoom';
 
 interface GalleryItem {
-  src: string | { src: string };
+  src?: string | { src: string };
   thumb?: string;
   alt?: string;
   subHtml?: string;
@@ -15,7 +15,7 @@ interface GalleryItem {
 interface UseLightGalleryOptions {
   items: GalleryItem[];
   selector?: string;
-  containerSelector: string;
+  containerSelector?: string;
   download?: boolean;
   counter?: boolean;
   closeOnTap?: boolean;
@@ -47,7 +47,11 @@ export const useLightGallery = ({
     if (!container) return;
 
     const normalizedItems = items.map((item) => {
-      const resolvedSrc = typeof item.src === 'string' ? item.src : item.src?.src;
+      const resolvedSrc = typeof item.src === 'string'
+        ? item.src
+        : typeof item.src === 'object' && item.src?.src
+          ? item.src.src
+          : item.img ?? item.thumb;
       const resolvedThumb = item.thumb ?? (typeof resolvedSrc === 'string' ? resolvedSrc : undefined);
       const resolvedAlt = item.alt ?? '';
 
@@ -69,6 +73,7 @@ export const useLightGallery = ({
       showCloseIcon,
       selector,
       addClass: 'lightgallery',
+      ...(containerSelector ? { container: container as HTMLElement } : {}),
       afterChange: (instance: { index: number }) => {
         setCurrentIndex(instance.index);
       },
@@ -76,7 +81,23 @@ export const useLightGallery = ({
 
     galleryInstanceRef.current = lightGallery(container as HTMLElement, galleryOptions);
 
+    const galleryElement = container as HTMLElement;
+
+    const handleOpen = () => {
+      document.body.classList.add('lightgallery-on');
+    };
+
+    const handleClose = () => {
+      document.body.classList.remove('lightgallery-on');
+    };
+
+    galleryElement.addEventListener('lgAfterOpen', handleOpen);
+    galleryElement.addEventListener('lgBeforeClose', handleClose);
+
     return () => {
+      document.body.classList.remove('lightgallery-on');
+      galleryElement.removeEventListener('lgAfterOpen', handleOpen);
+      galleryElement.removeEventListener('lgBeforeClose', handleClose);
       galleryInstanceRef.current?.destroy?.();
       galleryInstanceRef.current = null;
     };

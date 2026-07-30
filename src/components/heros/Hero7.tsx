@@ -150,7 +150,7 @@ const Hero7 = () => {
   const getPreviewSrc = (item: { thumb?: string; src?: string }) => item.thumb ?? item.src ?? "";
   const { galleryRef, openGallery, totalItems } = useLightGallery({
     items: galleryWithIndexes,
-    containerSelector: '.gallery-equipment-wrapper',
+    selector: '.gallery-item',
     closeOnTap: true,
   });
   const [groupIndex, setGroupIndex] = useState(0);
