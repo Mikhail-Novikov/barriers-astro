@@ -129,7 +129,7 @@ type OptionCardProps = {
  */
 function OptionCard({ item, isActive, name, onSelect, className, size }: OptionCardProps): JSX.Element {
   return (
-    <label className={`relative bg-white rounded-2xl p-4 flex flex-col justify-between cursor-pointer ${className}`}>
+    <label className={`relative border bg-white rounded-2xl p-4 flex flex-col justify-between cursor-pointer ${className} ${isActive ? 'border-grey-900' : 'border-transparent'}`}>
       <img src={item.img} alt={item.title} width={size?.width || 100} height={size?.height || 100} />
       <span className="flex items-center gap-2">
         <input
