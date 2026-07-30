@@ -148,7 +148,11 @@ const galleryWithIndexes = galleryAll.map((item, index) => ({ ...item, index }))
  */
 const Hero7 = () => {
   const getPreviewSrc = (item: { thumb?: string; src?: string }) => item.thumb ?? item.src ?? "";
-  const { galleryRef, openGallery, currentIndex, totalItems } = useLightGallery({ items: galleryWithIndexes });
+  const { galleryRef, openGallery, totalItems } = useLightGallery({
+    items: galleryWithIndexes,
+    containerSelector: '.gallery-equipment-wrapper',
+    closeOnTap: true,
+  });
   const [groupIndex, setGroupIndex] = useState(0);
 
   // Сколько элементов следует отображать в сетке главной страницы
@@ -163,7 +167,7 @@ const Hero7 = () => {
   const goToPrev = () => setGroupIndex((prev) => (prev - 1 + totalGroups) % totalGroups);
 
   return (
-    <div className="container my-10 sm:my-15 lg:my-18 xl:mb-20 xl:mt-15">
+    <div className="gallery-equipment-wrapper container my-10 sm:my-15 lg:my-18 xl:mb-20 xl:mt-15">
       <h2 className="h2 mb-8">
         Примеры установок
       </h2>

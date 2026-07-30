@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import lightGallery from 'lightgallery';
+import type { LightGallerySettings } from 'lightgallery/lg-settings';
+import type { LightGallery } from 'lightgallery/lightgallery';
 import lgZoom from 'lightgallery/plugins/zoom';
 
 interface GalleryItem {
@@ -13,26 +15,36 @@ interface GalleryItem {
 interface UseLightGalleryOptions {
   items: GalleryItem[];
   selector?: string;
+  containerSelector: string;
   download?: boolean;
   counter?: boolean;
   closeOnTap?: boolean;
   showCloseIcon?: boolean;
 }
 
+type LightGalleryHookOptions = LightGallerySettings & {
+  afterChange?: (instance: { index: number }) => void;
+};
+
 export const useLightGallery = ({
   items,
   selector = '.gallery-item',
+  containerSelector,
   download = false,
   counter = true,
   closeOnTap = true,
   showCloseIcon = true,
 }: UseLightGalleryOptions) => {
-  const galleryRef = useRef<HTMLDivElement | null>(null);
-  const galleryInstanceRef = useRef<any>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const galleryInstanceRef = useRef<LightGallery | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    if (!galleryRef.current) return;
+    const container = containerSelector
+      ? document.querySelector(containerSelector)
+      : galleryRef.current;
+
+    if (!container) return;
 
     const normalizedItems = items.map((item) => {
       const resolvedSrc = typeof item.src === 'string' ? item.src : item.src?.src;
@@ -47,38 +59,47 @@ export const useLightGallery = ({
       };
     });
 
-    galleryInstanceRef.current = lightGallery(galleryRef.current, {
+    const galleryOptions: LightGalleryHookOptions = {
       dynamic: true,
       dynamicEl: normalizedItems,
       plugins: [lgZoom],
       download,
       counter,
-      closeOnTap: false,
+      closeOnTap,
       showCloseIcon,
       selector,
       addClass: 'lightgallery',
-      selectWithin: 'container-control',
-      afterChange: (instance: any) => {
+      afterChange: (instance: { index: number }) => {
         setCurrentIndex(instance.index);
       },
-    } as any);
+    };
+
+    galleryInstanceRef.current = lightGallery(container as HTMLElement, galleryOptions);
 
     return () => {
       galleryInstanceRef.current?.destroy?.();
       galleryInstanceRef.current = null;
     };
-  }, [items, selector, download, counter, closeOnTap, showCloseIcon]);
+  }, [items, selector, containerSelector, download, counter, closeOnTap, showCloseIcon]);
 
   const openGallery = (index: number) => {
     galleryInstanceRef.current?.openGallery(index);
   };
 
   const goToNext = () => {
-    galleryInstanceRef.current?.next();
+    const instance = galleryInstanceRef.current as LightGallery & {
+      next?: () => void;
+      prev?: () => void;
+    };
+    instance.next?.();
   };
 
   const goToPrev = () => {
-    galleryInstanceRef.current?.prev();
+    const instance = galleryInstanceRef.current as LightGallery & {
+      next?: () => void;
+      prev?: () => void;
+    };
+    instance.prev?.();
   };
 
   return { galleryRef, openGallery, goToNext, goToPrev, currentIndex, totalItems: items.length };
