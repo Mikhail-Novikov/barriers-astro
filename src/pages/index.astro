@@ -1,15 +1,28 @@
 ---
+import { Heroes } from '../components/Landing';
+import Layout from '../layouts/Layout.astro';
 import Main from '@components/Main.astro';
 import Header from '@components/Header.astro';
-import Hero1 from '@components/heros/Hero1.astro';
-import Hero3 from '@components/heros/Hero3';
-import Hero4 from '@components/heros/Hero4.astro';
-import Hero7 from '@components/heros/Hero7';
-import Promo from '@components/Promo';
-import { Heroes } from '../components/Landing'; 
 import Footer from '../components/Footer.astro';
 
-import Layout from '../layouts/Layout.astro';
+import Promo from '@components/Promo';
+
+import Hero1 from '@components/heros/Hero1.astro';
+import Hero2 from '@components/heros/Hero2';
+import Hero3 from '@components/heros/Hero3.astro';
+import Hero4 from '@components/heros/Hero4.astro';
+import Hero5 from '@components/heros/Hero5.astro';
+import Hero6 from '@components/heros/Hero6';
+import Hero7 from '@components/heros/Hero7';
+import Hero8 from '@components/heros/Hero8.astro';
+import Hero9 from '@components/heros/Hero9.astro';
+import Hero10 from '@components/heros/Hero10';
+import Hero11 from '@components/heros/Hero11.astro';
+import Hero12 from '@components/heros/Hero12.astro';
+import Hero13 from '@components/heros/Hero13.astro';
+import Hero14 from '@components/heros/Hero14.astro';
+import Hero15 from '@components/heros/Hero15.astro';
+
 import "../styles/global.css";
 ---
 
@@ -18,9 +31,20 @@ import "../styles/global.css";
 	<Main>
 		<Promo client:load />
 		<Hero1 />
-		<Hero7 client:load />
-		<Hero3 client:load />
+		<Hero2 client:load />
+		<Hero3 />
 		<Hero4 />
+		<Hero5 />
+		<Hero6 client:load />
+		<Hero7 client:load />
+		<Hero8 />
+		<Hero9 />
+		<Hero10 client:load />
+		<Hero11 />
+		<Hero12 />
+		<Hero13 />
+		<Hero14 />
+		<Hero15 />
 		<Heroes client:load />
 	</Main>
 	<Footer />

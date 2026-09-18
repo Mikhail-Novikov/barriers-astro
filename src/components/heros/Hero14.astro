@@ -1,0 +1,48 @@
+---
+
+import AboutCarousel from './AboutCarousel';
+
+const aboutImages = Object.entries(
+  import.meta.glob<string>('../../assets/about/*.{png,jpg,jpeg,webp}', {
+    eager: true,
+    import: 'default',
+    query: '?url',
+  }),
+)
+  .sort(([first], [second]) => first.localeCompare(second, undefined, { numeric: true }))
+  .map(([, src]) => src);
+---
+
+<section aria-label="О компании" class="bg-grey-200 lg:pb-25">
+  <div class="container">
+    <div class="flex flex-col gap-10 rounded-5xl bg-white p-6 sm:p-10 lg:gap-16 lg:p-20 lg:-mx-20">
+      <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <h2 class="h2 mb-12">О компании</h2>
+          <div class="flex gap-10 sm:gap-x-12">
+            <div>
+              <strong class="block text-7xl font-bold font-inter-bold leading-none text-grey-800">5</strong>
+              <span class="mt-2 block text-lg text-grey-700">лет гарантии</span>
+            </div>
+            <div>
+              <strong class="block text-7xl font-bold font-inter-bold leading-none text-grey-800">38</strong>
+              <span class="mt-2 block text-lg text-grey-700">лет на рынке</span>
+            </div>
+            <div>
+              <strong class="block text-7xl font-bold font-inter-bold leading-none text-grey-800">96</strong>
+              <span class="mt-2 block text-lg text-grey-700">стран продаж</span>
+            </div> 
+          </div>
+        </div>
+
+        <div class="space-y-7 text-grey-700 text-md/6 lg:text-lg/7">
+          <p><strong class="font-manrope-semibold text-grey-1000">PERCo специализируется на&nbsp;серийном производстве оборудования и&nbsp;систем безопасности</strong> собственной разработки&nbsp;с1988&nbsp;года. Сегодня PERCo&nbsp;&mdash; лидер в&nbsp;производстве систем контроля доступа и&nbsp;дорожной автоматики.</p>
+          <p>Высокое качество обеспечило продукции PERCo <strong class="font-manrope-semibold text-grey-1000">признание как в&nbsp;России, так и&nbsp;за&nbsp;рубежом.</strong> Система менеджмента качества PERCo сертифицирована на&nbsp;соответствие международным стандартам ISO 9001:2015.</p>
+          <p>Собственное производство PERCo оснащено современным <strong class="font-manrope-semibold text-grey-1000">высокоточным и&nbsp;высокотехнологичным оборудованием</strong>, что позволяет разрабатывать, выпускать и&nbsp;успешно представлять на&nbsp;рынке широкий ассортимент товаров, отвечающих мировым стандартам.</p>
+        </div>
+      </div>
+
+      <AboutCarousel images={aboutImages} client:load />
+    </div>
+  </div>
+</section>

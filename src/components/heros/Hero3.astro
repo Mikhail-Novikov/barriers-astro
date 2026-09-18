@@ -1,0 +1,92 @@
+---
+import warrantyImage from '../../assets/img/5-years-warranty.jpg';
+import { publicAsset } from '../../utils/publicAsset';
+---
+
+<section aria-label="Шлагбаум, который прослужит долго" class="bg-grey-100 pt-10 xl:pt-15 3xl:pt-20">
+  <div class="container">
+    <h2 class="h2 mb-6 lg:mb-8">Шлагбаум, который прослужит долго</h2>
+
+    <div class="flex flex-col lg:flex-row gap-x-5 3xl:gap-x-8 gap-y-5">
+      <div class="col-span-12 lg:w-1/2 p-[16px_16px_24px_16px] md:p-[20px_24px] lg:p-[32px_32px_40px_32px] 2xl:p-[32px_40px_40px_40px] bg-white border border-grey-400 rounded-[24px]">
+        <div>
+          <video
+            class="w-full min-h-full object-cover rounded-2xl"
+            muted
+            autoplay
+            preload="auto"
+            playsinline
+            loop
+            poster={publicAsset('/img/anti-corrosion-coating.webp')}
+          >
+            <source src={publicAsset('/video/anti-corrosion-coating-video.mp4')} type="video/mp4" />
+          </video>
+        </div>
+        <div class="mt-5 md:mt-10 max-w-[600px]">
+          <h4 class="h4 mb-4">Качественное антикоррозийное покрытие</h4>
+          <ul class="list-none pl-0 space-y-4 text-md/6 text-grey-1000">
+            <li>
+              <div class="mb-2 text-md/6 font-manrope-semibold">Качество подготовки поверхности</div>
+              <p class="m-0 text-md/6">Специальная линия химической подготовки работает в&nbsp;автоматическом режиме, что минимизирует возможность нарушения технологического процесса.</p>
+            </li>
+            <li>
+              <div class="mb-2 font-manrope-semibold">Качество краски</div>
+              <p class="m-0 text-md/6">Для тумб шлагбаумов используется краска, предназначенная для многолетней эксплуатации на&nbsp;улице.</p>
+            </li>
+            <li>
+              <div class="mb-2 text-md/6 font-manrope-semibold">Соблюдение режимов полимеризации</div>
+              <p class="m-0 text-md/6">Окрашенные детали отправляются в&nbsp;камеру полимеризации, где порошковый слой оплавляется при температуре порядка 180 &deg;C&nbsp;и&nbsp;приобретает монолитность.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-span-12 lg:w-1/2 flex flex-col gap-y-5 3xl:gap-8">
+        <div class="flex-1 p-[16px_16px_24px_16px] md:p-[20px_24px] lg:p-[32px_32px_40px_32px] 2xl:p-[32px_40px_40px_40px] bg-white border border-grey-400 rounded-[24px]">
+          <h4 class="h4 mb-4">Встроенная система обогрева</h4>
+          <ul class="list-none pl-0 space-y-3 text-md/6 text-grey-1000">
+            <li>
+              <p class="m-0 text-md/6">
+                <b class="font-manrope-semibold">Все модели</b> 
+                шлагбаумов оснащены встроенной системой обогрева, что обеспечивает устойчивую работу при перепадах температур.
+              </p>
+            </li>
+            <li>
+              <div class="mb-2 font-manrope-semibold">Температурный диапазон</div>
+              <p class="m-0 text-md/6">
+                Стандартные модели рассчитаны на&nbsp;эксплуатацию при температурах 
+                <b class="font-manrope-semibold">от &minus;40 &deg;С&nbsp;до&nbsp;+55&nbsp;&deg;С</b>, а&nbsp;специализированные модели GF13N и&nbsp;GS14N&nbsp;&mdash; от &minus;60 &deg;С&nbsp;до + 55&nbsp;&deg;С.
+              </p>
+            </li>
+            <li>
+              <div class="mb-2 font-manrope-semibold">Принцип работы системы обогрева</div>
+              <p class="m-0 text-md/6">
+                Если температура внутри тумбы опускается ниже &minus;20 &deg;C, подогрев включается 
+                <b class="font-manrope-semibold">автоматически</b>, предотвращая загустение смазки в&nbsp;редукторе и&nbsp;защищая электронику.
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div class="flex-1 p-[16px_16px_24px_16px] md:p-[20px_24px] lg:p-[32px_32px_40px_32px] 2xl:p-[32px_40px_40px_40px] bg-white border border-grey-400 rounded-[24px]">
+          <div class="flex gap-x-15 items-start">
+            <div>
+              <h4 class="h4 mb-4">Высокая долговечность в каждой детали</h4>
+              <img class="shrink-0 sm:hidden mb-4" src={warrantyImage.src} width="105" height="105" alt="">
+              <ul class="list-none pl-0 space-y-2 text-md/6 text-grey-1000">
+                <li>
+                  <p>Средняя наработка на&nbsp;отказ&nbsp;&mdash; не&nbsp;менее 3&nbsp;млн циклов.</p>
+                </li>
+                <li>
+                  <p>Прочные материалы, защита механизмов и&nbsp;качественное исполнение обеспечивают длительный срок службы.</p>
+                </li>
+                <li>
+                  <p>Надежность <b class="font-manrope-semibold">подтверждена испытаниями</b> и <b class="font-manrope-semibold">5-летней гарантией на&nbsp;все шлагбаумы</b> PERCo.</p>
+                </li>
+              </ul>
+            </div>
+            <img class="shrink-0 hidden sm:block" src={warrantyImage.src} width="105" height="105" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

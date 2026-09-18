@@ -16,15 +16,15 @@ interface BreakpointValue {
 
 // Tailwind breakpoints
 const breakpoints = {
-  mobile: 300,
+  mobile: 280,
   xs: 320,
-  sm: 500,
-  md: 900,
-  lg: 1250,
-  xl: 1400,
-  '2xl': 1600,
-  '3xl': 1920,
-  '4xl': 2560,
+  sm: 600,
+  md: 712,
+  lg: 1019,
+  xl: 1200,
+  '2xl': 1400,
+  '3xl': 1600,
+  '4xl': 1920,
 };
 
 /**

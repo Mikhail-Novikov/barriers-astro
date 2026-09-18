@@ -9,6 +9,12 @@
   --color-grey-300: #E9EAEF;
   --color-grey-200: #F3F4F8;
   --color-grey-100: #FDFDFE;
+  --color-red: #FF2F1C;
+  --color-cta: #003067;
+  --color-cta-hover: #00214D;
+  --color-cta-disabled: #C9D2E0;
+
+  --text-primary: #2C2D2E;
 
   --default-font-family: "Manrope", sans-serif;
   --color-white: #FFFFFF;
@@ -18,7 +24,6 @@
   --color-gray-100: #F8F8F8;
   --color-red: #EF1E1E;
   --color-tertiary: #BABBBC;
-  --color-grey-200: #E9E9E9;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
@@ -27,12 +32,13 @@
 
    /* Breakpoints */
   --breakpoint-xs: 320px;
-  --breakpoint-sm: 500px;
-  --breakpoint-md: 900px;
-  --breakpoint-lg: 1250px;
-  --breakpoint-xl: 1400px;
-  --breakpoint-2xl: 1600px;
-  --breakpoint-3xl: 1900px;
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 712px;
+  --breakpoint-lg: 1019px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1400px;
+  --breakpoint-3xl: 1600px;
+  --breakpoint-4xl: 1920px;
 
   /* typography  */
   --text-xs: 12px;
@@ -51,6 +57,8 @@
   --font-manrope-medium: "Manrope-Medium", sans-serif;
   --font-manrope-bold: "Manrope-Bold", sans-serif;
   --font-manrope-semibold: "Manrope-SemiBold", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-inter-bold: "Inter-Bold", sans-serif;
 
   --transparent-10: rgba(0, 0, 0, .1);
   --transparent-20: rgba(0, 0, 0, .2);
@@ -91,4 +99,8 @@
   --spacing-28: 112px;
   --spacing-29: 116px;
   --spacing-30: 120px;
+
+  --radius-5xl: 40px;
+
+  --peer-li-marker: #ABE272;
 }

@@ -25,6 +25,27 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            li: {
+              color: '#2C2D2E',
+              paddingInlineStart: '0 !important',
+            },
+            'li::marker': {
+              color: '#fff',
+            },
+          },
+        },
+      },
     },
+    plugins: [
+      require('@tailwindcss/typography')({
+        className: 'b-theme',
+        defaultVariants: {
+          preset: 'default',
+        },
+      }),
+    ],
   },
 };

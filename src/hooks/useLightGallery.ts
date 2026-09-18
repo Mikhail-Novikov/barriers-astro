@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import lightGallery from 'lightgallery';
-import type { LightGallerySettings } from 'lightgallery/lg-settings';
-import type { LightGallery } from 'lightgallery/lightgallery';
-import lgZoom from 'lightgallery/plugins/zoom';
+import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
+import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
 interface GalleryItem {
   src?: string | { src: string };
@@ -23,13 +21,9 @@ interface UseLightGalleryOptions {
   showCloseIcon?: boolean;
 }
 
-type LightGalleryHookOptions = LightGallerySettings & {
-  afterChange?: (instance: { index: number }) => void;
-};
-
 export const useLightGallery = ({
   items,
-  selector = '.gallery-item',
+  selector = 'a[data-fancybox]',
   containerSelector,
   download = false,
   counter = true,
@@ -38,8 +32,8 @@ export const useLightGallery = ({
   showCloseIcon = true,
 }: UseLightGalleryOptions) => {
   const galleryRef = useRef<HTMLDivElement>(null);
-  const galleryInstanceRef = useRef<LightGallery | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const fancyboxInstanceRef = useRef<any>(null);
 
   useEffect(() => {
     const container = containerSelector
@@ -48,97 +42,70 @@ export const useLightGallery = ({
 
     if (!container) return;
 
-    const normalizedItems = items.map((item) => {
-      const resolvedSrc = typeof item.src === 'string'
-        ? item.src
-        : typeof item.src === 'object' && item.src?.src
-          ? item.src.src
-          : item.img ?? item.thumb;
-      const resolvedThumb = item.thumb ?? (typeof resolvedSrc === 'string' ? resolvedSrc : undefined);
-      const resolvedTitle = [item.title, item.alt]
-        .find((value): value is string => typeof value === 'string' && value.trim().length > 0)
-        ?.trim() ?? '';
+    // Используем selector для bindings
+    const actualSelector = selector || 'a[data-fancybox]';
 
-      return {
-        ...item,
-        src: resolvedSrc,
-        thumb: resolvedThumb,
-        subHtml: resolvedTitle ? `<p class="!text-2xl !mb-4">${resolvedTitle}</p>` : undefined,
-        title: resolvedTitle,
-      };
-    });
-
-    const galleryOptions: LightGalleryHookOptions = {
-      dynamic: true,
-      dynamicEl: normalizedItems,
-      plugins: [lgZoom],
-      download,
-      controls,
-      counter,
-      closeOnTap,
-      showCloseIcon,
-      selector,
-      addClass: 'lightgallery',
-      ...(containerSelector ? { container: container as HTMLElement } : {}),
-      afterChange: (instance: { index: number }) => {
-        setCurrentIndex(instance.index);
+    const fancyboxOptions: Record<string, any> = {
+      on: {
+        reveal: (fancybox: any, slide: any) => {
+          const index = fancybox.getIndex?.();
+          if (index !== undefined) {
+            setCurrentIndex(index);
+          }
+        },
       },
+      Toolbar: {
+        display: {
+          left: counter ? ['counter'] : [],
+          middle: [],
+          right: controls ? ['zoom', 'fullscreen', 'close'] : ['close'],
+        },
+      },
+      Click: closeOnTap ? 'close' : 'toggle',
     };
 
-    galleryInstanceRef.current = lightGallery(container as HTMLElement, galleryOptions);
-
-    const galleryElement = container as HTMLElement;
-
-    const handleOpen = () => {
-      document.body.classList.add('lightgallery-on');
-    };
-
-    const handleClose = () => {
-      document.body.classList.remove('lightgallery-on');
-    };
-
-    const handleBackdropClick = (event: MouseEvent) => {
-      const target = event.target as HTMLElement | null;
-      const isOutsideClick = target === document.body || target === document.documentElement;
-      const isBackdrop = target?.classList.contains('lightgallery-backdrop');
-
-      if (isOutsideClick || isBackdrop) {
-        galleryInstanceRef.current?.closeGallery();
-      }
-    };
-
-    galleryElement.addEventListener('lgAfterOpen', handleOpen);
-    galleryElement.addEventListener('lgBeforeClose', handleClose);
-    document.addEventListener('click', handleBackdropClick);
+    // Bind Fancybox к контейнеру с селектором
+    Fancybox.bind(container as HTMLElement, actualSelector, fancyboxOptions);
+    fancyboxInstanceRef.current = Fancybox;
 
     return () => {
-      document.body.classList.remove('lightgallery-on');
-      galleryElement.removeEventListener('lgAfterOpen', handleOpen);
-      galleryElement.removeEventListener('lgBeforeClose', handleClose);
-      document.removeEventListener('click', handleBackdropClick);
-      galleryInstanceRef.current?.destroy?.();
-      galleryInstanceRef.current = null;
+      try {
+        Fancybox.unbind(container as HTMLElement);
+      } catch (e) {
+        // Ignore unbind errors
+      }
     };
-  }, [items, selector, containerSelector, download, counter, closeOnTap, showCloseIcon]);
+  }, [items, selector, containerSelector, counter, closeOnTap, controls]);
 
   const openGallery = (index: number) => {
-    galleryInstanceRef.current?.openGallery(index);
+    const container = containerSelector
+      ? document.querySelector(containerSelector)
+      : galleryRef.current;
+
+    if (container) {
+      const actualSelector = selector || 'a[data-fancybox]';
+      const links = container.querySelectorAll(actualSelector);
+      const link = links[index] as HTMLElement;
+      if (link) {
+        link.click();
+      }
+    }
   };
 
   const goToNext = () => {
-    const instance = galleryInstanceRef.current as LightGallery & {
-      next?: () => void;
-      prev?: () => void;
-    };
-    instance.next?.();
+    const instance = Fancybox.getInstance?.();
+    const carousel = instance?.getCarousel?.();
+    if (carousel?.next) {
+      carousel.next();
+    }
   };
 
   const goToPrev = () => {
-    const instance = galleryInstanceRef.current as LightGallery & {
-      next?: () => void;
-      prev?: () => void;
-    };
-    instance.prev?.();
+    const instance = Fancybox.getInstance?.();
+    const carousel = instance?.getCarousel?.();
+    if (carousel?.prev) {
+      carousel.prev();
+    }
   };
 
   return { galleryRef, openGallery, goToNext, goToPrev, currentIndex, totalItems: items.length };

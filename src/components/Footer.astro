@@ -1,16 +1,20 @@
-<footer class="w-full pt-15 px-0 pb-20 bg-grey-1000 md:p-y-23 md:p-x-[46px] relative overflow-hidden">
+---
+import { publicAsset } from '../utils/publicAsset';
+---
+
+<footer class="w-full pt-15 px-0 pb-20 bg-cta md:p-y-23 md:p-x-[46px] relative overflow-hidden">
   <div class="container">
-    <div class="w-full m-auto flex flex-col gap-10 relative z-1 md:gap-20">
+    <div class="perco-icons w-full m-auto flex flex-col gap-10 relative z-1 md:gap-20">
       <div class="flex items-center justify-between">
         <a class="block max-w-25 *:block *:max-w-full *:h-auto md:max-w-[127px]" href="https://perco.ru" target="_blank">
-          <img src="/logo.svg" width="137" height="35" alt="Перко - автоматические шлагбаумы" />
+          <img src={publicAsset('/logo.svg')} width="137" height="35" alt="Перко - автоматические шлагбаумы" />
         </a>
         <button class="btn btn-up">
           <span class="text-up-button text-white">Наверх</span>
-          <span class="text-4xl"><span class="icon-up-button size-8 text-grey-700"></span></span>
+          <span class="text-5xl"><span class="perco-icon-arrow-up size-8 text-grey-700"></span></span>
         </button>
         <button class="btn hidden bg-white rounded-[50%] p-2 ![transition:background-color_0.3s_ease-in-out] fixed right-12 bottom-12 hover:bg-grey size-17">
-          <span class="icon-link-arrow"></span>
+          <span class="perco-icon-arrow-up"></span>
         </button>
       </div>
       <div class="flex flex-col gap-10 text-white md:flex-row md:gap-32 text-lg/[150%]">
@@ -26,12 +30,12 @@
       </div>
       <div class="flex items-start flex-col justify-between gap-15 md:flex-row md:items-center">
         <ul class="flex gap-x-6 list-none order-1 md:order-none">
-          <li class="size-8"><a class="text-gray-1000 text-3xl inline-block" href="https://t.me/perco_com" target="_blank"><span class="icon-telegram"></span></a></li>
-          <li class="size-8"><a class="text-gray-1000 text-3xl inline-block" href="https://www.youtube.com/percoru" target="_blank"><span class="icon-youtube"></span></a></li>
-          <li class="size-8"><a class="text-gray-1000 text-3xl inline-block" href="https://vk.com/percoru" target="_blank"> <span class="icon-vk"></span></a></li>
-          <li class="size-8"><a class="text-gray-1000 text-3xl inline-block" href="https://vkvideo.ru/@percoru" target="_blank"><span class="icon-vk-video"></span></a></li>
-          <li class="size-8"><a class="text-gray-1000 text-3xl inline-block" href="https://dzen.ru/perco" target="_blank"><span class="icon-dzen"></span></a></li>
-          <li class="size-8"><a class="text-gray-1000 text-3xl inline-block" href="https://max.ru/id7802931046_biz" target="_blank"><span class="icon-max-messenger"></span></a></li>
+          <li class="size-8"><a class="text-cta text-3xl inline-block" href="https://t.me/perco_com" target="_blank"><span class="perco-icon-telegram"></span></a></li>
+          <li class="size-8"><a class="text-cta text-3xl inline-block" href="https://www.youtube.com/percoru" target="_blank"><span class="perco-icon-youtube"></span></a></li>
+          <li class="size-8"><a class="text-cta text-3xl inline-block" href="https://vk.com/percoru" target="_blank"> <span class="perco-icon-vk"></span></a></li>
+          <li class="size-8"><a class="text-cta text-3xl inline-block" href="https://vkvideo.ru/@percoru" target="_blank"><span class="perco-icon-vk-video"></span></a></li>
+          <li class="size-8"><a class="text-cta text-3xl inline-block" href="https://dzen.ru/perco" target="_blank"><span class="perco-icon-dzen"></span></a></li>
+          <li class="size-8"><a class="text-cta text-3xl inline-block" href="https://max.ru/id7802931046_biz" target="_blank"><span class="perco-icon-max-messenger"></span></a></li>
         </ul>
         <a class="font-normal text-[#8e8f9e] transition:color_0.3s hover:text-white underline" href="https://www.perco.ru/politika-konfidentsialnosti/">Политика конфиденциальности</a>
       </div>

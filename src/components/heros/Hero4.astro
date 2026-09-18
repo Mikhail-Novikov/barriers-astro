@@ -1,104 +1,98 @@
 ---
-import { ACTION_ERROR_CODES } from "astro:actions";
-
-const faqItems = [
-  {
-    title: "Как понять, нужно ли устанавливать круглую стрелу?",
-    answer: "Круглые стрелы обычно устанавливаются в регионах с повышенной ветровой нагрузкой. Конкретных рекомендаций по скорости и силе ветра, при которых ставится круглая стрела, нет. Каждая ситуация оценивается экспертом.",
-  },
-  {
-    title: "Как оборудовать шлагбаумами проезд шириной более 6 метров?",
-    answer: "Круглые стрелы обычно устанавливаются в регионах с повышенной ветровой нагрузкой. Конкретных рекомендаций по скорости и силе ветра, при которых ставится круглая стрела, нет. Каждая ситуация оценивается экспертом.",
-  },
-  {
-    title: "Что произойдет, если машина въедет в закрывающуюся стрелу?",
-    answer: "Круглые стрелы обычно устанавливаются в регионах с повышенной ветровой нагрузкой. Конкретных рекомендаций по скорости и силе ветра, при которых ставится круглая стрела, нет. Каждая ситуация оценивается экспертом.",
-  },
-  {
-    title: "Какие гарантии на шлагбаумы предусмотрены?",
-    answer: "Круглые стрелы обычно устанавливаются в регионах с повышенной ветровой нагрузкой. Конкретных рекомендаций по скорости и силе ветра, при которых ставится круглая стрела, нет. Каждая ситуация оценивается экспертом.",
-  },
-  {
-    title: "Как открывать шлагбаум экстренным службам (скорой, МЧС)?",
-    answer: "Круглые стрелы обычно устанавливаются в регионах с повышенной ветровой нагрузкой. Конкретных рекомендаций по скорости и силе ветра, при которых ставится круглая стрела, нет. Каждая ситуация оценивается экспертом.",
-  },
-];
+import { publicAsset } from '../../utils/publicAsset';
 ---
 
-<section aria-label="Исполнение, которое прослужит долго..." class="bg-white pb-30 pt-20">
+<section aria-label="Решения для любого климата и нагрузки" class="bg-white pb-15 pt-10 md:pt-15 xl:pb-20 xl:pt-10 3xl:pt-15 2xl:pb-25 3xl:pb-30">
   <div class="container">
-    <div class="flex flex-col gap-8">
-      <h2 class="h2">Исполнение, которое прослужит долго...</h2>
+    <h3 class="h3 mb-6 lg:mb-6">Решения для любого климата и нагрузки</h3>
 
-      <div class="grid grid-cols-12 gap-8">
-        <div class="col-span-12 lg:col-span-6 mb-8 lg:mb-0">
-          <div class="flex flex-col items-start gap-[40px] p-[32px_40px_40px_40px] bg-white border border-grey-400 rounded-[24px] flex-1 self-stretch">
+    <div class="lg:flex gap-5 3xl:gap-8 perco-icons">
+      <div class="flex flex-col items-start lg:w-1/2 mb-5 lg:mb-0 p-[20px_12px] sm:p-[32px_16px] md:p-[28px_28px_40px_28px] 2xl:p-[40px_40px_52px_40px] bg-grey-200 border-transparent rounded-3xl">
+        <div class="flex items-center gap-x-5 md:gap-x-6">
+          <div class="size-15 bg-white rounded-[50%] flex items-center justify-center text-[40px] text-cta"><i class="perco-icon-highspeed"></i></div>
+          <h4 class="text-2xl/8 font-bold">
+            Скоростные модели
+            <p class="text-lg/7 font-normal hidden sm:block">для интенсивного транспортного потока</p>
+          </h4>
+        </div>
+        <p class="text-md/6 font-normal block sm:hidden">для интенсивного транспортного потока</p>
+        <div class="flex flex-1 flex-col justify-between 2xl:flex-row gap-5 2xl:space-y-8 text-md/6 mt-7">
+          <div class="2xl:w-6/12">
+            <p class="mb-5 text-grey-1000">
+              <span class="font-manrope-semibold">Модели шлагбаумов  GF13, GF13N и GF03.1</span>
+                предназначены для установки на&nbsp;платных парковках, автомагистралях, в&nbsp;аэропортах, на&nbsp;железнодорожных вокзалах, в&nbsp;бизнес-центрах и&nbsp;других объектах с&nbsp;высокой нагрузкой.
+            </p>
+            <ul class="list-disc pl-6 text-grey-1000 marker:text-[12px]">
+              <li class="mb-2">
+                <p><span class="font-manrope-semibold">Скоростной механизм</span> обеспечивает 
+                  время поднятия стрелы 0,7-1,5 cекунд
+                </p>
+              </li>
+              <li class="mb-0">
+                <div class="font-manrope-semibold">Буфер из&nbsp;пеноматериала со&nbsp;светоотражающими наклейками</div>
+                <p>служит для дополнительной защиты стрелы и&nbsp;корпуса автомобиля.</p>
+              </li>
+            </ul>
+          </div>
+          <div class="w-full h-[360px] 2xl:w-6/12 rounded">
             <video
-              class="w-full"
+              class="w-full h-auto min-h-full object-cover rounded-2xl"
               muted
               autoplay
               preload="auto"
               playsinline
               loop
-              poster="/img/anti-corrosion-coating.webp"
+              poster={publicAsset('/img/picking/high-throughput.webp')}
             >
-              <source src="/video/faq-video.mp4" type="video/mp4" />
+              <source src={publicAsset('/video/picking/high-barrier.mp4')} type="video/mp4" />
             </video>
-            <div class="flex flex-col items-start self-stretch">
-              <h3 class="h3 mb-4 text-2xl font-bold">Качественное антикоррозийное покрытие</h3>
-              <p class="mb-5 text-lg text-grey-1000">
-                Составляющие качественного антикоррозийного покрытия:
-              </p>
-              <ul class="list-disc pl-6 text-lg text-grey-700">
-                <li class="mb-4">
-                  <div class="mb-2 text-grey-1000 text-md font-bold">Качество подготовки поверхности</div>
-                  <p class="-ml-5">Обеспечивается на специальной автоматической линии химической подготовки. Что сводит к минимуму возможность нарушения технологического процесса.</p>
-                </li>
-                <li class="mb-4">
-                  <div class="mb-2 text-grey-1000 text-md font-bold">Качество краски</div>
-                  <p class="-ml-5">Для тумб шлагбаумов используется краска ___, предназначенная для многолетней эксплуатации на улице.</p>
-                </li>
-                <li class="mb-4">
-                  <div class="mb-2 text-grey-1000 text-md font-bold">Соблюдение режимов полимеризации</div>
-                  <p class="-ml-5">Окрашенные детали отправляются в камеру полимеризации, где порошковый слой оплавляется при температуре порядка 180°C и приобретает монолитность.</p>
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
-        <div class="col-span-12 lg:col-span-6 p-[32px_40px_40px_40px] bg-white border border-grey-400 rounded-[24px] flex-1 self-stretch">
-          <h3 class="h3 mb-4 text-2xl font-bold">Встроенная система обогрева</h3>
-          <p class="mb-5 text-lg text-grey-1000">
-            <span class="font-bold">Все модели</span>
-            шлагбаумов оснащены встроенной системой обогрева, что обеспечивает устойчивую работу оборудования при перепадах температур.
-          </p>
-          <ul class="list-disc pl-6 text-lg text-grey-700">
-            <li class="mb-4">
-              <div class="mb-2 text-grey-1000 text-md font-bold">Принцип работы системы обогрева</div>
-              <p class="-ml-5">Подогрев включается <span class="font-bold">автоматическ</span>и, если температура внутри тумбы опускается<span class="font-bold">ниже &minus;20&deg;С</span>, предотвращая загустение смазки в&nbsp;редукторе и&nbsp;защищая электронику.</p>
-            </li>
-            <li class="mb-4">
-              <div class="mb-2 text-grey-1000 text-md font-bold">Температурный диапазон</div>
-              <p class="-ml-5">Стандартные модели работают при температурах от&nbsp;+55&nbsp;&deg;С&nbsp;до &minus;40&deg;С, а&nbsp;специализированные (серия GS14N) выдерживают морозы до &minus;60 &deg;С.</p>
-            </li>
-            <li class="mb-4">
-              <div class="mb-2 text-grey-1000 text-md font-bold">Дополнительное утепление (опция)</div>
-              <p class="-ml-5">В&nbsp;морозостойких модификациях (серия GS14N) корпус из&nbsp;стали 09Г2С дополнительно изолирован фольгированным пеноматериалом.</p>
-            </li>
-          </ul>
-          <video
-            class="max-w-[400px] mt-0 lg:mt-10"
-            muted
-            autoplay
-            preload="auto"
-            playsinline
-            loop
-            poster="/img/heating-system.webp"
-            aria-label="Встроенная система обогрева"
-            width="400"
-          >
-            <source src="/video/faq-video.mp4" type="video/mp4" />
-          </video>
+      </div>
+
+      <div class="lg:w-1/2 p-[20px_12px] sm:p-[32px_16px] md:p-[28px_28px_40px_28px] 2xl:p-[40px_40px_52px_40px] bg-grey-200 border-transparent rounded-3xl">
+        <div class="flex items-center gap-x-5 md:gap-6">
+          <div class="size-15 bg-white rounded-[50%] flex items-center justify-center text-[40px] text-cta"><i class="perco-icon-frostresistant"></i></div>
+          <h4 class="text-2xl/8 font-bold">
+            Морозостойкие модели
+            <p class="text-lg/7 font-normal hidden sm:block">для экстремально низких температур</p>
+          </h4>
+        </div>
+        <p class="text-md/6 font-normal block sm:hidden">для экстремально низких температур</p>
+        <div class="flex flex-col 2xl:flex-row 2xl:items-start 2xl:space-y-8 gap-5 mt-3 text-md/6 mt-7">
+          <div class="2xl:w-1/2 2xl:order-1">
+            <p class="mb-5 text-grey-1000">
+              <span class="font-manrope-semibold">Модели шлагбаумов  линеек GF13N и GS14N </span>
+              имеют морозоустойчивый корпус, который обеспечивает стабильную работу при температуре до 
+              <span class="font-manrope-semibold">-60°C.</span>
+            </p>
+            <ul class="list-disc pl-6 text-grey-1000 marker:text-[12px]">
+              <li class="mb-2">
+                <span class="font-manrope-semibold">Дополнительный обогрев</span> корпуса.
+              </li>
+              <li class="mb-2">
+                <span class="font-manrope-semibold">Утепеление стойки</span> фольгированным пеноматериалом.
+              </li>
+              <li class="mb-2">
+                <span class="font-manrope-semibold">Специальная морозостойкая марка стали 09Г2С</span> обеспечивает повышенную коррозийную стойкость.
+              </li>
+              <li class="mb-2">
+                <span class="font-manrope-semibold">Модель GF13N </span>сочетает морозостойкий корпус с&nbsp;высокоскоростным механизмом.
+              </li>
+            </ul>
+          </div>
+          <div class="min-w-0 2xl:w-1/2">
+            <picture class="w-full">
+              <source srcset={publicAsset('/img/picking/frost‑resistant.webp')} media="(max-width: 500px)" type="image/webp" />
+              <source srcset={publicAsset('/img/picking/frost‑resistant.webp')} media="(max-width: 600px)" type="image/webp" />
+              <source srcset={publicAsset('/img/picking/frost‑resistant-712.webp')} media="(max-width: 712px)" type="image/webp" />
+              <source srcset={publicAsset('/img/picking/frost‑resistant-1019.webp')} media="(max-width: 1019px)" type="image/webp" />
+              <source srcset={publicAsset('/img/picking/frost‑resistant-1200.webp')} media="(max-width: 1200px)" type="image/webp" />
+              <source srcset={publicAsset('/img/picking/frost‑resistant-1400.webp')} media="(max-width: 1400px)" type="image/webp" />
+              <source srcset={publicAsset('/img/picking/frost‑resistant.webp')} media="(min-width: 1401px)" type="image/webp" />
+              <img class="w-full" srcset={publicAsset('/img/picking/frost‑resistant.webp')} alt="Модели шлагбаумов  линеек GF13N и GS14N">
+            </picture>
+          </div>
         </div>
       </div>
     </div>

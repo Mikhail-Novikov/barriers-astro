@@ -1,6 +1,7 @@
 type SliderArrowProps = {
   direction: "left" | "right";
   onClick: () => void;
+  disabled?: boolean;
   theme?: string;
   icon?: string;
 }
@@ -13,18 +14,19 @@ type SliderArrowProps = {
  * @param icon - иконка стрелки
  * @return {JSX.Element}
  */
-const SliderArrow = ({ direction, onClick, theme = "", icon = "icon-arrow-left-big" }: SliderArrowProps): JSX.Element => {
+const SliderArrow = ({ direction, onClick, disabled = false, theme = "", icon = "icon-arrow-left-big" }: SliderArrowProps): JSX.Element => {
   const themeClass = theme ? `${theme}` : "";
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className="text-white text-sm cursor-pointer"
+      disabled={disabled}
+      className={`perco-icons text-white text-sm ${disabled ? "cursor-not-allowed opacity-40" : "cursor-pointer"}`}
       aria-label={direction === "left" ? "Предыдущий слайд" : "Следующий слайд"}
     >
-      <span className={`flex items-center justify-center size-13 rounded-full bg-grey-800 hover:bg-grey-500 transition-background duration-100 ${themeClass}`}>
-        {direction === "left" ? <i className={`${icon}`} /> : <i className={`${icon} rotate-180`} />}
+      <span className={`flex items-center justify-center size-13 rounded-full bg-grey-800 transition-background duration-100 ${disabled ? "" : "hover:bg-grey-500"} ${themeClass}`}>
+        {direction === "left" ? <i className={`perco-${icon}`} /> : <i className={`perco-${icon} rotate-180`} />}
       </span>
     </button>
   );

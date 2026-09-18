@@ -7,7 +7,7 @@
 }
 
 .btn--outline {
-  @apply bg-transparent border text-white font-semibold px-8 rounded-4xl h-12 hover:bg-white hover:text-grey-1000 transition-colors cursor-pointer
+  @apply bg-transparent border text-white font-manrope-semibold px-8 rounded-4xl h-12 hover:bg-white hover:text-grey-1000 transition-colors cursor-pointer
 }
 
 .link--underline {

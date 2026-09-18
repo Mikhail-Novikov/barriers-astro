@@ -1,0 +1,46 @@
+---
+import sm1 from '../../assets/img/setup-maintenance/sm-1.png';
+import sm2 from '../../assets/img/setup-maintenance/sm-2.png';
+
+const cards = [
+  {
+    image: sm1,
+    title: 'Встроенный блок управления',
+    description: '<p>Удобный доступ к&nbsp;блоку управления позволяет легко его обслуживать (рыба).</p><p>Датчики вскрытия корпуса позволяют отслеживать несанкционированный доступ к внутренним элементам шлагбаума. Монтажные шпеклеры идут в комплекте.</p>',
+    imagePosition: 'left' as const,
+  },
+  {
+    image: sm2,
+    title: 'Настройка через<br>мобильное приложение',
+    description: '<p>Мобильное приложение для настройки шлагбаума устанавливается на&nbsp;смартфон администратора, отвечающего за&nbsp;управление работой шлагбаума.</p><p>Для настройки шлагбаума используются технологии беспроводной передачи данных Bluetooth. Команды от&nbsp;приложения поступают в&nbsp;плату управления шлагбаума через модуль GSM&nbsp;/ BLE.</p>',
+    imagePosition: 'right' as const,
+  },
+];
+---
+
+<section aria-label="Удобство настройки и обслуживания" class="bg-grey-400 pt-10 md:pt-15 xl:pt-20 pb-10 md:pb-15 lg:pb-20 xl:pb-25">
+  <div class="container">
+    <div class="flex flex-col gap-9">
+      <h2 class="h2">Удобство настройки и обслуживания</h2>
+
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {cards.map((card) => (
+          <article class={`flex min-w-0 flex-col gap-x-10 overflow-hidden rounded-3xl bg-white p-10 lg:flex-row ${card.imagePosition === 'right' ? 'lg:flex-row-reverse' : ''}`}>
+            <div class="flex-shrink-0 lg:w-1/2">
+              <img
+                class="h-auto w-full object-cover rounded-2xl"
+                src={card.image.src}
+                alt={card.title}
+                loading="lazy"
+              />
+            </div>
+            <div class="flex flex-1 flex-col gap-3 lg:w-1/2 text-grey-1000">
+              <h3 class="mt-10 text-2xl/8 font-bold" set:html={card.title} />
+              <div class="text-md/6 whitespace-pre-line flex flex-col gap-y-3" set:html={card.description} />
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

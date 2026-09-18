@@ -1,0 +1,90 @@
+---
+import EquipmentCarousel from '../EquipmentCarousel';
+import CarouselControls from '../CarouselControls';
+import { publicAsset } from '../../utils/publicAsset';
+
+const configurationCards = [
+  {
+    image: publicAsset('/img/configuration-additional-equipment/cae-1.webp'),
+    title: 'Варианты установки стрелы',
+    description: '<p>Универсальная конструкция шлагбаумов PERCo позволяет устанавливать его как справа, так и&nbsp;слева от&nbsp;зоны проезда, обеспечивая оптимальное решение для объектов с&nbsp;любой схемой въезда.</p>',
+  },
+  {
+    image: publicAsset('/img/configuration-additional-equipment/cae-2.webp'),
+    title: 'Два синхронных шлагбаума для широкого проезда',
+    description: '<p>Широкий проезд может быть оборудован двумя шлагбаумами, один из&nbsp;которых дублирует работу второго.</p> <p> Также для широких проездов подойдет модель GS06.1&nbsp;с увеличенным перекрытием проезда (стрела 6,3&nbsp;м).</p>',
+  },
+  {
+    image: publicAsset('/img/configuration-additional-equipment/cae-3.webp'),
+    title: 'Островок безопасности',
+    description: '<p>Применяется для установки оборудования дорожной автоматики и&nbsp;разделения потоков транспортных средств.</p> <p> Металлическая опалубка имеет модульную конструкцию, позволяя организовать островок безопасности различной длины.</p>',
+  },
+];
+
+const equipmentCards = [
+  { id: 4, title: 'Анкеры для шлагбаумов' },
+  { id: 22, title: 'Подвесная опорная стойка для стрелы шлагбаума GBS2' },
+  { id: 18, title: 'Опорная стойка стрелы шлагбаума GBS1' },
+  { id: 25, title: 'Стойка для считывателя GM5' },
+  { id: 9, title: 'Кронштейн GDH1' },
+  { id: 20, title: 'Устройство радиоуправления YET404PC' },
+  { id: 19, title: 'Брелок-передатчик радиоуправления YET2129 четырехкнопочный с динамическим кодом' },
+  { id: 12, title: 'Островок безопасности PI-01' },
+  { id: 7, title: 'GSM / BLE модуль управления шлагбаумом PERCo-GCM1' },
+  { id: 6, title: 'Стойка для установки оборудования (2,2 м) BH04' },
+  { id: 5, title: 'Стойка для установки оборудования (1,2 м) BH04.1' },
+  { id: 10, title: 'Считыватель дальнего действия IR10.1 (EMM)' },
+  { id: 17, title: 'Считыватель дальнего действия RU5306T' },
+  { id: 15, title: 'Сирена' },
+  { id: 8, title: 'Брелоки PERCo-GCR2' },
+  { id: 27, title: 'Светодиодная лента GBL4.3 для дополнительной подсветки стрелы шлагбаума PERCo-GBO4.3' },
+  { id: 26, title: 'Лампа сигнальная со встроенной антенной SL-U' },
+  { id: 1, title: 'Кодовая панель Tantos TS-KBD-EM2 Metal' },
+  { id: 24, title: 'Ограждение для стойки шлагбаума GM3' },
+  { id: 27, title: 'Светодиодная лента GBL3.0 для дополнительной подсветки стрелы шлагбаума PERCo-GBO3.0' },
+  { id: 16, title: 'Устройство радиоуправления двухканальное GCR1' },
+  { id: 3, title: 'Комплект фотоэлементов GD1' },
+  { id: 23, title: 'Стойка для фотоэлемента безопасности GDS1' },
+  { id: 14, title: 'Двухканальный датчик индукционной петли PD232' },
+  { id: 11, title: 'Одноканальный датчик индукционной петли M1H' },
+];
+---
+
+<section id="configuration" aria-label="Конфигурация" class="bg-grey-200 pt-10 md:pt-15 xl:pt-20 pb-10 md:pb-15 lg:pb-20 xl:pb-25">
+  <div class="container">
+      <h3 id="execution" class="h2 mb-8">Конфигурация</h3>
+
+      <div class="flex flex-col gap-10 md:gap-y-5 lg:gap-y-8 lg:pb-15">
+        {configurationCards.map((card) => (
+          <article class="md:grid grid-cols-12 items-center text-grey-1000">
+            <div class="md:col-span-7 xl:col-span-5 mb-5 md:mb-0">
+              <img class="rounded-3xl object-cover" src={card.image} alt={card.title} loading="lazy" />
+            </div>
+            <div class="md:col-span-5 xl:col-span-7 max-w-[410px] md:ml-10 xl:ml-24">
+              <h4 class="h4 mb-3">{card.title}</h4>
+              <div class="flex flex-col gap-y-3 text-md/6" set:html={card.description} />
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="md:grid grid-cols-16 rounded-3xl bg-white lg:items-start gap-10 p-8 lg:p-14 mt-8 text-grey-1000">
+        <div class="min-w-0 col-span-16 md:col-span-5 lg:col-span-4 2xl:col-span-3">
+          <h4 class="mb-6 text-2xl/8 2xl:text-3xl/10 font-manrope-semibold">Дополнительное оборудование</h4>
+          <div class="flex flex-col-reverse sm:flex-row-reverse gap-3 mb-2 sm:mb-10">
+            <CarouselControls
+              client:load
+              controlEvent="equipment-carousel"
+              className="md:hidden"
+              previousLabel="Предыдущие товары"
+              nextLabel="Следующие товары"
+            />
+            <p class="text-md/6">К&nbsp;шлагбауму можно подключить светофор, видеорегистратор, сирену и&nbsp;другое дополнительное оборудование.</p>
+          </div>
+        </div>
+        <div class="min-w-0 col-span-16 md:col-span-11 lg:col-span-12 2xl:col-span-13 md:ml-11"> 
+          <EquipmentCarousel cards={equipmentCards} client:load />
+        </div>
+      </div>
+    </div>
+</section>

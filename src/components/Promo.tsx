@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { publicAsset } from "@utils/publicAsset";
 
 export default function Promo() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -7,7 +8,7 @@ export default function Promo() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 1200);
+      setIsMobile(window.innerWidth < 600);
     };
 
     setIsMounted(true);
@@ -26,8 +27,8 @@ export default function Promo() {
   }, [isMobile, isMounted]);
 
   const src = isMobile
-    ? "/video/promo-mobile.mp4"
-    : "/video/promo-desktop.mp4";
+    ? publicAsset("/video/promo/promo-video-mobile.mp4")
+    : publicAsset("/video/promo/promo-video.mp4");
 
   return (
     <section className="relative">
@@ -40,32 +41,36 @@ export default function Promo() {
         preload="auto"
         playsInline
         loop
-        poster="/img/preview-promo.webp"
+        poster={publicAsset("/img/preview-promo.webp")}
       >
         <source src={src} type="video/mp4" />
       </video>
 
       <div className="container">
-        <div className="flex flex-col justify-between h-full absolute top-0 pt-10 pb-23 max-w-[500px] text-left text-white">
-          <ul className="flex flex-col gap-2 font-semibold">
+        <div className="h-full absolute top-0 pt-12 xl:pt-18 2xl:pt-21 3xl:pt-[116px] max-w-[500px] text-left text-white">
+          <h1 className="text-[38px]/12 xl:text-6xl/14 font-bold">
+            Шлагбаумы 
+          </h1>
+          <ul className="perco-icons flex flex-col gap-y-1 mt-6 xl:mt-8 2xl:mt-12 3xl:mt-14.5 font-manrope-semibold text-lg/5">
             <li>
-              <i className=" "></i>
-              <p className="text-md">СДЕЛАНО В РОССИИ</p>
+              <div className="flex gap-x-2 items-center text-[28px]/8 xl:text-3xl/10">
+                <i className="perco-icon-ru"></i>
+                <p className="text-md/5 2xl:text-lg/5">сделано в России</p>
+              </div>
             </li>
             <li>
-              <p className="text-md">
-                <span className="text-2xl font-bold">5 </span>ЛЕТ ГАРАНТИИ
+              <p className="text-md/5 2xl:text-lg/5">
+                <span className="text-[28px]/8 xl:text-3xl/10">5 </span>
+                лет гарантии
               </p>
             </li>
             <li>
-              <p className="text-md">
-                <span className="text-2xl font-bold">38 </span>ЛЕТ НА РЫНКЕ
+              <p className="text-md/5 2xl:text-lg/5">
+                <span className="text-[28px]/8 xl:text-3xl/10">38 </span>
+                лет на рынке
               </p>
             </li>
           </ul>
-          <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-6xl/14 font-semibold">
-            Автоматические шлагбаумы
-          </h1>
         </div>
       </div>
     </section>

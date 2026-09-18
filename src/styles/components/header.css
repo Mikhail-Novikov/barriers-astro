@@ -1,3 +1,14 @@
 .h2 {
-  @apply text-[38px] not-italic font-bold text-grey-900 leading-11;
+  @apply not-italic -tracking-wide font-manrope-bold text-grey-1000
+         text-[28px]/8        /* < 500px */
+         min-[500px]:text-[32px]/10
+         2xl:text-[38px]/11; /* >= 1400px */
+}
+
+.h3 {
+  @apply not-italic font-manrope-semibold text-grey-1000 text-[28px]/8 min-[600px]:text-[32px]/10 tracking-[0.01em];
+}
+
+.h4 {
+  @apply not-italic font-manrope-semibold text-grey-1000 text-[20px]/6 min-[1019px]:text-[24px]/8;
 }

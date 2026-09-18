@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.4.0",
+    "@fancyapps/ui": "^6.1.15",
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
     "@fortawesome/react-fontawesome": "^3.1.0",
+    "@splidejs/react-splide": "^0.7.12",
     "@tailwindcss/vite": "^4.1.14",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
@@ -27,6 +29,7 @@
     "react-dom": "^18.3.1",
     "react-icons": "^5.5.0",
     "react-lottie": "^1.2.10",
+    "react-select": "^5.10.2",
     "swiper": "^12.0.2",
     "tailwindcss": "^4.1.14"
   },

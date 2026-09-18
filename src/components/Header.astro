@@ -1,16 +1,16 @@
 ---
 import Menu from "./Menu/Menu";
+import { publicAsset } from '../utils/publicAsset';
 ---
-
-<header class="bg-grey-1000 sticky z-20 top-0 left-0 right-0">
+<header class="perco-icons bg-cta sticky z-20 top-0 left-0 right-0">
   <div class="container">
-    <nav class="flex items-center justify-between h-[90px] relative">
+    <nav class="flex items-center justify-between h-[64px] sm:h-[90px] relative">
       <a href="#" class="flex shrink-0" aria-label="логотип PERCo">
-        <img src="/logo.svg" alt="логотип PERCo" class="w-[107px] h-[27.5px]" />
+        <img src={publicAsset('/logo.svg')} alt="логотип PERCo" class="w-15 sm:w-[107px] sm:h-[27.5px]" />
       </a>
       <Menu client:load />
-      <button class="btn--outline mr-16 lg:mr-0 hidden md:block">Подобрать шлагбаум</button>
-      <button class="mr-16 p-4 lg:mr-0 md:hidden text-4xl text-white hover:text-grey-700 cursor-pointer transition-all duration-300 ease-out"><i class="icon-phone"></i></button>
+      <button class="btn--outline mr-16 lg:mr-0 hidden lg:block">Подобрать шлагбаум</button>
+      <button class="mr-8 p-4 lg:mr-0 lg:hidden text-4xl text-white hover:text-grey-700 cursor-pointer transition-all duration-300 ease-out"><i class="perco-icon-phone"></i></button>
     </nav>
   </div>
 </header>
