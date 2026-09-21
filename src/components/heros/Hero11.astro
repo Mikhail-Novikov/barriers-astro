@@ -18,28 +18,30 @@ const cards = [
 ];
 ---
 
-<section aria-label="Удобство настройки и обслуживания" class="bg-grey-400 pt-10 md:pt-15 xl:pt-20 pb-10 md:pb-15 lg:pb-20 xl:pb-25">
+<section aria-label="Удобство настройки и обслуживания" class="bg-grey-400 py-15 xl:pt-20 lg:pb-20 xl:pb-25">
   <div class="container">
     <div class="flex flex-col gap-9">
       <h2 class="h2">Удобство настройки и обслуживания</h2>
 
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {cards.map((card) => (
-          <article class={`flex min-w-0 flex-col gap-x-10 overflow-hidden rounded-3xl bg-white p-10 lg:flex-row ${card.imagePosition === 'right' ? 'lg:flex-row-reverse' : ''}`}>
-            <div class="flex-shrink-0 lg:w-1/2">
-              <img
-                class="h-auto w-full object-cover rounded-2xl"
-                src={card.image.src}
-                alt={card.title}
-                loading="lazy"
-              />
-            </div>
-            <div class="flex flex-1 flex-col gap-3 lg:w-1/2 text-grey-1000">
-              <h3 class="mt-10 text-2xl/8 font-bold" set:html={card.title} />
-              <div class="text-md/6 whitespace-pre-line flex flex-col gap-y-3" set:html={card.description} />
-            </div>
-          </article>
-        ))}
+      <div class="min-w-0 overflow-x-auto pb-2">
+        <div class="grid sm:min-w-[923px] sm:grid-cols-2 gap-y-5 sm:gap-6">
+          {cards.map((card) => (
+            <article class={`flex min-w-0 flex-col gap-x-10 overflow-hidden rounded-3xl bg-white p-6 lg:p-10 2xl:flex-row ${card.imagePosition === 'right' ? '2xl:flex-row-reverse' : ''}`}>
+              <div class="flex-shrink-0 2xl:w-1/2">
+                <img
+                  class="h-[310px] sm:h-auto rounded-2xl object-cover"
+                  src={card.image.src}
+                  alt={card.title}
+                  loading="lazy"
+                />
+              </div>
+              <div class="flex flex-1 flex-col gap-3 text-grey-1000 2xl:w-1/2">
+                <h3 class="mt-8 sm:mt-10 text-2xl/8 font-bold" set:html={card.title} />
+                <div class="flex flex-col gap-y-3 whitespace-pre-line text-md/6" set:html={card.description} />
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </div>
   </div>
