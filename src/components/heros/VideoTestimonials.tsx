@@ -2,6 +2,7 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { useRef, useState } from 'react';
 import { useLightGallery } from '@hooks/useLightGallery';
 import SliderArrow from '@components/SliderArrow';
+import VideoPlayButton from '@components/VideoPlayButton';
 import '@splidejs/react-splide/css';
 
 const aboutImages = Object.entries(
@@ -108,11 +109,7 @@ export default function VideoTestimonials(): JSX.Element {
                     className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
                     loading={index < 3 ? 'eager' : 'lazy'}
                   />
-                  <span className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/10">
-                    <span className="flex size-16 items-center justify-center rounded-full bg-white/90 text-grey-1000 opacity-0 shadow-sm transition-opacity duration-300 group-hover:opacity-100">
-                      <span className="ml-1 block h-0 w-0 border-y-[9px] border-y-transparent border-l-[13px] border-l-grey-1000" />
-                    </span>
-                  </span>
+                  <VideoPlayButton />
                 </span>
                 <span className="mt-4 mr-6 block text-md/6 text-grey-1000">{title}</span>
               </a>
