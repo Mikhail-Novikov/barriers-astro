@@ -1,6 +1,7 @@
 ---
 
 import AboutCarousel from './AboutCarousel';
+import AboutCarouselStacked from './AboutCarouselStacked';
 
 const aboutImages = Object.entries(
   import.meta.glob<string>('../../assets/about/*.{png,jpg,jpeg,webp}', {
@@ -13,7 +14,7 @@ const aboutImages = Object.entries(
   .map(([, src]) => src);
 ---
 
-<section aria-label="О компании" class="bg-grey-200 lg:pb-25">
+<section aria-label="О компании" class="bg-grey-200 pb-10 md:pb-15 xl:pb-20 lg:pb-25">
   <div class="container">
     <div class="flex flex-col gap-10 rounded-5xl bg-white p-6 sm:p-10 lg:gap-16 lg:p-20 lg:-mx-20">
       <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
@@ -42,7 +43,12 @@ const aboutImages = Object.entries(
         </div>
       </div>
 
-      <AboutCarousel images={aboutImages} client:load />
+      <div class="hidden sm:block">
+        <AboutCarousel images={aboutImages} client:load />
+      </div>
+      <div class="sm:hidden">
+        <AboutCarouselStacked images={aboutImages} client:load />
+      </div>
     </div>
   </div>
 </section>
