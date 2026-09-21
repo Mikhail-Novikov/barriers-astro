@@ -1,8 +1,9 @@
-import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperInstance } from 'swiper';
 import { useMemo, useRef, useState } from 'react';
 import { useLightGallery } from '@hooks/useLightGallery';
 import SliderArrow from '@components/SliderArrow';
-import '@splidejs/react-splide/css';
+import 'swiper/css';
 
 type AboutCarouselProps = {
   images: string[];
@@ -14,7 +15,7 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
   const [startIndex, setStartIndex] = useState(0);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(images.length <= slidesPerPage);
-  const splideRef = useRef<{ splide?: { go: (index: number) => void } }>(null);
+  const swiperRef = useRef<SwiperInstance | null>(null);
   const galleryItems = useMemo(
     () => images.map((src, index) => ({ src, alt: `Производство PERCo, фото ${index + 1}` })),
     [images],
@@ -31,12 +32,13 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
   const move = (direction: 'prev' | 'next') => {
     const nextIndex = direction === 'next' ? startIndex + slidesPerPage : startIndex - slidesPerPage;
 
-    splideRef.current?.splide?.go(nextIndex);
+    swiperRef.current?.slideTo(nextIndex);
   };
-  const updateNavigation = (splide: { index: number; length: number; options: { perPage: number } }) => {
-    setStartIndex(splide.index);
-    setIsAtStart(splide.index === 0);
-    setIsAtEnd(splide.index >= splide.length - splide.options.perPage);
+  const updateNavigation = (swiper: SwiperInstance) => {
+    const slidesPerView = Number(swiper.params.slidesPerView);
+    setStartIndex(swiper.activeIndex);
+    setIsAtStart(swiper.isBeginning);
+    setIsAtEnd(swiper.isEnd || swiper.activeIndex >= swiper.slides.length - slidesPerView);
   };
 
   return (
@@ -53,27 +55,24 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
         </div>
       </div>
 
-      <Splide
-        ref={splideRef}
-        aria-label="Фотографии о компании"
-        options={{
-          arrows: false,
-          pagination: false,
-          perPage: slidesPerPage,
-          perMove: slidesPerPage,
-          gap: 20,
-          rewind: true,
-          loop: false,
-          breakpoints: {
-            767: { perPage: 1, perMove: slidesPerPage, gap: '1rem' },
-          },
+      <Swiper
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+          updateNavigation(swiper);
         }}
-        onMounted={updateNavigation}
-        onMoved={updateNavigation}
+        aria-label="Фотографии о компании"
+        slidesPerView={slidesPerPage}
+        slidesPerGroup={slidesPerPage}
+        spaceBetween={20}
+        loop={false}
+        breakpoints={{
+          767: { slidesPerView: slidesPerPage, slidesPerGroup: slidesPerPage, spaceBetween: 16 },
+        }}
+        onSlideChange={updateNavigation}
         className="about-gallery__slider"
       >
         {images.map((src, index) => (
-          <SplideSlide key={src}>
+          <SwiperSlide key={src}>
             <a
               href={src}
               data-fancybox="about"
@@ -87,9 +86,9 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
                 loading={index < 2 ? 'eager' : 'lazy'}
               />
             </a>
-          </SplideSlide>
+          </SwiperSlide>
         ))}
-      </Splide>
+      </Swiper>
     </div>
   );
 }

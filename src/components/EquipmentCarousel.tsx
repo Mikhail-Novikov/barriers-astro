@@ -1,6 +1,7 @@
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperInstance } from "swiper";
 import { useEffect, useRef } from "react";
-import "@splidejs/react-splide/css";
+import "swiper/css";
 import { publicAsset } from "@utils/publicAsset";
 import { useBreakpoint } from "@hooks/useBreakpoint";
 import CarouselControls from "./CarouselControls";
@@ -11,12 +12,14 @@ type EquipmentCarouselProps = {
 
 const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
   const screen = useBreakpoint();
-  const splideRef = useRef<{
-    splide?: { go: (direction: "-1" | "+1") => void };
-  }>(null);
+  const swiperRef = useRef<SwiperInstance | null>(null);
 
   const move = (direction: "-1" | "+1") => {
-    splideRef.current?.splide?.go(direction);
+    if (direction === "+1") {
+      swiperRef.current?.slideNext();
+    } else {
+      swiperRef.current?.slidePrev();
+    }
   };
 
   useEffect(() => {
@@ -43,29 +46,24 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
         />
       )}
       <div className="min-w-0 flex-1 overflow-hidden">
-        <Splide
-          ref={splideRef}
-          aria-label="Дополнительное оборудование"
-          options={{
-            arrows: false,
-            rewind: false,
-            loop: false,
-            // fixedWidth: "352px",
-            perPage: 3.2,
-            breakpoints: {
-              600: { perPage: 1.3 },
-              712: { perPage: 1.8 },
-              1200: { perPage: 1.7 },
-              1400: { perPage: 2.3 },
-              1600: { perPage: 2.4 },
-            },
-            gap: 12,
-            pagination: false,
+        <Swiper
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper;
           }}
+          aria-label="Дополнительное оборудование"
+          slidesPerView={3.2}
+          breakpoints={{
+            600: { slidesPerView: 1.3 },
+            712: { slidesPerView: 1.8 },
+            1200: { slidesPerView: 1.7 },
+            1400: { slidesPerView: 2.3 },
+            1600: { slidesPerView: 2.4 },
+          }}
+          spaceBetween={12}
           className="equipment-carousel"
         >
           {cards.map((card) => (
-            <SplideSlide key={`${card.id}-${card.title}`}>
+            <SwiperSlide key={`${card.id}-${card.title}`}>
               <article>
                 <img
                   className="rounded-3xl bg-grey-200 object-contain"
@@ -79,9 +77,9 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
                   {card.title}
                 </h4>
               </article>
-            </SplideSlide>
+            </SwiperSlide>
           ))}
-        </Splide>
+        </Swiper>
       </div>
     </div>
   );

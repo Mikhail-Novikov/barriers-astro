@@ -1,9 +1,14 @@
-import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import type { Swiper as SwiperInstance } from 'swiper';
+import { FreeMode } from 'swiper/modules';
 import { useRef, useState } from 'react';
 import { useLightGallery } from '@hooks/useLightGallery';
+
 import SliderArrow from '@components/SliderArrow';
 import VideoPlayButton from '@components/VideoPlayButton';
-import '@splidejs/react-splide/css';
+
+import 'swiper/css';
+import 'swiper/css/free-mode';
 
 const aboutImages = Object.entries(
   import.meta.glob<string>('../../assets/about/*.{png,jpg,jpeg,webp}', {
@@ -47,7 +52,7 @@ export default function VideoTestimonials(): JSX.Element {
   const [startIndex, setStartIndex] = useState(0);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
-  const splideRef = useRef<{ splide?: { go: (index: number | string) => void } }>(null);
+  const swiperRef = useRef<SwiperInstance | null>(null);
   const { galleryRef } = useLightGallery({
     items: testimonials.map(({ title, videoUrl }) => ({ src: videoUrl, subHtml: title })),
     selector: 'a[data-fancybox="video-testimonials"]',
@@ -57,44 +62,36 @@ export default function VideoTestimonials(): JSX.Element {
   const move = (direction: 'prev' | 'next') => {
     const nextIndex = direction === 'next' ? startIndex + 1 : startIndex - 1;
 
-    splideRef.current?.splide?.go(nextIndex);
+    swiperRef.current?.slideTo(nextIndex);
   };
 
-  const updateNavigation = (splide: { index: number; length: number; options: { perPage: number } }) => {
-    setStartIndex(splide.index);
-    setIsAtStart(splide.index === 0);
-    setIsAtEnd(splide.index >= splide.length - splide.options.perPage);
+  const updateNavigation = (swiper: SwiperInstance) => {
+    setStartIndex(swiper.activeIndex);
+    setIsAtStart(swiper.isBeginning);
+    setIsAtEnd(swiper.isEnd);
   };
 
   return (
     <div ref={galleryRef}>
-      <Splide
-        ref={splideRef}
-        aria-label="Видеоотзывы клиентов"
-        options={{
-          arrows: false,
-          pagination: false,
-          perPage: 3.2,
-          perMove: 1,
-          gap: 8,
-          rewind: false,
-          loop: false,
-          breakpoints: {
-            320: { perPage: 1.4  },
-            1019: { perPage: 2.25  },
-            1200: { perPage: 2.5 },
-            1400: { perPage: 3.2 },
-            1600: { perPage: 3.4 },
-          },
+      <Swiper
+        modules={[FreeMode]}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+          updateNavigation(swiper);
         }}
-        onMounted={updateNavigation}
-        onMoved={updateNavigation}
+        aria-label="Видеоотзывы клиентов"
+        slidesPerView="auto"
+        slidesPerGroup={1}
+        spaceBetween={4}
+        freeMode={{ enabled: true, sticky: true }}
+        loop={false}
+        onSlideChange={updateNavigation}
       >
         {testimonials.map(({ title, duration, videoUrl }, index) => {
           const image = aboutImages[index % aboutImages.length];
 
           return (
-            <SplideSlide key={title}>
+            <SwiperSlide key={`${videoUrl}-${index}`} className="!w-[min(415px,calc(100vw-32px))]">
               <a
                 href={videoUrl}
                 data-fancybox="video-testimonials"
@@ -102,7 +99,7 @@ export default function VideoTestimonials(): JSX.Element {
                 data-caption={title}
                 className="group block cursor-zoom-in"
               >
-                <span className="relative block aspect-[1.76] overflow-hidden rounded-3xl">
+                <span className="relative block aspect-[1.76] overflow-hidden rounded-2xl">
                   <img
                     src={image}
                     alt=""
@@ -113,10 +110,10 @@ export default function VideoTestimonials(): JSX.Element {
                 </span>
                 <span className="mt-4 mr-6 block text-md/6 text-grey-1000">{title}</span>
               </a>
-            </SplideSlide>
+            </SwiperSlide>
           );
         })}
-      </Splide>
+      </Swiper>
 
       <div className="mt-10 flex justify-end gap-2" aria-label="Управление видеоотзывами">
         <SliderArrow direction="left" onClick={() => move('prev')} disabled={isAtStart} />

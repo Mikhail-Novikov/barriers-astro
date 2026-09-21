@@ -115,7 +115,7 @@ export const useIntersectionObserverArray = (
     onLeave,
   } = options;
 
-  const refs = useRef<(HTMLDivElement | null)[]>(Array(count).fill(null));
+  const refs = useRef<(HTMLElement | null)[]>(Array(count).fill(null));
   const animatedRef = useRef<Set<Element>>(new Set());
 
   useEffect(() => {

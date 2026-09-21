@@ -197,6 +197,7 @@ export default function Hero10(): JSX.Element {
           {!screen.md && (
             <div className="md:hidden" aria-label="Варианты объектов">
               <Select<SolutionOption, false>
+                instanceId="solution-select"
                 inputId="solution-select"
                 aria-label="Варианты объектов"
                 options={solutionOptions}
