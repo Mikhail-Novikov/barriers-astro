@@ -93,7 +93,7 @@ const FeedbackForm = () => {
 
   return (
     <div className="rounded-3xl max-w-[684px]">
-      <h3 className="text-[38px]/[46px] font-manrope-semibold text-grey-1000 mb-6">Свяжитесь с&nbsp;нами</h3>
+      <h3 className="text-center sm:text-left text-lg/6 sm:text-[38px]/[46px] font-manrope-semibold text-shadow-grey-800 sm:text-grey-1000 mb-6">Свяжитесь с&nbsp;нами</h3>
 
       {submitSuccess && (
         <div className="mb-6 p-4 rounded-2xl bg-green-50 border border-green-200 text-green-800 text-sm">
@@ -101,10 +101,10 @@ const FeedbackForm = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6 text-sm sm:text-lg">
         {/* Имя */}
         <div>
-          <label htmlFor="name" className="block text-md/6 font-manrope-semibold text-grey-1000 mb-1">
+          <label htmlFor="name" className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
             Имя
           </label>
           <input
@@ -114,13 +114,13 @@ const FeedbackForm = () => {
             value={formData.name}
             onChange={handleChange}
             placeholder="Имя"
-            className="w-full px-4 h-13 rounded-3xl border border-grey-300 bg-white text-grey-1000 placeholder-grey-800 focus:outline-none focus:border-cta focus:ring-1 focus:ring-cta transition-colors"
+            className="w-full px-4 h-11 sm:h-13 rounded-lg sm:rounded-[20px] border border-grey-300 bg-white text-grey-1000 placeholder-grey-800 focus:outline-none focus:border-cta focus:ring-1 focus:ring-cta transition-colors"
           />
         </div>
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-md/6 font-manrope-semibold text-grey-1000 mb-1">
+          <label htmlFor="email" className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
             Email<span className="text-cta">*</span>
           </label>
           <input
@@ -130,7 +130,7 @@ const FeedbackForm = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
-            className={`w-full px-4 h-13 rounded-3xl border bg-grey-50 text-grey-1000 text-lg bg-white placeholder-grey-800 focus:outline-none transition-colors ${
+            className={`w-full px-4 h-11 sm:h-13 rounded-lg sm:rounded-[20px] border bg-grey-50 text-grey-1000 text-sm sm:text-lg bg-white placeholder-grey-800 focus:outline-none transition-colors ${
               errors.email
                 ? 'border-red-500 focus:ring-1 focus:ring-red-500'
                 : 'border-grey-300 focus:border-cta focus:ring-1 focus:ring-cta'
@@ -143,7 +143,7 @@ const FeedbackForm = () => {
 
         {/* Сообщение */}
         <div>
-          <label htmlFor="message" className="block text-md/6 font-manrope-semibold text-grey-1000 mb-1">
+          <label htmlFor="message" className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
             Сообщение<span className="text-cta">*</span>
           </label>
           <textarea
@@ -153,7 +153,7 @@ const FeedbackForm = () => {
             onChange={handleChange}
             placeholder="Сообщение"
             rows={5}
-            className={`w-full px-4 h-[190px] pt-5 rounded-3xl border bg-grey-50 bg-white text-grey-1000 text-lg placeholder-grey-800 focus:outline-none transition-colors resize-none ${
+            className={`w-full px-4 py-2 sm:p-5 h-30 sm:h-[190px] rounded-lg sm:rounded-[20px] border bg-grey-50 bg-white text-grey-1000 text-sm sm:text-lg placeholder-grey-800 focus:outline-none transition-colors resize-none ${
               errors.message
                 ? 'border-red-500 focus:ring-1 focus:ring-red-500'
                 : 'border-grey-300 focus:border-cta focus:ring-1 focus:ring-cta'
@@ -168,9 +168,9 @@ const FeedbackForm = () => {
         <button
           type="submit"
           disabled={!isFormValid || isSubmitting}
-          className={`mt-4 w-full py-3 px-6 rounded-2xl font-manrope-semibold text-white text-lg transition-colors ${
+          className={`mt-4 w-full h-12 sm:h-16 px-6 rounded-2xl font-manrope-semibold text-white text-lg transition-colors ${
             isFormValid && !isSubmitting
-              ? 'rounded-2xl bg-cta px-8 py-3 text-white transition-colors hover:bg-cta-hover disabled:cursor-not-allowed disabled:bg-cta-disabled cursor-pointer text-lg'
+              ? 'rounded-2xl bg-cta px-8 text-white transition-colors hover:bg-cta-hover disabled:cursor-not-allowed disabled:bg-cta-disabled cursor-pointer text-lg'
               : 'bg-cta-disabled cursor-not-allowed opacity-50'
           }`}
         >

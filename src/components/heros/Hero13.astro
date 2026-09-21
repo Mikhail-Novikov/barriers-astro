@@ -3,17 +3,17 @@ import FeedbackForm from './FeedbackForm';
 import { publicAsset } from '../../utils/publicAsset';
 ---
 
-<section aria-label="Остались вопросы?" class="bg-grey-200 py-20 lg:pt-20 lg:pb-[108px]">
+<section aria-label="Остались вопросы?" class="bg-grey-200 p-[40px_0_60px] lg:pt-20 lg:pb-[108px]">
   <div class="container">
-    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 items-start">
+    <div class="grid grid-cols-1 sm:gap-8 lg:grid-cols-2 items-start">
       <div class="flex flex-col gap-6">
-        <h2 class="mt-1 text-5xl lg:text-[60px] font-normal text-grey-700">Остались вопросы?</h2>
         <img 
           src={publicAsset('/img/ill-feedback.webp')}
           alt="Техническая поддержка" 
-          class="w-full max-w-md h-auto m-15"
+          class="sm:order-1 mx-auto block h-auto w-full max-w-[127px] sm:max-w-md object-contain"
           loading="lazy"
         />
+        <h2 class="mt-1 text-2xl/8 sm:text-[60px]/16 font-normal text-center sm:text-left sm:text-grey-700">Остались вопросы?</h2>
       </div>
       <div>
         <FeedbackForm client:load />
