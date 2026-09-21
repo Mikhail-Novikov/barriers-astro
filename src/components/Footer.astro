@@ -1,5 +1,6 @@
 ---
 import { publicAsset } from '../utils/publicAsset';
+import ScrollToTopButton from './ScrollToTopButton';
 ---
 
 <footer class="w-full pt-15 px-0 pb-20 bg-cta md:p-y-23 md:p-x-[46px] relative overflow-hidden">
@@ -9,10 +10,7 @@ import { publicAsset } from '../utils/publicAsset';
         <a class="block max-w-25 *:block *:max-w-full *:h-auto md:max-w-[127px]" href="https://perco.ru" target="_blank">
           <img src={publicAsset('/logo.svg')} width="137" height="35" alt="Перко - автоматические шлагбаумы" />
         </a>
-        <button class="btn btn-up">
-          <span class="text-up-button text-white">Наверх</span>
-          <span class="text-5xl"><span class="perco-icon-arrow-up size-8 text-grey-700"></span></span>
-        </button>
+        <ScrollToTopButton client:load />
         <button class="btn hidden bg-white rounded-[50%] p-2 ![transition:background-color_0.3s_ease-in-out] fixed right-12 bottom-12 hover:bg-grey size-17">
           <span class="perco-icon-arrow-up"></span>
         </button>
