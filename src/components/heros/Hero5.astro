@@ -46,7 +46,12 @@ const cards = [
                 loading="lazy"
               />
             ) : (
-              <video class="h-full w-full object-cover" src={card.pathVideo} controls=""></video>
+              <video class="h-full w-full object-cover" src={card.pathVideo} 
+                muted
+                autoplay
+                preload="auto"
+                playsinline
+                loop />
             )}
             {card.notification && (
               <div class="perco-icons absolute bottom-3 right-3 z-10 flex min-w-0 flex-col rounded-lg bg-white px-3 py-2 shadow-[0_1px_5px_rgba(0,0,0,0.22)] pointer-events-none sm:py-3 pr-5 sm:text-xs/[1.3]">
