@@ -1,10 +1,13 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { useEffect, useRef } from "react";
-import "swiper/css";
+
 import { publicAsset } from "@utils/publicAsset";
 import { useBreakpoint } from "@hooks/useBreakpoint";
+
 import CarouselControls from "./CarouselControls";
+
+import "swiper/css";
 
 type EquipmentCarouselProps = {
   cards: { id: number; title: string }[];
@@ -51,7 +54,7 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
             swiperRef.current = swiper;
           }}
           aria-label="Дополнительное оборудование"
-          slidesPerView={3.2}
+          slidesPerView={1.4}
           breakpoints={{
             600: { slidesPerView: 1.3 },
             712: { slidesPerView: 1.8 },
@@ -73,7 +76,7 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
                   alt={card.title}
                   loading="lazy"
                 />
-                <h4 className="pt-2 text-lg/6 font-manrope-semibold text-grey-1000">
+                <h4 className="pt-2 text-md/normal md:text-lg/6 font-manrope-semibold">
                   {card.title}
                 </h4>
               </article>
