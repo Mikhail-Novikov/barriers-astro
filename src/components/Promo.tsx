@@ -43,7 +43,7 @@ export default function Promo() {
         loop
         poster={publicAsset("/img/preview-promo.webp")}
       >
-        
+        <source src={src} type="video/mp4" />
       </video>
 
       <div className="container">

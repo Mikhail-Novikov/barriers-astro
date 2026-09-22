@@ -190,7 +190,7 @@ const Hero2 = () => {
         <h2 className="h2 mb-8">Примеры установок</h2>
         <div
           ref={galleryRef}
-          className="gallery-equipment rounded-5xl"
+          className="gallery-equipment rounded-3xl lg:rounded-5xl"
         >
           {previewItems.map((item, i) => {
             const absoluteIndex = item.index ?? groupIndex * groupSize + i;
