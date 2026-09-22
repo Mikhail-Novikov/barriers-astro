@@ -25,6 +25,42 @@ type SolutionOption = {
   label: string;
 };
 
+/**
+ * Компонент SolutionPrice отображает цену и описание готового решения.
+ *
+ * @param price - Цена готового решения.
+ * @param description - Описание готового решения.
+ * @returns {JSX.Element} JSX-элемент, представляющий цену и описание готового решения.
+ * @example
+ * <SolutionPrice price="151 020 ₽" description="GS04.1: прямоугольная стрела 4,3 м, опорная стойка GBS1" />
+ */
+function SolutionPrice({ price, description }: Pick<Solution, 'price' | 'description'>): JSX.Element {
+  return (
+    <div className="mb-5 flex w-full items-center gap-5 rounded-3xl bg-grey-200 py-3 sm:px-6 sm:py-4 lg:px-5">
+      <strong className="shrink-0 ml-5 text-xl/8 font-manrope-semibold text-cta lg:text-2xl/7">{price}</strong>
+      <span className="font-manrope-semibold text-md/5"><HtmlContent>{description}</HtmlContent></span>
+    </div>
+  );
+}
+
+/**
+ * Компонент SolutionAdditions отображает список дополнений для готового решения.
+ * @param additions - Массив дополнений.
+ * @returns {JSX.Element | null} JSX-элемент, представляющий список дополнений, или null, если дополнений нет.
+ */
+function SolutionAdditions({ additions }: { additions?: string[] }): JSX.Element | null {
+  if (!additions?.length) return null;
+
+  return (
+    <>
+      <p className="mb-3 ml-4 text-xl/7 text-grey-800">Что можно добавить:</p>
+      <ul className="mb-6 sm:mb-10 list-disc marker:text-[12px] space-y-1 ml-4 pl-3 sm:pl-6 text-md/6">
+        {additions.map((addition) => <li key={addition}><HtmlContent>{addition}</HtmlContent></li>)}
+      </ul>
+    </>
+  );
+}
+
 const solutions: Solution[] = [
   {
     tag: "Бизнес-центр, офис",
@@ -191,106 +227,92 @@ export default function Hero10(): JSX.Element {
   return (
     <section aria-label="Готовые решения" className="bg-white pt-10 md:pt-15 xl:pt-20 pb-10 md:pb-15 lg:pb-20 xl:pb-25">
       <div className="container">
-        <div className="flex flex-col gap-9">
-          <h3 className="h2">Готовые решения</h3>
+        <h3 className="h2 mb-6 lg:mb-8">Готовые решения</h3>
 
-          {!screen.md && (
-            <div className="md:hidden" aria-label="Варианты объектов">
-              <Select<SolutionOption, false>
-                instanceId="solution-select"
-                inputId="solution-select"
-                aria-label="Варианты объектов"
-                options={solutionOptions}
-                value={solutionOptions[activeIndex]}
-                onChange={handleSolutionChange}
-                isSearchable={false}
-                classNamePrefix="solution-select"
-                styles={{
-                  control: (base) => ({
-                    ...base,
-                    minHeight: 44,
-                    borderRadius: 8,
-                    borderColor: '#AEAFBF',
-                    backgroundColor: '#F3F4F8',
-                    boxShadow: 'none',
-                  }),
-                  option: (base, state) => ({
-                    ...base,
-                    color: '#22252F',
-                    backgroundColor: state.isSelected ? '#E2E3EA' : state.isFocused ? '#F3F4F8' : '#FFFFFF',
-                    borderColor: state.isSelected ? '#003067' : '',
-                  }),
-                  indicatorSeparator: (base) => ({
-                    ...base,
-                    display: 'none',
-                  }),
-                }}
-              />
-            </div>
-          )}
+        {!screen.md && (
+          <div className="md:hidden mb-6" aria-label="Варианты объектов">
+            <Select<SolutionOption, false>
+              instanceId="solution-select"
+              inputId="solution-select"
+              aria-label="Варианты объектов"
+              options={solutionOptions}
+              value={solutionOptions[activeIndex]}
+              onChange={handleSolutionChange}
+              isSearchable={false}
+              classNamePrefix="solution-select"
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  minHeight: 44,
+                  borderRadius: 8,
+                  borderColor: '#AEAFBF',
+                  backgroundColor: '#F3F4F8',
+                  boxShadow: 'none',
+                }),
+                option: (base, state) => ({
+                  ...base,
+                  color: '#22252F',
+                  backgroundColor: state.isSelected ? '#E2E3EA' : state.isFocused ? '#F3F4F8' : '#FFFFFF',
+                  borderColor: state.isSelected ? '#003067' : '',
+                }),
+                indicatorSeparator: (base) => ({
+                  ...base,
+                  display: 'none',
+                }),
+              }}
+            />
+          </div>
+        )}
 
-          <div className="perco-icons hidden flex-wrap gap-2 lg:gap-3 md:flex" role="tablist" aria-label="Варианты объектов">
-            {solutions.map((solution, index) => {
-              const isActive = index === activeIndex;
+        <div className="perco-icons hidden flex-wrap gap-2 lg:gap-3 md:flex" role="tablist" aria-label="Варианты объектов">
+          {solutions.map((solution, index) => {
+            const isActive = index === activeIndex;
 
-              return (
-                <button
-                  key={solution.tag}
-                  type="button"
-                  id={`solution-tab-${index}`}
-                  className={`solution-tab flex cursor-pointer items-center rounded-xl border px-3.5 h-12 hover:bg-grey-300 font-manrope-semibold text-left text-lg/6 transition-colors ${isActive ? 'border-cta bg-grey-200 text-grey-1000' : 'border-transparent bg-grey-200 text-grey-800'}`}
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-controls={`solution-panel-${index}`}
-                  onClick={() => setActiveIndex(index)}
-                >
-                  <span aria-hidden="true" className={`mr-1 text-xl/4 ${isActive ? ' text-cta' : ''}`}>
-                    <i className={isActive ? 'perco-icon-check-tag' : 'perco-icon-plus-tag'} />
-                  </span>
-                  {solution.tag}
-                </button>
-              );
-            })}
+            return (
+              <button
+                key={solution.tag}
+                type="button"
+                id={`solution-tab-${index}`}
+                className={`solution-tab flex cursor-pointer items-center rounded-xl border px-3.5 h-12 hover:bg-grey-300 font-manrope-semibold text-left text-lg/6 transition-colors ${isActive ? 'border-cta bg-grey-200 text-grey-1000' : 'border-transparent bg-grey-200 text-grey-800'}`}
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`solution-panel-${index}`}
+                onClick={() => setActiveIndex(index)}
+              >
+                <span aria-hidden="true" className={`mr-1 text-xl/4 ${isActive ? ' text-cta' : ''}`}>
+                  <i className={isActive ? 'perco-icon-check-tag' : 'perco-icon-plus-tag'} />
+                </span>
+                {solution.tag}
+              </button>
+            );
+          })}
+        </div>
+
+        <div
+          id={`solution-panel-${activeIndex}`}
+          className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-15"
+          role="tabpanel"
+          aria-labelledby={`solution-tab-${activeIndex}`}
+        >
+          <div className="flex min-h-[360px] items-center justify-center overflow-hidden rounded-3xl bg-grey-200 lg:col-span-7 lg:min-h-[560px]">
+            <img className="h-full w-full object-contain" src={activeSolution.image} alt={activeSolution.description} />
           </div>
 
-          <div
-            id={`solution-panel-${activeIndex}`}
-            className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-15"
-            role="tabpanel"
-            aria-labelledby={`solution-tab-${activeIndex}`}
-          >
-            <div className="flex min-h-[360px] items-center justify-center overflow-hidden rounded-3xl bg-grey-200 lg:col-span-7 lg:min-h-[560px]">
-              <img className="h-full w-full object-contain" src={activeSolution.image} alt={activeSolution.description} />
-            </div>
-
-            <div className="flex flex-col items-start max-w-[470px] text-grey-1000 lg:col-span-5">
-              <h4 className="mb-5 text-3xl/10 font-bold lg:text-3xl/10">{activeSolution.title}</h4>
-              <p className="mb-4 text-md/6 text-grey-800"><HtmlContent>{activeSolution.specifics}</HtmlContent></p>
-              {activeSolution.important && (
-                <p className="mb-5 text-md/6 text-grey-800"><strong>Важно: </strong><HtmlContent>{activeSolution.important}</HtmlContent></p>
-              )}
-              <div className="mb-5 flex w-full items-center gap-5 rounded-3xl bg-grey-200 px-6 py-4 lg:px-5">
-                <strong className="shrink-0 ml-5 text-xl/8 font-manrope-semibold text-cta lg:text-2xl/7">{activeSolution.price}</strong>
-                <span className="font-manrope-semibold text-md/5"><HtmlContent>{activeSolution.description}</HtmlContent></span>
-              </div>
-              <p className="mb-3 ml-4 text-xl/7 text-grey-800">Что можно добавить:</p>
-              <ul className="mb-6 sm:mb-10  list-disc marker:text-[12px] space-y-1 ml-4 pl-3 sm:pl-6 text-md/6">
-                {activeSolution.additions.map((addition) => <li key={addition}><HtmlContent>{addition}</HtmlContent></li>)}
-              </ul>
-              {activeSolution.alternative && (
-                <>
-                  <div className="mb-5 flex w-full items-center gap-5 rounded-3xl bg-grey-200 px-6 py-4 lg:px-5">
-                    <strong className="shrink-0 ml-5 text-xl/8 font-manrope-semibold text-cta lg:text-2xl/7">{activeSolution.alternative.price}</strong>
-                    <span className="font-manrope-semibold text-md/5"><HtmlContent>{activeSolution.alternative.description}</HtmlContent></span>
-                  </div>
-                  <p className="mb-3 ml-4 text-xl/7 text-grey-800">Что можно добавить:</p>
-                  <ul className="mb-6 sm:mb-10 list-disc marker:text-[12px] space-y-1 ml-4 pl-3 sm:pl-6 text-md/6">
-                    {activeSolution.alternative.additions && activeSolution.alternative.additions.map((addition) => <li key={addition}><HtmlContent>{addition}</HtmlContent></li>)}
-                  </ul>
-                </>
-              )}
-              <button type="button" className="min-w-[232px] cursor-pointer rounded-2xl bg-cta px-8 h-12 text-lg text-white transition-colors hover:bg-cta-hover">Заказать</button>
-            </div>
+          <div className="flex flex-col items-start max-w-[470px] text-grey-1000 lg:col-span-5">
+            <h4 className="mb-5 text-3xl/10 font-bold lg:text-3xl/10">{activeSolution.title}</h4>
+            <p className="mb-4 text-md/6 text-grey-800"><HtmlContent>{activeSolution.specifics}</HtmlContent></p>
+            {activeSolution.important && (
+              <p className="mb-5 text-md/6 text-grey-800"><strong>Важно: </strong><HtmlContent>{activeSolution.important}</HtmlContent></p>
+            )}
+            <SolutionPrice price={activeSolution.price} description={activeSolution.description} />
+            <SolutionAdditions additions={activeSolution.additions} />
+            {activeSolution.alternative && (
+              <>
+                <SolutionPrice price={activeSolution.alternative.price} description={activeSolution.alternative.description} />
+                <SolutionAdditions additions={activeSolution.alternative.additions} />
+              </>
+            )}
+            <button type="button" className="min-w-[232px] cursor-pointer rounded-2xl bg-cta px-8 h-12 text-lg text-white transition-colors hover:bg-cta-hover">Заказать</button>
           </div>
         </div>
       </div>
