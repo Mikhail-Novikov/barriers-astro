@@ -18,6 +18,8 @@ interface UseLightGalleryOptions {
   counter?: boolean;
   closeOnTap?: boolean;
   controls?: boolean;
+  showFullscreen?: boolean;
+  navigation?: boolean;
   showCloseIcon?: boolean;
 }
 
@@ -29,6 +31,8 @@ export const useLightGallery = ({
   counter = true,
   closeOnTap = true,
   controls = true,
+  showFullscreen = true,
+  navigation = true,
   showCloseIcon = true,
 }: UseLightGalleryOptions) => {
   const galleryRef = useRef<HTMLDivElement>(null);
@@ -58,8 +62,13 @@ export const useLightGallery = ({
         display: {
           left: counter ? ['counter'] : [],
           middle: [],
-          right: controls ? ['zoom', 'fullscreen', 'close'] : ['close'],
+          right: controls
+            ? ['zoom', ...(showFullscreen ? ['fullscreen'] : []), 'close']
+            : ['close'],
         },
+      },
+      Carousel: {
+        Navigation: navigation,
       },
       Click: closeOnTap ? 'close' : 'toggle',
     };
@@ -75,7 +84,7 @@ export const useLightGallery = ({
         // Ignore unbind errors
       }
     };
-  }, [items, selector, containerSelector, counter, closeOnTap, controls]);
+  }, [items, selector, containerSelector, counter, closeOnTap, controls, showFullscreen, navigation]);
 
   const openGallery = (index: number) => {
     const container = containerSelector

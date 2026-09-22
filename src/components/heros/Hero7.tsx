@@ -235,26 +235,22 @@ export default function Hero7(): JSX.Element {
     [selectedType, selectedDesign],
   );
 
-  const galleryWithIndexes = illustrationItems.map((item, index) => ({
-    ...item,
-    index,
-    src: item.img,
-    thumb: item.img,
-    alt: item.title,
-    title: item.title,
-  }));
+  const currentGalleryItem = {
+    ...currentVariant,
+    index: 0,
+    src: currentVariant.img,
+    thumb: currentVariant.img,
+    alt: currentVariant.title,
+  };
 
-  const { galleryRef, openGallery, totalItems } = useLightGallery({
-    items: galleryWithIndexes,
-    containerSelector: ".internal-container",
+  const { galleryRef, openGallery } = useLightGallery({
+    items: [currentGalleryItem],
     closeOnTap: true,
     counter: false,
-    controls: false,
+    controls: true,
+    showFullscreen: false,
+    navigation: false,
   });
-
-  const currentIndex = illustrationItems.findIndex(
-    (item) => item.type === selectedType && item.design === selectedDesign,
-  );
 
   return (
     <section
@@ -357,19 +353,19 @@ export default function Hero7(): JSX.Element {
                   role="button"
                   tabIndex={0}
                   onClick={() =>
-                    openGallery(currentIndex >= 0 ? currentIndex : 0)
+                    openGallery(0)
                   }
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
-                      openGallery(currentIndex >= 0 ? currentIndex : 0);
+                      openGallery(0);
                     }
                   }}
-                  className="lg:h-13 text-[52px] text-grey-500 hover:text-grey-800 cursor-pointer transition-all duration-300 ease-out"
+                  className="perco-icons lg:h-13 text-2xl text-right text-grey-500 hover:text-grey-800 cursor-pointer transition-all duration-300 ease-out"
                 >
-                  <i className="icon-plus-circle-fill lg:float-right" />
+                  <i className="perco-icon-control-fullscreen lg:float-right" />
                 </div>
-                <h4 className="text-2xl text-grey-700 lg:text-center">
+                <h4 className="text-[12px]/5 md:text-lg lg:text-xl text-grey-700 text-center">
                   {currentVariant.title}
                 </h4>
                 <img
@@ -384,7 +380,14 @@ export default function Hero7(): JSX.Element {
         </div>
       </div>
       <div className="lightgallery-backdrop" />
-      <div className="internal-container" />
+      <div ref={galleryRef}>
+        <a
+          data-fancybox="hero7-gallery"
+          href={currentGalleryItem.src}
+          aria-label={currentGalleryItem.title}
+          className="sr-only"
+        />
+      </div>
     </section>
   );
 }
