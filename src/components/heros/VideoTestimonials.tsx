@@ -3,6 +3,7 @@ import type { Swiper as SwiperInstance } from 'swiper';
 import { FreeMode } from 'swiper/modules';
 import { useRef, useState } from 'react';
 import { useLightGallery } from '@hooks/useLightGallery';
+import { useBreakpoint } from '@hooks/useBreakpoint';
 
 import SliderArrow from '@components/SliderArrow';
 import VideoPlayButton from '@components/VideoPlayButton';
@@ -49,6 +50,7 @@ const testimonials = [
 ];
 
 export default function VideoTestimonials(): JSX.Element {
+  const screen = useBreakpoint();
   const [startIndex, setStartIndex] = useState(0);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(false);
@@ -91,7 +93,7 @@ export default function VideoTestimonials(): JSX.Element {
           const image = aboutImages[index % aboutImages.length];
 
           return (
-            <SwiperSlide key={`${videoUrl}-${index}`} className="!w-[min(415px,calc(100vw-32px))]">
+            <SwiperSlide key={`${videoUrl}-${index}`} className="sm:!w-[min(415px,calc(100vw-32px))]">
               <a
                 href={videoUrl}
                 data-fancybox="video-testimonials"
@@ -115,9 +117,27 @@ export default function VideoTestimonials(): JSX.Element {
         })}
       </Swiper>
 
-      <div className="mt-10 flex justify-end gap-2" aria-label="Управление видеоотзывами">
-        <SliderArrow direction="left" onClick={() => move('prev')} disabled={isAtStart} />
-        <SliderArrow direction="right" onClick={() => move('next')} disabled={isAtEnd} />
+      <div aria-label="Управление видеоотзывами">
+        {!screen.sm ? (
+          <div className="flex items-center justify-center gap-2 mt-6" role="tablist" aria-label="Выбор видеоотзыва">
+            {testimonials.map(({ videoUrl, title }, index) => (
+              <button
+                key={videoUrl}
+                type="button"
+                role="tab"
+                aria-label={title}
+                aria-selected={startIndex === index}
+                onClick={() => swiperRef.current?.slideTo(index)}
+                className={`cursor-pointer rounded-full transition-colors ${startIndex === index ? 'size-2 bg-grey-700' : 'size-1 bg-grey-500'}`}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-end gap-2 mt-10" aria-label="Управление видеоотзывами">
+            <SliderArrow direction="left" onClick={() => move('prev')} disabled={isAtStart} />
+            <SliderArrow direction="right" onClick={() => move('next')} disabled={isAtEnd} />
+          </div>
+        )}
       </div>
     </div>
   );

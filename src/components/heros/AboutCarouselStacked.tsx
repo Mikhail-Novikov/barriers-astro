@@ -68,7 +68,7 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
           <button
             key={`about-pair-pagination-${pairIndex}`}
             type="button"
-            aria-label={`Показать пару фотографий ${pairIndex + 1}`}
+            aria-label={`Показать cлайд ${pairIndex + 1}`}
             aria-current={activePair === pairIndex ? 'true' : undefined}
             onClick={() => swiperRef.current?.slideTo(pairIndex)}
             className={`rounded-full transition-colors ${activePair === pairIndex ? 'size-2 bg-grey-700' : 'size-1 bg-grey-500'}`}
