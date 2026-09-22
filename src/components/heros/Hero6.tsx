@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import barriers from '../../content/barriers.json';
+import FilterCheckbox from '@components/FilterCheckbox';
 import WidthSlider from './WidthSlider';
 import { publicAsset } from '@utils/publicAsset';
 
@@ -35,31 +36,6 @@ type FilterSectionProps<T extends FilterValue> = {
   selected: T[];
   onToggle: (value: T) => void;
 };
-
-function FilterCheckbox({
-  checked,
-  label,
-  onChange,
-}: {
-  checked: boolean;
-  label: string;
-  onChange: () => void;
-}): JSX.Element {
-  return (
-    <label className="flex cursor-pointer items-center gap-4 perco-icons text-md/7 text-grey-1000">
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-        className="peer sr-only"
-      />
-      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border border-grey-700 text-white peer-checked:border-cta peer-checked:bg-cta text-md/5">
-        {checked && <span className="relative left-[0.5px] perco-icon-check-tag" />}
-      </span>
-      {label}
-    </label>
-  );
-}
 
 function FilterSection<T extends FilterValue>({
   title,
