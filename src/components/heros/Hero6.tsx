@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import barriers from '../../content/barriers.json';
 import WidthSlider from './WidthSlider';
 import { publicAsset } from '@utils/publicAsset';
@@ -134,11 +134,19 @@ const matchesFotoElementFilter = (selected: string[], bodyStyle: string): boolea
 };
 
 export default function Hero6(): JSX.Element {
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [maxWidth, setMaxWidth] = useState(0);
   const [temperatures, setTemperatures] = useState<string[]>(['standard']);
   const [openings, setOpenings] = useState<string[]>([]);
   const [booms, setBooms] = useState<string[]>([]);
   const [fotoElements, setFotoElements] = useState<string[]>([]);
+
+  useEffect(() => {
+    const handleResize = () => setIsFiltersOpen(false);
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const filterSections = [
     createFilterSection({
@@ -188,36 +196,63 @@ export default function Hero6(): JSX.Element {
     setFotoElements([]);
   };
 
+  const appliedFiltersCount = (maxWidth > 0 ? 1 : 0)
+    + temperatures.length
+    + openings.length
+    + booms.length
+    + fotoElements.length;
+
+  const filtersContent = (
+    <>
+      <fieldset>
+        <legend className="mb-5 text-md/6 font-manrope-semibold text-grey-1000">Ширина проезда</legend>
+        <WidthSlider value={maxWidth} onChange={setMaxWidth} />
+      </fieldset>
+
+      {filterSections.map((section, index) => (
+        <div key={`filter-section-${index}`}>
+          {section}
+        </div>
+      ))}
+
+      <button type="button" onClick={resetFilters} className="lg:mt-4 shrink-0 w-fit rounded-2xl border border-grey-600 px-8 py-3 text-md/6 font-manrope-semibold text-cta transition-colors hover:border-cta cursor-pointer">
+        Сбросить все фильтры
+      </button>
+    </>
+  );
+
   return (
-    <section aria-label="Модели шлагбаумов" className="bg-grey-200 pt-10 sm:pt-15 3xl:pt-20 pb-10 sm:pb-20 lg:pb-20">
+    <section aria-label="Модели шлагбаумов" className="relative bg-grey-200 pt-10 sm:pt-15 3xl:pt-20 pb-10 sm:pb-20 lg:pb-20">
       <div className="container">
         <h2 id="catalog" className="h2 mb-6 lg:mb-8">Модели шлагбаумов</h2>
         <div className="perco-icons mb-4 lg:hidden">
-          <button onClick={resetFilters} className="flex items-center gap-x-3 cursor-pointer text-cta hover:text-cta/90">
+          <button type="button" onClick={() => setIsFiltersOpen(true)} className="flex items-center gap-x-3 cursor-pointer text-cta hover:text-cta/90">
             <span className="text-5xl"><i className="perco-icon-btn-filter" /></span>
-            <span className="text-md/5 font-manrope-semibold text-grey-1000 hover:text-cta/90">Фильтр (2)</span>
+            <span className="text-md/5 font-manrope-semibold text-grey-1000 hover:text-cta/90">Фильтр ({appliedFiltersCount})</span>
           </button>
         </div>
+        <div
+          className={`fixed inset-0 z-50 bg-grey-1000/40 transition-opacity duration-300 lg:hidden ${isFiltersOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+          onClick={() => setIsFiltersOpen(false)}
+          aria-hidden={!isFiltersOpen}
+        />
+        <aside className={`absolute left-0 top-42 z-50 flex w-full max-w-[390px] flex-col rounded-2xl bg-white px-4 py-6 transition-transform duration-300 ease-out sm:px-8 lg:hidden ${isFiltersOpen ? 'translate-x-0' : '-translate-x-full'}`} onClick={(event) => event.stopPropagation()}>
+          <div className="flex justify-end mb-2">
+            <button type="button" aria-label="Закрыть фильтры" onClick={() => setIsFiltersOpen(false)} className="perco-icons shrink-0 cursor-pointer text-2xl/6 text-grey-800 hover:text-cta">
+              <i className="perco-icon-close" />
+            </button>
+          </div>
+          <div className="flex flex-col gap-7">
+            {filtersContent}
+          </div>
+        </aside>
         <div className="grid grid-cols-12 items-start gap-5">
           <div className="col-span-4 xl:col-span-3 flex-col gap-2 lg:sticky lg:top-[120px] hidden lg:flex">
             <aside className="rounded-3xl bg-white px-4 2xl:px-8 py-9">
               <h3 className="mb-8 text-xl/6 font-manrope-semibold text-grey-800">Выберите условие эксплуатации</h3>
 
               <div className="flex flex-col gap-7">
-                <fieldset>
-                  <legend className="mb-5 text-md/6 font-manrope-semibold text-grey-1000">Ширина проезда</legend>
-                  <WidthSlider value={maxWidth} onChange={setMaxWidth} />
-                </fieldset>
-
-                {filterSections.map((section, index) => (
-                  <div key={`filter-section-${index}`}>
-                    {section}
-                  </div>
-                ))}
-
-                <button type="button" onClick={resetFilters} className="mt-4 shrink-0 w-fit rounded-2xl border border-grey-600 px-8 py-3 text-md/6 font-manrope-semibold text-cta transition-colors hover:border-cta cursor-pointer">
-                  Сбросить все фильтры
-                </button>
+                {filtersContent}
               </div>
             </aside>
             <p className="px-8 py-2 text-md/6 text-grey-700">Все цены указаны со&nbsp;склада в&nbsp;Москве и&nbsp;Санкт-Петербурге</p>
