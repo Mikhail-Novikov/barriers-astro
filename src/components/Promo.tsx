@@ -35,7 +35,7 @@ export default function Promo() {
       <video
         ref={videoRef}
         key={src}
-        className="w-full"
+        className="w-full h-[340px] max-h-[700px] sm:h-auto sm:min-h-[260px] object-cover"
         muted
         autoPlay
         preload="auto"
@@ -43,7 +43,7 @@ export default function Promo() {
         loop
         poster={publicAsset("/img/preview-promo.webp")}
       >
-        <source src={src} type="video/mp4" />
+        
       </video>
 
       <div className="container">

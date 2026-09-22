@@ -274,7 +274,7 @@ export default function Hero10(): JSX.Element {
                 <span className="font-manrope-semibold text-md/5"><HtmlContent>{activeSolution.description}</HtmlContent></span>
               </div>
               <p className="mb-3 ml-4 text-xl/7 text-grey-800">Что можно добавить:</p>
-              <ul className="mb-10 list-disc marker:text-[12px] space-y-1 ml-4 pl-6 text-md/6">
+              <ul className="mb-6 sm:mb-10  list-disc marker:text-[12px] space-y-1 ml-4 pl-3 sm:pl-6 text-md/6">
                 {activeSolution.additions.map((addition) => <li key={addition}><HtmlContent>{addition}</HtmlContent></li>)}
               </ul>
               {activeSolution.alternative && (
@@ -284,7 +284,7 @@ export default function Hero10(): JSX.Element {
                     <span className="font-manrope-semibold text-md/5"><HtmlContent>{activeSolution.alternative.description}</HtmlContent></span>
                   </div>
                   <p className="mb-3 ml-4 text-xl/7 text-grey-800">Что можно добавить:</p>
-                  <ul className="mb-10 list-disc marker:text-[12px] space-y-1 ml-4 pl-6 text-md/6">
+                  <ul className="mb-6 sm:mb-10 list-disc marker:text-[12px] space-y-1 ml-4 pl-3 sm:pl-6 text-md/6">
                     {activeSolution.alternative.additions && activeSolution.alternative.additions.map((addition) => <li key={addition}><HtmlContent>{addition}</HtmlContent></li>)}
                   </ul>
                 </>
