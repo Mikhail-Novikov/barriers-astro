@@ -192,9 +192,11 @@ export default function Hero6(): JSX.Element {
     <section aria-label="Модели шлагбаумов" className="bg-grey-200 pt-10 sm:pt-15 3xl:pt-20 pb-10 sm:pb-20 lg:pb-20">
       <div className="container">
         <h2 id="catalog" className="h2 mb-6 lg:mb-8">Модели шлагбаумов</h2>
-        <div className="perco-icons flex items-center gap-x-3 mb-4 lg:hidden ">
-          <span className="text-cta text-2xl"><i className="perco-icon-burger" /></span>
-          <span>Фильтр (2)</span>
+        <div className="perco-icons mb-4 lg:hidden">
+          <button onClick={resetFilters} className="flex items-center gap-x-3 cursor-pointer text-cta hover:text-cta/90">
+            <span className="text-5xl"><i className="perco-icon-btn-filter" /></span>
+            <span className="text-md/5 font-manrope-semibold text-grey-1000 hover:text-cta/90">Фильтр (2)</span>
+          </button>
         </div>
         <div className="grid grid-cols-12 items-start gap-5">
           <div className="col-span-4 xl:col-span-3 flex-col gap-2 lg:sticky lg:top-[120px] hidden lg:flex">
