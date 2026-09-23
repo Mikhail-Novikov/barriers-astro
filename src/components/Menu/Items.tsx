@@ -13,7 +13,7 @@ type ItemsProps = {
  * @param isOpen - признак открытости меню
  * @param onItemClick - коллбек при клике на пункт меню
  */
-export default function Items({ isMobile, isOpen, onItemClick }: ItemsProps) {
+const Items = ({ isMobile, isOpen, onItemClick }: ItemsProps) => {
   const handleItemClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith("#")) {
       event.preventDefault();
@@ -33,7 +33,7 @@ export default function Items({ isMobile, isOpen, onItemClick }: ItemsProps) {
   };
 
   return (
-    <ul className={isMobile ? `fixed z-10 w-full top-15 sm:top-20 left-0 bg-grey-1000 p-8 md:pl-12 flex flex-col gap-4 transition-all duration-300 ease-out ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none -translate-y-2"}` : "flex items-center gap-x-8 xl:gap-20"}>
+    <ul className={isMobile ? `lg:hidden fixed z-10 w-full top-15 sm:top-20 left-0 bg-grey-1000 p-8 md:pl-12 flex flex-col gap-4 transition-all duration-300 ease-out ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none -translate-y-2"}` : "hidden lg:flex items-center gap-x-8 xl:gap-20"}>
       {MENU_ITEMS.map((item) => (
         <li key={item.href} className="transition-transform duration-300 ease-out">
           <a
@@ -47,4 +47,6 @@ export default function Items({ isMobile, isOpen, onItemClick }: ItemsProps) {
       ))}
     </ul>
   );
-}
+};
+
+export default Items;

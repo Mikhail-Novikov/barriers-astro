@@ -1,14 +1,14 @@
 import Items from "./Items";
 import MenuMobile from "./MenuMobile";
 
-import { useBreakpoint } from "@hooks/useBreakpoint";
+/**
+ * Компонент меню
+ */
+const Menu = () => (
+  <>
+    <Items />
+    <MenuMobile />
+  </>
+);
 
-export default function Menu() {
-  const screen = useBreakpoint();
-
-  return (
-    <>
-      {!screen.lg ? <MenuMobile /> : <Items /> }
-    </>
-  );
-}
+export default Menu;

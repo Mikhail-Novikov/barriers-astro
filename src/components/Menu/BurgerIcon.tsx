@@ -8,12 +8,18 @@ type BurgerIconProps = {
   onClick?: () => void;
 };
 
-export default function BurgerIcon({ isOpen, onClick }: BurgerIconProps): JSX.Element {
+/**
+ * Компонент иконки бургера
+ * @param isOpen - признак открытости меню
+ * @param onClick - коллбек при клике на иконку
+ * @return {JSX.Element}
+ */
+const BurgerIcon = ({ isOpen, onClick }: BurgerIconProps): JSX.Element => {
   return (
     <button
       type="button"
       onClick={onClick}
-      className="absolute top-1/2 -translate-y-1/2 right-0 text-white hover:text-grey-700 text-4xl cursor-pointer transition-all duration-300 ease-out"
+      className="lg:hidden absolute top-1/2 -translate-y-1/2 right-0 text-white hover:text-grey-700 text-4xl cursor-pointer transition-all duration-300 ease-out"
       aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
       aria-expanded={isOpen}
     >
@@ -22,4 +28,6 @@ export default function BurgerIcon({ isOpen, onClick }: BurgerIconProps): JSX.El
       </span>
     </button>
   );
-}
+};
+
+export default BurgerIcon;

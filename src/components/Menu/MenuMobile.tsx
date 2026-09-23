@@ -2,7 +2,7 @@ import { useState } from "react";
 import BurgerIcon from "./BurgerIcon";
 import Items from "./Items";
 
-export default function MenuMobile() {
+const MenuMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -11,4 +11,6 @@ export default function MenuMobile() {
       <BurgerIcon isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)} />
     </>
   );
-}
+};
+
+export default MenuMobile;
