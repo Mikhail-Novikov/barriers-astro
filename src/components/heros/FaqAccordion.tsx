@@ -26,7 +26,7 @@ export default function FaqAccordion({ items }: FaqAccordionProps): JSX.Element 
           <details
             key={item.title}
             open={isOpen}
-            className="flex w-full flex-col perco-icons text-left text-grey-900 not-first:mt-6"
+            className="flex w-full flex-col perco-icons text-left text-grey-1000 not-first:mt-6"
           >
             <summary
               className={`collapse-header flex list-none items-center gap-4 border-b border-grey-500 pb-4 cursor-pointer ${

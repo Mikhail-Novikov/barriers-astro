@@ -264,7 +264,7 @@ export default function Hero10(): JSX.Element {
           </div>
         )}
 
-        <div className="perco-icons hidden flex-wrap gap-2 lg:gap-3 md:flex" role="tablist" aria-label="Варианты объектов">
+        <div className="perco-icons hidden flex-wrap gap-2 mb-8 lg:gap-3 md:flex" role="tablist" aria-label="Варианты объектов">
           {solutions.map((solution, index) => {
             const isActive = index === activeIndex;
 
