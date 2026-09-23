@@ -237,7 +237,7 @@ export default function Hero6(): JSX.Element {
             {filteredBarriers.map((barrier) => (
               <article key={barrier.fullName} className="flex min-h-[340px] flex-col rounded-3xl bg-white border border-grey-400 transition-colors hover:border-cta cursor-pointer">
                 <div className="flex min-h-[230px] items-center justify-center">
-                  <img className="max-h-[220px] w-full object-contain" src={`${previewPath}${barrier.imageNamePreview}`} alt={barrier.fullName} loading="lazy" />
+                  <img className="max-h-[220px] w-full object-contain" src={`${previewPath}${barrier.imageNamePreview}.webp`} alt={barrier.fullName} loading="lazy" />
                 </div>
                 <div className="mt-auto p-[8px_8px_20px_32px] font-manrope-semibold">
                   <h3 className="text-xl/7 text-grey-1000">{barrier.baseModel}</h3>
