@@ -1,5 +1,7 @@
 ---
 import Menu from "./Menu/Menu";
+import Modal from './heros/Modal';
+import FeedbackForm from './heros/FeedbackForm';
 import { publicAsset } from '../utils/publicAsset';
 ---
 <header id="top" class="perco-icons bg-cta sticky z-20 top-0 left-0 right-0">
@@ -9,7 +11,9 @@ import { publicAsset } from '../utils/publicAsset';
         <img src={publicAsset('/logo.svg')} alt="логотип PERCo" class="w-15 sm:w-[107px] sm:h-[27.5px]" />
       </a>
       <Menu client:load />
-      <button class="btn--outline mr-16 lg:mr-0 hidden lg:block">Подобрать шлагбаум</button>
+      <Modal client:load triggerLabel="Подобрать шлагбаум" title="Форма обратной связи">
+        <FeedbackForm idPrefix="feedback-modal" />
+      </Modal>
       <button class="mr-8 p-4 lg:mr-0 lg:hidden text-4xl text-white hover:text-grey-700 cursor-pointer transition-all duration-300 ease-out"><i class="perco-icon-phone"></i></button>
     </nav>
   </div>

@@ -11,7 +11,16 @@ interface FormErrors {
   message?: string;
 }
 
-const FeedbackForm = () => {
+interface FeedbackFormProps {
+  idPrefix?: string;
+}
+
+/**
+ * Компонент формы обратной связи
+ * @param idPrefix - префикс для id элементов формы
+ * @return {JSX.Element} JSX-элемент, представляющий форму обратной связи
+ */
+const FeedbackForm = ({ idPrefix = 'feedback' }: FeedbackFormProps): JSX.Element => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -104,11 +113,11 @@ const FeedbackForm = () => {
       <form onSubmit={handleSubmit} className="flex flex-col gap-6 text-sm sm:text-lg">
         {/* Имя */}
         <div>
-          <label htmlFor="name" className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
+          <label htmlFor={`${idPrefix}-name`} className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
             Имя
           </label>
           <input
-            id="name"
+            id={`${idPrefix}-name`}
             type="text"
             name="name"
             value={formData.name}
@@ -120,11 +129,11 @@ const FeedbackForm = () => {
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
+          <label htmlFor={`${idPrefix}-email`} className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
             Email<span className="text-cta">*</span>
           </label>
           <input
-            id="email"
+            id={`${idPrefix}-email`}
             type="email"
             name="email"
             value={formData.email}
@@ -143,11 +152,11 @@ const FeedbackForm = () => {
 
         {/* Сообщение */}
         <div>
-          <label htmlFor="message" className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
+          <label htmlFor={`${idPrefix}-message`} className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
             Сообщение<span className="text-cta">*</span>
           </label>
           <textarea
-            id="message"
+            id={`${idPrefix}-message`}
             name="message"
             value={formData.message}
             onChange={handleChange}
