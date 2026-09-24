@@ -22,6 +22,7 @@ interface UseLightGalleryOptions {
   navigation?: boolean;
   showCloseIcon?: boolean;
   mainClass?: string;
+  captionClassName?: string;
 }
 
 export const useLightGallery = ({
@@ -36,6 +37,7 @@ export const useLightGallery = ({
   navigation = true,
   showCloseIcon = true,
   mainClass,
+  captionClassName,
 }: UseLightGalleryOptions) => {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -73,7 +75,9 @@ export const useLightGallery = ({
       Carousel: {
         Navigation: navigation,
         formatCaption: (caption: string, slide: any) =>
-          slide?.triggerEl?.dataset?.caption ?? caption,
+          captionClassName
+            ? `<span class="${captionClassName}">${slide?.triggerEl?.dataset?.caption ?? caption}</span>`
+            : slide?.triggerEl?.dataset?.caption ?? caption,
       },
       Click: closeOnTap ? 'close' : 'toggle',
       Zoom: false,
@@ -94,7 +98,7 @@ export const useLightGallery = ({
         // Ignore unbind errors
       }
     };
-  }, [items, selector, containerSelector, counter, closeOnTap, controls, showFullscreen, navigation, mainClass]);
+  }, [items, selector, containerSelector, counter, closeOnTap, controls, showFullscreen, navigation, mainClass, captionClassName]);
 
   const openGallery = (index: number) => {
     const container = containerSelector

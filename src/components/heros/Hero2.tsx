@@ -159,6 +159,7 @@ const Hero2 = () => {
     items: galleryWithIndexes,
     selector: "a[data-fancybox]",
     closeOnTap: false,
+    captionClassName: "inline-block mx-10 text-2xl text-white text-center",
   });
   const [groupIndex, setGroupIndex] = useState(0);
 
@@ -200,6 +201,7 @@ const Hero2 = () => {
                 key={absoluteIndex}
                 data-fancybox="gallery"
                 data-index={absoluteIndex}
+                data-caption={item.alt}
                 href={item.src}
                 onClick={(event) => {
                   event.preventDefault();
@@ -226,6 +228,7 @@ const Hero2 = () => {
               key={`hidden-${item.index ?? i}`}
               data-fancybox="gallery"
               data-index={item.index ?? visibleCount + i}
+              data-caption={item.alt}
               href={item.src}
               onClick={(event) => {
                 event.preventDefault();
