@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface FormData {
   name: string;
@@ -13,6 +13,7 @@ interface FormErrors {
 
 interface FeedbackFormProps {
   idPrefix?: string;
+  initialMessage?: string;
 }
 
 /**
@@ -20,7 +21,7 @@ interface FeedbackFormProps {
  * @param idPrefix - префикс для id элементов формы
  * @return {JSX.Element} JSX-элемент, представляющий форму обратной связи
  */
-const FeedbackForm = ({ idPrefix = 'feedback' }: FeedbackFormProps): JSX.Element => {
+const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFormProps): JSX.Element => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -30,6 +31,10 @@ const FeedbackForm = ({ idPrefix = 'feedback' }: FeedbackFormProps): JSX.Element
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, message: initialMessage }));
+  }, [initialMessage]);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

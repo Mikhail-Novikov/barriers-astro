@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
+import { cloneElement, isValidElement, useEffect, useState } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 
 interface ModalProps {
   children: ReactNode;
@@ -16,8 +16,10 @@ const Modal = ({
 }: ModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [initialMessage, setInitialMessage] = useState('');
 
   const openModal = () => {
+    setInitialMessage('');
     setIsOpen(true);
     requestAnimationFrame(() => setIsVisible(true));
   };
@@ -46,6 +48,18 @@ const Modal = ({
       document.body.classList.remove('overflow-hidden');
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    const handleExternalOpen = (event: Event) => {
+      const customEvent = event as CustomEvent<{ message?: string }>;
+      setInitialMessage(customEvent.detail?.message ?? '');
+      setIsOpen(true);
+      requestAnimationFrame(() => setIsVisible(true));
+    };
+
+    window.addEventListener('open-feedback-modal', handleExternalOpen);
+    return () => window.removeEventListener('open-feedback-modal', handleExternalOpen);
+  }, []);
 
   return (
     <>
@@ -82,7 +96,9 @@ const Modal = ({
             >
               <span aria-hidden="true">&times;</span>
             </button>
-            {children}
+            {isValidElement(children)
+              ? cloneElement(children as ReactElement<{ initialMessage?: string }>, { initialMessage })
+              : children}
           </div>
         </div>
       )}

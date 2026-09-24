@@ -3,8 +3,15 @@ import barriers from '../../content/barriers.json';
 import FilterCheckbox from '@components/FilterCheckbox';
 import WidthSlider from './WidthSlider';
 import { publicAsset } from '@utils/publicAsset';
+import { useLightGallery } from '@hooks/useLightGallery';
+import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
 
 const previewPath = publicAsset('/img/barriers/');
+const barrierMainImages = import.meta.glob('../../assets/img/barriers/*/main/*.{webp,jpg,jpeg,png}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>;
 
 const TemperaturesOptions = [
   ['standard', '−40 °C'],
@@ -116,6 +123,49 @@ export default function Hero6(): JSX.Element {
   const [openings, setOpenings] = useState<string[]>([]);
   const [booms, setBooms] = useState<string[]>([]);
   const [fotoElements, setFotoElements] = useState<string[]>([]);
+  const barrierGalleryItems = useMemo(
+    () => Object.entries(barrierMainImages).map(([path, src]) => ({ src, alt: path })),
+    [],
+  );
+  const { galleryRef } = useLightGallery({
+    items: barrierGalleryItems,
+    selector: 'a[data-fancybox^="barrier-"]',
+    closeOnTap: true,
+    counter: false,
+    showFullscreen: false,
+    mainClass: 'barrier-gallery',
+  });
+
+  useEffect(() => {
+    /**
+     * Обработчик клика по кнопке "Заказать"
+     * @param event - событие клика по кнопке "Заказать"
+     * @returns 
+     */
+    const handleOrderClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const orderButton = target.closest<HTMLButtonElement>('[data-order-barrier]');
+      if (!orderButton) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      const barrierName = orderButton.dataset.orderBarrier;
+      Fancybox.close();
+      // TODO: задержка для открытия модального окна с формой обратной связи, 
+      // можно заменить на вызов функции открытия модального окна
+      window.setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('open-feedback-modal', {
+          detail: { message: barrierName ? `Интересует шлагбаум: ${barrierName}` : '' },
+        }));
+      }, 500);
+    };
+
+    // Добавляем обработчик клика по кнопке "Заказать" на весь документ для делегирования событий, 
+    // чтобы обработать клики на кнопках, которые могут быть динамически добавлены в DOM.
+    document.addEventListener('click', handleOrderClick);
+    // Удаляем обработчик клика по кнопке "Заказать" при размонтировании компонента
+    return () => document.removeEventListener('click', handleOrderClick);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => setIsFiltersOpen(false);
@@ -233,9 +283,42 @@ export default function Hero6(): JSX.Element {
             </aside>
             <p className="px-8 py-2 text-md/6 text-grey-700">Все цены указаны со&nbsp;склада в&nbsp;Москве и&nbsp;Санкт-Петербурге</p>
           </div>
-          <div className="col-span-12 lg:col-span-8 xl:col-span-9 grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-            {filteredBarriers.map((barrier) => (
-              <article key={barrier.fullName} className="flex min-h-[340px] flex-col rounded-3xl bg-white border border-grey-400 transition-colors hover:border-cta cursor-pointer">
+          <div ref={galleryRef} className="col-span-12 lg:col-span-8 xl:col-span-9 grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+            {filteredBarriers.map((barrier) => {
+              const folderName = barrier.imageNamePreview.replace(/-preview$/, '');
+              const galleryImages = Object.entries(barrierMainImages)
+                .filter(([path]) => path.includes(`/barriers/${folderName}/main/`))
+                .map(([, src]) => src);
+              const caption = `
+                <div class="barrier-caption flex max-w-[520px] flex-col gap-2 p-4 text-left">
+                  <h3 class="mb-7 text-2xl xl:text-3xl/10 text-black font-manrope-semibold">${barrier.fullName}</h3>
+                  <div class="flex items-center gap-3">
+                    <div class="text-2xl/8 text-cta font-manrope-bold">${barrier.price}</div>
+                    <div class="text-grey-800 text-sm/normal">Цена со склада<br> в Москве и СПб</div>
+                  </div>
+                  <ul class="mt-7 space-y-1 list-disc pl-6 text-grey-800 marker:text-[12px]">
+                    ${barrier.prodBenefits
+                      .map((feature) => `<li class="text-md/normal">${feature}</li>`)
+                      .join('')}
+                  </ul>
+                  <button type="button" data-order-barrier="${barrier.fullName}" class="mt-8 xl:mt-20 w-full max-w-[280px] rounded-2xl bg-cta px-6 py-3 font-manrope-semibold text-white text-lg transition-colors hover:bg-cta-hover cursor-pointer">Заказать</button>
+                </div>
+              `;
+
+              return (
+              <article
+                key={barrier.fullName}
+                className="flex min-h-[340px] flex-col rounded-3xl bg-white border border-grey-400 transition-colors hover:border-cta cursor-pointer"
+                role="button"
+                tabIndex={0}
+                onClick={() => document.querySelector<HTMLAnchorElement>(`a[data-fancybox="barrier-${folderName}"]`)?.click()}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    document.querySelector<HTMLAnchorElement>(`a[data-fancybox="barrier-${folderName}"]`)?.click();
+                  }
+                }}
+              >
                 <div className="flex min-h-[230px] items-center justify-center">
                   <img className="max-h-[220px] w-full object-contain" src={`${previewPath}${barrier.imageNamePreview.replace(/-preview$/, '')}/preview.webp`} alt={barrier.fullName} loading="lazy" />
                 </div>
@@ -244,8 +327,20 @@ export default function Hero6(): JSX.Element {
                   <p className="mt-1 text-md/5 text-grey-800">{barrier.tag}</p>
                   <p className="mt-4 text-xl/7 text-cta">{barrier.price}</p>
                 </div>
+                {galleryImages.map((src, index) => (
+                  <a
+                    key={src}
+                    data-fancybox={`barrier-${folderName}`}
+                    href={src}
+                    data-caption={caption}
+                    aria-label={`${barrier.fullName}, изображение ${index + 1}`}
+                    className="sr-only"
+                    onClick={(event) => event.stopPropagation()}
+                  />
+                ))}
               </article>
-            ))}
+              );
+            })}
             {filteredBarriers.length === 0 && (
               <p className="rounded-3xl bg-white p-8 text-lg/6 text-grey-700 md:col-span-2 xl:col-span-3">По выбранным условиям модели не найдены.</p>
             )}

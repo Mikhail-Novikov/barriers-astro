@@ -21,6 +21,7 @@ interface UseLightGalleryOptions {
   showFullscreen?: boolean;
   navigation?: boolean;
   showCloseIcon?: boolean;
+  mainClass?: string;
 }
 
 export const useLightGallery = ({
@@ -34,6 +35,7 @@ export const useLightGallery = ({
   showFullscreen = true,
   navigation = true,
   showCloseIcon = true,
+  mainClass,
 }: UseLightGalleryOptions) => {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,6 +60,7 @@ export const useLightGallery = ({
           }
         },
       },
+      ...(mainClass ? { mainClass } : {}),
       Toolbar: {
         display: {
           left: counter ? ['counter'] : [],
@@ -69,8 +72,15 @@ export const useLightGallery = ({
       },
       Carousel: {
         Navigation: navigation,
+        formatCaption: (caption: string, slide: any) =>
+          slide?.triggerEl?.dataset?.caption ?? caption,
       },
       Click: closeOnTap ? 'close' : 'toggle',
+      Zoom: false,
+      Images: {
+        wheel: false, // или wheel: false
+      },
+      wheel: 'slide',
     };
 
     // Bind Fancybox к контейнеру с селектором
@@ -84,7 +94,7 @@ export const useLightGallery = ({
         // Ignore unbind errors
       }
     };
-  }, [items, selector, containerSelector, counter, closeOnTap, controls, showFullscreen, navigation]);
+  }, [items, selector, containerSelector, counter, closeOnTap, controls, showFullscreen, navigation, mainClass]);
 
   const openGallery = (index: number) => {
     const container = containerSelector
