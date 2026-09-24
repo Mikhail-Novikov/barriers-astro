@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Select, { type SingleValue } from 'react-select';
 import { publicAsset } from '../../utils/publicAsset';
 import { HtmlContent } from '@utils/HtmlContent';
@@ -212,6 +212,7 @@ const solutions: Solution[] = [
 
 export default function Hero10(): JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
   const activeSolution = solutions[activeIndex];
   const solutionOptions: SolutionOption[] = solutions.map((solution, index) => ({
     value: index,
@@ -222,13 +223,18 @@ export default function Hero10(): JSX.Element {
     if (option) setActiveIndex(option.value);
   };
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   return (
     <section aria-label="Готовые решения" className="bg-white pt-10 md:pt-15 xl:pt-20 pb-10 md:pb-15 lg:pb-20 xl:pb-25">
       <div className="container">
         <h3 className="h2 mb-6 lg:mb-8">Готовые решения</h3>
 
-        <div className="md:hidden mb-6" aria-label="Варианты объектов">
-          <Select<SolutionOption, false>
+        {isMounted && (
+          <div className="md:hidden mb-6" aria-label="Варианты объектов">
+            <Select<SolutionOption, false>
             instanceId="solution-select"
             inputId="solution-select"
             aria-label="Варианты объектов"
@@ -257,8 +263,9 @@ export default function Hero10(): JSX.Element {
                 display: 'none',
               }),
             }}
-          />
-        </div>
+            />
+          </div>
+        )}
 
         <div className="perco-icons hidden flex-wrap gap-2 mb-8 lg:gap-3 md:flex" role="tablist" aria-label="Варианты объектов">
           {solutions.map((solution, index) => {
