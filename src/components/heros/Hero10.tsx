@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Select, { type SingleValue } from 'react-select';
 import { publicAsset } from '../../utils/publicAsset';
 import { HtmlContent } from '@utils/HtmlContent';
-import { useBreakpoint } from '@hooks/useBreakpoint';
 
 type Solution = {
   tag: string;
@@ -213,7 +212,6 @@ const solutions: Solution[] = [
 
 export default function Hero10(): JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0);
-  const screen = useBreakpoint();
   const activeSolution = solutions[activeIndex];
   const solutionOptions: SolutionOption[] = solutions.map((solution, index) => ({
     value: index,
@@ -229,40 +227,38 @@ export default function Hero10(): JSX.Element {
       <div className="container">
         <h3 className="h2 mb-6 lg:mb-8">Готовые решения</h3>
 
-        {!screen.md && (
-          <div className="md:hidden mb-6" aria-label="Варианты объектов">
-            <Select<SolutionOption, false>
-              instanceId="solution-select"
-              inputId="solution-select"
-              aria-label="Варианты объектов"
-              options={solutionOptions}
-              value={solutionOptions[activeIndex]}
-              onChange={handleSolutionChange}
-              isSearchable={false}
-              classNamePrefix="solution-select"
-              styles={{
-                control: (base) => ({
-                  ...base,
-                  minHeight: 44,
-                  borderRadius: 8,
-                  borderColor: '#AEAFBF',
-                  backgroundColor: '#F3F4F8',
-                  boxShadow: 'none',
-                }),
-                option: (base, state) => ({
-                  ...base,
-                  color: '#22252F',
-                  backgroundColor: state.isSelected ? '#E2E3EA' : state.isFocused ? '#F3F4F8' : '#FFFFFF',
-                  borderColor: state.isSelected ? '#003067' : '',
-                }),
-                indicatorSeparator: (base) => ({
-                  ...base,
-                  display: 'none',
-                }),
-              }}
-            />
-          </div>
-        )}
+        <div className="md:hidden mb-6" aria-label="Варианты объектов">
+          <Select<SolutionOption, false>
+            instanceId="solution-select"
+            inputId="solution-select"
+            aria-label="Варианты объектов"
+            options={solutionOptions}
+            value={solutionOptions[activeIndex]}
+            onChange={handleSolutionChange}
+            isSearchable={false}
+            classNamePrefix="solution-select"
+            styles={{
+              control: (base) => ({
+                ...base,
+                minHeight: 44,
+                borderRadius: 8,
+                borderColor: '#AEAFBF',
+                backgroundColor: '#F3F4F8',
+                boxShadow: 'none',
+              }),
+              option: (base, state) => ({
+                ...base,
+                color: '#22252F',
+                backgroundColor: state.isSelected ? '#E2E3EA' : state.isFocused ? '#F3F4F8' : '#FFFFFF',
+                borderColor: state.isSelected ? '#003067' : '',
+              }),
+              indicatorSeparator: (base) => ({
+                ...base,
+                display: 'none',
+              }),
+            }}
+          />
+        </div>
 
         <div className="perco-icons hidden flex-wrap gap-2 mb-8 lg:gap-3 md:flex" role="tablist" aria-label="Варианты объектов">
           {solutions.map((solution, index) => {
