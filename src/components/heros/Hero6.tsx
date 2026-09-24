@@ -5,6 +5,9 @@ import WidthSlider from './WidthSlider';
 import { publicAsset } from '@utils/publicAsset';
 import { useLightGallery } from '@hooks/useLightGallery';
 import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
+import Modal from './Modal';
+import FeedbackForm from './FeedbackForm';
+import { barrierFeedback } from '@utils/barrierFeedback';
 
 const previewPath = publicAsset('/img/barriers/');
 const barrierMainImages = import.meta.glob('../../assets/img/barriers/*/main/*.{webp,jpg,jpeg,png}', {
@@ -37,6 +40,7 @@ const fotoElementOptions = [
 
 type FilterValue = string | boolean;
 
+/** Тип свойств секции фильтрации */
 type FilterSectionProps<T extends FilterValue> = {
   title: string;
   options: readonly (readonly [T, string])[];
@@ -44,6 +48,11 @@ type FilterSectionProps<T extends FilterValue> = {
   onToggle: (value: T) => void;
 };
 
+/**
+ * Создает секцию фильтрации.
+ * @param props FilterSectionProps<T>- свойства секции фильтрации
+ * @return {JSX.Element} JSX-элемент секции фильтрации
+ */
 function FilterSection<T extends FilterValue>({
   title,
   options,
@@ -65,14 +74,31 @@ function FilterSection<T extends FilterValue>({
   );
 }
 
-function toggleValue<T>(value: T, values: T[], setValues: (values: T[]) => void) {
+/**
+ * Переключает значение в массиве.
+ * @param value - значение, которое нужно переключить
+ * @param values - массив значений
+ * @param setValues - функция для установки нового массива значений
+ * @return {void}
+ */
+const toggleValue = <T,>(value: T, values: T[], setValues: (values: T[]) => void): void => {
   setValues(values.includes(value) ? values.filter((item) => item !== value) : [...values, value]);
-}
+};
 
-function createFilterSection<T extends FilterValue>(props: FilterSectionProps<T>): JSX.Element {
+/**
+ * Создает секцию фильтрации.
+ * @param props FilterSectionProps<T>- свойства секции фильтрации
+ * @return {JSX.Element} JSX-элемент секции фильтрации
+ */
+const createFilterSection = <T extends FilterValue>(props: FilterSectionProps<T>): JSX.Element => {
   return <FilterSection {...props} />;
 }
 
+/**
+ * Возвращает длину барьера в зависимости от ширины дороги.
+ * @param roadWidth - ширина дороги
+ * @return {string} длина барьера
+ */
 const getRequiredBoomLength = (roadWidth: number): string | null => {
   if (roadWidth === 0) return null;
   if (roadWidth <= 3) return '3';
@@ -80,6 +106,12 @@ const getRequiredBoomLength = (roadWidth: number): string | null => {
   return '6.3';
 };
 
+/**
+ * Проверяет, соответствует ли барьер выбранным фильтрам по температуре.
+ * @param selected - массив выбранных фильтров по температуре
+ * @param isLowTemp - признак низкой температуры
+ * @return {boolean} true, если барьер соответствует фильтрам, иначе false
+ */
 const matchesTemperatureFilter = (selected: string[], isLowTemp: boolean): boolean => {
   const hasStandard = selected.includes('standard');
   const hasLow = selected.includes('low');
@@ -88,6 +120,13 @@ const matchesTemperatureFilter = (selected: string[], isLowTemp: boolean): boole
   return hasLow === isLowTemp;
 };
 
+/**
+ * Проверяет, соответствует ли барьер выбранным фильтрам по времени открытия.
+ * @param selected - массив выбранных фильтров по времени открытия
+ * @param isHighSpeed - признак высокой скорости
+ * @param openingTime - время открытия
+ * @return {boolean} true, если барьер соответствует фильтрам, иначе false
+ */
 const matchesOpeningFilter = (selected: string[], isHighSpeed: boolean, openingTime: string): boolean => {
   if (selected.length === 0) return true;
 
@@ -98,6 +137,13 @@ const matchesOpeningFilter = (selected: string[], isHighSpeed: boolean, openingT
   });
 };
 
+/**
+ * Проверяет, соответствует ли барьер выбранным фильтрам по шлагбауму.
+ * @param selected - массив выбранных фильтров по шлагбауму
+ * @param boomShape - форма шлагбаума
+ * @param isBoomFoldable - возможность складывать шлагбаум
+ * @return {boolean} true, если барьер соответствует фильтрам, иначе false
+ */
 const matchesBoomFilter = (selected: string[], boomShape: string, isBoomFoldable: boolean): boolean => {
   if (selected.length === 0) return true;
 
@@ -107,6 +153,12 @@ const matchesBoomFilter = (selected: string[], boomShape: string, isBoomFoldable
   });
 };
 
+/**
+ * Проверяет, соответствует ли барьер выбранным фильтрам по фотоэлементу.
+ * @param selected - массив выбранных фильтров по фотоэлементу
+ * @param bodyStyle - стиль корпуса барьера
+ * @return {boolean} true, если барьер соответствует фильтрам, иначе false
+ */
 const matchesFotoElementFilter = (selected: string[], bodyStyle: string): boolean => {
   if (selected.length === 0) return true;
 
@@ -116,6 +168,10 @@ const matchesFotoElementFilter = (selected: string[], bodyStyle: string): boolea
   });
 };
 
+/**
+ * Компонент Hero6 отображает каталог моделей шлагбаумов с возможностью фильтрации.
+ * @return {JSX.Element} JSX-элемент, представляющий каталог моделей шлагбаумов
+ */
 export default function Hero6(): JSX.Element {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [maxWidth, setMaxWidth] = useState(0);
@@ -137,36 +193,50 @@ export default function Hero6(): JSX.Element {
   });
 
   useEffect(() => {
+    const MODAL_OPEN_DELAY_MS = 500;
+    const SESSION_STORAGE_KEY = 'barrier-feedback-message';
+    const MODAL_TRIGGER_SELECTOR = '#open-modal-sale-barrier';
+    const ORDER_BUTTON_ATTR = 'data-order-barrier';
+
     /**
      * Обработчик клика по кнопке "Заказать"
      * @param event - событие клика по кнопке "Заказать"
-     * @returns 
      */
     const handleOrderClick = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      const orderButton = target.closest<HTMLButtonElement>('[data-order-barrier]');
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+
+      // Получаем ближайшую кнопку с атрибутом data-order-barrier
+      const orderButton = target.closest<HTMLButtonElement>(`[${ORDER_BUTTON_ATTR}]`);
       if (!orderButton) return;
 
       event.preventDefault();
       event.stopPropagation();
-      const barrierName = orderButton.dataset.orderBarrier;
+
+      // Получаем название барьера из атрибута data-order-barrier
+      const barrierName = orderButton.getAttribute(ORDER_BUTTON_ATTR) ?? '';
+      const message = barrierName ? `Мне нужна консультация: ${barrierName}` : '';
+
+      // Сохраняем сообщение в переменную утилиты barrierFeedback для передачи в модальное окно
+      barrierFeedback.set(message);
+
+      // Закрываем Fancybox
       Fancybox.close();
-      // TODO: задержка для открытия модального окна с формой обратной связи, 
-      // можно заменить на вызов функции открытия модального окна
+      // и открываем модальное окно с формой обратной связи
       window.setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('open-feedback-modal', {
-          detail: { message: barrierName ? `Интересует шлагбаум: ${barrierName}` : '' },
-        }));
-      }, 500);
+        document.querySelector<HTMLButtonElement>(MODAL_TRIGGER_SELECTOR)?.click();
+      }, MODAL_OPEN_DELAY_MS);
     };
 
-    // Добавляем обработчик клика по кнопке "Заказать" на весь документ для делегирования событий, 
-    // чтобы обработать клики на кнопках, которые могут быть динамически добавлены в DOM.
+    // Добавляем обработчик клика по кнопке "Заказать"
     document.addEventListener('click', handleOrderClick);
-    // Удаляем обработчик клика по кнопке "Заказать" при размонтировании компонента
-    return () => document.removeEventListener('click', handleOrderClick);
+
+    return () => {
+      document.removeEventListener('click', handleOrderClick);
+    };
   }, []);
 
+  // Закрытие фильтров при изменении размера окна
   useEffect(() => {
     const handleResize = () => setIsFiltersOpen(false);
 
@@ -174,6 +244,7 @@ export default function Hero6(): JSX.Element {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Фильтры
   const filterSections = [
     createFilterSection({
       title: 'Минимальная температура эксплуатации',
@@ -201,6 +272,7 @@ export default function Hero6(): JSX.Element {
     }),
   ];
 
+  // Фильтрация
   const requiredBoomLength = getRequiredBoomLength(maxWidth);
   const filteredBarriers = useMemo(
     () => barriers.filter(
@@ -214,7 +286,11 @@ export default function Hero6(): JSX.Element {
       [booms, fotoElements, openings, requiredBoomLength, temperatures]
   );
 
-  const resetFilters = () => {
+  /**
+   * Сброс фильтров
+   * @return {void}
+   */
+  const resetFilters = (): void => {
     setMaxWidth(0);
     setTemperatures([]);
     setOpenings([]);
@@ -222,12 +298,20 @@ export default function Hero6(): JSX.Element {
     setFotoElements([]);
   };
 
+  /**
+   * Количество примененных фильтров
+   * @return {number} количество примененных фильтров
+   */
   const appliedFiltersCount = (maxWidth > 0 ? 1 : 0)
     + temperatures.length
     + openings.length
     + booms.length
     + fotoElements.length;
 
+  /**
+   * Контент фильтров
+   * @return {JSX.Element} JSX-элемент с контентом фильтров
+   */
   const filtersContent = (
     <>
       <fieldset>
@@ -250,6 +334,13 @@ export default function Hero6(): JSX.Element {
   return (
     <section aria-label="Модели шлагбаумов" className="relative bg-grey-200 pt-10 sm:pt-15 3xl:pt-20 pb-10 sm:pb-20 lg:pb-20">
       <div className="container">
+        <Modal
+          triggerId="open-modal-sale-barrier"
+          triggerClassName="hidden"
+          title="Заказать шлагбаум"
+        >
+          <FeedbackForm idPrefix="open-modal-sale-barrier" />
+        </Modal>
         <h2 id="catalog" className="h2 mb-6 lg:mb-8">Модели шлагбаумов</h2>
         <div className="perco-icons mb-4 lg:hidden">
           <button type="button" onClick={() => setIsFiltersOpen(true)} className="flex items-center gap-x-3 cursor-pointer text-cta hover:text-cta/90">

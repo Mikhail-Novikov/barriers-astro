@@ -6,13 +6,27 @@ interface ModalProps {
   title?: string;
   triggerLabel?: string;
   triggerClassName?: string;
+  triggerId?: string;
+  onClose?: () => void;
 }
 
+/**
+ * Компонент модального окна
+ * @param children - содержимое модального окна
+ * @param title - заголовок модального окна
+ * @param triggerLabel - текст кнопки, открывающей модальное окно
+ * @param triggerClassName - класс кнопки, открывающей модальное окно
+ * @param triggerId - id кнопки, открывающей модальное окно
+ * @param onClose - функция, вызываемая при закрытии модального окна
+ * @return {JSX.Element} JSX-элемент, представляющий модальное окно
+ */
 const Modal = ({
   children,
   title = 'Модальное окно',
   triggerLabel = 'Открыть окно',
   triggerClassName = 'btn--outline mr-16 lg:mr-0 hidden lg:block',
+  triggerId,
+  onClose,
 }: ModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -27,6 +41,7 @@ const Modal = ({
   const closeModal = () => {
     setIsVisible(false);
     setIsOpen(false);
+    onClose?.();
   };
 
   useEffect(() => {
@@ -49,22 +64,11 @@ const Modal = ({
     };
   }, [isOpen]);
 
-  useEffect(() => {
-    const handleExternalOpen = (event: Event) => {
-      const customEvent = event as CustomEvent<{ message?: string }>;
-      setInitialMessage(customEvent.detail?.message ?? '');
-      setIsOpen(true);
-      requestAnimationFrame(() => setIsVisible(true));
-    };
-
-    window.addEventListener('open-feedback-modal', handleExternalOpen);
-    return () => window.removeEventListener('open-feedback-modal', handleExternalOpen);
-  }, []);
-
   return (
     <>
       <button
         type="button"
+        id={triggerId}
         className={triggerClassName}
         onClick={openModal}
       >

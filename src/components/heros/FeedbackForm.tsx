@@ -1,18 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { barrierFeedback } from '@utils/barrierFeedback';
 
+// интерфейсы для данных формы
 interface FormData {
   name: string;
   email: string;
   message: string;
 }
 
+// интерфейсы для ошибок валидации
 interface FormErrors {
   email?: string;
   message?: string;
 }
 
+// интерфейсы пропсов компонента
 interface FeedbackFormProps {
+  // префикс id элементов формы
   idPrefix?: string;
+  // начальное сообщение, которое будет установлено в поле сообщения
   initialMessage?: string;
 }
 
@@ -22,25 +28,51 @@ interface FeedbackFormProps {
  * @return {JSX.Element} JSX-элемент, представляющий форму обратной связи
  */
 const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFormProps): JSX.Element => {
-  const [formData, setFormData] = useState<FormData>({
+  const pendingMessage = idPrefix === 'open-modal-sale-barrier'
+    ? barrierFeedback.consume()
+    : '';
+  const [formData, setFormData] = useState<FormData>(() => ({
     name: '',
     email: '',
-    message: '',
-  });
+    message: initialMessage || pendingMessage,
+  }));
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const messageFieldRef = useRef<HTMLTextAreaElement>(null);
 
+  // Синхронизация сообщения из props initialMessage в состояние формы
   useEffect(() => {
-    setFormData((prev) => ({ ...prev, message: initialMessage }));
+    if (initialMessage) {
+      setFormData((prev) => ({ ...prev, message: initialMessage }));
+    }
   }, [initialMessage]);
 
+  useEffect(() => {
+    const frameId = requestAnimationFrame(() => {
+      if (messageFieldRef.current && messageFieldRef.current.value !== formData.message) {
+        messageFieldRef.current.value = formData.message;
+      }
+    });
+
+    return () => cancelAnimationFrame(frameId);
+  }, [formData.message]);
+
+  /**
+   * Функция для валидации email
+   * @param email - email для проверки
+   * @return {boolean} true, если email корректный, иначе false
+   */
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
+  /**
+   * Функция для валидации формы обратной связи
+   * @return {boolean} true, если форма валидна, иначе false
+   */
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
@@ -58,10 +90,14 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
     return Object.keys(newErrors).length === 0;
   };
 
+  /**
+   * Обработчик изменения полей формы
+   * @param event - событие изменения поля
+   */
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = event.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -75,8 +111,12 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  /**
+   * Обработчик отправки формы
+   * @param event - событие отправки формы
+   */
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     if (!validateForm()) {
       return;
@@ -86,8 +126,6 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
     try {
       // Здесь можно добавить отправку данных на сервер
       // await fetch('/api/feedback', { method: 'POST', body: JSON.stringify(formData) })
-      
-      console.log('Отправка обратной связи:', formData);
       
       setSubmitSuccess(true);
       setFormData({ name: '', email: '', message: '' });
@@ -161,6 +199,7 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
             Сообщение<span className="text-cta">*</span>
           </label>
           <textarea
+            ref={messageFieldRef}
             id={`${idPrefix}-message`}
             name="message"
             value={formData.message}
