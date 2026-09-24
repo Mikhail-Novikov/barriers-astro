@@ -6,7 +6,7 @@
 }
 
 .h3 {
-  @apply not-italic font-manrope-semibold text-grey-1000 text-[28px]/8 min-[600px]:text-[32px]/10 tracking-[0.01em];
+  @apply not-italic font-manrope-bold text-grey-1000 text-[28px]/8 min-[600px]:text-[32px]/10 tracking-[0.01em];
 }
 
 .h4 {
