@@ -1,13 +1,17 @@
 .btn {
-  @apply border-1 cursor-pointer shrink-0 ![transition:all_0.3s] text-lg font-normal rounded-2xl min-h-12 pl-9 pr-9 text-white
+  @apply border-1 cursor-pointer ![transition:all_0.3s] font-manrope-semibold min-h-12 pl-9 pr-9 text-white
 }
 
 .btn-up {
-  @apply border-grey-700 hover:border-white cursor-pointer shrink-0 ![transition:all_0.3s] flex items-center bg-transparent w-auto px-6 gap-2 text-lg rounded-2xl h-13
+  @apply border-grey-700 hover:border-white cursor-pointer ![transition:all_0.3s] flex items-center bg-transparent w-auto px-6 gap-2 text-lg rounded-2xl h-13
+}
+
+.btn--primary {
+  @apply bg-cta rounded-[16px] text-white text-lg hover:bg-cta-hover disabled:bg-cta-disabled
 }
 
 .btn--outline {
-  @apply bg-transparent border text-white font-manrope-semibold px-8 rounded-4xl h-12 hover:bg-white hover:text-grey-1000 transition-colors cursor-pointer
+  @apply bg-transparent border-2 px-8 rounded-[24px] text-white hover:bg-white hover:text-grey-1000 transition-colors cursor-pointer
 }
 
 .link--underline {

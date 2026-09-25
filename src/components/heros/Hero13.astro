@@ -10,12 +10,12 @@ import { publicAsset } from '../../utils/publicAsset';
         <img 
           src={publicAsset('/img/ill-feedback.webp')}
           alt="Техническая поддержка" 
-          class="sm:order-1 mx-auto block h-auto w-full max-w-[127px] sm:max-w-md object-contain"
+          class="sm:order-1 block mt-20 ml-19 h-auto w-full max-w-[127px] sm:max-w-md object-contain"
           loading="lazy"
         />
         <h2 class="mt-1 text-2xl/8 sm:text-[60px]/16 font-normal text-center sm:text-left sm:text-grey-700">Остались вопросы?</h2>
       </div>
-      <div>
+      <div class="ml-3">
         <FeedbackForm client:load idPrefix="feedback-page" />
       </div>
     </div>

@@ -58,16 +58,17 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
           breakpoints={{
             600: { slidesPerView: 1.3 },
             712: { slidesPerView: 1.8 },
-            1200: { slidesPerView: 1.7 },
+            1019: { slidesPerView: 1.7 },
+            1200: { slidesPerView: 1.8 },
             1400: { slidesPerView: 2.3 },
-            1600: { slidesPerView: 2.4 },
+            1600: { slidesPerView: 3.3 },
           }}
           spaceBetween={12}
           className="equipment-carousel"
         >
           {cards.map((card) => (
             <SwiperSlide key={`${card.id}-${card.title}`}>
-              <article>
+              <article className="w-[352px]">
                 <img
                   className="rounded-3xl bg-grey-200 object-contain"
                   src={publicAsset(

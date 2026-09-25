@@ -11,12 +11,12 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const variantClassName = variant === 'outline'
-    ? 'border border-white bg-transparent text-white hover:bg-white hover:text-grey-1000'
-    : 'bg-cta text-white hover:bg-cta-hover disabled:bg-cta-disabled';
+    ? 'btn--outline'
+    : 'btn--primary';
 
   return (
     <button
-      className={`rounded-2xl px-8 py-3 transition-colors disabled:cursor-not-allowed cursor-pointer text-lg ${variantClassName} ${className}`}
+      className={`btn ${variantClassName} ${className}`}
       {...props}
     >
       {children}
