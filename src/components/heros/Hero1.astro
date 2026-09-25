@@ -57,7 +57,7 @@ const faqItems = [
     <div class="grid grid-cols-12 gap-4">
       <div class="col-span-12 lg:col-span-5 pt-2 lg:pt-0 lg:mt-5 lg:order-1">
         <FaqAccordion client:load items={faqItems} />
-        <Modal client:load triggerLabel="Получить консультацию" title="Форма обратной связи" triggerClassName="mt-6 lg:mt-14 hidden lg:block">
+        <Modal client:load triggerLabel="Получить консультацию" title="Форма обратной связи" triggerClassName="mt-6 lg:mt-14 hidden lg:block" triggerVariant="primary">
           <FeedbackForm idPrefix="open-modal-sale-barrier" />
         </Modal>
       </div>
@@ -75,7 +75,7 @@ const faqItems = [
         </video>
       </div>
     </div>
-    <Modal client:load triggerLabel="Получить консультацию" title="Форма обратной связи" triggerClassName="mt-8 lg:hidden">
+    <Modal client:load triggerLabel="Получить консультацию" title="Форма обратной связи" triggerClassName="mt-8 lg:hidden" triggerVariant="primary">
       <FeedbackForm idPrefix="open-modal-sale-barrier" />
     </Modal>
   </div>

@@ -1,12 +1,14 @@
 import { cloneElement, isValidElement, useEffect, useState } from 'react';
 import type { ReactElement, ReactNode } from 'react';
 import { Button } from '@components/Button';
+import type { ButtonVariant } from '@components/Button';
 
 interface ModalProps {
   children: ReactNode;
   title?: string;
   triggerLabel?: string;
   triggerClassName?: string;
+  triggerVariant?: ButtonVariant;
   triggerId?: string;
   onClose?: () => void;
 }
@@ -17,6 +19,7 @@ interface ModalProps {
  * @param title - заголовок модального окна
  * @param triggerLabel - текст кнопки, открывающей модальное окно
  * @param triggerClassName - класс кнопки, открывающей модальное окно
+ * @param triggerVariant - вариант кнопки, открывающей модальное окно
  * @param triggerId - id кнопки, открывающей модальное окно
  * @param onClose - функция, вызываемая при закрытии модального окна
  * @return {JSX.Element} JSX-элемент, представляющий модальное окно
@@ -26,6 +29,7 @@ const Modal = ({
   title = 'Модальное окно',
   triggerLabel = 'Открыть окно',
   triggerClassName = 'btn--outline mr-16 lg:mr-0 hidden lg:block',
+  triggerVariant = 'outline',
   triggerId,
   onClose,
 }: ModalProps) => {
@@ -70,7 +74,8 @@ const Modal = ({
       <Button
         type="button"
         id={triggerId}
-        className={triggerClassName}
+        variant={triggerVariant}
+        className={triggerClassName.replace('btn--outline', '')}
         onClick={openModal}
       >
         {triggerLabel}
