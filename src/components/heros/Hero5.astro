@@ -1,31 +1,25 @@
 ---
-import rs1 from '../../assets/img/reliability-security/rs-1.png';
-import rs2 from '../../assets/img/reliability-security/rs-2.png';
-import rs3 from '../../assets/img/reliability-security/rs-3.png';
-import rs4 from '../../assets/video/reliability-security/rs4-video.mp4';
-
 import { publicAsset } from "@utils/publicAsset";
 
 const cards = [
   {
-    image: rs1,
+    image: '/img/reliability-security/rs-1.webp',
     notification: true,
     title: 'Датчики вскрытия корпуса',
     description: 'Датчик открытия дверцы позволяет <b class="font-manrope-semibold">отслеживать несанкционированный доступ</b> к внутренним элементам шлагбаума, включая механизм ручного поднятия стрелы. <b class="font-manrope-semibold">Уведомление о взломе</b> мгновенно поступает на пульт охраны.',
   },
   {
-    image: rs2,
+    image: '/img/reliability-security/rs-2.webp',
     title: 'Аварийное открытие',
     description: 'Для свободного проезда в экстренной ситуации к шлагбауму подключается устройство аварийного открытия.',
   },
   {
-    image: rs3,
+    image: '/img/reliability-security/rs-3.webp',
     title: 'Сигнальная индикация',
     description: '<p class="mb-5">На шлагбаум может дополнительно устанавливаться сигнальная лампа.</p> <p><b class="font-manrope-semibold">Модели GS04.1</b> и <b class="font-manrope-semibold">GS06.1</b> имеют встроенную сигнальную индикацию.</p>',
   },
   {
     isVideo: true,
-    pathVideo: rs4,
     title: 'Защита от наезда и механического воздействия',
     description: 'Стрела оснащена пластиковыми предохранителями: при критической нагрузке на стрелу они разрушаются, стрела отсоединяется, при этом механизм и тумба не повреждаются.',
   },
@@ -43,12 +37,13 @@ const cards = [
             {!card.isVideo ? (
               <img
                 class="h-full w-full object-cover"
-                src={card.image?.src}
+                src={publicAsset(`${card.image}`)}
                 alt={card.title}
                 loading="lazy"
               />
             ) : (
-              <video class="h-full w-full object-cover" src={card.pathVideo} 
+              <video class="h-full w-full object-cover"
+                src={publicAsset('/video/reliability-security/rs4-video.mp4')}
                 muted
                 autoplay
                 preload="auto"
