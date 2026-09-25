@@ -9,6 +9,7 @@ import Modal from './Modal';
 import FeedbackForm from './FeedbackForm';
 import { barrierFeedback } from '@utils/barrierFeedback';
 
+import emptySearchImage from '../../assets/img/empty-search.png';
 const previewPath = publicAsset('/img/barriers/');
 const barrierMainImages = import.meta.glob('../../assets/img/barriers/*/main/*.{webp,jpg,jpeg,png}', {
   eager: true,
@@ -387,9 +388,11 @@ export default function Hero6(): JSX.Element {
                     <div class="text-2xl/8 text-cta font-manrope-bold">${barrier.price}</div>
                     <div class="text-grey-800 text-sm/normal">Цена со склада<br> в Москве и СПб</div>
                   </div>
-                  <ul class="mt-7 space-y-1 list-disc pl-6 text-grey-800 marker:text-[12px]">
+                  <ul class="mt-7 space-y-1 list-disc pl-6 text-grey-800 marker:text-[12px] marker">
                     ${barrier.prodBenefits
-                      .map((feature) => `<li class="text-md/normal">${feature}</li>`)
+                      .map((feature) => `<li class="text-md/normal">
+                        ${feature}
+                      </li>`)
                       .join('')}
                   </ul>
                   <button type="button" data-order-barrier="${barrier.fullName}" class="mt-8 xl:mt-20 w-full max-w-[280px] rounded-2xl bg-cta px-6 py-3 font-manrope-semibold text-white text-lg transition-colors hover:bg-cta-hover cursor-pointer">Заказать</button>
@@ -433,7 +436,10 @@ export default function Hero6(): JSX.Element {
               );
             })}
             {filteredBarriers.length === 0 && (
-              <p className="rounded-3xl bg-white p-8 text-lg/6 text-grey-700 md:col-span-2 xl:col-span-3">По выбранным условиям модели не найдены.</p>
+              <div className="md:col-span-2 xl:col-span-3 rounded-3xl bg-white p-8 text-lg/6 text-grey-800 text-center">
+                <img className="shrink-0 mx-auto mb-8" src={emptySearchImage.src} width="424" height="307" alt="не найдено"></img>
+                <p>Ничего не&nbsp;найдено.<br />Уменьшите количество фильтров.</p>
+              </div>
             )}
           </div>
           <p className="col-span-12 pl-3 text-md/6 text-grey-700 block lg:hidden">Все цены указаны со&nbsp;склада в&nbsp;Москве и&nbsp;Санкт-Петербурге</p>
