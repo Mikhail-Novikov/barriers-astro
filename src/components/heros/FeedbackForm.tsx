@@ -41,7 +41,7 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const messageFieldRef = useRef<HTMLTextAreaElement>(null);
+  const messageFieldRef = useRef<HTMLDivElement>(null);
 
   // Синхронизация сообщения из props initialMessage в состояние формы
   useEffect(() => {
@@ -52,8 +52,8 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
 
   useEffect(() => {
     const frameId = requestAnimationFrame(() => {
-      if (messageFieldRef.current && messageFieldRef.current.value !== formData.message) {
-        messageFieldRef.current.value = formData.message;
+      if (messageFieldRef.current && messageFieldRef.current.innerHTML !== formData.message) {
+        messageFieldRef.current.innerHTML = formData.message;
       }
     });
 
@@ -95,9 +95,7 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
    * Обработчик изменения полей формы
    * @param event - событие изменения поля
    */
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prev) => ({
       ...prev,
@@ -108,6 +106,20 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
       setErrors((prev) => ({
         ...prev,
         [name]: undefined,
+      }));
+    }
+  };
+
+  const handleMessageChange = (event: React.FormEvent<HTMLDivElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      message: event.currentTarget.innerHTML,
+    }));
+
+    if (errors.message) {
+      setErrors((prev) => ({
+        ...prev,
+        message: undefined,
       }));
     }
   };
@@ -196,17 +208,18 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
 
         {/* Сообщение */}
         <div>
-          <label htmlFor={`${idPrefix}-message`} className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
+          <label id={`${idPrefix}-message-label`} htmlFor={`${idPrefix}-message`} className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
             Сообщение<span className="text-cta">*</span>
           </label>
-          <textarea
+          <div
             ref={messageFieldRef}
             id={`${idPrefix}-message`}
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder="Сообщение"
-            rows={5}
+            role="textbox"
+            aria-multiline="true"
+            aria-labelledby={`${idPrefix}-message-label`}
+            contentEditable
+            suppressContentEditableWarning
+            onInput={handleMessageChange}
             className={`w-full px-4 py-2 sm:p-5 h-30 sm:h-[190px] rounded-lg sm:rounded-[20px] border bg-grey-50 bg-white text-grey-1000 text-sm sm:text-lg placeholder-grey-800 focus:outline-none transition-colors resize-none ${
               errors.message
                 ? 'border-red-500 focus:ring-1 focus:ring-red-500'

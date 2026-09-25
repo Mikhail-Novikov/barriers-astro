@@ -9,6 +9,7 @@ interface ModalProps {
   triggerLabel?: string;
   triggerClassName?: string;
   triggerVariant?: ButtonVariant;
+  initialMessage?: string;
   triggerId?: string;
   onClose?: () => void;
 }
@@ -30,6 +31,7 @@ const Modal = ({
   triggerLabel = 'Открыть окно',
   triggerClassName = 'btn--outline mr-16 lg:mr-0 hidden lg:block',
   triggerVariant = 'outline',
+  initialMessage: initialMessageProp = '',
   triggerId,
   onClose,
 }: ModalProps) => {
@@ -38,7 +40,7 @@ const Modal = ({
   const [initialMessage, setInitialMessage] = useState('');
 
   const openModal = () => {
-    setInitialMessage('');
+    setInitialMessage(initialMessageProp);
     setIsOpen(true);
     requestAnimationFrame(() => setIsVisible(true));
   };

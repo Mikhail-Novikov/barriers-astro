@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import Select, { type SingleValue } from 'react-select';
-import { publicAsset } from '../../utils/publicAsset';
+
 import { HtmlContent } from '@utils/HtmlContent';
+import Modal from '@components/heros/Modal';
+import FeedbackForm from '@components/heros/FeedbackForm';
+
+import { publicAsset } from '../../utils/publicAsset';
 
 type Solution = {
   tag: string;
@@ -315,7 +319,15 @@ export default function Hero10(): JSX.Element {
                 <SolutionAdditions additions={activeSolution.alternative.additions} />
               </>
             )}
-            <button type="button" className="min-w-[232px] cursor-pointer rounded-2xl bg-cta px-8 h-12 text-lg text-white transition-colors hover:bg-cta-hover">Заказать</button>
+            <Modal
+              triggerLabel="Заказать"
+              title="Форма обратной связи"
+              triggerClassName="min-w-[232px]"
+              triggerVariant="primary"
+              initialMessage={`Нужна консультация по готовому решению:<br /> <strong class="font-manrope-semibold">${activeSolution.title}</strong> <strong class="font-manrope-semibold">${activeSolution.description}</strong>${activeSolution.alternative ? `<br /><strong class="font-manrope-semibold">${activeSolution.alternative.description}</strong>` : ''}`}
+            >
+              <FeedbackForm idPrefix="open-modal-sale-barrier" />
+            </Modal>
           </div>
         </div>
       </div>

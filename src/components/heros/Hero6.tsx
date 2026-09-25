@@ -216,7 +216,7 @@ export default function Hero6(): JSX.Element {
 
       // Получаем название барьера из атрибута data-order-barrier
       const barrierName = orderButton.getAttribute(ORDER_BUTTON_ATTR) ?? '';
-      const message = barrierName ? `Мне нужна консультация: ${barrierName}` : '';
+      const message = barrierName ? `Нужна консультация:<br /> <strong class="font-manrope-semibold">${barrierName}</strong>` : '';
 
       // Сохраняем сообщение в переменную утилиты barrierFeedback для передачи в модальное окно
       barrierFeedback.set(message);
