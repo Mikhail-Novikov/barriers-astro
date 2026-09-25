@@ -4,6 +4,8 @@ import rs2 from '../../assets/img/reliability-security/rs-2.png';
 import rs3 from '../../assets/img/reliability-security/rs-3.png';
 import rs4 from '../../assets/video/reliability-security/rs4-video.mp4';
 
+import { publicAsset } from "@utils/publicAsset";
+
 const cards = [
   {
     image: rs1,
@@ -50,6 +52,7 @@ const cards = [
                 muted
                 autoplay
                 preload="auto"
+                poster={publicAsset("/img/reliability-security/rs-4.webp")}
                 playsinline
                 loop />
             )}
