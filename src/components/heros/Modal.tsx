@@ -1,5 +1,6 @@
 import { cloneElement, isValidElement, useEffect, useState } from 'react';
 import type { ReactElement, ReactNode } from 'react';
+import { Button } from '@components/Button';
 
 interface ModalProps {
   children: ReactNode;
@@ -66,14 +67,14 @@ const Modal = ({
 
   return (
     <>
-      <button
+      <Button
         type="button"
         id={triggerId}
         className={triggerClassName}
         onClick={openModal}
       >
         {triggerLabel}
-      </button>
+      </Button>
 
       {isOpen && (
         <div

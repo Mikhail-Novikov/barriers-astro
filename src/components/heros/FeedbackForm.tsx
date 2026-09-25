@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { barrierFeedback } from '@utils/barrierFeedback';
+import { Button } from '@components/Button';
 
 // интерфейсы для данных формы
 interface FormData {
@@ -218,17 +219,13 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
         </div>
 
         {/* Кнопка отправки */}
-        <button
+        <Button
           type="submit"
           disabled={!isFormValid || isSubmitting}
-          className={`mt-4 w-full h-12 sm:h-16 px-6 rounded-2xl font-manrope-semibold text-white text-lg transition-colors ${
-            isFormValid && !isSubmitting
-              ? 'rounded-2xl bg-cta px-8 text-white transition-colors hover:bg-cta-hover disabled:cursor-not-allowed disabled:bg-cta-disabled cursor-pointer text-lg'
-              : 'bg-cta-disabled cursor-not-allowed opacity-50'
-          }`}
+          className={`mt-4 w-full h-12 sm:h-16 px-6 font-manrope-semibold ${!isFormValid || isSubmitting ? 'opacity-50' : ''}`}
         >
           {isSubmitting ? 'Отправка...' : 'Отправить'}
-        </button>
+        </Button>
       </form>
     </div>
   );
