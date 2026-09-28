@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { barrierFeedback } from '@utils/barrierFeedback';
 import { Button } from '@components/Button';
 
+// todo вынести в константы env
+const BITRIX_FORM_URL = 'https://www.perco.des/php/barriers-config-form.php';
+const BITRIX_FORM_PASSWORD = 'bae42d7d01c78bf32db83aadd036e2ca574203da';
+
 // интерфейсы для данных формы
 interface FormData {
   name: string;
@@ -41,6 +45,7 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const messageFieldRef = useRef<HTMLDivElement>(null);
 
   // Синхронизация сообщения из props initialMessage в состояние формы
@@ -132,6 +137,7 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
    */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setSubmitError('');
 
     if (!validateForm()) {
       return;
@@ -139,18 +145,33 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
 
     setIsSubmitting(true);
     try {
-      // Здесь можно добавить отправку данных на сервер
-      // await fetch('/api/feedback', { method: 'POST', body: JSON.stringify(formData) })
-      
+      const params = new URLSearchParams({
+        pw: BITRIX_FORM_PASSWORD,
+        name: formData.name,
+        email: formData.email,
+        phone: '',
+        message: formData.message,
+        barriers: '',
+        options: '',
+        query_string: window.location.search,
+      });
+      const response = await fetch(`${BITRIX_FORM_URL}?${params.toString()}`);
+      const responseBody = await response.text();
+
+      if (!response.ok || !responseBody.includes('ok')) {
+        throw new Error('Bitrix form submission failed');
+      }
+
       setSubmitSuccess(true);
       setFormData({ name: '', email: '', message: '' });
-      
+
       // Скрыть сообщение об успехе через 5 секунд
       setTimeout(() => {
         setSubmitSuccess(false);
       }, 5000);
     } catch (error) {
       console.error('Ошибкa отправки формы:', error);
+      setSubmitError('Не удалось отправить сообщение. Попробуйте позже.');
     } finally {
       setIsSubmitting(false);
     }
@@ -165,6 +186,11 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
       {submitSuccess && (
         <div className="mb-6 p-4 rounded-2xl bg-green-50 border border-green-200 text-green-800 text-sm">
           Спасибо! Ваше сообщение отправлено. Мы&nbsp;свяжемся с&nbsp;вами в&nbsp;ближайшее время.
+        </div>
+      )}
+      {submitError && (
+        <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm" role="alert">
+          {submitError}
         </div>
       )}
 
