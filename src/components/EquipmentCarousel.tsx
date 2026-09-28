@@ -39,7 +39,7 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
   }, []);
 
   return (
-    <div className="flex min-w-0 w-full gap-4 overflow-hidden">
+    <div className="flex min-w-0 w-full gap-2 lg:gap-5 overflow-hidden">
       {screen.md && (
         <CarouselControls
           onPrevious={() => move("-1")}
@@ -54,21 +54,16 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
             swiperRef.current = swiper;
           }}
           aria-label="Дополнительное оборудование"
-          slidesPerView={1.4}
+          width={304}
           breakpoints={{
-            600: { slidesPerView: 1.3 },
-            712: { slidesPerView: 1.8 },
-            1019: { slidesPerView: 1.7 },
-            1200: { slidesPerView: 1.8 },
-            1400: { slidesPerView: 2.3 },
-            1600: { slidesPerView: 3.3 },
+            712: { width: 352 },
           }}
           spaceBetween={12}
           className="equipment-carousel"
         >
           {cards.map((card) => (
             <SwiperSlide key={`${card.id}-${card.title}`}>
-              <article className="w-[352px]">
+              <article className="swiper-slide-transform">
                 <img
                   className="rounded-3xl bg-grey-200 object-contain"
                   src={publicAsset(

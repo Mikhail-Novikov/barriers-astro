@@ -1,15 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
-import barriers from '../../content/barriers.json';
-import FilterCheckbox from '@components/FilterCheckbox';
-import WidthSlider from './WidthSlider';
-import { publicAsset } from '@utils/publicAsset';
-import { useLightGallery } from '@hooks/useLightGallery';
-import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
 import Modal from './Modal';
 import FeedbackForm from './FeedbackForm';
+import WidthSlider from './WidthSlider';
+
+import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
+import FilterCheckbox from '@components/FilterCheckbox';
 import { barrierFeedback } from '@utils/barrierFeedback';
+import { publicAsset } from '@utils/publicAsset';
+import { useLightGallery } from '@hooks/useLightGallery';
+import barriers from '@content/barriers.json';
 
 import emptySearchImage from '../../assets/img/empty-search.png';
+
 const previewPath = publicAsset('/img/barriers/');
 const barrierMainImages = import.meta.glob('../../assets/img/barriers/*/main/*.{webp,jpg,jpeg,png}', {
   eager: true,
@@ -177,7 +179,7 @@ export default function Hero6(): JSX.Element {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [maxWidth, setMaxWidth] = useState(0);
   const [temperatures, setTemperatures] = useState<string[]>(['standard']);
-  const [openings, setOpenings] = useState<string[]>([]);
+  const [openings, setOpenings] = useState<string[]>(['4-6']);
   const [booms, setBooms] = useState<string[]>([]);
   const [fotoElements, setFotoElements] = useState<string[]>([]);
   const barrierGalleryItems = useMemo(
