@@ -40,7 +40,7 @@ type SolutionOption = {
 function SolutionPrice({ price, description }: Pick<Solution, 'price' | 'description'>): JSX.Element {
   return (
     <div className="mb-5 flex w-full items-center gap-5 rounded-3xl bg-grey-200 py-3 sm:px-6 sm:py-4 lg:px-5">
-      <strong className="shrink-0 ml-5 text-xl/8 font-manrope-semibold text-cta lg:text-2xl/7">{price}</strong>
+      <strong className="shrink-0 ml-5 text-xl/8 font-manrope-bold text-cta lg:text-2xl/7">{price}</strong>
       <span className="font-manrope-semibold text-md/5"><HtmlContent>{description}</HtmlContent></span>
     </div>
   );
@@ -56,8 +56,8 @@ function SolutionAdditions({ additions }: { additions?: string[] }): JSX.Element
 
   return (
     <>
-      <p className="mb-3 ml-4 text-xl/7 text-grey-800">Что можно добавить:</p>
-      <ul className="mb-6 sm:mb-10 list-disc marker:text-[12px] space-y-1 ml-4 pl-3 sm:pl-6 text-md/6">
+      <p className="mb-3 ml-4 text-lg/6 text-grey-800 font-manrope-semibold">Что можно добавить:</p>
+      <ul className="mb-6 sm:mb-10 list-disc marker:text-[12px] space-y-1 ml-3 pl-3 sm:pl-6 text-md/6">
         {additions.map((addition) => <li key={addition}><HtmlContent>{addition}</HtmlContent></li>)}
       </ul>
     </>
@@ -301,7 +301,7 @@ export default function Hero10(): JSX.Element {
           role="tabpanel"
           aria-labelledby={`solution-tab-${activeIndex}`}
         >
-          <div className="flex min-h-[360px] items-center justify-center overflow-hidden rounded-3xl bg-grey-200 lg:col-span-7 lg:min-h-[560px]">
+          <div className="flex items-center justify-center overflow-hidden rounded-3xl bg-grey-200 lg:col-span-6 min-h-[360px] lg:min-h-[560px]">
             <img className="h-full w-full object-contain" src={activeSolution.image} alt={activeSolution.description} />
           </div>
 
