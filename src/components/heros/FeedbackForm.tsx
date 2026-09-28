@@ -52,14 +52,15 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
 
   useEffect(() => {
     const frameId = requestAnimationFrame(() => {
-      if (messageFieldRef.current && messageFieldRef.current.innerHTML !== formData.message) {
-        messageFieldRef.current.innerHTML = formData.message;
+      const el = messageFieldRef.current;
+      if (!el) return;
+      if (el.innerHTML !== formData.message) {
+        el.innerHTML = formData.message;
       }
     });
 
     return () => cancelAnimationFrame(frameId);
   }, [formData.message]);
-
   /**
    * Функция для валидации email
    * @param email - email для проверки
@@ -111,9 +112,10 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
   };
 
   const handleMessageChange = (event: React.FormEvent<HTMLDivElement>) => {
+    const message = event.currentTarget.innerHTML;
     setFormData((prev) => ({
       ...prev,
-      message: event.currentTarget.innerHTML,
+      message,
     }));
 
     if (errors.message) {
@@ -217,10 +219,11 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
             role="textbox"
             aria-multiline="true"
             aria-labelledby={`${idPrefix}-message-label`}
+            data-placeholder="Сообщение"
             contentEditable
             suppressContentEditableWarning
             onInput={handleMessageChange}
-            className={`w-full px-4 py-2 sm:p-5 h-30 sm:h-[190px] rounded-lg sm:rounded-[20px] border bg-grey-50 bg-white text-grey-1000 text-sm sm:text-lg placeholder-grey-800 focus:outline-none transition-colors resize-none ${
+            className={`w-full px-4 py-2 sm:p-5 h-30 sm:h-[190px] rounded-lg sm:rounded-[20px] border bg-grey-50 bg-white text-grey-1000 text-sm sm:text-lg focus:outline-none transition-colors resize-none empty:before:content-[attr(data-placeholder)] empty:before:text-grey-800 empty:before:pointer-events-none ${
               errors.message
                 ? 'border-red-500 focus:ring-1 focus:ring-red-500'
                 : 'border-grey-300 focus:border-cta focus:ring-1 focus:ring-cta'
