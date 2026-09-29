@@ -1,6 +1,7 @@
 ---
 import warrantyImage from '../../assets/img/5-years-warranty.jpg';
 import { publicAsset } from '../../utils/publicAsset';
+import Video from '@components/Video';
 ---
 
 <section aria-label="Шлагбаум, который прослужит долго" class="bg-grey-100 pt-10 xl:pt-15 3xl:pt-20">
@@ -10,17 +11,17 @@ import { publicAsset } from '../../utils/publicAsset';
     <div class="flex flex-col lg:flex-row gap-x-5 3xl:gap-x-8 gap-y-8">
       <div class="col-span-12 lg:w-1/2 p-0 sm:p-[20px_24px] lg:p-[32px_32px_40px_32px] 2xl:p-[32px_40px_40px_40px] bg-white sm:border border-grey-400 rounded-[24px]">
         <div>
-          <video
-            class="w-full min-h-full object-cover rounded-3xl"
-            muted
-            autoplay
-            preload="auto"
-            playsinline
-            loop
+          <Video
+            client:load
+            className="w-full min-h-full object-cover rounded-3xl"
+            src={publicAsset('/video/anti-corrosion-coating-video.mp4')}
             poster={publicAsset('/img/anti-corrosion-coating.webp')}
-          >
-            <source src={publicAsset('/video/anti-corrosion-coating-video.mp4')} type="video/mp4" />
-          </video>
+            muted
+            autoPlay
+            preload="auto"
+            playsInline
+            loop
+          />
         </div>
         <div class="mt-5 md:mt-10 max-w-[600px]">
           <h4 class="h4 mb-4">Качественное антикоррозийное покрытие</h4>

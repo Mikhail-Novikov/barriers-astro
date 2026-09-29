@@ -1,5 +1,6 @@
 ---
 import { publicAsset } from '../../utils/publicAsset';
+import Video from '@components/Video';
 ---
 
 <section aria-label="Решения для любого климата и нагрузки" class="bg-white pb-15 pt-10 md:pt-15 xl:pb-20 xl:pt-10 3xl:pt-15 2xl:pb-25 3xl:pb-30">
@@ -34,18 +35,19 @@ import { publicAsset } from '../../utils/publicAsset';
               </li>
             </ul>
           </div>
-          <div class="w-full h-[360px] 2xl:w-6/12 rounded">
-            <video
-              class="w-full h-auto min-h-full object-cover rounded-2xl"
-              muted
-              autoplay
-              preload="auto"
-              playsinline
-              loop
+          <div class="2xl:w-6/12">
+            <Video
+              client:load
+              containerClassName="w-full h-[360px] rounded-2xl overflow-hidden"
+              className="w-full h-auto min-h-full object-cover rounded-2xl"
+              src={publicAsset('/video/picking/high-barrier.mp4')}
               poster={publicAsset('/img/picking/high-throughput.webp')}
-            >
-              <source src={publicAsset('/video/picking/high-barrier.mp4')} type="video/mp4" />
-            </video>
+              muted
+              autoPlay
+              preload="auto"
+              playsInline
+              loop
+            />
           </div>
         </div>
       </div>

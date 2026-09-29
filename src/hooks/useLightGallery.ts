@@ -23,6 +23,8 @@ interface UseLightGalleryOptions {
   showCloseIcon?: boolean;
   mainClass?: string;
   captionClassName?: string;
+  onClose?: () => void;
+  videoAutoplay?: boolean;
 }
 
 export const useLightGallery = ({
@@ -38,10 +40,17 @@ export const useLightGallery = ({
   showCloseIcon = true,
   mainClass,
   captionClassName,
+  onClose,
+  videoAutoplay = false,
 }: UseLightGalleryOptions) => {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const fancyboxInstanceRef = useRef<any>(null);
+  const onCloseRef = useRef(onClose);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     const container = containerSelector
@@ -55,6 +64,7 @@ export const useLightGallery = ({
 
     const fancyboxOptions: Record<string, any> = {
       on: {
+        destroy: () => onCloseRef.current?.(),
         reveal: (fancybox: any, slide: any) => {
           const index = fancybox.getIndex?.();
           if (index !== undefined) {
@@ -74,6 +84,7 @@ export const useLightGallery = ({
       },
       Carousel: {
         Navigation: navigation,
+        ...(videoAutoplay ? { Video: { autoplay: true } } : {}),
         formatCaption: (caption: string, slide: any) =>
           captionClassName
             ? `<span class="${captionClassName}">${slide?.triggerEl?.dataset?.caption ?? caption}</span>`
@@ -98,7 +109,7 @@ export const useLightGallery = ({
         // Ignore unbind errors
       }
     };
-  }, [items, selector, containerSelector, counter, closeOnTap, controls, showFullscreen, navigation, mainClass, captionClassName]);
+  }, [items, selector, containerSelector, counter, closeOnTap, controls, showFullscreen, navigation, mainClass, captionClassName, videoAutoplay]);
 
   const openGallery = (index: number) => {
     const container = containerSelector

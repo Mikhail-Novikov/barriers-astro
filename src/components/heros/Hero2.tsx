@@ -241,7 +241,7 @@ const Hero2 = () => {
           ))}
         </div>
         <div className="mt-8 flex justify-between items-center">
-          <div className="min-w-[90px] h-10 p-2 text-grey-800 border border-grey-500 rounded-full text-center">
+          <div className="min-w-[90px] h-10 p-2 text-grey-800 border border-grey-600 rounded-full text-center">
             {firstPreviewIndex}/{totalItems}
           </div>
           <div className="flex gap-2">

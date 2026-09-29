@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { publicAsset } from "@utils/publicAsset";
+import Video from "@components/Video";
 
 export default function Promo() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -32,19 +33,19 @@ export default function Promo() {
 
   return (
     <section className="relative">
-      <video
+      <Video
         ref={videoRef}
         key={src}
         className="w-full h-[340px] max-h-[700px] sm:h-auto sm:min-h-[260px] object-cover"
+        src={src}
+        poster={publicAsset("/img/preview-promo.webp")}
         muted
         autoPlay
         preload="auto"
         playsInline
         loop
-        poster={publicAsset("/img/preview-promo.webp")}
-      >
-        <source src={src} type="video/mp4" />
-      </video>
+        showFullscreen={false}
+      />
 
       <div className="container">
         <div className="h-full sm:absolute top-0 pt-5 sm:pt-12 pb-10 xl:pt-18 2xl:pt-21 3xl:pt-[116px] max-w-[500px] text-left text-black sm:text-white">

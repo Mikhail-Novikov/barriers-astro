@@ -1,5 +1,6 @@
 ---
 import { publicAsset } from "@utils/publicAsset";
+import Video from "@components/Video";
 
 const cards = [
   {
@@ -42,14 +43,14 @@ const cards = [
                 loading="lazy"
               />
             ) : (
-              <video class="h-full w-full object-cover"
+              <Video client:load containerClassName="h-full w-full" className="h-full w-full object-cover"
                 src={publicAsset('/video/reliability-security/rs4-video.mp4')}
-                muted
-                autoplay
-                preload="auto"
-                playsinline
-                loop
                 poster={publicAsset("/img/reliability-security/rs-4.webp")}
+                muted
+                autoPlay
+                preload="auto"
+                playsInline
+                loop
               />
             )}
             {card.notification && (
