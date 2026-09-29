@@ -1,0 +1,215 @@
+{
+  "img_path": "img/gallery/about/",
+  "images": [
+    {
+      "id": 1,
+      "src": "vanni_1000.webp",
+      "alt": "Линия подготовки к окраске",
+      "description": "Линия подготовки к окраске"
+    },
+    {
+      "id": 2,
+      "src": "center-smt-montaj.webp",
+      "alt": "Центр SMT-монтажа электронных плат",
+      "description": "Центр SMT-монтажа электронных плат"
+    },
+    {
+      "id": 3,
+      "src": "laser-cutting-of-metal_1000.webp",
+      "alt": "Лазерный раскрой металла",
+      "description": "Лазерный раскрой металла"
+    },
+    {
+      "id": 4,
+      "src": "band-machine_1000.webp",
+      "alt": "Ленточнопильный станок",
+      "description": "Ленточнопильный станок"
+    },
+    {
+      "id": 5,
+      "src": "machining-center-with-CNC_01_1000.webp",
+      "alt": "Обрабатывающий центр с ЧПУ",
+      "description": "Обрабатывающий центр с ЧПУ"
+    },
+    {
+      "id": 6,
+      "src": "machining-center-with-CNC_02_1000.webp",
+      "alt": "Обрабатывающий центр с ЧПУ",
+      "description": "Обрабатывающий центр с ЧПУ"
+    },
+    {
+      "id": 7,
+      "src": "electronic-plates-SMT-mounting-center_02_1000.webp",
+      "alt": "Центр SMT-монтажа электронных плат",
+      "description": "Центр SMT-монтажа электронных плат"
+    },
+    {
+      "id": 8,
+      "src": "mechanical-shop_03_1000.webp",
+      "alt": "Механический цех",
+      "description": "Механический цех"
+    },
+    {
+      "id": 9,
+      "src": "mechanical-shop_02_1000.webp",
+      "alt": "Механический цех",
+      "description": "Механический цех"
+    },
+    {
+      "id": 10,
+      "src": "pipe-drilling-machine_1000.webp",
+      "alt": "Трубосверлильная машина",
+      "description": "Трубосверлильная машина"
+    },
+    {
+      "id": 11,
+      "src": "mechanical-shop_01_1000.webp",
+      "alt": "Механический цех",
+      "description": "Механический цех"
+    },
+    {
+      "id": 12,
+      "src": "blanking-shop_02_1000.webp",
+      "alt": "Заготовительный участок",
+      "description": "Заготовительный участок"
+    },
+    {
+      "id": 13,
+      "src": "assembling-shop_02_1000.webp",
+      "alt": "Cборочный цех",
+      "description": "Cборочный цех"
+    },
+    {
+      "id": 14,
+      "src": "five-axis-machining-center_1000.webp",
+      "alt": "Пятикоординатный обрабатывающий центр",
+      "description": "Пятикоординатный обрабатывающий центр"
+    },
+    {
+      "id": 15,
+      "src": "electronic-plates-SMT-mounting-center_01_1000.webp",
+      "alt": "Центр SMT-монтажа электронных плат",
+      "description": "Центр SMT-монтажа электронных плат"
+    },
+    {
+      "id": 16,
+      "src": "blanking-shop_1000.webp",
+      "alt": "Заготовительный участок",
+      "description": "Заготовительный участок"
+    },
+    {
+      "id": 17,
+      "src": "quality-control_1000.webp",
+      "alt": "Контроль качества",
+      "description": "Контроль качества"
+    },
+    {
+      "id": 18,
+      "src": "sheet-metal-working-shop_06_1000.webp",
+      "alt": "Цех листовой металлообработки",
+      "description": "Цех листовой металлообработки"
+    },
+    {
+      "id": 19,
+      "src": "hull-bending_1000.webp",
+      "alt": "Гибка корпусов",
+      "description": "Гибка корпусов"
+    },
+    {
+      "id": 20,
+      "src": "sheet-metal-working-shop_05_1000.webp",
+      "alt": "Цех листовой металлообработки",
+      "description": "Цех листовой металлообработки"
+    },
+    {
+      "id": 21,
+      "src": "assembling-shop_1000.webp",
+      "alt": "Cборочный цех",
+      "description": "Cборочный цех"
+    },
+    {
+      "id": 22,
+      "src": "painting-pretreatment-line_1000.webp",
+      "alt": "Линия подготовки к окраске",
+      "description": "Линия подготовки к окраске"
+    },
+    {
+      "id": 23,
+      "src": "blanking-press_1000.webp",
+      "alt": "Вырубной пресс",
+      "description": "Вырубной пресс"
+    },
+    {
+      "id": 24,
+      "src": "sheet-metal-working-shop_04_1000.webp",
+      "alt": "Цех листовой металлообработки",
+      "description": "Цех листовой металлообработки"
+    },
+    {
+      "id": 25,
+      "src": "sheet-metal-working-shop_03_1000.webp",
+      "alt": "Цех листовой металлообработки",
+      "description": "Цех листовой металлообработки"
+    },
+    {
+      "id": 26,
+      "src": "vistovka_1000.webp",
+      "alt": "Переговоры с партнерами на выставке в Дубае, ОАЭ",
+      "description": "Переговоры с партнерами на выставке в Дубае, ОАЭ"
+    },
+    {
+      "id": 27,
+      "src": "vistovachniy_1000.webp",
+      "alt": "Выставочный зал",
+      "description": "Выставочный зал"
+    },
+    {
+      "id": 28,
+      "src": "uc_1000.webp",
+      "alt": "Учебный класс в Санкт-Петербурге",
+      "description": "Учебный класс в Санкт-Петербурге"
+    },
+    {
+      "id": 29,
+      "src": "amada_1000.webp",
+      "alt": "Цех листовой металлообработки",
+      "description": "Цех листовой металлообработки"
+    },
+    {
+      "id": 30,
+      "src": "ceh_1000.webp",
+      "alt": "Цех листовой металлообработки",
+      "description": "Цех листовой металлообработки"
+    },
+    {
+      "id": 31,
+      "src": "dzp_1000.webp",
+      "alt": "Главный офис PERCo",
+      "description": "Главный офис PERCo"
+    },
+    {
+      "id": 32,
+      "src": "kamaz_1000.webp",
+      "alt": "Отгрузка продукции PERCo",
+      "description": "Отгрузка продукции PERCo"
+    },
+    {
+      "id": 33,
+      "src": "opitniy_1000.webp",
+      "alt": "Опытный участок",
+      "description": "Опытный участок"
+    },
+    {
+      "id": 34,
+      "src": "pokraska_1000.webp",
+      "alt": "Покрасочная линия",
+      "description": "Покрасочная линия"
+    },
+    {
+      "id": 35,
+      "src": "sklad_1000.webp",
+      "alt": "Склад готовой продукции",
+      "description": "Склад готовой продукции"
+    }
+  ]
+}

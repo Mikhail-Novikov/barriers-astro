@@ -6,7 +6,7 @@ import SliderArrow from '@components/SliderArrow';
 import 'swiper/css';
 
 type AboutCarouselProps = {
-  images: string[];
+  images: { src: string; alt: string; description: string }[];
 };
 
 const slidesPerPage = 2;
@@ -17,12 +17,13 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
   const [isAtEnd, setIsAtEnd] = useState(images.length <= slidesPerPage);
   const swiperRef = useRef<SwiperInstance | null>(null);
   const galleryItems = useMemo(
-    () => images.map((src, index) => ({ src, alt: `Производство PERCo, фото ${index + 1}` })),
+    () => images.map(({ src, alt }) => ({ src, alt })),
     [images],
   );
   const { galleryRef } = useLightGallery({
     items: galleryItems,
     selector: 'a[data-fancybox="about"]',
+    captionClassName: "inline-block mx-10 text-2xl text-white text-center",
   });
 
   const pageCount = Math.ceil(images.length / slidesPerPage);
@@ -71,17 +72,17 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
         onSlideChange={updateNavigation}
         className="about-gallery__slider"
       >
-        {images.map((src, index) => (
+        {images.map(({ src, alt, description }, index) => (
           <SwiperSlide key={src}>
             <a
               href={src}
               data-fancybox="about"
-              data-caption={`Производство PERCo, фото ${index + 1}`}
+              data-caption={description}
               className="block h-full cursor-zoom-in"
             >
               <img
                 src={src}
-                alt={`Производство PERCo, фото ${index + 1}`}
+                alt={alt}
                 className={`aspect-[1.72] h-full max-h-[412px] w-full object-cover ${index % 2 !== 0 ? 'rounded-tr-[32px] rounded-br-[32px]' : 'rounded-tl-[32px] rounded-bl-[32px]'}`}
                 loading={index < 2 ? 'eager' : 'lazy'}
               />

@@ -5,14 +5,14 @@ import { useLightGallery } from '@hooks/useLightGallery';
 import 'swiper/css';
 
 type AboutCarouselStackedProps = {
-  images: string[];
+  images: { src: string; alt: string; description: string }[];
 };
 
 export default function AboutCarouselStacked({ images }: AboutCarouselStackedProps): JSX.Element {
   const [activePair, setActivePair] = useState(0);
   const swiperRef = useRef<SwiperInstance | null>(null);
   const galleryItems = useMemo(
-    () => images.map((src, index) => ({ src, alt: `Производство PERCo, фото ${index + 1}` })),
+    () => images.map(({ src, alt }) => ({ src, alt })),
     [images],
   );
   const imagePairs = useMemo(
@@ -40,7 +40,7 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
       >
         {imagePairs.map((pair, pairIndex) => (
           <SwiperSlide key={`about-pair-${pairIndex}`}>
-            {pair.map((src, imageIndex) => {
+            {pair.map(({ src, alt, description }, imageIndex) => {
               const index = pairIndex * 2 + imageIndex;
 
               return (
@@ -48,12 +48,12 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
                   key={src}
                   href={src}
                   data-fancybox="about-stacked"
-                  data-caption={`Производство PERCo, фото ${index + 1}`}
+                  data-caption={description}
                   className="block cursor-zoom-in"
                 >
                   <img
                     src={src}
-                    alt={`Производство PERCo, фото ${index + 1}`}
+                    alt={alt}
                     className={`mb-1 aspect-[1.72] h-full w-full object-cover ${pair.length === 1 ? 'rounded-3xl' : imageIndex === 0 ? 'rounded-t-3xl' : 'rounded-b-3xl'}`}
                     loading={index < 2 ? 'eager' : 'lazy'}
                   />

@@ -58,6 +58,7 @@ export default function VideoTestimonials(): JSX.Element {
   const { galleryRef } = useLightGallery({
     items: testimonials.map(({ title, videoUrl }) => ({ src: videoUrl, subHtml: title })),
     selector: 'a[data-fancybox="video-testimonials"]',
+    captionClassName: "inline-block mx-10 text-2xl text-white text-center",
     controls: true,
   });
 
