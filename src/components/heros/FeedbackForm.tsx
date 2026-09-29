@@ -151,15 +151,12 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
         email: formData.email,
         phone: '',
         message: formData.message,
-        barriers: '',
-        options: '',
-        query_string: window.location.search,
       });
       const response = await fetch(`${BITRIX_FORM_URL}?${params.toString()}`);
       const responseBody = await response.text();
 
-      if (!response.ok || !responseBody.includes('ok')) {
-        throw new Error('Bitrix form submission failed');
+      if (!response.ok || responseBody.trim() !== 'ok') {
+        throw new Error(`Bitrix form submission failed (${response.status}): ${responseBody.trim() || 'empty response'}`);
       }
 
       setSubmitSuccess(true);
