@@ -19,7 +19,7 @@ const Items = ({ isMobile, isOpen, onItemClick }: ItemsProps) => {
       event.preventDefault();
       const target = document.getElementById(href.slice(1));
       const header = document.getElementById("top");
-      const offset = 16; // Отступ в пикселях
+      const offset = 0; // Отступ в пикселях
 
       if (target) {
         const headerHeight = header?.getBoundingClientRect().height ?? 0;

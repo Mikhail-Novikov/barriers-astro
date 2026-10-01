@@ -335,7 +335,7 @@ export default function Hero6(): JSX.Element {
   );
 
   return (
-    <section aria-label="Модели шлагбаумов" className="relative bg-grey-200 pt-10 sm:pt-15 3xl:pt-20 pb-10 sm:pb-20 lg:pb-20">
+    <section id="catalog" aria-label="Модели шлагбаумов" className="relative bg-grey-200 pt-10 sm:pt-15 3xl:pt-20 pb-10 sm:pb-20 lg:pb-20">
       <div className="container">
         <Modal
           triggerId="open-modal-sale-barrier"
@@ -344,7 +344,7 @@ export default function Hero6(): JSX.Element {
         >
           <FeedbackForm idPrefix="open-modal-sale-barrier" />
         </Modal>
-        <h2 id="catalog" className="h2 mb-6 lg:mb-8">Модели шлагбаумов</h2>
+        <h2 className="h2 mb-6 lg:mb-8">Модели шлагбаумов</h2>
         <div className="perco-icons mb-4 lg:hidden">
           <button type="button" onClick={() => setIsFiltersOpen(true)} className="flex items-center gap-x-3 cursor-pointer text-cta hover:text-cta/90">
             <span className="text-5xl"><i className="perco-icon-btn-filter" /></span>

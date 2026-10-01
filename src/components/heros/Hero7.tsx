@@ -268,12 +268,13 @@ export default function Hero7(): JSX.Element {
   });
 
   return (
-    <section
+    <section 
+      id="complectation"
       aria-label="Комплектация"
       className="bg-grey-400 pt-10 md:pt-15 xl:pt-20 pb-10 md:pb-15 lg:pb-20 xl:pb-25"
     >
       <div className="container">
-        <h2 id="complectation" className="h2 mb-6 lg:mb-8">
+        <h2 className="h2 mb-6 lg:mb-8">
           Комплектация
         </h2>
 
