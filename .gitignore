@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+
+/src/assets/video/choice-barrier/video.mp4
+/public/video/choice-barrier/video.mp4
+public/video/choice-barrier/*.mp4
