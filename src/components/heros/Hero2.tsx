@@ -3,7 +3,6 @@ import { useLightGallery } from "@hooks/useLightGallery";
 
 import SliderArrow from "@components/SliderArrow";
 import Video from "@components/Video";
-import installationsVideo from "@assets/video/examples-installations/installations.mp4";
 import { publicAsset } from "@utils/publicAsset";
 
 // Полный набор изображений из папки public/img/gallery
@@ -212,7 +211,7 @@ const Hero2 = () => {
                   <Video
                     containerClassName="h-full w-full"
                     className="h-full w-full object-cover"
-                    src={installationsVideo}
+                    src={publicAsset('/video/examples-installations/installations.mp4')}
                     poster={publicAsset('/img/examples-installations/preview.webp')}
                     caption={item.alt}
                     muted
