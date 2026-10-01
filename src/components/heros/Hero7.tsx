@@ -20,49 +20,49 @@ const illustrationItems: IllustrationItem[] = [
   {
     bodyStyle: "standard",
     boomShape: "round",
-    "title": "Шлагбаум GS14 со стрелой круглого сечения",
+    "title": "Шлагбаум GS14&nbsp;со стрелой круглого сечения",
     "img": `${imgPath}rezult/gs14-round.svg`
   },
   {
     bodyStyle: "standard",
     boomShape: "square",
-    "title": "Шлагбаум GS14 со стрелой прямоугольного сечения",
+    "title": "Шлагбаум GS14&nbsp;со стрелой прямоугольного сечения",
     "img": `${imgPath}rezult/gs14-square.svg`
   },
   {
     bodyStyle: "standard",
     boomShape: "foldable",
-    "title": "Шлагбаум GS14 со складной стрелой прямоугольного сечения",
+    "title": "Шлагбаум GS14&nbsp;со складной стрелой прямоугольного сечения",
     "img": `${imgPath}rezult/gs14-foldable.svg`
   },
   {
     bodyStyle: "standard",
     boomShape: "soft",
-    "title": "Скоростной шлагбаум GF13 со стрелой круглого сечения",
+    "title": "Скоростной шлагбаум GF13&nbsp;со стрелой круглого сечения",
     "img": `${imgPath}rezult/gs14-soft.svg`
   },
   {
     bodyStyle: "premium",
     boomShape: "round",
-    "title": "Шлагбаум GS04.1 со стрелой круглого сечения",
+    "title": "Шлагбаум GS04.1&nbsp;со стрелой круглого сечения",
     "img": `${imgPath}rezult/gs04-round.svg`
   },
   {
     bodyStyle: "premium",
     boomShape: "square",
-    "title": "Шлагбаум GS04.1 со стрелой прямоугольного сечения",
+    "title": "Шлагбаум GS04.1&nbsp;со стрелой прямоугольного сечения",
     "img": `${imgPath}rezult/gs04-square.svg`
   },
   {
     bodyStyle: "premium",
     boomShape: "foldable",
-    "title": "Шлагбаум GS04.1 со стрелой прямоугольного сечения",
+    "title": "Шлагбаум GS04.1&nbsp;со стрелой прямоугольного сечения",
     "img": `${imgPath}rezult/gs04-foldable.svg`
   },
   {
     bodyStyle: "premium",
     boomShape: "soft",
-    "title": "Скоростной шлагбаум GF03.1 со стрелой круглого сечения",
+    "title": "Скоростной шлагбаум GF03.1&nbsp;со стрелой круглого сечения",
     "img": `${imgPath}rezult/gs04-soft.svg`
   },
 ];
@@ -264,6 +264,7 @@ export default function Hero7(): JSX.Element {
     showFullscreen: false,
     navigation: false,
     mainClass: "hero7-gallery",
+    captionClassName: "inline-block mx-10 text-2xl text-white text-center",
   });
 
   return (
@@ -379,9 +380,7 @@ export default function Hero7(): JSX.Element {
                 >
                   <i className="perco-icon-control-fullscreen lg:float-right" />
                 </div>
-                <h4 className="text-[12px]/5 md:text-lg lg:text-xl font-manrope-semibold text-grey-700 text-center">
-                  {currentVariant.title}
-                </h4>
+                <h4 className="text-[12px]/5 md:text-lg lg:text-xl font-manrope-semibold text-grey-700 text-center" dangerouslySetInnerHTML={{__html: currentVariant.title}} />
                 <img
                   src={currentVariant.img}
                   alt={currentVariant.title}
@@ -398,6 +397,7 @@ export default function Hero7(): JSX.Element {
         <a
           data-fancybox="hero7-gallery"
           data-type="image"
+          data-caption={currentGalleryItem.title}
           href={currentGalleryItem.src}
           aria-label={currentGalleryItem.title}
           className="sr-only"
