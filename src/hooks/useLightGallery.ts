@@ -64,7 +64,10 @@ export const useLightGallery = ({
 
     const fancyboxOptions: Record<string, any> = {
       on: {
-        destroy: () => onCloseRef.current?.(),
+        destroy: () => {
+          onCloseRef.current?.();
+          document.dispatchEvent(new Event('fancybox:destroy'));
+        },
         reveal: (fancybox: any, slide: any) => {
           const index = fancybox.getIndex?.();
           if (index !== undefined) {

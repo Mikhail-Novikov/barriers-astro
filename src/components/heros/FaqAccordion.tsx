@@ -40,7 +40,7 @@ export default function FaqAccordion({ items }: FaqAccordionProps): JSX.Element 
               <span className="flex shrink-0 text-3xl text-grey-700">
                 {isOpen ? <i className="perco-icon-minus-circle-outline" /> : <i className="perco-icon-plus-circle-outline" />}
               </span>
-              <span className="text-lg/6 font-manrope-semibold" dangerouslySetInnerHTML={{__html: item.title}} />
+              <span className="text-md/6 xl:text-lg/6 font-manrope-semibold" dangerouslySetInnerHTML={{__html: item.title}} />
             </summary>
 
             <div className="max-w-[690px] space-y-2 px-4 pb-3 pt-3 text-left text-md/6" dangerouslySetInnerHTML={{ __html: item.answer }} />

@@ -4,9 +4,12 @@ import FilterCheckbox from "@components/FilterCheckbox";
 import { useMemo, useState } from "react";
 import { publicAsset } from "@utils/publicAsset";
 
+type BodyStyle = "standard" | "premium";
+type BoomShape = "round" | "square" | "foldable" | "soft";
+
 type IllustrationItem = {
-  type: string;
-  design: string;
+  bodyStyle: BodyStyle;
+  boomShape: BoomShape;
   title: string;
   img: string;
 };
@@ -15,104 +18,110 @@ const imgPath = publicAsset("/img/picking/");
 
 const illustrationItems: IllustrationItem[] = [
   {
-    type: "Прямоугольная",
-    design: "Стандартное",
-    title: "Шлагбаум GS04.1 со стрелой прямоугольного сечения",
-    img: `${imgPath}rezult/1.webp`,
+    bodyStyle: "standard",
+    boomShape: "round",
+    "title": "Шлагбаум GS14 со стрелой круглого сечения",
+    "img": `${imgPath}rezult/gs14-round.svg`
   },
   {
-    type: "Прямоугольная",
-    design: "Премиум",
-    title: "Шлагбаум GS04.1 со стрелой прямоугольного сечения",
-    img: `${imgPath}rezult/1.webp`,
+    bodyStyle: "standard",
+    boomShape: "square",
+    "title": "Шлагбаум GS14 со стрелой прямоугольного сечения",
+    "img": `${imgPath}rezult/gs14-square.svg`
   },
   {
-    type: "Прямоугольная складная",
-    design: "Стандартное",
-    title: "Шлагбаум GS04.1 со складной стрелой",
-    img: `${imgPath}rezult/1.webp`,
+    bodyStyle: "standard",
+    boomShape: "foldable",
+    "title": "Шлагбаум GS14 со складной стрелой прямоугольного сечения",
+    "img": `${imgPath}rezult/gs14-foldable.svg`
   },
   {
-    type: "Прямоугольная складная",
-    design: "Премиум",
-    title: "Шлагбаум GS04.1 для скоростного проезда",
-    img: `${imgPath}rezult/1.webp`,
+    bodyStyle: "standard",
+    boomShape: "soft",
+    "title": "Скоростной шлагбаум GF13 со стрелой круглого сечения",
+    "img": `${imgPath}rezult/gs14-soft.svg`
   },
   {
-    type: "Круглая",
-    design: "Стандартное",
-    title: "Шлагбаум GS04.1 со стрелой круглого сечения",
-    img: `${imgPath}rezult/1.webp`,
+    bodyStyle: "premium",
+    boomShape: "round",
+    "title": "Шлагбаум GS04.1 со стрелой круглого сечения",
+    "img": `${imgPath}rezult/gs04-round.svg`
   },
   {
-    type: "Круглая",
-    design: "Премиум",
-    title: "Шлагбаум GS04.1 со стрелой круглого сечения",
-    img: `${imgPath}rezult/1.webp`,
+    bodyStyle: "premium",
+    boomShape: "square",
+    "title": "Шлагбаум GS04.1 со стрелой прямоугольного сечения",
+    "img": `${imgPath}rezult/gs04-square.svg`
   },
   {
-    type: "для скоростного шлагбаума",
-    design: "Стандартное",
-    title: "Шлагбаум GS14 со складной стрелой прямоугольного сечения",
-    img: `${imgPath}rezult/1.webp`,
+    bodyStyle: "premium",
+    boomShape: "foldable",
+    "title": "Шлагбаум GS04.1 со стрелой прямоугольного сечения",
+    "img": `${imgPath}rezult/gs04-foldable.svg`
   },
   {
-    type: "для скоростного шлагбаума",
-    design: "Премиум",
-    title: "Скоростной шлагбаум GF03.1 со стрелой круглого сечения",
-    img: `${imgPath}rezult/1.webp`,
+    bodyStyle: "premium",
+    boomShape: "soft",
+    "title": "Скоростной шлагбаум GF03.1 со стрелой круглого сечения",
+    "img": `${imgPath}rezult/gs04-soft.svg`
   },
 ];
 
-const radioItemsType = [
+// Для фильтра десктопа
+const radioItemsType: { value: BoomShape; title: string; img: string; size: { width: number; height: number } }[] = [
   {
+    value: "square",
     title: "Прямоугольная",
     img: `${imgPath}options/rectangular.webp`,
     size: { width: 222, height: 72 },
   },
   {
+    value: "foldable",
     title: "Прямоугольная складная",
     img: `${imgPath}options/rectangular-folding.webp`,
     size: { width: 222, height: 62 },
   },
   {
+    value: "round",
     title: "Круглая",
     img: `${imgPath}options/round.webp`,
     size: { width: 222, height: 60 },
   },
   {
+    value: "soft",
     title: "Круглая с буфером для скоростного шлагбаума",
     img: `${imgPath}options/high-speed.webp`,
     size: { width: 222, height: 60 },
   },
 ];
 
-const radioItemsDesign = [
+const radioItemsDesign: { value: BodyStyle; title: string; img: string; size: { width: number; height: number } }[] = [
   {
+    value: "standard",
     title: "Стандартное",
     img: `${imgPath}options/standart.webp`,
     size: { width: 222, height: 170 },
   },
   {
+    value: "premium",
     title: "Премиум",
     img: `${imgPath}options/premium.webp`,
     size: { width: 222, height: 170 },
   },
 ];
 
+
+// Для мобильной версии фильтр
 const compactTypeItems = [
-  { value: "Круглая", label: "круглая" },
-  { value: "Прямоугольная", label: "прямоугольная с буферной накладкой" },
-  {
-    value: "Прямоугольная складная",
-    label: "складная прямоугольная с буферной накладкой",
-  },
-];
+  { value: "round", label: "круглая" },
+  { value: "square", label: "прямоугольная с буферной накладкой" },
+  { value: "foldable", label: "складная прямоугольная с буферной накладкой" },
+] as const;
 
 const compactDesignItems = [
-  { value: "Стандартное", label: "стандартное" },
-  { value: "Премиум", label: "премиум" },
-];
+  { value: "standard", label: "стандартное" },
+  { value: "premium", label: "премиум" },
+] as const;
 
 /**
  * Типы свойств для компонента OptionCard.
@@ -183,16 +192,16 @@ function OptionCard({
   );
 }
 
-function CompactOptionList({
+function CompactOptionList<T extends string>({
   items,
   name,
   selectedValue,
   onSelect,
 }: {
-  items: readonly { value: string; label: string }[];
+  items: readonly { value: T; label: string }[];
   name: string;
-  selectedValue: string;
-  onSelect: (value: string) => void;
+  selectedValue: T;
+  onSelect: (value: T) => void;
 }): JSX.Element {
   return (
     <ul className="list-none ml-6 space-y-4">
@@ -224,32 +233,37 @@ function CompactOptionList({
  */
 export default function Hero7(): JSX.Element {
   const screen = useBreakpoint();
-  const [selectedType, setSelectedType] = useState("Прямоугольная");
-  const [selectedDesign, setSelectedDesign] = useState("Стандартное");
+  const [selectedType, setSelectedType] = useState<BoomShape>("square");
+  const [selectedDesign, setSelectedDesign] = useState<BodyStyle>("standard");
 
+  // Отфильтрованный список вариантов комплектации
   const currentVariant = useMemo(
     () =>
-      illustrationItems.find(
-        (item) => item.type === selectedType && item.design === selectedDesign,
-      ) ?? illustrationItems[0],
+      illustrationItems.find((item) => item.boomShape === selectedType && item.bodyStyle === selectedDesign) ?? illustrationItems[0],
     [selectedType, selectedDesign],
   );
 
-  const currentGalleryItem = {
-    ...currentVariant,
-    index: 0,
-    src: currentVariant.img,
-    thumb: currentVariant.img,
-    alt: currentVariant.title,
-  };
+  // Текущий элемент галереи
+  const currentGalleryItem = useMemo(
+    () => ({
+      ...currentVariant,
+      index: 0,
+      src: currentVariant.img,
+      thumb: currentVariant.img,
+      alt: currentVariant.title,
+    }),
+    [currentVariant],
+  );
+  const galleryItems = useMemo(() => [currentGalleryItem], [currentGalleryItem]);
 
   const { galleryRef, openGallery } = useLightGallery({
-    items: [currentGalleryItem],
+    items: galleryItems,
     closeOnTap: true,
     counter: false,
     controls: true,
     showFullscreen: false,
     navigation: false,
+    mainClass: "hero7-gallery",
   });
 
   return (
@@ -302,7 +316,7 @@ export default function Hero7(): JSX.Element {
                   </h3>
                   <div className="grid grid-cols-2 grid-rows-2 gap-4">
                     {radioItemsType.map((item) => {
-                      const isActive = selectedType === item.title;
+                      const isActive = selectedType === item.value;
 
                       return (
                         <OptionCard
@@ -310,7 +324,7 @@ export default function Hero7(): JSX.Element {
                           item={item}
                           isActive={isActive}
                           name="type"
-                          onSelect={() => setSelectedType(item.title)}
+                          onSelect={() => setSelectedType(item.value)}
                           className="h-[140px]"
                           size={item.size}
                         />
@@ -326,7 +340,7 @@ export default function Hero7(): JSX.Element {
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
                     {radioItemsDesign.map((item) => {
-                      const isActive = selectedDesign === item.title;
+                      const isActive = selectedDesign === item.value;
 
                       return (
                         <OptionCard
@@ -334,7 +348,7 @@ export default function Hero7(): JSX.Element {
                           item={item}
                           isActive={isActive}
                           name="design"
-                          onSelect={() => setSelectedDesign(item.title)}
+                          onSelect={() => setSelectedDesign(item.value)}
                           className="md:h-[262px]"
                           size={item.size}
                         />
@@ -347,7 +361,7 @@ export default function Hero7(): JSX.Element {
           </div>
 
           <div className="col-span-12 bg-white rounded-2xl overflow-x-auto min-[1200px]:col-span-8 min-[1200px]:ml-11">
-            <div className="p-4 sm:p-10 gap-4 w-full">
+            <div className="px-4 pt-4 sm:px-10 sm:pt-10 gap-4 w-full">
               <div className="relative">
                 <div
                   role="button"
@@ -361,11 +375,11 @@ export default function Hero7(): JSX.Element {
                       openGallery(0);
                     }
                   }}
-                  className="perco-icons lg:h-13 text-2xl text-right text-grey-500 hover:text-grey-800 cursor-pointer transition-all duration-300 ease-out"
+                  className="perco-icons lg:h-13 text-2xl text-right text-grey-500 hover:text-grey-800 cursor-zoom-in transition-all duration-300 ease-out"
                 >
                   <i className="perco-icon-control-fullscreen lg:float-right" />
                 </div>
-                <h4 className="text-[12px]/5 md:text-lg lg:text-xl text-grey-700 text-center">
+                <h4 className="text-[12px]/5 md:text-lg lg:text-xl font-manrope-semibold text-grey-700 text-center">
                   {currentVariant.title}
                 </h4>
                 <img
@@ -383,6 +397,7 @@ export default function Hero7(): JSX.Element {
       <div ref={galleryRef}>
         <a
           data-fancybox="hero7-gallery"
+          data-type="image"
           href={currentGalleryItem.src}
           aria-label={currentGalleryItem.title}
           className="sr-only"

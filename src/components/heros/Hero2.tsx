@@ -2,36 +2,44 @@ import { useMemo, useState } from "react";
 import { useLightGallery } from "@hooks/useLightGallery";
 
 import SliderArrow from "@components/SliderArrow";
+import Video from "@components/Video";
+import installationsVideo from "@assets/video/examples-installations/installations.mp4";
 import { publicAsset } from "@utils/publicAsset";
 
 // Полный набор изображений из папки public/img/gallery
 const galleryAll = [
   {
-    thumb: "/img/gallery/preview/01-01.webp",
-    src: "/img/gallery/full/01-01.webp",
-    alt: "Шлагбаум GS04, гостиница «Левитанъ», Владимир",
+    thumb: "/img/gallery/preview/04-03.webp",
+    src: "/img/gallery/full/04-03.webp",
+    alt: "Шлагбаумы GS04, бизнес-центр Capital Tower, Москва",
   },
+  {
+    thumb: "",
+    src: "",
+    alt: "Установки шлагбаумов",
+    isVideo: true,
+  },
+  {
+    thumb: "/img/gallery/preview/03-02.webp",
+    src: "/img/gallery/full/03-02.webp",
+    alt: "Шлагбаум GS04, отель «Репинский курорт», Санкт-Петербург",
+  },
+  {
+    thumb: "/img/gallery/preview/02-01.webp",
+    src: "/img/gallery/full/02-01.webp",
+    alt: "Шлагбаум GS04, ЖК «Урбанист», Санкт-Петербург",
+  },
+  // дополнительные изображения для лайтбокса (не показаны на первой странице)
   {
     thumb: "/img/gallery/preview/01-02.webp",
     src: "/img/gallery/full/01-02.webp",
     alt: "Шлагбаумы GS04, фитнес-клуб Opera Fitness, Тюмень",
   },
   {
-    thumb: "/img/gallery/preview/01-03.webp",
-    src: "/img/gallery/full/01-03.webp",
-    alt: "Шлагбаум GS04, ЖК «Лахта», Санкт-Петербург",
-  },
-  {
     thumb: "/img/gallery/preview/01-04.webp",
     src: "/img/gallery/full/01-04.webp",
     alt: "Шлагбаумы GS04, Российский научно-исследовательский нейрохирургический институт им. А.Л. Поленова, Санкт-Петербург",
     moreText: "еще 4 фото",
-  },
-  // дополнительные изображения для лайтбокса (не показаны на первой странице)
-  {
-    thumb: "/img/gallery/preview/02-01.webp",
-    src: "/img/gallery/full/02-01.webp",
-    alt: "Шлагбаум GS04, ЖК «Урбанист», Санкт-Петербург",
   },
   {
     thumb: "/img/gallery/preview/02-02.webp",
@@ -54,9 +62,9 @@ const galleryAll = [
     alt: "Шлагбаумы GS04 в составе парковочной системы PERCo.Паркинг, деловой центр Sun City, Красное Село",
   },
   {
-    thumb: "/img/gallery/preview/03-02.webp",
-    src: "/img/gallery/full/03-02.webp",
-    alt: "Шлагбаум GS04, отель «Репинский курорт», Санкт-Петербург",
+    thumb: "/img/gallery/preview/01-03.webp",
+    src: "/img/gallery/full/01-03.webp",
+    alt: "Шлагбаум GS04, ЖК «Лахта», Санкт-Петербург",
   },
   {
     thumb: "/img/gallery/preview/03-03.webp",
@@ -79,9 +87,9 @@ const galleryAll = [
     alt: "Шлагбаум GS04, жилой комплекс, Москва",
   },
   {
-    thumb: "/img/gallery/preview/04-03.webp",
-    src: "/img/gallery/full/04-03.webp",
-    alt: "Шлагбаумы GS04, бизнес-центр Capital Tower, Москва",
+    thumb: "/img/gallery/preview/01-01.webp",
+    src: "/img/gallery/full/01-01.webp",
+    alt: "Шлагбаум GS04, гостиница «Левитанъ», Владимир",
   },
   {
     thumb: "/img/gallery/preview/04-04.webp",
@@ -195,6 +203,27 @@ const Hero2 = () => {
         >
           {previewItems.map((item, i) => {
             const absoluteIndex = item.index ?? groupIndex * groupSize + i;
+            const itemClassName =
+              (layoutClasses[i] ?? "item-gallery cursor-help") + " text-left";
+
+            if (item.isVideo) {
+              return (
+                <div key={absoluteIndex} className={itemClassName}>
+                  <Video
+                    containerClassName="h-full w-full"
+                    className="h-full w-full object-cover"
+                    src={installationsVideo}
+                    poster={publicAsset('/img/examples-installations/preview.webp')}
+                    caption={item.alt}
+                    muted
+                    autoPlay
+                    preload="auto"
+                    playsInline
+                    loop
+                  />
+                </div>
+              );
+            }
 
             return (
               <a
@@ -207,10 +236,7 @@ const Hero2 = () => {
                   event.preventDefault();
                   openGallery(absoluteIndex);
                 }}
-                className={
-                  (layoutClasses[i] ?? "item-gallery cursor-help") +
-                  " text-left"
-                }
+                className={itemClassName}
               >
                 <img
                   className="w-full h-auto object-cover"

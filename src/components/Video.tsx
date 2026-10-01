@@ -9,6 +9,7 @@ type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
   containerClassName?: string;
   // Показать ли опцию полноэкранного режима в light gallery.
   showFullscreen?: boolean;
+  caption?: string;
 };
 
 /**
@@ -22,33 +23,27 @@ type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
  * @returns {JSX.Element} Компонент Video.
  */
 const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
-  { src, poster, containerClassName = "", showFullscreen = true, ...props },
+  { src, poster, caption, containerClassName = "", showFullscreen = true, ...props },
   ref,
 ) {
   const [videoKey, setVideoKey] = useState(0);
   const items = useMemo(() => [{ src, poster }], [src, poster]);
 
   useEffect(() => {
-    const handleVideoGalleryClose = () => setVideoKey((key) => key + 1);
+    if (!props.autoPlay) return;
 
-    document.addEventListener("video-gallery-close", handleVideoGalleryClose);
-    return () => document.removeEventListener("video-gallery-close", handleVideoGalleryClose);
-  }, []);
-
-  // Обработчик закрытия галереи видео.
-  const handleGalleryClose = () => {
-    document.dispatchEvent(new Event("video-gallery-close"));
-  };
+    const handleGalleryClose = () => setVideoKey((key) => key + 1);
+    document.addEventListener("fancybox:destroy", handleGalleryClose);
+    return () => document.removeEventListener("fancybox:destroy", handleGalleryClose);
+  }, [props.autoPlay]);
 
   const { galleryRef, openGallery } = useLightGallery({
     items,
     selector: 'a[data-fancybox="video-player"]',
     showFullscreen,
-    onClose: handleGalleryClose,
     videoAutoplay: true,
   });
 
-  // Обработчик открытия галереи видео.
   const handleOpenGallery = () => {
     openGallery(0);
   };
@@ -73,6 +68,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
             data-fancybox="video-player"
             data-type="html5video"
             data-poster={poster}
+            data-caption={caption}
             aria-hidden="true"
             tabIndex={-1}
           />

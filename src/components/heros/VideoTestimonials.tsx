@@ -12,7 +12,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 
 const aboutImages = Object.entries(
-  import.meta.glob<string>('../../assets/about/*.{png,jpg,jpeg,webp}', {
+  import.meta.glob<string>('../../assets/img/video-reviews/*.{png,jpg,jpeg,webp}', {
     eager: true,
     import: 'default',
     query: '?url',
@@ -23,14 +23,14 @@ const aboutImages = Object.entries(
 
 const testimonials = [
   {
-    title: 'Шлагбаум PERCo в Морском порту Санкт-Петербурга',
-    duration: '01:45',
-    videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239289&hd=2&autoplay=1',
-  },
-  {
     title: 'Парковочная система PERCo.Паркинг в деловом центре Sun City, Санкт-Петербург',
     duration: '01:45',
     videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239330&hd=2&autoplay=1',
+  },
+  {
+    title: 'Система контроля доступа PERCo-Web в бизнес-центре Capital Tower',
+    duration: '01:45',
+    videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239358&hd=2&autoplay=1',
   },
   {
     title: 'Шлагбаумы PERCo на территории предприятия ДиКом',
@@ -38,14 +38,14 @@ const testimonials = [
     videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239217&hd=2&autoplay=1',
   },
   {
+    title: 'Шлагбаум PERCo в Морском порту Санкт-Петербурга',
+    duration: '01:45',
+    videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239289&hd=2&autoplay=1',
+  },
+  {
     title: 'Шлагбаумы PERCo в музее “Россия – моя история”',
     duration: '01:45',
     videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239254&hd=2&autoplay=1',
-  },
-  {
-    title: 'Система контроля доступа PERCo-Web в бизнес-центре Capital Tower',
-    duration: '01:45',
-    videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239358&hd=2&autoplay=1',
   },
 ];
 
