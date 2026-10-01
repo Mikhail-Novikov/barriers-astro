@@ -70,7 +70,7 @@ const solutions: Solution[] = [
     title: "Бизнес-центр или офис",
     image: publicAsset("/img/ready‑made-solutions/business-center.webp"),
     price: "151 020 ₽",
-    description: "GS04.1: прямоугольная стрела 4,3 м, опорная стойка GBS1",
+    description: "Шлагбаум GS04.1&nbsp;с прямоугольной стрелой 4,3&nbsp;м и&nbsp;опорной стойкой GBS1",
     specifics:
       "Презентабельный внешний вид, удобный доступ сотрудников и посетителей, средний поток, работа в составе СКУД или парковочной системы.",
     important: "Доступ сотрудников и посетителей по картам и брелокам.",
@@ -91,7 +91,7 @@ const solutions: Solution[] = [
     image: publicAsset("/img/ready‑made-solutions/residential-garage.webp"),
     price: "121 862 ₽",
     description:
-      "GS14:круглая стрела 4,3&nbsp;м, опорная стойка GBS1, комплект фотоэлементов GD1",
+      "Шлагбаум GS14 с круглой стрелой 4,3&nbsp;м, опорной стойка GBS1 и комплектом фотоэлементов GD1",
     specifics: "Въезд для своих, бюджетное решение, низкий поток.",
     important:
       "Доступ по брелокам; GSM-модуль не используется, чтобы не провоцировать утечку номера.",
@@ -106,12 +106,12 @@ const solutions: Solution[] = [
     ],
   },
   {
-    tag: "МКД, ЖК",
+    tag: "Двор ЖК",
     title: "Двор многоквартирного дома, ЖК",
-    image: publicAsset("/img/ready‑made-solutions/parking-space.webp"),
+    image: publicAsset("/img/ready‑made-solutions/residential-garage.webp"),
     price: "121 862 ₽",
     description:
-      "GS14: круглая стрела 4,3&nbsp;м, опорная стойка GBS1, комплект фотоэлементов GD1",
+      "Шлагбаум GS14 с круглой стрелой 4,3&nbsp;м, опорной стойкой GBS1 и комплектом фотоэлементов GD1",
     specifics:
       "Бюджетное решение, удобный доступ жильцам и возможность пропускать доставку в закрытый двор.",
     additions: [
@@ -120,97 +120,111 @@ const solutions: Solution[] = [
       "Устройство радиоуправления YET404PC",
       "Лампа сигнальная со встроенной антенной SL-U",
       "Стойка для фотоэлемента безопасности GDS1",
+      "Островок безопасности PI-01",
       "Ограждение для стойки шлагбаума GM3",
       "Стойка для считывателя GM5",
     ],
   },
   {
-    tag: "Коттеджный поселок, СНТ, дача",
+    tag: "СНТ, коттеджный поселок",
     title: "Коттеджный поселок, СНТ, дача",
     image: publicAsset("/img/ready‑made-solutions/snt.webp"),
     price: "141 871 ₽",
     description:
-      "GS16: круглая стрела 6,3&nbsp;м, опорная стойка GBS1, комплект фотоэлементов GD1",
-    specifics: "Бюджетное решение, широкий проезд для техники, низкий поток.",
+      "Шлагбаум GS16 с круглой стрелой 6,3&nbsp;м, опорной стойкой GBS1 и комплектом фотоэлементов GD1",
+    specifics:
+      "Бюджетное решение, удобный доступ жильцам и возможность пропускать доставку в закрытый двор.",
     additions: [
       "GSM / BLE модуль управления шлагбаумом PERCo-GCM1",
-      "Брелок-передатчик радиоуправления YET2129 четырехкнопочный с динамическим кодом",
+      "Брелок-передатчик радиоуправления YET2129 четырехкнопочный с&nbsp;динамическим кодом",
       "Устройство радиоуправления YET404PC",
-      "Лампа сигнальная со&nbsp;встроенной антенной SL-U",
+      "Лампа сигнальная со встроенной антенной SL-U",
+      "Стойка для фотоэлемента безопасности GDS1",
       "Островок безопасности PI-01",
       "Ограждение для стойки шлагбаума GM3",
     ],
   },
   {
-    tag: "Парковка",
-    title: "Парковка",
+    tag: "Крытая парковка",
+    title: "Крытая парковка",
+    image: publicAsset("/img/ready‑made-solutions/underground-parking.webp"),
+    price: "159 706 ₽",
+    description:
+      "Шлагбаум GS04.1 с прямоугольной стрелой 3&nbsp;м и шарниром для складной стрелы GBF1",
+    specifics:
+      "Бюджетное решение, удобный доступ жильцам и возможность пропускать доставку в закрытый двор.",
+    additions: [
+      "Светодиодная лента GBL4.3 для дополнительной подсветки стрелы шлагбаума PERCo-GBO4.3",
+      "Стойка для фотоэлемента безопасности GDS1",
+      "Островок безопасности PI-01",
+      "Ограждение для стойки шлагбаума GM3",
+    ],
+  },
+  {
+    tag: "Открытая парковка",
+    title: "Открытая парковка",
     image: publicAsset("/img/ready‑made-solutions/parking-space.webp"),
     price: "183 297 ₽",
-    description: "GF03.1: круглая стрела с&nbsp;буфером 3&nbsp;м",
-    specifics:
-      "Быстрое освобождение проезда, препятствие &laquo;паровозикам&raquo;, высокий поток, работа в&nbsp;составе парковочной системы.",
+    description:
+      "Шлагбаум GF03.1&nbsp;с круглой стрелой 3&nbsp;м и&nbsp;буфером",
+    specifics: "Бюджетное решение, широкий проезд для техники, низкий поток.",
     additions: [
       "Стойка для фотоэлемента безопасности GDS1",
       "Островок безопасности PI-01",
       "Ограждение для стойки шлагбаума GM3",
     ],
-    alternative: {
-      price: "252 017 ₽",
-      description:
-        "GF13N: для регионов с&nbsp;экстремально низкими температурами: круглая стрела с&nbsp;буфером 3&nbsp;м",
-      additions: [
-        "Островок безопасности PI-0",
-        "Ограждение для стойки шлагбаума GM3",
-      ],
-    },
   },
   {
-    tag: "Парковка подземная",
-    title: "Парковка подземная",
-    image: publicAsset("/img/ready‑made-solutions/underground-parking.webp"),
-    price: "159 706 ₽",
+    tag: "КПП",
+    title: "КПП, транспортная проходная",
+    image: publicAsset("/img/ready‑made-solutions/checkpoint.webp"),
+    price: "164 186 ₽",
     description:
-      "GS04.1: прямоугольная стрела 3 м, шарнир GBF1, опорная стойка GBS1",
+      "Шлагбаум GS06.1 с круглой стрелой 6,3 м и опорной стойкой GBS1",
     specifics:
       "Ограниченное пространство, работа в составе парковочной системы.",
     important: "Нужны элементы подсветки, чтобы избежать аварий.",
     additions: [
-      "Светодиодная лента GBL4.3",
-      "Стойка для фотоэлемента GDS1",
-      "Островок безопасности PI-01",
-      "Ограждение GM3",
-    ],
-  },
-  {
-    tag: "КПП, транспортная проходная",
-    title: "КПП, транспортная проходная",
-    image: publicAsset("/img/ready‑made-solutions/checkpoint.webp"),
-    price: "164 186 ₽",
-    description: "GS06.1: круглая стрела 6,3 м, опорная стойка GBS1",
-    specifics:
-      "Широкий проезд, удобный доступ сотрудникам, высокий поток посетителей, работа в составе СКУД.",
-    important:
-      "Возможна работа в регионах с экстремально низкими температурами.",
-    additions: [
-      "Считыватель IR10.1 (EMM)",
+      "Считыватель дальнего действия IR10.1 (EMM)",
       "Стойка для фотоэлемента безопасности GDS1",
       "Островок безопасности PI-01",
       "Ограждение для стойки шлагбаума GM3",
       "Стойка для считывателя GM5",
       "Стойка для установки оборудования (2,2 м) BH04",
     ],
-    alternative: {
-      price: "202 515 ₽",
-      description:
-        "GS14N для промышленных предприятий в регионах с экстремально низкими температурами: круглая стрела 4,3 м, опорная стойка GBS1",
-              additions: [
-        "Считыватель дальнего действия IR10.1 (EMM)",
-        "Островок безопасности PI-01",
-        "Ограждение для стойки шлагбаума GM3",
-        "Стойка для считывателя GM5",
-        "Стойка для установки оборудования (2,2 м) BH04",
-      ],
-    },
+  },
+  {
+    tag: "КПП — холодный климат",
+    title: "КПП — холодный климат",
+    image: publicAsset("/img/ready‑made-solutions/checkpoint-north.webp"),
+    price: "202 515 ₽",
+    description: "Шлагбаум GS14N с круглой стрелой 4,3&nbsp;м и опорной стойкой GBS1",
+    specifics:
+      "Широкий проезд, удобный доступ сотрудникам, высокий поток посетителей, работа в составе СКУД.",
+    important:
+      "Возможна работа в регионах с экстремально низкими температурами.",
+    additions: [
+      "Считыватель дальнего действия IR10.1 (EMM)",
+      "Островок безопасности PI-01",
+      "Ограждение для стойки шлагбаума GM3",
+      "Стойка для считывателя GM5",
+      "Стойка для установки оборудования (2,2 м) BH04",
+    ],
+  },
+  {
+    tag: "Открытая парковка — холодный климат",
+    title: "Открытая парковка — холодный климат",
+    image: publicAsset("/img/ready‑made-solutions/parking-north.webp"),
+    price: "252 017 ₽",
+    description: "Шлагбаум GF13N с круглой стрелой 3&nbsp;м и буфером",
+    specifics:
+      "Широкий проезд, удобный доступ сотрудникам, высокий поток посетителей, работа в&nbsp;составе СКУД.",
+    important:
+      "Возможна работа в регионах с экстремально низкими температурами.",
+    additions: [
+      "Островок безопасности PI-01",
+      "Ограждение для стойки шлагбаума GM3",
+    ],
   },
 ];
 
@@ -280,7 +294,7 @@ export default function Hero10(): JSX.Element {
                 key={solution.tag}
                 type="button"
                 id={`solution-tab-${index}`}
-                className={`solution-tab flex cursor-pointer items-center rounded-xl border px-3.5 h-12 hover:bg-grey-300 font-manrope-semibold text-left text-lg/6 transition-colors ${isActive ? 'border-cta bg-grey-200 text-grey-1000' : 'border-transparent bg-grey-200 text-grey-800'}`}
+                className={`solution-tab flex cursor-pointer items-center rounded-xl border px-3 h-12 hover:bg-grey-300 font-manrope-semibold text-left text-lg/6 transition-colors ${isActive ? 'border-cta bg-grey-200 text-grey-1000' : 'border-transparent bg-grey-200 text-grey-800'}`}
                 role="tab"
                 aria-selected={isActive}
                 aria-controls={`solution-panel-${index}`}
@@ -305,20 +319,11 @@ export default function Hero10(): JSX.Element {
             <img className="h-full w-full object-contain" src={activeSolution.image} alt={activeSolution.description} />
           </div>
 
-          <div className="flex flex-col items-start max-w-[470px] text-grey-1000 lg:col-span-5">
+          <div className="flex flex-col items-start max-w-[600px] text-grey-1000 lg:col-span-5">
             <h4 className="mb-5 text-3xl/10 font-bold lg:text-3xl/10">{activeSolution.title}</h4>
-            <p className="mb-4 text-md/6 text-grey-800"><HtmlContent>{activeSolution.specifics}</HtmlContent></p>
-            {activeSolution.important && (
-              <p className="mb-5 text-md/6 text-grey-800"><strong>Важно: </strong><HtmlContent>{activeSolution.important}</HtmlContent></p>
-            )}
             <SolutionPrice price={activeSolution.price} description={activeSolution.description} />
             <SolutionAdditions additions={activeSolution.additions} />
-            {activeSolution.alternative && (
-              <>
-                <SolutionPrice price={activeSolution.alternative.price} description={activeSolution.alternative.description} />
-                <SolutionAdditions additions={activeSolution.alternative.additions} />
-              </>
-            )}
+
             <Modal
               triggerLabel="Заказать"
               title="Форма обратной связи"
