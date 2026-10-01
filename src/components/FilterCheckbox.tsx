@@ -5,6 +5,7 @@ type FilterCheckboxProps = {
   type?: 'checkbox' | 'radio';
   name?: string;
   value?: string;
+  disabled?: boolean;
 };
 
 /**
@@ -36,18 +37,20 @@ export default function FilterCheckbox({
   type = 'checkbox',
   name,
   value,
+  disabled = false,
 }: FilterCheckboxProps): JSX.Element {
   return (
-    <label className="flex cursor-pointer items-center gap-4 perco-icons text-md/7 text-grey-1000">
+    <label className={`flex items-center gap-4 perco-icons text-md/7 ${disabled ? 'cursor-not-allowed text-grey-600' : 'cursor-pointer text-grey-1000'}`}>
       <input
         type={type}
         name={name}
         value={value}
         checked={checked}
+        disabled={disabled}
         onChange={onChange}
         className="peer sr-only"
       />
-      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border border-grey-700 text-white peer-checked:border-cta peer-checked:bg-cta text-md/5">
+      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border border-grey-700 text-white peer-checked:border-cta peer-checked:bg-cta peer-disabled:border-grey-400 peer-disabled:bg-grey-200 peer-disabled:text-grey-600 text-md/5">
         {checked && <span className="relative left-[0.5px] perco-icon-check-tag" />}
       </span>
       {label}
