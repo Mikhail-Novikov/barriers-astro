@@ -1,10 +1,12 @@
 import { useMemo } from 'react';
 import options from '@content/options.json';
+import type { BarrierFilterSelections, FilterRule, FilterOption } from '@shared-types/barrierFilters';
 
-type FilterOption = { name: string; value: string | string[] };
-type FilterRule = { selected: FilterOption; disables: FilterOption[] };
-type FilterSelections = Record<string, number | readonly string[]>;
-
+/**
+ * Возвращает максимальное значение ширины барьера.
+ * @param disabledValues Множество неактивных значений ширины барьера.
+ * @returns Максимальное значение ширины барьера.
+ */
 export const getMaxWidthLimit = (disabledValues?: ReadonlySet<string>): number => {
   const configuredMaximum = (options as FilterRule[]).reduce((maximum, { selected }) => {
     if (selected.name !== 'maxWidth') return maximum;
@@ -24,8 +26,7 @@ export const getMaxWidthLimit = (disabledValues?: ReadonlySet<string>): number =
  * @param current Текущее значение выбора.
  * @returns true, если опция соответствует текущему выбору, иначе false.
  */
-const matchesSelection = (option: FilterOption, current: number | readonly string[] | undefined): boolean => {
-  if (current === undefined) return false;
+const matchesSelection = (option: FilterOption, current: number | readonly string[]): boolean => {
 
   if (option.name === 'maxWidth' && typeof current === 'number') {
     if (Array.isArray(option.value)) {
@@ -44,11 +45,11 @@ const matchesSelection = (option: FilterOption, current: number | readonly strin
  * @param selections Объект, содержащий текущие выборы.
  * @returns Map с наборами отключенных значений по имени фильтра.
  */
-const useDisabledOptions = (selections: FilterSelections): ReadonlyMap<string, ReadonlySet<string>> => {
-  const { maxWidth, temperatures, openings, booms, fotoElements } = selections;
+const useDisabledOptions = (selections: BarrierFilterSelections): ReadonlyMap<string, ReadonlySet<string>> => {
+  const { maxWidth, temperatures, openingTimes, booms, fotoElement } = selections;
 
   return useMemo(() => {
-    const currentSelections: FilterSelections = { maxWidth, temperatures, openings, booms, fotoElements };
+    const currentSelections: BarrierFilterSelections = { maxWidth, temperatures, openingTimes, booms, fotoElement };
     const disabledOptions = new Map<string, Set<string>>();
 
     for (const { selected, disables } of options as FilterRule[]) {
@@ -63,7 +64,7 @@ const useDisabledOptions = (selections: FilterSelections): ReadonlyMap<string, R
     }
 
     return disabledOptions;
-  }, [booms, fotoElements, maxWidth, openings, temperatures]);
+  }, [booms, fotoElement, maxWidth, openingTimes, temperatures]);
 };
 
 export default useDisabledOptions;

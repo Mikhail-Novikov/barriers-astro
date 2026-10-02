@@ -12,13 +12,15 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
+        '@assets': path.resolve('./src/assets'),
         '@components': path.resolve('./src/components'),
         '@content': path.resolve('./src/content'),
+        '@fonts/*': path.resolve('./src/assets/fonts/*'),
+        '@hooks': path.resolve('./src/hooks'),
         '@layouts': path.resolve('./src/layouts'),
         '@pages': path.resolve('./src/pages'),
         '@styles': path.resolve('./src/styles'),
-        '@assets': path.resolve('./src/assets'),
-        '@fonts/*': path.resolve('./src/assets/fonts/*'),
+        '@types': path.resolve('./src/types'),
       }
     },
     plugins: [tailwindcss()]

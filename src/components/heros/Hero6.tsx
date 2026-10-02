@@ -1,16 +1,24 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Modal from './Modal';
 import FeedbackForm from './FeedbackForm';
 import WidthSlider from './WidthSlider';
 
-import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
 import FilterCheckbox from '@components/FilterCheckbox';
-import { barrierFeedback } from '@utils/barrierFeedback';
 import { publicAsset } from '@utils/publicAsset';
-import scrollElementBelowStickyHeader from '@utils/scrollElementBelowStickyHeader';
 import { useLightGallery } from '@hooks/useLightGallery';
+import useBarrierCatalogEffects from '@hooks/useBarrierCatalogEffects';
 import useDisabledOptions, { getMaxWidthLimit } from '@hooks/useDisabledOptions';
+
 import barriers from '@content/barriers.json';
+
+import type {
+  BoomOption,
+  FotoElementOption,
+  FilterSectionOption,
+  FilterSectionProps,
+  OpeningTimeOption,
+  TemperatureOption,
+} from '@shared-types/barrierFilters';
 
 import emptySearchImage from '../../assets/img/empty-search.png';
 
@@ -21,45 +29,34 @@ const barrierMainImages = import.meta.glob('../../assets/img/barriers/*/main/*.{
   import: 'default',
 }) as Record<string, string>;
 
-const TemperaturesOptions = [
+const TemperaturesOptions: readonly FilterSectionOption<TemperatureOption>[] = [
   ['standard', '−40 °C'],
   ['low', '−60 °C'],
 ] as const;
 
-const timeOpenOptions = [
+const openingTimeOptions: readonly FilterSectionOption<OpeningTimeOption>[] = [
   ['lessThan1.5', 'меньше 1,5 секунд'],
   ['3-4', '3-4 секунд'],
   ['4-6', '4–6 секунд'],
 ] as const;
 
-const boomOptions = [
+const boomOptions: readonly FilterSectionOption<BoomOption>[] = [
   ['round', 'круглая'],
   ['square', 'прямоугольная'],
   ['folding', 'складная прямоугольная'],
 ] as const;
 
-const fotoElementOptions = [
+const fotoElementOptions: readonly FilterSectionOption<FotoElementOption>[] = [
   ['with', 'встроенный'],
   ['without', 'место для установки'],
 ] as const;
-
-type FilterValue = string | boolean;
-
-/** Тип свойств секции фильтрации */
-type FilterSectionProps<T extends FilterValue> = {
-  title: string;
-  options: readonly (readonly [T, string])[];
-  selected: T[];
-  onToggle: (value: T) => void;
-  disabledValues?: ReadonlySet<T>;
-};
 
 /**
  * Создает секцию фильтрации.
  * @param props FilterSectionProps<T>- свойства секции фильтрации
  * @return {JSX.Element} JSX-элемент секции фильтрации
  */
-function FilterSection<T extends FilterValue>({
+function FilterSection<T extends string>({
   title,
   options,
   selected,
@@ -98,7 +95,7 @@ const toggleValue = <T,>(value: T, values: T[], setValues: (values: T[]) => void
  * @param props FilterSectionProps<T>- свойства секции фильтрации
  * @return {JSX.Element} JSX-элемент секции фильтрации
  */
-const createFilterSection = <T extends FilterValue>(props: FilterSectionProps<T>): JSX.Element => {
+const createFilterSection = <T extends string>(props: FilterSectionProps<T>): JSX.Element => {
   return <FilterSection {...props} />;
 }
 
@@ -120,7 +117,7 @@ const getRequiredBoomLength = (roadWidth: number): string | null => {
  * @param isLowTemp - признак низкой температуры
  * @return {boolean} true, если барьер соответствует фильтрам, иначе false
  */
-const matchesTemperatureFilter = (selected: string[], isLowTemp: boolean): boolean => {
+const matchesTemperatureFilter = (selected: TemperatureOption[], isLowTemp: boolean): boolean => {
   const hasStandard = selected.includes('standard');
   const hasLow = selected.includes('low');
 
@@ -135,7 +132,7 @@ const matchesTemperatureFilter = (selected: string[], isLowTemp: boolean): boole
  * @param openingTime - время открытия
  * @return {boolean} true, если барьер соответствует фильтрам, иначе false
  */
-const matchesOpeningFilter = (selected: string[], isHighSpeed: boolean, openingTime: string): boolean => {
+const matchesOpeningTimeFilter = (selected: OpeningTimeOption[], isHighSpeed: boolean, openingTime: string): boolean => {
   if (selected.length === 0) return true;
 
   return selected.some((opening) => {
@@ -161,7 +158,7 @@ const matchesOpeningFilter = (selected: string[], isHighSpeed: boolean, openingT
  * @param isBoomFoldable - возможность складывать шлагбаум
  * @return {boolean} true, если барьер соответствует фильтрам, иначе false
  */
-const matchesBoomFilter = (selected: string[], boomShape: string, isBoomFoldable: boolean): boolean => {
+const matchesBoomFilter = (selected: BoomOption[], boomShape: string, isBoomFoldable: boolean): boolean => {
   if (selected.length === 0) return true;
 
   return selected.some((boom) => {
@@ -176,7 +173,7 @@ const matchesBoomFilter = (selected: string[], boomShape: string, isBoomFoldable
  * @param bodyStyle - стиль корпуса барьера
  * @return {boolean} true, если барьер соответствует фильтрам, иначе false
  */
-const matchesFotoElementFilter = (selected: string[], bodyStyle: string): boolean => {
+const matchesFotoElementFilter = (selected: FotoElementOption[], bodyStyle: string): boolean => {
   if (selected.length === 0) return true;
 
   return selected.some((fotoElement) => {
@@ -192,32 +189,13 @@ const matchesFotoElementFilter = (selected: string[], bodyStyle: string): boolea
 export default function Hero6(): JSX.Element {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [maxWidth, setMaxWidth] = useState(0);
-  const [temperatures, setTemperatures] = useState<string[]>([]);
-  const [openings, setOpenings] = useState<string[]>([]);
-  const [booms, setBooms] = useState<string[]>([]);
-  const [fotoElements, setFotoElements] = useState<string[]>([]);
-  const previousFilters = useRef({ maxWidth, temperatures, openings, booms, fotoElements });
+  const [temperatures, setTemperatures] = useState<TemperatureOption[]>([]);
+  const [openingTimes, setOpeningTimes] = useState<OpeningTimeOption[]>([]);
+  const [booms, setBooms] = useState<BoomOption[]>([]);
+  const [fotoElement, setFotoElement] = useState<FotoElementOption[]>([]);
   // получаем отключенные опции для фильтров на основе текущих выбранных значений
-  const disabledOptions = useDisabledOptions({ maxWidth, temperatures, openings, booms, fotoElements });
+  const disabledOptions = useDisabledOptions({ maxWidth, temperatures, openingTimes, booms, fotoElement });
   const maxWidthLimit = getMaxWidthLimit(disabledOptions.get('maxWidth'));
-
-  useEffect(() => {
-    setMaxWidth((currentWidth) => Math.min(currentWidth, maxWidthLimit));
-  }, [maxWidthLimit]);
-
-  useEffect(() => {
-    const previous = previousFilters.current;
-    const hasChanged = previous.maxWidth !== maxWidth
-      || previous.temperatures !== temperatures
-      || previous.openings !== openings
-      || previous.booms !== booms
-      || previous.fotoElements !== fotoElements;
-
-    previousFilters.current = { maxWidth, temperatures, openings, booms, fotoElements };
-    if (!hasChanged) return;
-
-    scrollElementBelowStickyHeader(galleryRef.current, 120);
-  }, [booms, fotoElements, maxWidth, openings, temperatures]);
 
   /**
    * Создает массив элементов галереи для Fancybox.
@@ -235,57 +213,17 @@ export default function Hero6(): JSX.Element {
     showFullscreen: false,
     mainClass: 'barrier-gallery',
   });
-
-  useEffect(() => {
-    const MODAL_OPEN_DELAY_MS = 500;
-    const MODAL_TRIGGER_SELECTOR = '#open-modal-sale-barrier';
-    const ORDER_BUTTON_ATTR = 'data-order-barrier';
-
-    /**
-     * Обработчик клика по кнопке "Заказать"
-     * @param event - событие клика по кнопке "Заказать"
-     */
-    const handleOrderClick = (event: MouseEvent) => {
-      const target = event.target as HTMLElement | null;
-      if (!target) return;
-
-      // Получаем ближайшую кнопку с атрибутом data-order-barrier
-      const orderButton = target.closest<HTMLButtonElement>(`[${ORDER_BUTTON_ATTR}]`);
-      if (!orderButton) return;
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      // Получаем название барьера из атрибута data-order-barrier
-      const barrierName = orderButton.getAttribute(ORDER_BUTTON_ATTR) ?? '';
-      const message = barrierName ? `Нужна консультация:<br /> <strong class="font-manrope-semibold">${barrierName}</strong>` : '';
-
-      // Сохраняем сообщение в переменную утилиты barrierFeedback для передачи в модальное окно
-      barrierFeedback.set(message);
-
-      // Закрываем Fancybox
-      Fancybox.close();
-      // и открываем модальное окно с формой обратной связи
-      window.setTimeout(() => {
-        document.querySelector<HTMLButtonElement>(MODAL_TRIGGER_SELECTOR)?.click();
-      }, MODAL_OPEN_DELAY_MS);
-    };
-
-    // Добавляем обработчик клика по кнопке "Заказать"
-    document.addEventListener('click', handleOrderClick);
-
-    return () => {
-      document.removeEventListener('click', handleOrderClick);
-    };
-  }, []);
-
-  // Закрытие фильтров при изменении размера окна
-  useEffect(() => {
-    const handleResize = () => setIsFiltersOpen(false);
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  useBarrierCatalogEffects({
+    selectedMaxWidth: maxWidth,
+    maxWidthLimit,
+    temperatures,
+    openingTimes,
+    booms,
+    fotoElement,
+    galleryRef,
+    setMaxWidth,
+    setIsFiltersOpen,
+  });
 
   // Фильтры
   const filterSections = [
@@ -293,29 +231,29 @@ export default function Hero6(): JSX.Element {
       title: 'Минимальная температура эксплуатации',
       options: TemperaturesOptions,
       selected: temperatures,
-      onToggle: (value: string) => toggleValue(value, temperatures, setTemperatures),
+      onToggle: (value: TemperatureOption) => toggleValue(value, temperatures, setTemperatures),
       disabledValues: disabledOptions.get('temperatures'),
     }),
     createFilterSection({
       title: 'Время открытия',
-      options: timeOpenOptions,
-      selected: openings,
-      onToggle: (value: string) => toggleValue(value, openings, setOpenings),
-      disabledValues: disabledOptions.get('openings'),
+      options: openingTimeOptions,
+      selected: openingTimes,
+      onToggle: (value: OpeningTimeOption) => toggleValue(value, openingTimes, setOpeningTimes),
+      disabledValues: disabledOptions.get('openingTimes'),
     }),
     createFilterSection({
       title: 'Тип стрелы',
       options: boomOptions,
       selected: booms,
-      onToggle: (value: string) => toggleValue(value, booms, setBooms),
+      onToggle: (value: BoomOption) => toggleValue(value, booms, setBooms),
       disabledValues: disabledOptions.get('booms'),
     }),
     createFilterSection({
       title: 'Фотоэлемент',
       options: fotoElementOptions,
-      selected: fotoElements,
-      disabledValues: disabledOptions.get('fotoElements'),
-      onToggle: (value: string) => toggleValue(value, fotoElements, setFotoElements),
+      selected: fotoElement,
+      disabledValues: disabledOptions.get('fotoElement'),
+      onToggle: (value: FotoElementOption) => toggleValue(value, fotoElement, setFotoElement),
     }),
   ];
 
@@ -326,11 +264,11 @@ export default function Hero6(): JSX.Element {
       (barrier) =>
         (requiredBoomLength === null || barrier.boomLength === requiredBoomLength) &&
         matchesTemperatureFilter(temperatures, barrier.isLowTemp) &&
-        matchesOpeningFilter(openings, barrier.isHighSpeed, barrier.openingTime) &&
+        matchesOpeningTimeFilter(openingTimes, barrier.isHighSpeed, barrier.openingTime) &&
         matchesBoomFilter(booms, barrier.boomShape, barrier.isBoomFoldable) &&
-        matchesFotoElementFilter(fotoElements, barrier.bodyStyle)
+        matchesFotoElementFilter(fotoElement, barrier.bodyStyle)
     ),
-      [booms, fotoElements, openings, requiredBoomLength, temperatures]
+      [booms, fotoElement, openingTimes, requiredBoomLength, temperatures]
   );
 
   /**
@@ -340,9 +278,9 @@ export default function Hero6(): JSX.Element {
   const resetFilters = (): void => {
     setMaxWidth(0);
     setTemperatures([]);
-    setOpenings([]);
+    setOpeningTimes([]);
     setBooms([]);
-    setFotoElements([]);
+    setFotoElement([]);
   };
 
   /**
@@ -351,9 +289,9 @@ export default function Hero6(): JSX.Element {
    */
   const appliedFiltersCount = (maxWidth > 0 ? 1 : 0)
     + temperatures.length
-    + openings.length
+    + openingTimes.length
     + booms.length
-    + fotoElements.length;
+    + fotoElement.length;
 
   /**
    * Контент фильтров

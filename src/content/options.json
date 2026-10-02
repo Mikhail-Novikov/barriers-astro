@@ -1,6 +1,6 @@
 [
 	{
-		"selected": { "name": "fotoElements", "value": "with" },
+		"selected": { "name": "fotoElement", "value": "with" },
 		"disables": [
 			{ "name": "temperatures", "value": "low" }
 		]
@@ -8,7 +8,7 @@
 	{
 		"selected": { "name": "booms", "value": "square" },
 		"disables": [
-			{ "name": "openings", "value": "lessThan1.5" },
+			{ "name": "openingTimes", "value": "lessThan1.5" },
 			{ "name": "temperatures", "value": "low" },
 			{ "name": "maxWidth", "value": "4" }
 		]
@@ -16,13 +16,13 @@
 	{
 		"selected": { "name": "booms", "value": "folding" },
 		"disables": [
-			{ "name": "openings", "value": "lessThan1.5" },
+			{ "name": "openingTimes", "value": "lessThan1.5" },
 			{ "name": "temperatures", "value": "low" },
 			{ "name": "maxWidth", "value": "4" }
 		]
 	},
 	{
-		"selected": { "name": "openings", "value": "lessThan1.5" },
+		"selected": { "name": "openingTimes", "value": "lessThan1.5" },
 		"disables": [
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
@@ -32,7 +32,7 @@
 	{
 		"selected": { "name": "temperatures", "value": "low" },
 		"disables": [
-			{ "name": "fotoElements", "value": "with" },
+			{ "name": "fotoElement", "value": "with" },
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
 			{ "name": "maxWidth", "value": "4" }
@@ -41,7 +41,7 @@
 	{
 		"selected": { "name": "maxWidth", "value": ["3", "4"] },
 		"disables": [
-			{ "name": "openings", "value": "lessThan1.5" }
+			{ "name": "openingTimes", "value": "lessThan1.5" }
 		]
 	},
 	{
@@ -49,8 +49,8 @@
 		"disables": [
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "openings", "value": "lessThan1.5" },
-			{ "name": "openings", "value": "3-4" },
+			{ "name": "openingTimes", "value": "lessThan1.5" },
+			{ "name": "openingTimes", "value": "3-4" },
 			{ "name": "temperatures", "value": "low" }
 		]
 	}
