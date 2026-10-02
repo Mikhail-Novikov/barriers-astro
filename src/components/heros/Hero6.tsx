@@ -222,6 +222,10 @@ export default function Hero6(): JSX.Element {
     fotoElement,
     galleryRef,
     setMaxWidth,
+    setTemperatures,
+    setOpeningTimes,
+    setBooms,
+    setFotoElement,
     setIsFiltersOpen,
   });
 

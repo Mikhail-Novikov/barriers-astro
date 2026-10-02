@@ -60,6 +60,10 @@ export type UseBarrierCatalogEffectsParams = {
 	galleryRef: RefObject<HTMLDivElement>;
   /** функция для установки максимальной ширины */
 	setMaxWidth: Dispatch<SetStateAction<number>>;
+	setTemperatures: Dispatch<SetStateAction<TemperatureOption[]>>;
+	setOpeningTimes: Dispatch<SetStateAction<OpeningTimeOption[]>>;
+	setBooms: Dispatch<SetStateAction<BoomOption[]>>;
+	setFotoElement: Dispatch<SetStateAction<FotoElementOption[]>>;
   /** функция для установки состояния открытия фильтров */
 	setIsFiltersOpen: Dispatch<SetStateAction<boolean>>;
 };

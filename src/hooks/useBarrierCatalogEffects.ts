@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
 import { barrierFeedback } from '@utils/barrierFeedback';
+import { readBarrierCatalogFilters, saveBarrierCatalogFilters } from '@utils/barrierFiltersStorage';
 import scrollElementBelowStickyHeader from '@utils/scrollElementBelowStickyHeader';
 
 import type {
@@ -34,9 +35,38 @@ const useBarrierCatalogEffects = ({
   fotoElement,
   galleryRef,
   setMaxWidth,
+  setTemperatures,
+  setOpeningTimes,
+  setBooms,
+  setFotoElement,
   setIsFiltersOpen,
 }: UseBarrierCatalogEffectsParams): void => {
   const previousFilters = useRef({ selectedMaxWidth, temperatures, openingTimes, booms, fotoElement });
+  const filtersRestored = useRef(false);
+
+  useEffect(() => {
+    const savedFilters = readBarrierCatalogFilters();
+    if (savedFilters) {
+      setMaxWidth(savedFilters.maxWidth);
+      setTemperatures([...savedFilters.temperatures]);
+      setOpeningTimes([...savedFilters.openingTimes]);
+      setBooms([...savedFilters.booms]);
+      setFotoElement([...savedFilters.fotoElement]);
+    }
+    filtersRestored.current = true;
+  }, [setBooms, setFotoElement, setMaxWidth, setOpeningTimes, setTemperatures]);
+
+  useEffect(() => {
+    if (!filtersRestored.current) return;
+
+    saveBarrierCatalogFilters({
+      maxWidth: selectedMaxWidth,
+      temperatures,
+      openingTimes,
+      booms,
+      fotoElement,
+    });
+  }, [booms, fotoElement, openingTimes, selectedMaxWidth, temperatures]);
 
   // устанавливаем ограничение на максимальную ширину в соответствии с текущими фильтрами
   useEffect(() => {
