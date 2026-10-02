@@ -8,6 +8,7 @@ import FilterCheckbox from '@components/FilterCheckbox';
 import { barrierFeedback } from '@utils/barrierFeedback';
 import { publicAsset } from '@utils/publicAsset';
 import { useLightGallery } from '@hooks/useLightGallery';
+import useDisabledOptions, { getMaxWidthLimit } from '@hooks/useDisabledOptions';
 import barriers from '@content/barriers.json';
 
 import emptySearchImage from '../../assets/img/empty-search.png';
@@ -49,6 +50,7 @@ type FilterSectionProps<T extends FilterValue> = {
   options: readonly (readonly [T, string])[];
   selected: T[];
   onToggle: (value: T) => void;
+  disabledValues?: ReadonlySet<T>;
 };
 
 /**
@@ -61,6 +63,7 @@ function FilterSection<T extends FilterValue>({
   options,
   selected,
   onToggle,
+  disabledValues,
 }: FilterSectionProps<T>): JSX.Element {
   return (
     <fieldset className="flex flex-col gap-4">
@@ -71,6 +74,7 @@ function FilterSection<T extends FilterValue>({
           checked={selected.includes(value)}
           label={label}
           onChange={() => onToggle(value)}
+          disabled={disabledValues?.has(value) ?? false}
         />
       ))}
     </fieldset>
@@ -135,13 +139,22 @@ const matchesOpeningFilter = (selected: string[], isHighSpeed: boolean, openingT
 
   return selected.some((opening) => {
     if (opening === 'lessThan1.5') return isHighSpeed;
-    if (opening === '3-4') return openingTime.startsWith('3');
-    return openingTime.startsWith('4');
+    if (isHighSpeed) return false;
+
+    const times = [...openingTime.matchAll(/\d+(?:[,.]\d+)?/g)]
+      .map(([time]) => Number(time.replace(',', '.')));
+    if (times.length === 0) return false;
+
+    const openingMin = openingTime.trimStart().startsWith('до') ? 0 : times[0];
+    const openingMax = times[times.length - 1];
+    const [filterMin, filterMax] = opening === '3-4' ? [3, 4] : [4, 6];
+
+    return openingMax > filterMin && openingMin < filterMax;
   });
 };
 
 /**
- * Проверяет, соответствует ли барьер выбранным фильтрам по шлагбауму.
+ * Проверяет, соответствует ли барьер складываемому шлагбауму.
  * @param selected - массив выбранных фильтров по шлагбауму
  * @param boomShape - форма шлагбаума
  * @param isBoomFoldable - возможность складывать шлагбаум
@@ -178,10 +191,22 @@ const matchesFotoElementFilter = (selected: string[], bodyStyle: string): boolea
 export default function Hero6(): JSX.Element {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [maxWidth, setMaxWidth] = useState(0);
-  const [temperatures, setTemperatures] = useState<string[]>(['standard']);
-  const [openings, setOpenings] = useState<string[]>(['4-6']);
+  const [temperatures, setTemperatures] = useState<string[]>([]);
+  const [openings, setOpenings] = useState<string[]>([]);
   const [booms, setBooms] = useState<string[]>([]);
   const [fotoElements, setFotoElements] = useState<string[]>([]);
+  // получаем отключенные опции для фильтров на основе текущих выбранных значений
+  const disabledOptions = useDisabledOptions({ maxWidth, temperatures, openings, booms, fotoElements });
+  const maxWidthLimit = getMaxWidthLimit(disabledOptions.get('maxWidth'));
+
+  useEffect(() => {
+    setMaxWidth((currentWidth) => Math.min(currentWidth, maxWidthLimit));
+  }, [maxWidthLimit]);
+
+  /**
+   * Создает массив элементов галереи для Fancybox.
+   * @return {Array<{ src: string, alt: string }>} массив объектов с путями к изображениям и их альтернативным текстом
+   */
   const barrierGalleryItems = useMemo(
     () => Object.entries(barrierMainImages).map(([path, src]) => ({ src, alt: path })),
     [],
@@ -197,7 +222,6 @@ export default function Hero6(): JSX.Element {
 
   useEffect(() => {
     const MODAL_OPEN_DELAY_MS = 500;
-    const SESSION_STORAGE_KEY = 'barrier-feedback-message';
     const MODAL_TRIGGER_SELECTOR = '#open-modal-sale-barrier';
     const ORDER_BUTTON_ATTR = 'data-order-barrier';
 
@@ -254,23 +278,27 @@ export default function Hero6(): JSX.Element {
       options: TemperaturesOptions,
       selected: temperatures,
       onToggle: (value: string) => toggleValue(value, temperatures, setTemperatures),
+      disabledValues: disabledOptions.get('temperatures'),
     }),
     createFilterSection({
       title: 'Время открытия',
       options: timeOpenOptions,
       selected: openings,
       onToggle: (value: string) => toggleValue(value, openings, setOpenings),
+      disabledValues: disabledOptions.get('openings'),
     }),
     createFilterSection({
       title: 'Тип стрелы',
       options: boomOptions,
       selected: booms,
       onToggle: (value: string) => toggleValue(value, booms, setBooms),
+      disabledValues: disabledOptions.get('booms'),
     }),
     createFilterSection({
       title: 'Фотоэлемент',
       options: fotoElementOptions,
       selected: fotoElements,
+      disabledValues: disabledOptions.get('fotoElements'),
       onToggle: (value: string) => toggleValue(value, fotoElements, setFotoElements),
     }),
   ];
@@ -319,7 +347,7 @@ export default function Hero6(): JSX.Element {
     <>
       <fieldset>
         <legend className="mb-5 text-md/6 font-manrope-semibold text-grey-1000">Ширина проезда</legend>
-        <WidthSlider value={maxWidth} onChange={setMaxWidth} />
+        <WidthSlider value={maxWidth} max={maxWidthLimit} onChange={setMaxWidth} />
       </fieldset>
 
       {filterSections.map((section, index) => (

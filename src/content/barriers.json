@@ -1,8 +1,30 @@
 [
   {
+    "fullName": "Скоростной шлагбаум GF03.1 со стрелой круглого сечения 3 метра",
+    "baseModel": "Скоростной шлагбаум GF03.1",
+    "price": "183 297 ₽",
+    "tag": "3 м, круглая стрела",
+    "bodyStyle": "premium",
+    "isHighSpeed": true,
+    "isLowTemp": false,
+    "boomShape": "round",
+    "boomLength": "3",
+    "minRoadWidth": "2.3",
+    "maxRoadWidth": "3",
+    "isBoomFoldable": false,
+    "openingTime": "0,7–1,5",
+    "capacityPerDay": "7000",
+    "temperatureRange": "−40…+55",
+    "imageNamePreview": "GF03.1-round-3-boom-preview",
+    "imageNameFull": "GF03.1-round-3-boom-full",
+    "prodBenefits": ["5 лет гарантии", "Встроенная система обогрева", "Встроенный фотоэлемент безопасности", "Встроенная индикация", "Высокая коррозионная стойкость"],
+    "voltage": "220 В",
+    "resistance": "не менее 6 млн циклов"
+  },
+  {
     "fullName": "Скоростной шлагбаум GF13 со стрелой круглого сечения 3 метра",
     "baseModel": "Скоростной шлагбаум GF13",
-    "price": "252 017 ₽",
+    "price": "145 354 ₽",
     "tag": "3 м, круглая стрела",
     "bodyStyle": "standard",
     "isHighSpeed": true,
@@ -24,7 +46,7 @@
   {
     "fullName": "Скоростной шлагбаум GF13N со стрелой круглого сечения 3 метра",
     "baseModel": "Скоростной шлагбаум GF13N",
-    "price": "189 698 ₽",
+    "price": "252 017 ₽",
     "tag": "3 м, круглая стрела",
     "bodyStyle": "standard",
     "isHighSpeed": true,
@@ -46,7 +68,7 @@
   {
     "fullName": "Шлагбаум GS04.1 со складной стрелой прямоугольного сечения 3 метра",
     "baseModel": "Шлагбаум GS04.1",
-    "price": "130 640 ₽",
+    "price": "159 706 ₽",
     "tag": "3 м, складная прямоугольная стрела",
     "bodyStyle": "premium",
     "isHighSpeed": false,
@@ -68,7 +90,7 @@
   {
     "fullName": "Шлагбаум GS04.1 со складной стрелой прямоугольного сечения 4,3 метра",
     "baseModel": "Шлагбаум GS04.1",
-    "price": "142 614 ₽",
+    "price": "161 834 ₽",
     "tag": "4,3 м, складная прямоугольная стрела",
     "bodyStyle": "premium",
     "isHighSpeed": false,
@@ -90,7 +112,7 @@
   {
     "fullName": "Шлагбаум GS04.1 со стрелой круглого сечения 3 метра",
     "baseModel": "Шлагбаум GS04.1",
-    "price": "196 237 ₽",
+    "price": "137 887 ₽",
     "tag": "3 м, круглая стрела",
     "bodyStyle": "premium",
     "isHighSpeed": false,
@@ -112,7 +134,7 @@
   {
     "fullName": "Шлагбаум GS04.1 со стрелой круглого сечения 4,3 метра",
     "baseModel": "Шлагбаум GS04.1",
-    "price": "142 614 ₽",
+    "price": "140 054 ₽",
     "tag": "4,3 м, круглая стрела",
     "bodyStyle": "premium",
     "isHighSpeed": false,
@@ -156,7 +178,7 @@
   {
     "fullName": "Шлагбаум GS04.1 со стрелой прямоугольного сечения 4,3 метра",
     "baseModel": "Шлагбаум GS04.1",
-    "price": "196 237 ₽",
+    "price": "144 742 ₽",
     "tag": "4,3 м, прямоугольная стрела",
     "bodyStyle": "premium",
     "isHighSpeed": false,
@@ -222,7 +244,7 @@
   {
     "fullName": "Шлагбаум GS14 со складной стрелой прямоугольного сечения 4,3 метра",
     "baseModel": "Шлагбаум GS14",
-    "price": "142 614 ₽",
+    "price": "132 768 ₽",
     "tag": "4,3 м, складная прямоугольная стрела",
     "bodyStyle": "standard",
     "isHighSpeed": false,
@@ -244,7 +266,7 @@
   {
     "fullName": "Шлагбаум GS14 со стрелой круглого сечения 3 метра",
     "baseModel": "Шлагбаум GS14",
-    "price": "196 237 ₽",
+    "price": "108 821 ₽",
     "tag": "3 м, круглая стрела",
     "bodyStyle": "standard",
     "isHighSpeed": false,
@@ -266,7 +288,7 @@
   {
     "fullName": "Шлагбаум GS14 со стрелой круглого сечения 4,3 метра",
     "baseModel": "Шлагбаум GS14",
-    "price": "142 614 ₽",
+    "price": "110 988 ₽",
     "tag": "4,3 м, круглая стрела",
     "bodyStyle": "standard",
     "isHighSpeed": false,
@@ -288,7 +310,7 @@
   {
     "fullName": "Шлагбаум GS14 со стрелой прямоугольного сечения 3 метра",
     "baseModel": "Шлагбаум GS14",
-    "price": "142 614 ₽",
+    "price": "113 548 ₽",
     "tag": "3 м, прямоугольная стрела",
     "bodyStyle": "standard",
     "isHighSpeed": false,
@@ -310,7 +332,7 @@
   {
     "fullName": "Шлагбаум GS14 со стрелой прямоугольного сечения 4,3 метра",
     "baseModel": "Шлагбаум GS14",
-    "price": "196 237 ₽",
+    "price": "115 676 ₽",
     "tag": "4,3 м, прямоугольная стрела",
     "bodyStyle": "standard",
     "isHighSpeed": false,
@@ -332,7 +354,7 @@
   {
     "fullName": "Шлагбаум GS14N со стрелой круглого сечения 3 метра",
     "baseModel": "Шлагбаум GS14N",
-    "price": "189 698 ₽",
+    "price": "194 070 ₽",
     "tag": "3 м, круглая стрела",
     "bodyStyle": "standard",
     "isHighSpeed": false,
@@ -376,7 +398,7 @@
   {
     "fullName": "Шлагбаум GS16 со стрелой круглого сечения 6,3 метра",
     "baseModel": "Шлагбаум GS16",
-    "price": "157 908 ₽",
+    "price": "130 997 ₽",
     "tag": "6,3 м, круглая стрела",
     "bodyStyle": "standard",
     "isHighSpeed": false,

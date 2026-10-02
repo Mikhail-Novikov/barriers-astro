@@ -2,16 +2,17 @@ import type { CSSProperties } from 'react';
 
 type WidthSliderProps = {
   value: number;
+  max: number;
   onChange: (value: number) => void;
 };
 
-export default function WidthSlider({ value, onChange }: WidthSliderProps): JSX.Element {
-  const sliderPercentage = `${(value / 6) * 100}%`;
-  const isLimited = value < 0.1 || value > 5.9;
+export default function WidthSlider({ value, max, onChange }: WidthSliderProps): JSX.Element {
+  const sliderPercentage = `${(value / max) * 100}%`;
+  const isLimited = value < 0.1 || value > max - 0.1;
   const trackClasses = [
     'width-slider-track',
     value === 0 && 'width-slider-track--min',
-    value === 6 && 'width-slider-track--max',
+    value === max && 'width-slider-track--max',
     isLimited && 'width-slider-track--limited',
   ].filter(Boolean).join(' ');
 
@@ -27,7 +28,7 @@ export default function WidthSlider({ value, onChange }: WidthSliderProps): JSX.
           type="range"
           name="width"
           min="0"
-          max="6"
+          max={max}
           step="0.1"
           value={value}
           onChange={(event) => onChange(Number(event.target.value))}
@@ -42,7 +43,7 @@ export default function WidthSlider({ value, onChange }: WidthSliderProps): JSX.
         >
           {value.toLocaleString('ru-RU', { maximumFractionDigits: 1 })}
         </span>
-        <span className="width-slider-label-max">6</span>
+        <span className="width-slider-label-max">{max}</span>
       </div>
     </div>
   );
