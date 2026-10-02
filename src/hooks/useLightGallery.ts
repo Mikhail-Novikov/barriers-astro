@@ -31,13 +31,11 @@ export const useLightGallery = ({
   items,
   selector = 'a[data-fancybox]',
   containerSelector,
-  download = false,
   counter = true,
   closeOnTap = true,
   controls = true,
   showFullscreen = true,
   navigation = true,
-  showCloseIcon = true,
   mainClass,
   captionClassName,
   onClose,
@@ -99,6 +97,7 @@ export const useLightGallery = ({
         wheel: false, // или wheel: false
       },
       wheel: 'slide',
+      Hash: false,
     };
 
     // Bind Fancybox к контейнеру с селектором

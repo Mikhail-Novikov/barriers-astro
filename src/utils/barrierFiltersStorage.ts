@@ -1,6 +1,7 @@
 import type { BarrierFilterSelections } from '@shared-types/barrierFilters';
 
 const FILTERS_STORAGE_KEY = 'barrier-catalog-filters';
+let hasCheckedInitialNavigation = false;
 
 /**
  * Проверяет, является ли значение объектом.
@@ -29,6 +30,15 @@ const getValidOptions = <T extends string>(value: unknown, allowedOptions: reado
  */
 export const readBarrierCatalogFilters = (): BarrierFilterSelections | null => {
   try {
+    if (!hasCheckedInitialNavigation) {
+      hasCheckedInitialNavigation = true;
+      const navigationEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+      if (navigationEntry?.type === 'reload') {
+        sessionStorage.removeItem(FILTERS_STORAGE_KEY);
+        return null;
+      }
+    }
+
     const serializedFilters = sessionStorage.getItem(FILTERS_STORAGE_KEY);
     if (!serializedFilters) return null;
 

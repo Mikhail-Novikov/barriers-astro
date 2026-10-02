@@ -205,6 +205,7 @@ export default function Hero6(): JSX.Element {
     () => Object.entries(barrierMainImages).map(([path, src]) => ({ src, alt: path })),
     [],
   );
+
   const { galleryRef } = useLightGallery({
     items: barrierGalleryItems,
     selector: 'a[data-fancybox^="barrier-"]',
@@ -213,6 +214,7 @@ export default function Hero6(): JSX.Element {
     showFullscreen: false,
     mainClass: 'barrier-gallery',
   });
+
   useBarrierCatalogEffects({
     selectedMaxWidth: maxWidth,
     maxWidthLimit,
