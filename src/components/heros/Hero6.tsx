@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Modal from './Modal';
 import FeedbackForm from './FeedbackForm';
 import WidthSlider from './WidthSlider';
@@ -7,6 +7,7 @@ import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
 import FilterCheckbox from '@components/FilterCheckbox';
 import { barrierFeedback } from '@utils/barrierFeedback';
 import { publicAsset } from '@utils/publicAsset';
+import scrollElementBelowStickyHeader from '@utils/scrollElementBelowStickyHeader';
 import { useLightGallery } from '@hooks/useLightGallery';
 import useDisabledOptions, { getMaxWidthLimit } from '@hooks/useDisabledOptions';
 import barriers from '@content/barriers.json';
@@ -195,6 +196,7 @@ export default function Hero6(): JSX.Element {
   const [openings, setOpenings] = useState<string[]>([]);
   const [booms, setBooms] = useState<string[]>([]);
   const [fotoElements, setFotoElements] = useState<string[]>([]);
+  const previousFilters = useRef({ maxWidth, temperatures, openings, booms, fotoElements });
   // получаем отключенные опции для фильтров на основе текущих выбранных значений
   const disabledOptions = useDisabledOptions({ maxWidth, temperatures, openings, booms, fotoElements });
   const maxWidthLimit = getMaxWidthLimit(disabledOptions.get('maxWidth'));
@@ -202,6 +204,20 @@ export default function Hero6(): JSX.Element {
   useEffect(() => {
     setMaxWidth((currentWidth) => Math.min(currentWidth, maxWidthLimit));
   }, [maxWidthLimit]);
+
+  useEffect(() => {
+    const previous = previousFilters.current;
+    const hasChanged = previous.maxWidth !== maxWidth
+      || previous.temperatures !== temperatures
+      || previous.openings !== openings
+      || previous.booms !== booms
+      || previous.fotoElements !== fotoElements;
+
+    previousFilters.current = { maxWidth, temperatures, openings, booms, fotoElements };
+    if (!hasChanged) return;
+
+    scrollElementBelowStickyHeader(galleryRef.current, 120);
+  }, [booms, fotoElements, maxWidth, openings, temperatures]);
 
   /**
    * Создает массив элементов галереи для Fancybox.
@@ -405,7 +421,7 @@ export default function Hero6(): JSX.Element {
             </aside>
             <p className="px-8 py-2 text-md/6 text-grey-700">Все цены указаны со&nbsp;склада в&nbsp;Москве и&nbsp;Санкт-Петербурге</p>
           </div>
-          <div ref={galleryRef} className="col-span-12 lg:col-span-8 xl:col-span-9 grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+          <div ref={galleryRef} style={{ overflowAnchor: 'none' }} className="col-span-12 lg:col-span-8 xl:col-span-9 grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
             {filteredBarriers.map((barrier) => {
               const folderName = barrier.imageNamePreview.replace(/-preview$/, '');
               const galleryImages = Object.entries(barrierMainImages)
