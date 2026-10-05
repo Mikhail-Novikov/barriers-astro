@@ -215,10 +215,10 @@ const Hero2 = () => {
                     poster={publicAsset('/img/examples-installations/preview.webp')}
                     caption={item.alt}
                     muted
-                    autoPlay
                     preload="auto"
                     playsInline
                     loop
+                    playButtonVisibility="always"
                   />
                 </div>
               );
@@ -269,7 +269,7 @@ const Hero2 = () => {
           <div className="min-w-[90px] h-10 p-2 text-grey-800 border border-grey-600 rounded-full text-center">
             {firstPreviewIndex}/{totalItems}
           </div>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-1">
             <SliderArrow
               direction="left"
               onClick={goToPrev}

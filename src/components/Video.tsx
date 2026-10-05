@@ -9,6 +9,8 @@ type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
   containerClassName?: string;
   // Показать ли опцию полноэкранного режима в light gallery.
   showFullscreen?: boolean;
+  // Режим видимости иконки воспроизведения: по наведению, постоянно или скрыта.
+  playButtonVisibility?: 'hover' | 'always' | 'hidden';
   caption?: string;
 };
 
@@ -23,7 +25,7 @@ type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
  * @returns {JSX.Element} Компонент Video.
  */
 const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
-  { src, poster, caption, containerClassName = "", showFullscreen = true, ...props },
+  { src, poster, caption, containerClassName = "", showFullscreen = true, playButtonVisibility = 'hover', ...props },
   ref,
 ) {
   const [videoKey, setVideoKey] = useState(0);
@@ -72,7 +74,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
             aria-hidden="true"
             tabIndex={-1}
           />
-          <VideoPlayButton onClick={handleOpenGallery} />
+          <VideoPlayButton onClick={handleOpenGallery} visibility={playButtonVisibility} />
         </>
       )}
     </div>

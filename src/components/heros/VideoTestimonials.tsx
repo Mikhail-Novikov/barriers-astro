@@ -134,7 +134,7 @@ export default function VideoTestimonials(): JSX.Element {
             ))}
           </div>
         ) : (
-          <div className="flex justify-end gap-2 mt-10" aria-label="Управление видеоотзывами">
+          <div className="flex items-center justify-end gap-1 mt-10" aria-label="Управление видеоотзывами">
             <SliderArrow direction="left" onClick={() => move('prev')} disabled={isAtStart} />
             <SliderArrow direction="right" onClick={() => move('next')} disabled={isAtEnd} />
           </div>

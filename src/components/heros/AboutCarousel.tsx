@@ -48,11 +48,9 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
         <span className="inline-flex rounded-full border border-grey-500 px-5 py-2 text-lg/7 text-grey-700">
           {rangeStart} - {rangeEnd}
         </span>
-        <div className="flex items-center gap-6" aria-label="Управление фотографиями">
-          <div className="flex items-center gap-2">
-            <SliderArrow direction="left" onClick={() => move('prev')} disabled={isAtStart} />
-            <SliderArrow direction="right" onClick={() => move('next')} disabled={isAtEnd} />
-          </div>
+        <div className="flex items-center gap-1" aria-label="Управление фотографиями">
+          <SliderArrow direction="left" onClick={() => move('prev')} disabled={isAtStart} />
+          <SliderArrow direction="right" onClick={() => move('next')} disabled={isAtEnd} />
         </div>
       </div>
 

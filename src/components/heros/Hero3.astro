@@ -13,7 +13,7 @@ import Video from '@components/Video';
         <div>
           <Video
             client:load
-            className="w-full min-h-full object-cover rounded-3xl"
+            className="w-full min-h-full object-cover rounded-3xl cursor-pointer"
             src={publicAsset('/video/anti-corrosion-coating-video.mp4')}
             poster={publicAsset('/img/anti-corrosion-coating.webp')}
             muted
@@ -21,6 +21,7 @@ import Video from '@components/Video';
             preload="auto"
             playsInline
             loop
+            playButtonVisibility="hidden"
           />
         </div>
         <div class="mt-5 md:mt-10 max-w-[600px]">
