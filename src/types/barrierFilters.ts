@@ -1,15 +1,19 @@
 import type { Dispatch, RefObject, SetStateAction } from 'react';
 
+// типы для фильтров каталога шлагбаумов
 export type TemperatureOption = 'standard' | 'low';
-export type OpeningTimeOption = 'lessThan1.5' | '3-4' | '4-6';
+export type OpeningTimeFilterOption = 'lessThan1.5' | '3-4' | '4-6';
 export type BoomOption = 'round' | 'square' | 'folding';
 export type FotoElementOption = 'with' | 'without';
+
+// интервал открытия
+export type OpeningTimeOption = { from: number; to: number };
 
 // выбранные значения фильтров
 export type BarrierFilterSelections = {
 	maxWidth: number;
 	temperatures: readonly TemperatureOption[];
-	openingTimes: readonly OpeningTimeOption[];
+	openingTimes: readonly OpeningTimeFilterOption[];
 	booms: readonly BoomOption[];
 	fotoElement: readonly FotoElementOption[];
 };
@@ -51,7 +55,7 @@ export type UseBarrierCatalogEffectsParams = {
   /** массив выбранных температур */
 	temperatures: TemperatureOption[];
 	/** выбранные интервалы времени открытия */
-	openingTimes: OpeningTimeOption[];
+	openingTimes: OpeningTimeFilterOption[];
   /** массив выбранных типов стрел шлагбаумов */
 	booms: BoomOption[];
   /** тип шлагбаума с фотоэлементом или без него */
@@ -61,7 +65,7 @@ export type UseBarrierCatalogEffectsParams = {
   /** функция для установки максимальной ширины */
 	setMaxWidth: Dispatch<SetStateAction<number>>;
 	setTemperatures: Dispatch<SetStateAction<TemperatureOption[]>>;
-	setOpeningTimes: Dispatch<SetStateAction<OpeningTimeOption[]>>;
+	setOpeningTimes: Dispatch<SetStateAction<OpeningTimeFilterOption[]>>;
 	setBooms: Dispatch<SetStateAction<BoomOption[]>>;
 	setFotoElement: Dispatch<SetStateAction<FotoElementOption[]>>;
   /** функция для установки состояния открытия фильтров */

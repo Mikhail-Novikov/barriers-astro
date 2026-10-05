@@ -16,6 +16,7 @@ import type {
   FotoElementOption,
   FilterSectionOption,
   FilterSectionProps,
+  OpeningTimeFilterOption,
   OpeningTimeOption,
   TemperatureOption,
 } from '@shared-types/barrierFilters';
@@ -34,7 +35,7 @@ const TemperaturesOptions: readonly FilterSectionOption<TemperatureOption>[] = [
   ['low', '−60 °C'],
 ] as const;
 
-const openingTimeOptions: readonly FilterSectionOption<OpeningTimeOption>[] = [
+const openingTimeOptions: readonly FilterSectionOption<OpeningTimeFilterOption>[] = [
   ['lessThan1.5', 'меньше 1,5 секунд'],
   ['3-4', '3-4 секунд'],
   ['4-6', '4–6 секунд'],
@@ -132,22 +133,20 @@ const matchesTemperatureFilter = (selected: TemperatureOption[], isLowTemp: bool
  * @param openingTime - время открытия
  * @return {boolean} true, если барьер соответствует фильтрам, иначе false
  */
-const matchesOpeningTimeFilter = (selected: OpeningTimeOption[], isHighSpeed: boolean, openingTime: string): boolean => {
+const matchesOpeningTimeFilter = (
+  selected: OpeningTimeFilterOption[],
+  isHighSpeed: boolean,
+  openingTime: OpeningTimeOption,
+): boolean => {
   if (selected.length === 0) return true;
 
   return selected.some((opening) => {
     if (opening === 'lessThan1.5') return isHighSpeed;
     if (isHighSpeed) return false;
 
-    const times = [...openingTime.matchAll(/\d+(?:[,.]\d+)?/g)]
-      .map(([time]) => Number(time.replace(',', '.')));
-    if (times.length === 0) return false;
-
-    const openingMin = openingTime.trimStart().startsWith('до') ? 0 : times[0];
-    const openingMax = times[times.length - 1];
     const [filterMin, filterMax] = opening === '3-4' ? [3, 4] : [4, 6];
 
-    return openingMax > filterMin && openingMin < filterMax;
+    return openingTime.to > filterMin && openingTime.from < filterMax;
   });
 };
 
@@ -190,7 +189,7 @@ export default function Hero6(): JSX.Element {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [maxWidth, setMaxWidth] = useState(0);
   const [temperatures, setTemperatures] = useState<TemperatureOption[]>([]);
-  const [openingTimes, setOpeningTimes] = useState<OpeningTimeOption[]>([]);
+  const [openingTimes, setOpeningTimes] = useState<OpeningTimeFilterOption[]>([]);
   const [booms, setBooms] = useState<BoomOption[]>([]);
   const [fotoElement, setFotoElement] = useState<FotoElementOption[]>([]);
   // получаем отключенные опции для фильтров на основе текущих выбранных значений
@@ -244,7 +243,7 @@ export default function Hero6(): JSX.Element {
       title: 'Время открытия',
       options: openingTimeOptions,
       selected: openingTimes,
-      onToggle: (value: OpeningTimeOption) => toggleValue(value, openingTimes, setOpeningTimes),
+      onToggle: (value: OpeningTimeFilterOption) => toggleValue(value, openingTimes, setOpeningTimes),
       disabledValues: disabledOptions.get('openingTimes'),
     }),
     createFilterSection({
