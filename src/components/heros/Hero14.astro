@@ -47,10 +47,10 @@ const aboutImages = about.images.map((image) => {
         </div>
       </div>
 
-      <div class="hidden sm:block">
+      <div class="hidden lg:block">
         <AboutCarousel images={aboutImages} client:load />
       </div>
-      <div class="sm:hidden">
+      <div class="lg:hidden">
         <AboutCarouselStacked images={aboutImages} client:load />
       </div>
     </div>
