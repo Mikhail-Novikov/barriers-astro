@@ -33,7 +33,6 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
         }}
         slidesPerView={1}
         slidesPerGroup={1}
-        spaceBetween={8}
         loop={false}
         onSlideChange={(swiper) => setActivePair(swiper.activeIndex)}
         className="about-gallery-stacked__slider"
@@ -54,7 +53,7 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
                   <img
                     src={src}
                     alt={alt}
-                    className={`mb-1 aspect-[1.72] h-full w-full object-cover ${pair.length === 1 ? 'rounded-3xl' : imageIndex === 0 ? 'rounded-t-3xl' : 'rounded-b-3xl'}`}
+                    className={`mb-1 sm:mb-4 aspect-[1.72] h-[172px] sm:h-[294px] w-full object-cover ${pair.length === 1 ? 'rounded-3xl' : imageIndex === 0 ? 'rounded-t-3xl' : 'rounded-b-3xl'}`}
                     loading={index < 2 ? 'eager' : 'lazy'}
                   />
                 </a>

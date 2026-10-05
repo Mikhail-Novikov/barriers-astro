@@ -362,7 +362,7 @@ export default function Hero6(): JSX.Element {
                 {filtersContent}
               </div>
             </aside>
-            <p className="px-8 py-2 text-md/6 text-grey-700">Все цены указаны со&nbsp;склада в&nbsp;Москве и&nbsp;Санкт-Петербурге</p>
+            <p className="px-8 py-2 text-md/6 text-grey-900">Все цены указаны со&nbsp;склада в&nbsp;Москве и&nbsp;Санкт-Петербурге</p>
           </div>
           <div ref={galleryRef} style={{ overflowAnchor: 'none' }} className="col-span-12 lg:col-span-8 xl:col-span-9 grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
             {filteredBarriers.map((barrier) => {
@@ -431,7 +431,7 @@ export default function Hero6(): JSX.Element {
               </div>
             )}
           </div>
-          <p className="col-span-12 pl-3 text-md/6 text-grey-700 block lg:hidden">Все цены указаны со&nbsp;склада в&nbsp;Москве и&nbsp;Санкт-Петербурге</p>
+          <p className="col-span-12 pl-3 text-md/6 text-grey-900 block lg:hidden">Все цены указаны со&nbsp;склада в&nbsp;Москве и&nbsp;Санкт-Петербурге</p>
         </div>
       </div>
     </section>

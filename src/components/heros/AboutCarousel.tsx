@@ -26,8 +26,6 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
     captionClassName: "inline-block mx-10 text-2xl text-white text-center",
   });
 
-  const pageCount = Math.ceil(images.length / slidesPerPage);
-  const currentPage = Math.floor(startIndex / slidesPerPage);
   const rangeStart = String(startIndex + 1).padStart(2, '0');
   const rangeEnd = String(Math.min(startIndex + slidesPerPage, images.length)).padStart(2, '0');
   const move = (direction: 'prev' | 'next') => {
@@ -68,7 +66,6 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
           767: { slidesPerView: slidesPerPage, slidesPerGroup: slidesPerPage, spaceBetween: 16 },
         }}
         onSlideChange={updateNavigation}
-        className="about-gallery__slider"
       >
         {images.map(({ src, alt, description }, index) => (
           <SwiperSlide key={src}>

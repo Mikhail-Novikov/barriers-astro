@@ -35,6 +35,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.perco-icon-control-fullscreen-mobile:before {
+  content: "\f023";
+}
+
 .perco-icon-btn-filter:before {
   content: "\f022";
 }

@@ -379,7 +379,8 @@ export default function Hero7(): JSX.Element {
                   }}
                   className="perco-icons lg:h-13 text-2xl text-right text-grey-500 hover:text-grey-800 cursor-zoom-in transition-all duration-300 ease-out"
                 >
-                  <i className="perco-icon-control-fullscreen lg:float-right" />
+                  <i className="!hidden sm:!block perco-icon-control-fullscreen lg:float-right" />
+                  <span className="sm:hidden text-2xl text-grey-500"><i className="perco-icon-control-fullscreen-mobile lg:float-right" /></span>
                 </div>
                 <h4 className="text-[12px]/5 md:text-lg lg:text-xl font-manrope-semibold text-grey-700 text-center" dangerouslySetInnerHTML={{__html: currentVariant.title}} />
                 <img
