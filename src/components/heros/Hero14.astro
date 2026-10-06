@@ -3,19 +3,12 @@
 import AboutCarousel from './AboutCarousel';
 import AboutCarouselStacked from './AboutCarouselStacked';
 import about from '@content/about.json';
+import { publicAsset } from '@utils/publicAsset';
 
-const aboutImageAssets = import.meta.glob<string>('../../assets/about/*.{png,jpg,jpeg,webp}', {
-  eager: true,
-  import: 'default',
-  query: '?url',
-});
-const aboutImages = about.images.map((image) => {
-  const src = aboutImageAssets[`../../assets/about/${image.src}`];
-
-  if (!src) throw new Error(`About gallery image not found: ${image.src}`);
-
-  return { ...image, src };
-});
+const aboutImages = about.images.map((image) => ({
+  ...image,
+  src: publicAsset(`/img/about/${image.src}`),
+}));
 ---
 
 <section aria-label="О компании" class="bg-grey-200 pb-10 md:pb-15 xl:pb-20 lg:pb-25">

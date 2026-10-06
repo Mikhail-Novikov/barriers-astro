@@ -13,15 +13,9 @@ import VideoPlayButton from '@components/VideoPlayButton';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
-const aboutImages = Object.entries(
-  import.meta.glob<string>('../../assets/img/video-reviews/*.{png,jpg,jpeg,webp}', {
-    eager: true,
-    import: 'default',
-    query: '?url',
-  }),
-)
-  .sort(([first], [second]) => first.localeCompare(second, undefined, { numeric: true }))
-  .map(([, src]) => src);
+const previewImages = [1, 2, 3, 4, 5].map((index) =>
+  publicAsset(`/img/video-reviews/vr-${index}.webp`),
+);
 
 const testimonials = [
   {
@@ -101,7 +95,7 @@ export default function VideoTestimonials(): JSX.Element {
         onSlideChange={updateNavigation}
       >
         {testimonials.map(({ title, duration, videoUrl }, index) => {
-          const image = aboutImages[index % aboutImages.length];
+          const image = previewImages[index % previewImages.length];
 
           return (
             <SwiperSlide key={`${videoUrl}-${index}`} className="sm:!w-[min(415px,calc(100vw-32px))]">
