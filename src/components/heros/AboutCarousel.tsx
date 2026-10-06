@@ -23,7 +23,7 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
   const { galleryRef } = useLightGallery({
     items: galleryItems,
     selector: 'a[data-fancybox="about"]',
-    captionClassName: "inline-block mx-10 text-2xl text-white text-center",
+    captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
   });
 
   const rangeStart = String(startIndex + 1).padStart(2, '0');

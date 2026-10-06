@@ -166,7 +166,7 @@ const Hero2 = () => {
     items: galleryWithIndexes,
     selector: "a[data-fancybox]",
     closeOnTap: false,
-    captionClassName: "inline-block mx-10 text-2xl text-white text-center",
+    captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
   });
   const [groupIndex, setGroupIndex] = useState(0);
 

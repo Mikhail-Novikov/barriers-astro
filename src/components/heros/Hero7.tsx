@@ -264,7 +264,7 @@ export default function Hero7(): JSX.Element {
     showFullscreen: false,
     navigation: false,
     mainClass: "hero7-gallery",
-    captionClassName: "inline-block mx-10 text-2xl text-white text-center",
+    captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
   });
 
   return (
