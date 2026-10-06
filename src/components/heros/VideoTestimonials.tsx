@@ -66,7 +66,7 @@ export default function VideoTestimonials(): JSX.Element {
     items: testimonials.map(({ title, videoUrl }) => ({ src: videoUrl, subHtml: title })),
     selector: 'a[data-fancybox="video-testimonials"]',
     captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
-    mainClass: 'video-reviews-gallery',
+    mainClass: 'hero-video',
     controls: true,
     navigation: false,
     hasArrows: false,

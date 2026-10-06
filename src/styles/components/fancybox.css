@@ -70,8 +70,8 @@
   }
 }
 
-.video-reviews-gallery .fancybox__slide .f-html {
-  max-width: 100%;
+.hero-video .fancybox__slide .f-html {
+  max-width: 1600px;
   width: calc(100vw - 32px);
   max-height: inherit;
   height: fit-content;

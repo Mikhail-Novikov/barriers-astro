@@ -167,6 +167,7 @@ const Hero2 = () => {
     selector: "a[data-fancybox]",
     closeOnTap: false,
     captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
+    mainClass: 'hero-video',
   });
   const [groupIndex, setGroupIndex] = useState(0);
 
