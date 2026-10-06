@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
+import { Arrows, Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
 import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
 interface GalleryItem {
@@ -20,6 +20,7 @@ interface UseLightGalleryOptions {
   controls?: boolean;
   showFullscreen?: boolean;
   navigation?: boolean;
+  hasArrows?: boolean;
   showCloseIcon?: boolean;
   mainClass?: string;
   captionClassName?: string;
@@ -36,6 +37,7 @@ export const useLightGallery = ({
   controls = true,
   showFullscreen = true,
   navigation = true,
+  hasArrows = true,
   mainClass,
   captionClassName,
   onClose,
@@ -66,7 +68,7 @@ export const useLightGallery = ({
           onCloseRef.current?.();
           document.dispatchEvent(new Event('fancybox:destroy'));
         },
-        reveal: (fancybox: any, slide: any) => {
+        'Carousel.ready': (fancybox: any) => {
           const index = fancybox.getIndex?.();
           if (index !== undefined) {
             setCurrentIndex(index);
@@ -85,6 +87,7 @@ export const useLightGallery = ({
       },
       Carousel: {
         Navigation: navigation,
+        Arrows: hasArrows,
         ...(videoAutoplay ? { Video: { autoplay: true } } : {}),
         formatCaption: (caption: string, slide: any) =>
           captionClassName

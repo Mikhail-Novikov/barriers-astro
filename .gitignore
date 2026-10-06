@@ -27,3 +27,6 @@ pnpm-debug.log*
 /src/assets/video/choice-barrier/video.mp4
 /public/video/choice-barrier/video.mp4
 public/video/choice-barrier/*.mp4
+video-reviews/
+/public/video/video-reviews/*
+/src/assets/video/video-reviews/*

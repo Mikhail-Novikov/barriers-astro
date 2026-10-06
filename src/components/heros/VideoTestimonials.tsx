@@ -5,6 +5,8 @@ import { useRef, useState } from 'react';
 import { useLightGallery } from '@hooks/useLightGallery';
 import { useBreakpoint } from '@hooks/useBreakpoint';
 
+import { publicAsset } from "@utils/publicAsset";
+
 import SliderArrow from '@components/SliderArrow';
 import VideoPlayButton from '@components/VideoPlayButton';
 
@@ -24,31 +26,36 @@ const aboutImages = Object.entries(
 const testimonials = [
   {
     title: 'Парковочная система PERCo.Паркинг в деловом центре Sun City, Санкт-Петербург',
-    duration: '01:45',
-    videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239330&hd=2&autoplay=1',
+    duration: '02:44',
+    videoUrl: publicAsset('/video/video-reviews/vr-1.mp4'),
   },
   {
     title: 'Система контроля доступа PERCo-Web в бизнес-центре Capital Tower',
-    duration: '01:45',
-    videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239358&hd=2&autoplay=1',
+    duration: '02:11',
+    videoUrl: publicAsset('/video/video-reviews/vr-2.mp4'),
   },
   {
     title: 'Шлагбаумы PERCo на территории предприятия ДиКом',
-    duration: '01:45',
-    videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239217&hd=2&autoplay=1',
+    duration: '01:06',
+    videoUrl: publicAsset('/video/video-reviews/vr-3.mp4'),
   },
   {
     title: 'Шлагбаум PERCo в Морском порту Санкт-Петербурга',
-    duration: '01:45',
-    videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239289&hd=2&autoplay=1',
+    duration: '02:34',
+    videoUrl: publicAsset('/video/video-reviews/vr-4.mp4'),
   },
   {
     title: 'Шлагбаумы PERCo в музее “Россия – моя история”',
-    duration: '01:45',
-    videoUrl: 'https://vk.com/video_ext.php?oid=-60562237&id=456239254&hd=2&autoplay=1',
+    duration: '01:02',
+    videoUrl: publicAsset('/video/video-reviews/vr-5.mp4'),
   },
 ];
 
+/**
+ * Компонент видео-ролликов
+ * 
+ * @return VideoTestimonials
+ */
 export default function VideoTestimonials(): JSX.Element {
   const screen = useBreakpoint();
   const [startIndex, setStartIndex] = useState(0);
@@ -58,8 +65,11 @@ export default function VideoTestimonials(): JSX.Element {
   const { galleryRef } = useLightGallery({
     items: testimonials.map(({ title, videoUrl }) => ({ src: videoUrl, subHtml: title })),
     selector: 'a[data-fancybox="video-testimonials"]',
-    captionClassName: "inline-block mx-10 text-2xl text-white text-center",
+    captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
+    mainClass: 'video-reviews-gallery',
     controls: true,
+    navigation: false,
+    hasArrows: false,
   });
 
   const move = (direction: 'prev' | 'next') => {
@@ -98,9 +108,8 @@ export default function VideoTestimonials(): JSX.Element {
               <a
                 href={videoUrl}
                 data-fancybox="video-testimonials"
-                data-type="iframe"
                 data-caption={title}
-                className="group block cursor-zoom-in"
+                className="group block cursor-zoom-in outline-none focus:outline-none focus-visible:outline-none"
               >
                 <span className="relative block aspect-[1.76] overflow-hidden rounded-2xl">
                   <img
@@ -109,6 +118,9 @@ export default function VideoTestimonials(): JSX.Element {
                     className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
                     loading={index < 3 ? 'eager' : 'lazy'}
                   />
+                  <span className="px-2 absolute bottom-2 right-2 bg-black/40 rounded-2xl font-manrope-medium text-white text-sm/7">
+                    {duration}
+                  </span>
                   <VideoPlayButton />
                 </span>
                 <span className="mt-4 mr-6 block text-md/6 text-grey-1000">{title}</span>

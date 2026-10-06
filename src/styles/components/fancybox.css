@@ -69,3 +69,10 @@
     width: 100%;
   }
 }
+
+.video-reviews-gallery .fancybox__slide .f-html {
+  max-width: 100%;
+  width: calc(100vw - 32px);
+  max-height: inherit;
+  height: fit-content;
+}
