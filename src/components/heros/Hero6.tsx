@@ -218,6 +218,7 @@ export default function Hero6(): JSX.Element {
     hasArrows: false,
     download: false,
     mainClass: 'barrier-gallery',
+    disableZoom: true,
   });
 
   useBarrierCatalogEffects({
@@ -377,16 +378,19 @@ export default function Hero6(): JSX.Element {
                 .filter(([path]) => path.includes(`/barriers/${folderName}/main/`))
                 .map(([, src]) => src);
               const caption = `
-                <div class="barrier-caption flex max-w-[520px] flex-col gap-2 px-2 md:p-4 text-left">
+                <div class="barrier-caption flex max-w-[520px] flex-col sm:gap-2 px-2 md:p-4 text-left">
                   <h3 class="mb-4 md:mb-7 text-2xl xl:text-3xl/10 text-black font-manrope-semibold">${barrier.fullName}</h3>
                   <div class="flex items-center gap-3">
                     <div class="text-2xl/8 text-cta font-manrope-bold">${barrier.price}</div>
                     <div class="text-grey-800 text-sm/normal">Цена со склада<br> в Москве и СПб</div>
                   </div>
-                  <ul class="mt-4 md:mt-7 space-y-1 list-disc pl-4 md:pl-6 text-grey-800 marker:text-[12px] marker">
+                  <ul class="perco-icons mt-4 md:mt-7 space-y-1 list-none pl-0">
                     ${barrier.prodBenefits
                       .map((feature) => `<li class="text-md/normal">
-                        ${feature}
+                        <div class="flex items-center gap-x-2 text-cta">
+                          <i class="perco-icon-check-tag"></i>
+                          <span class="text-grey-1000">${feature}</span>
+                        </div>
                       </li>`)
                       .join('')}
                   </ul>

@@ -11,22 +11,40 @@ interface GalleryItem {
 }
 
 interface UseLightGalleryOptions {
+  /** Элементы галереи */
   items: GalleryItem[];
+  /** Селектор элементов галереи */
   selector?: string;
+  /** Селектор контейнера */
   containerSelector?: string;
+  /** Показывать кнопку скачивания */
   download?: boolean;
+  /** Показывать счетчик */
   counter?: boolean;
+  /** Закрывать галерею при клике на фон */
   closeOnTap?: boolean;
+  /** Показывать среднюю панель */
   controls?: boolean;
+  /** Показывать панель инструментов справа */
   showToolbar?: boolean;
+  /** Показывать полноэкранный режим */
   showFullscreen?: boolean;
+  /** Показывать навигацию */
   navigation?: boolean;
+  /** Показывать стрелки */
   hasArrows?: boolean;
+  /** Показывать иконку закрытия */
   showCloseIcon?: boolean;
+  /** Класс для основного контейнера */
   mainClass?: string;
+  /** Класс для caption */
   captionClassName?: string;
+  /** Функция, вызываемая при закрытии галереи */
   onClose?: () => void;
+  /** Автозапуск видео при открытии галереи */
   videoAutoplay?: boolean;
+  /** Отключает увеличение/уменьшение изображения (Panzoom) */
+  disableZoom?: boolean;
 }
 
 export const useLightGallery = ({
@@ -46,6 +64,7 @@ export const useLightGallery = ({
   captionClassName,
   onClose,
   videoAutoplay = false,
+  disableZoom = false,
 }: UseLightGalleryOptions) => {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -85,10 +104,29 @@ export const useLightGallery = ({
           enabled: showToolbar,
           display: {
             left: counter ? ['counter'] : [],
-            middle: controls ? ['zoomIn', 'zoomOut', 'toggle1to1'] : [],
-            right: [...(showCloseIcon ? ['close'] : []), ...(download ? ['download'] : []), ...(showFullscreen ? ['fullscreen'] : [])],
+            middle:
+              controls && !disableZoom
+                ? ['zoomIn', 'zoomOut', 'toggle1to1']
+                : [],
+            right: [
+              ...(showCloseIcon ? ['close'] : []),
+              ...(download ? ['download'] : []),
+              ...(showFullscreen ? ['fullscreen'] : []),
+            ],
           },
         },
+        // Настройки Panzoom: при disableZoom полностью блокируем зум
+        Zoomable: disableZoom
+          ? {
+              Panzoom: {
+                maxScale: 1,
+                minScale: 1,
+                wheelAction: false,
+                pinchToZoom: false,
+                clickAction: false,
+              },
+            }
+          : {},
         Navigation: navigation,
         Arrows: hasArrows,
         ...(videoAutoplay ? { Video: { autoplay: true } } : {}),
@@ -100,11 +138,10 @@ export const useLightGallery = ({
       Click: closeOnTap ? 'close' : 'toggle',
       Zoom: false,
       Images: {
-        wheel: false, // или wheel: false
+        wheel: false,
       },
       wheel: 'slide',
       Hash: false,
-      //closeButton: showCloseIcon,
     };
 
     // Bind Fancybox к контейнеру с селектором
@@ -118,7 +155,23 @@ export const useLightGallery = ({
         // Ignore unbind errors
       }
     };
-  }, [items, selector, containerSelector, counter, closeOnTap, controls, showToolbar, showFullscreen, showCloseIcon, download, navigation, mainClass, captionClassName, videoAutoplay]);
+  }, [
+    items,
+    selector,
+    containerSelector,
+    counter,
+    closeOnTap,
+    controls,
+    showToolbar,
+    showFullscreen,
+    showCloseIcon,
+    download,
+    navigation,
+    mainClass,
+    captionClassName,
+    videoAutoplay,
+    disableZoom,
+  ]);
 
   const openGallery = (index: number) => {
     const container = containerSelector
@@ -151,5 +204,12 @@ export const useLightGallery = ({
     }
   };
 
-  return { galleryRef, openGallery, goToNext, goToPrev, currentIndex, totalItems: items.length };
+  return {
+    galleryRef,
+    openGallery,
+    goToNext,
+    goToPrev,
+    currentIndex,
+    totalItems: items.length,
+  };
 };
