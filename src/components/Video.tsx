@@ -44,6 +44,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
     selector: 'a[data-fancybox="video-player"]',
     showFullscreen,
     videoAutoplay: true,
+    controls: false,
     mainClass: 'hero-video',
   });
 

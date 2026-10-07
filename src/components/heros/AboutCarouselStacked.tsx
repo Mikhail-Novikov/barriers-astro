@@ -5,9 +5,16 @@ import { useLightGallery } from '@hooks/useLightGallery';
 import 'swiper/css';
 
 type AboutCarouselStackedProps = {
+  // массив изображений в галерее в формате { src: string; alt: string; description: string }
   images: { src: string; alt: string; description: string }[];
 };
 
+/**
+ * Компонент AboutCarouselStacked представляет собой галерею изображений в стеке.
+ * 
+ * @param {Array} props.images - Массив изображений в галерее в формате { src: string; alt: string; description: string }.
+ * @return {JSX.Element} JSX-элемент галереи.
+ */
 export default function AboutCarouselStacked({ images }: AboutCarouselStackedProps): JSX.Element {
   const [activePair, setActivePair] = useState(0);
   const swiperRef = useRef<SwiperInstance | null>(null);
@@ -22,6 +29,7 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
   const { galleryRef } = useLightGallery({
     items: galleryItems,
     selector: 'a[data-fancybox="about-stacked"]',
+    controls: false,
   });
 
   return (

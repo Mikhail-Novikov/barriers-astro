@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Arrows, Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
+import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
 import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
 interface GalleryItem {
@@ -18,6 +18,7 @@ interface UseLightGalleryOptions {
   counter?: boolean;
   closeOnTap?: boolean;
   controls?: boolean;
+  showToolbar?: boolean;
   showFullscreen?: boolean;
   navigation?: boolean;
   hasArrows?: boolean;
@@ -34,8 +35,11 @@ export const useLightGallery = ({
   containerSelector,
   counter = true,
   closeOnTap = true,
-  controls = true,
+  controls = false,
+  showToolbar = true,
   showFullscreen = true,
+  showCloseIcon = true,
+  download = false,
   navigation = true,
   hasArrows = true,
   mainClass,
@@ -76,16 +80,15 @@ export const useLightGallery = ({
         },
       },
       ...(mainClass ? { mainClass } : {}),
-      Toolbar: {
-        display: {
-          left: counter ? ['counter'] : [],
-          middle: [],
-          right: controls
-            ? ['zoom', ...(showFullscreen ? ['fullscreen'] : []), 'close']
-            : ['close'],
-        },
-      },
       Carousel: {
+        Toolbar: {
+          enabled: showToolbar,
+          display: {
+            left: counter ? ['counter'] : [],
+            middle: controls ? ['zoomIn', 'zoomOut', 'toggle1to1'] : [],
+            right: [...(showCloseIcon ? ['close'] : []), ...(download ? ['download'] : []), ...(showFullscreen ? ['fullscreen'] : [])],
+          },
+        },
         Navigation: navigation,
         Arrows: hasArrows,
         ...(videoAutoplay ? { Video: { autoplay: true } } : {}),
@@ -101,6 +104,7 @@ export const useLightGallery = ({
       },
       wheel: 'slide',
       Hash: false,
+      //closeButton: showCloseIcon,
     };
 
     // Bind Fancybox к контейнеру с селектором
@@ -114,7 +118,7 @@ export const useLightGallery = ({
         // Ignore unbind errors
       }
     };
-  }, [items, selector, containerSelector, counter, closeOnTap, controls, showFullscreen, navigation, mainClass, captionClassName, videoAutoplay]);
+  }, [items, selector, containerSelector, counter, closeOnTap, controls, showToolbar, showFullscreen, showCloseIcon, download, navigation, mainClass, captionClassName, videoAutoplay]);
 
   const openGallery = (index: number) => {
     const container = containerSelector

@@ -61,7 +61,7 @@ export default function VideoTestimonials(): JSX.Element {
     selector: 'a[data-fancybox="video-testimonials"]',
     captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
     mainClass: 'hero-video',
-    controls: true,
+    controls: false,
     navigation: false,
     hasArrows: false,
   });

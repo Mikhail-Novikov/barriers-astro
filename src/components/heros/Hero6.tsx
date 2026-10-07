@@ -210,7 +210,13 @@ export default function Hero6(): JSX.Element {
     selector: 'a[data-fancybox^="barrier-"]',
     closeOnTap: true,
     counter: false,
+    controls: false,
+    showToolbar: true,
     showFullscreen: false,
+    showCloseIcon: true,
+    navigation: true,
+    hasArrows: false,
+    download: false,
     mainClass: 'barrier-gallery',
   });
 
@@ -371,20 +377,20 @@ export default function Hero6(): JSX.Element {
                 .filter(([path]) => path.includes(`/barriers/${folderName}/main/`))
                 .map(([, src]) => src);
               const caption = `
-                <div class="barrier-caption flex max-w-[520px] flex-col gap-2 p-4 text-left">
-                  <h3 class="mb-7 text-2xl xl:text-3xl/10 text-black font-manrope-semibold">${barrier.fullName}</h3>
+                <div class="barrier-caption flex max-w-[520px] flex-col gap-2 px-2 md:p-4 text-left">
+                  <h3 class="mb-4 md:mb-7 text-2xl xl:text-3xl/10 text-black font-manrope-semibold">${barrier.fullName}</h3>
                   <div class="flex items-center gap-3">
                     <div class="text-2xl/8 text-cta font-manrope-bold">${barrier.price}</div>
                     <div class="text-grey-800 text-sm/normal">Цена со склада<br> в Москве и СПб</div>
                   </div>
-                  <ul class="mt-7 space-y-1 list-disc pl-6 text-grey-800 marker:text-[12px] marker">
+                  <ul class="mt-4 md:mt-7 space-y-1 list-disc pl-4 md:pl-6 text-grey-800 marker:text-[12px] marker">
                     ${barrier.prodBenefits
                       .map((feature) => `<li class="text-md/normal">
                         ${feature}
                       </li>`)
                       .join('')}
                   </ul>
-                  <button type="button" data-order-barrier="${barrier.fullName}" class="mt-8 xl:mt-20 w-full max-w-[280px] rounded-2xl bg-cta px-6 py-3 font-manrope-semibold text-white text-lg transition-colors hover:bg-cta-hover cursor-pointer">Заказать</button>
+                  <button type="button" data-order-barrier="${barrier.fullName}" class="mt-8 xl:mt-20 w-full md:max-w-[280px] rounded-2xl bg-cta px-6 py-3 font-manrope-semibold text-white text-lg transition-colors hover:bg-cta-hover cursor-pointer">Заказать</button>
                 </div>
               `;
 
@@ -416,6 +422,7 @@ export default function Hero6(): JSX.Element {
                     data-fancybox={`barrier-${folderName}`}
                     href={src}
                     data-caption={caption}
+                    data-counter="false"
                     aria-label={`${barrier.fullName}, изображение ${index + 1}`}
                     className="sr-only"
                     onClick={(event) => event.stopPropagation()}
