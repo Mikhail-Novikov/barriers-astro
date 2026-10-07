@@ -20,55 +20,60 @@ const illustrationItems: IllustrationItem[] = [
   {
     bodyStyle: "standard",
     boomShape: "round",
-    "title": "Шлагбаум GS14&nbsp;со стрелой круглого сечения",
-    "img": `${imgPath}rezult/gs14-round.svg`
+    title: "Шлагбаум GS14&nbsp;со стрелой круглого сечения",
+    img: `${imgPath}rezult/gs14-round.svg`,
   },
   {
     bodyStyle: "standard",
     boomShape: "square",
-    "title": "Шлагбаум GS14&nbsp;со стрелой прямоугольного сечения",
-    "img": `${imgPath}rezult/gs14-square.svg`
+    title: "Шлагбаум GS14&nbsp;со стрелой прямоугольного сечения",
+    img: `${imgPath}rezult/gs14-square.svg`,
   },
   {
     bodyStyle: "standard",
     boomShape: "foldable",
-    "title": "Шлагбаум GS14&nbsp;со складной стрелой прямоугольного сечения",
-    "img": `${imgPath}rezult/gs14-foldable.svg`
+    title: "Шлагбаум GS14&nbsp;со складной стрелой прямоугольного сечения",
+    img: `${imgPath}rezult/gs14-foldable.svg`,
   },
   {
     bodyStyle: "standard",
     boomShape: "soft",
-    "title": "Скоростной шлагбаум GF13&nbsp;со стрелой круглого сечения",
-    "img": `${imgPath}rezult/gs14-soft.svg`
+    title: "Скоростной шлагбаум GF13&nbsp;со стрелой круглого сечения",
+    img: `${imgPath}rezult/gs14-soft.svg`,
   },
   {
     bodyStyle: "premium",
     boomShape: "round",
-    "title": "Шлагбаум GS04.1&nbsp;со стрелой круглого сечения",
-    "img": `${imgPath}rezult/gs04-round.svg`
+    title: "Шлагбаум GS04.1&nbsp;со стрелой круглого сечения",
+    img: `${imgPath}rezult/gs04-round.svg`,
   },
   {
     bodyStyle: "premium",
     boomShape: "square",
-    "title": "Шлагбаум GS04.1&nbsp;со стрелой прямоугольного сечения",
-    "img": `${imgPath}rezult/gs04-square.svg`
+    title: "Шлагбаум GS04.1&nbsp;со стрелой прямоугольного сечения",
+    img: `${imgPath}rezult/gs04-square.svg`,
   },
   {
     bodyStyle: "premium",
     boomShape: "foldable",
-    "title": "Шлагбаум GS04.1&nbsp;со стрелой прямоугольного сечения",
-    "img": `${imgPath}rezult/gs04-foldable.svg`
+    title: "Шлагбаум GS04.1&nbsp;со стрелой прямоугольного сечения",
+    img: `${imgPath}rezult/gs04-foldable.svg`,
   },
   {
     bodyStyle: "premium",
     boomShape: "soft",
-    "title": "Скоростной шлагбаум GF03.1&nbsp;со стрелой круглого сечения",
-    "img": `${imgPath}rezult/gs04-soft.svg`
+    title: "Скоростной шлагбаум GF03.1&nbsp;со стрелой круглого сечения",
+    img: `${imgPath}rezult/gs04-soft.svg`,
   },
 ];
 
 // Для фильтра десктопа
-const radioItemsType: { value: BoomShape; title: string; img: string; size: { width: number; height: number } }[] = [
+const radioItemsType: {
+  value: BoomShape;
+  title: string;
+  img: string;
+  size: { width: number; height: number };
+}[] = [
   {
     value: "square",
     title: "Прямоугольная",
@@ -95,7 +100,12 @@ const radioItemsType: { value: BoomShape; title: string; img: string; size: { wi
   },
 ];
 
-const radioItemsDesign: { value: BodyStyle; title: string; img: string; size: { width: number; height: number } }[] = [
+const radioItemsDesign: {
+  value: BodyStyle;
+  title: string;
+  img: string;
+  size: { width: number; height: number };
+}[] = [
   {
     value: "standard",
     title: "Стандартное",
@@ -109,7 +119,6 @@ const radioItemsDesign: { value: BodyStyle; title: string; img: string; size: { 
     size: { width: 222, height: 170 },
   },
 ];
-
 
 // Для мобильной версии фильтр
 const compactTypeItems = [
@@ -226,6 +235,32 @@ function CompactOptionList<T extends string>({
 }
 
 /**
+ * Компонент SelectionStepHeading представляет собой заголовок с номером шага и названием.
+ * @param param step - Номер шага.
+ * @param param title - Название шага.
+ * @param param className - Дополнительные классы для стилизации.
+ * 
+ * @return {JSX.Element} JSX-элемент, представляющий заголовок с номером шага и названием.
+ */
+
+function SelectionStepHeading({
+  step,
+  title,
+  className,
+}: {
+  step: number;
+  title: string;
+  className: string;
+}): JSX.Element {
+  return (
+    <h3 className={className}>
+      <span className="text-xl/normal sm:text-2xl/normal">{step}. </span>
+      {title}
+    </h3>
+  );
+}
+
+/**
  * Компонент Hero3 представляет собой секцию с вариантами комплектации.
  * Пользователь может выбрать тип стрелы и исполнение корпуса, после чего отображается соответствующая иллюстрация.
  *
@@ -239,7 +274,10 @@ export default function Hero7(): JSX.Element {
   // Отфильтрованный список вариантов комплектации
   const currentVariant = useMemo(
     () =>
-      illustrationItems.find((item) => item.boomShape === selectedType && item.bodyStyle === selectedDesign) ?? illustrationItems[0],
+      illustrationItems.find(
+        (item) =>
+          item.boomShape === selectedType && item.bodyStyle === selectedDesign,
+      ) ?? illustrationItems[0],
     [selectedType, selectedDesign],
   );
 
@@ -254,7 +292,10 @@ export default function Hero7(): JSX.Element {
     }),
     [currentVariant],
   );
-  const galleryItems = useMemo(() => [currentGalleryItem], [currentGalleryItem]);
+  const galleryItems = useMemo(
+    () => [currentGalleryItem],
+    [currentGalleryItem],
+  );
 
   const { galleryRef, openGallery } = useLightGallery({
     items: galleryItems,
@@ -264,29 +305,29 @@ export default function Hero7(): JSX.Element {
     showFullscreen: true,
     navigation: false,
     mainClass: "hero7-gallery",
-    captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
+    captionClassName:
+      "inline-block md:mx-10 md:text-2xl text-white text-center",
   });
 
   return (
-    <section 
+    <section
       id="complectation"
       aria-label="Комплектация"
-      className="bg-grey-400 pt-10 md:pt-15 xl:pt-20 pb-10 md:pb-15 lg:pb-20 xl:pb-25"
+      className="bg-grey-400 pt-10 sm:py-15 xl:pt-20 pb-10 lg:pb-20 xl:pb-25"
     >
       <div className="container">
-        <h2 className="h2 mb-6 lg:mb-8">
-          Комплектация
-        </h2>
+        <h2 className="h2 mb-6 lg:mb-8">Комплектация</h2>
 
         <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-12 mb-4 grid grid-cols-1 gap-8 rounded-6 lg:mb-0 min-[1200px]:col-span-4 min-[1200px]:block min-[1200px]:overflow-hidden">
-            {!screen.xl && (
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 mb-3">
+          <div className="col-span-12 mb-4 2xl:mb-0 grid grid-cols-1 gap-8 rounded-6 lg:mb-6 2xl:col-span-5 2xl:block 2xl:overflow-hidden">
+            {!screen["2xl"] && (
+              <div className="grid grid-cols-1 gap-y-5 sm:grid-cols-2 mb-3">
                 <div>
-                  <h3 className="mb-4 font-manrope-semibold text-xl/6">
-                    <span className="text-2xl">1. </span>
-                    Выберите тип стрелы
-                  </h3>
+                  <SelectionStepHeading
+                    step={1}
+                    title="Выберите тип стрелы"
+                    className="flex items-center gap-x-2 mb-4 font-manrope-semibold text-lg/6 lg:text-xl"
+                  />
                   <CompactOptionList
                     items={compactTypeItems}
                     name="compact-type"
@@ -295,10 +336,11 @@ export default function Hero7(): JSX.Element {
                   />
                 </div>
                 <div>
-                  <h3 className="mb-6 font-manrope-semibold text-xl/6">
-                    <span className="text-2xl">2. </span>
-                    Выберите исполнение корпуса
-                  </h3>
+                  <SelectionStepHeading
+                    step={2}
+                    title="Выберите исполнение корпуса"
+                    className="flex items-center gap-x-2 mb-4 font-manrope-semibold text-lg/6 lg:text-xl"
+                  />
                   <CompactOptionList
                     items={compactDesignItems}
                     name="compact-design"
@@ -309,13 +351,14 @@ export default function Hero7(): JSX.Element {
               </div>
             )}
 
-            {screen.xl && (
+            {screen["2xl"] && (
               <div>
                 <div className="mb-8">
-                  <h3 className="font-manrope-semibold text-xl mb-5">
-                    <span className="text-2xl">1. </span>
-                    Выберите тип стрелы
-                  </h3>
+                  <SelectionStepHeading
+                    step={1}
+                    title="Выберите тип стрелы"
+                    className="flex items-center gap-x-2 font-manrope-semibold text-xl mb-5"
+                  />
                   <div className="grid grid-cols-2 grid-rows-2 gap-4">
                     {radioItemsType.map((item) => {
                       const isActive = selectedType === item.value;
@@ -336,10 +379,11 @@ export default function Hero7(): JSX.Element {
                 </div>
 
                 <div>
-                  <h3 className="font-manrope-semibold text-xl mb-5">
-                    <span className="text-2xl">2. </span>
-                    Выберите исполнение корпуса
-                  </h3>
+                  <SelectionStepHeading
+                    step={2}
+                    title="Выберите исполнение корпуса"
+                    className="flex items-center gap-x-2 font-manrope-semibold text-xl mb-5"
+                  />
                   <div className="grid grid-cols-2 gap-4">
                     {radioItemsDesign.map((item) => {
                       const isActive = selectedDesign === item.value;
@@ -362,34 +406,36 @@ export default function Hero7(): JSX.Element {
             )}
           </div>
 
-          <div className="col-span-12 bg-white rounded-2xl overflow-x-auto min-[1200px]:col-span-8 min-[1200px]:ml-11">
-            <div className="px-4 pt-4 sm:px-10 sm:pt-10 gap-4 w-full">
-              <div className="relative">
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() =>
-                    openGallery(0)
+          <div className="col-span-12 bg-white rounded-xl md:rounded-2xl overflow-x-auto 2xl:col-span-7 2xl:ml-11 mt-0 2xl:mt-13 3xl:mt-0">
+            <div className="relative px-4 pt-5 md:px-10 sm:pt-10 2xl:pt-30 3xl:pt-20 gap-4 w-full">
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => openGallery(0)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openGallery(0);
                   }
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      openGallery(0);
-                    }
-                  }}
-                  className="perco-icons lg:h-13 text-2xl text-right text-grey-500 hover:text-grey-800 cursor-zoom-in transition-all duration-300 ease-out"
-                >
-                  <i className="!hidden sm:!block perco-icon-control-fullscreen lg:float-right" />
-                  <span className="sm:hidden text-2xl text-grey-500"><i className="perco-icon-control-fullscreen-mobile lg:float-right" /></span>
-                </div>
-                <h4 className="text-[12px]/5 md:text-lg lg:text-xl font-manrope-semibold text-grey-700 text-center" dangerouslySetInnerHTML={{__html: currentVariant.title}} />
-                <img
-                  src={currentVariant.img}
-                  alt={currentVariant.title}
-                  title={currentVariant.title}
-                  data-iframe-title={currentVariant.title}
-                />
+                }}
+                className="perco-icons absolute inset-3 md:inset-6 lg:h-13 text-2xl text-right text-grey-500 hover:text-grey-800 cursor-zoom-in transition-all duration-300 ease-out"
+              >
+                <i className="!hidden md:!block perco-icon-control-fullscreen lg:float-right" />
+                <span className="md:hidden text-2xl text-grey-500">
+                  <i className="perco-icon-control-fullscreen-mobile lg:float-right" />
+                </span>
               </div>
+              <h4
+                className="pr-8 text-[12px]/4 md:text-lg/normal lg:text-xl font-manrope-semibold text-grey-700 text-center"
+                dangerouslySetInnerHTML={{ __html: currentVariant.title }}
+              />
+              <img
+                className="p-[0_0_20px] lg:p-[0_12px_40px] 2xl:p-0 object-contain"
+                src={currentVariant.img}
+                alt={currentVariant.title}
+                title={currentVariant.title}
+                data-iframe-title={currentVariant.title}
+              />
             </div>
           </div>
         </div>

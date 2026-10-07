@@ -40,7 +40,7 @@ export default function FilterCheckbox({
   disabled = false,
 }: FilterCheckboxProps): JSX.Element {
   return (
-    <label className={`flex items-center gap-4 perco-icons text-md/7 ${disabled ? 'cursor-not-allowed text-grey-600' : 'cursor-pointer text-grey-1000'}`}>
+    <label className={`flex items-center gap-4 perco-icons text-md/6 ${disabled ? 'cursor-not-allowed text-grey-600' : 'cursor-pointer text-grey-1000'}`}>
       <input
         type={type}
         name={name}

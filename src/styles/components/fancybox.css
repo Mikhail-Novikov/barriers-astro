@@ -11,12 +11,36 @@
 
 .hero7-gallery .fancybox__slide {
   border-radius: 24px;
-  padding: 24px;
   max-width: 1600px;
   width: calc(100vw - 32px);
   height: fit-content;
   margin-top: auto;
   margin-bottom: auto;
+}
+
+.hero7-gallery .fancybox__slide img.f-panzoom__content {
+  border-radius: 24px;
+  padding: 40px;
+  background-color: #fff;
+}
+
+@media (max-width: 1019px) {
+  .hero7-gallery .fancybox__slide img.f-panzoom__content {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 712px) {
+  .hero7-gallery .fancybox__slide img.f-panzoom__content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero7-gallery .fancybox__slide img.f-panzoom__content {
+    border-radius: 16px;
+    padding: 12px;
+  }
 }
 
 /* .barrier-gallery .f-carousel__toolbar .f-button:not([data-fancybox-close]),
