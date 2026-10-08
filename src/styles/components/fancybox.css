@@ -1,4 +1,3 @@
-
 .fancybox__viewport:has(iframe) {
   width: min(1200px, calc(100vw - 32px)) !important;
   max-width: 1200px !important;
@@ -43,12 +42,8 @@
   }
 }
 
-/* .barrier-gallery .f-carousel__toolbar .f-button:not([data-fancybox-close]),
-.barrier-gallery .f-button.is-arrow {
-  display: none !important;
-} */
-
-.fancybox__slide:has(.barrier-caption) {
+.barrier-gallery .barrier-modal-wrapper {
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -58,16 +53,25 @@
   padding: 24px;
   max-width: 1600px;
   width: calc(100vw - 32px);
-  max-height: 900px;
+  height: 900px;
   margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.fancybox__slide:has(.barrier-caption) .fancybox__content {
+.barrier-gallery .barrier-modal-wrapper .f-panzoom__content {
+  padding: 0;
+  max-width: 800px;
+}
+
+.barrier-gallery .fancybox__slide:has(.barrier-caption) .fancybox__content {
   min-width: 0;
   max-width: min(70vw, 900px);
 }
 
-.fancybox__slide:has(.barrier-caption) .fancybox__caption {
+.barrier-gallery .fancybox__slide:has(.barrier-caption) .fancybox__caption {
   flex: 0 0 min(360px, 28vw);
   max-width: min(360px, 28vw);
   margin: 0;
@@ -77,29 +81,26 @@
 }
 
 @media (max-width: 1200px) {
-  .fancybox__slide:has(.barrier-caption) {
+  .barrier-gallery .barrier-modal-wrapper {
+    border-radius: 16px;
     flex-direction: column;
     gap: 12px;
     padding: 0;
   }
 
-  .fancybox__slide:has(.barrier-caption) .f-panzoom__content {
-    padding: 8px 0;
+  .barrier-gallery .barrier-modal-wrapper .f-panzoom__content {
+    padding: 16px 0;
+    max-width: calc(100% - 24px);
   }
 
-  .fancybox__slide:has(.barrier-caption) .fancybox__content,
-  .fancybox__slide:has(.barrier-caption) .fancybox__caption {
+  .barrier-gallery .barrier-modal-wrapper .barrier-caption__wrapper {
     max-width: 100%;
-  }
-
-  .fancybox__slide:has(.barrier-caption) .fancybox__caption {
-    flex-basis: auto;
-    width: 100%;
+    padding: 0 16px 40px 16px;
   }
 }
 
 @media (max-width: 600px) {
-  .fancybox__slide:has(.barrier-caption) {
+  .barrier-gallery .barrier-modal-wrapper {
     max-height: fit-content;
     padding-bottom: 12px;
   }

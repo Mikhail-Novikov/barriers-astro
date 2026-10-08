@@ -219,6 +219,12 @@ export default function Hero6(): JSX.Element {
     download: false,
     mainClass: 'barrier-gallery',
     disableZoom: true,
+    slideWrapper: {
+      tag: 'figure',
+      className: 'barrier-modal-wrapper',
+      attributes: { 'data-role': 'slide-content' },
+    },
+    captionPlacement: 'wrapper',
   });
 
   useBarrierCatalogEffects({

@@ -30,3 +30,6 @@ public/video/choice-barrier/*.mp4
 video-reviews/
 /public/video/video-reviews/*
 /src/assets/video/video-reviews/*
+.continue/
+/.continue/
+/.continue/*

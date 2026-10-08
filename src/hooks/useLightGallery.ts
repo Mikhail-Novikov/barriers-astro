@@ -2,49 +2,62 @@ import { useEffect, useRef, useState } from 'react';
 import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
 import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
+/** Интерфейс для описания элемента галереи.*/
 interface GalleryItem {
+  /** Источник изображения или объект с источником изображения. */
   src?: string | { src: string };
+  /** Путь к уменьшенной версии изображения, используемой в качестве превью. */
   thumb?: string;
+  /** Альтернативный текст для изображения.*/
   alt?: string;
+  /** HTML-код, отображаемый под изображением (например, подпись).*/
   subHtml?: string;
+  /** Дополнительные пользовательские свойства. */
   [key: string]: any;
 }
 
+interface SlideWrapperOptions {
+  /** Тег обёртки, по умолчанию 'div' */
+  tag?: string;
+  /** Классы, которые будут добавлены обёртке */
+  className?: string;
+  /** Дополнительные атрибуты */
+  attributes?: Record<string, string>;
+}
+
 interface UseLightGalleryOptions {
-  /** Элементы галереи */
   items: GalleryItem[];
-  /** Селектор элементов галереи */
   selector?: string;
-  /** Селектор контейнера */
   containerSelector?: string;
-  /** Показывать кнопку скачивания */
   download?: boolean;
-  /** Показывать счетчик */
   counter?: boolean;
-  /** Закрывать галерею при клике на фон */
   closeOnTap?: boolean;
-  /** Показывать среднюю панель */
   controls?: boolean;
-  /** Показывать панель инструментов справа */
   showToolbar?: boolean;
-  /** Показывать полноэкранный режим */
   showFullscreen?: boolean;
-  /** Показывать навигацию */
   navigation?: boolean;
-  /** Показывать стрелки */
   hasArrows?: boolean;
-  /** Показывать иконку закрытия */
   showCloseIcon?: boolean;
-  /** Класс для основного контейнера */
   mainClass?: string;
-  /** Класс для caption */
   captionClassName?: string;
-  /** Функция, вызываемая при закрытии галереи */
   onClose?: () => void;
-  /** Автозапуск видео при открытии галереи */
   videoAutoplay?: boolean;
   /** Отключает увеличение/уменьшение изображения (Panzoom) */
   disableZoom?: boolean;
+  /**
+   * Размещение подписи:
+   * - `'default'` — стандартный блок Fancybox (`.fancybox__caption`)
+   * - `'wrapper'` — внутрь slideWrapper под изображением
+   * - `'none'` — не показывать подпись вообще
+   */
+  captionPlacement?: 'default' | 'wrapper' | 'none';
+  /**
+   * Обёртка вокруг контента слайда (viewport Panzoom).
+   * - `false` — не создавать обёртку
+   * - строка — классы для div-обёртки
+   * - объект — расширенная настройка (тег, классы, атрибуты)
+   */
+  slideWrapper?: false | string | SlideWrapperOptions;
 }
 
 export const useLightGallery = ({
@@ -65,6 +78,8 @@ export const useLightGallery = ({
   onClose,
   videoAutoplay = false,
   disableZoom = false,
+  captionPlacement = 'default',
+  slideWrapper = false,
 }: UseLightGalleryOptions) => {
   const galleryRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -82,8 +97,19 @@ export const useLightGallery = ({
 
     if (!container) return;
 
-    // Используем selector для bindings
     const actualSelector = selector || 'a[data-fancybox]';
+
+    // Нормализуем опцию slideWrapper
+    const wrapperConfig: Required<SlideWrapperOptions> | null =
+      slideWrapper === false
+        ? null
+        : typeof slideWrapper === 'string'
+          ? { tag: 'div', className: slideWrapper, attributes: {} }
+          : {
+              tag: slideWrapper.tag ?? 'div',
+              className: slideWrapper.className ?? '',
+              attributes: slideWrapper.attributes ?? {},
+            };
 
     const fancyboxOptions: Record<string, any> = {
       on: {
@@ -97,9 +123,49 @@ export const useLightGallery = ({
             setCurrentIndex(index);
           }
         },
+        // Оборачиваем контент слайда после его готовности
+        'Carousel.contentReady': (_fancybox: any, _carousel: any, slide: any) => {
+          if (!wrapperConfig) return;
+
+          const viewport = slide?.panzoomRef?.getViewport?.();
+          if (!viewport) return;
+
+          const marker = 'data-slide-wrapper';
+          if (viewport.querySelector(`[${marker}]`)) return;
+
+          const wrapper = document.createElement(wrapperConfig.tag);
+          if (wrapperConfig.className) {
+            wrapper.className = wrapperConfig.className;
+          }
+          wrapper.setAttribute(marker, '');
+          Object.entries(wrapperConfig.attributes).forEach(([k, v]) => {
+            wrapper.setAttribute(k, v);
+          });
+
+          // Переносим содержимое viewport в обёртку
+          while (viewport.firstChild) {
+            wrapper.appendChild(viewport.firstChild);
+          }
+
+          // Если подпись должна быть внутри обёртки — переносим её сюда
+          if (captionPlacement === 'wrapper') {
+            const captionHtml = slide?.triggerEl?.dataset?.caption;
+            if (captionHtml) {
+              const captionEl = document.createElement('div');
+              captionEl.className = 'barrier-caption__wrapper';
+              captionEl.innerHTML = captionHtml;
+              wrapper.appendChild(captionEl);
+            }
+          }
+
+          viewport.appendChild(wrapper);
+        },
       },
       ...(mainClass ? { mainClass } : {}),
+      // Верхнеуровневая опция в Fancybox 6
+      backdropClick: 'close',
       Carousel: {
+        adaptiveHeight: true,
         Toolbar: {
           enabled: showToolbar,
           display: {
@@ -115,7 +181,6 @@ export const useLightGallery = ({
             ],
           },
         },
-        // Настройки Panzoom: при disableZoom полностью блокируем зум
         Zoomable: disableZoom
           ? {
               Panzoom: {
@@ -134,6 +199,10 @@ export const useLightGallery = ({
           captionClassName
             ? `<span class="${captionClassName}">${slide?.triggerEl?.dataset?.caption ?? caption}</span>`
             : slide?.triggerEl?.dataset?.caption ?? caption,
+        // Прячем штатную подпись, если она не нужна или переехала в обёртку
+        ...(captionPlacement !== 'default'
+          ? { formatCaption: () => '' }
+          : {}),
       },
       Click: closeOnTap ? 'close' : 'toggle',
       Zoom: false,
@@ -144,7 +213,6 @@ export const useLightGallery = ({
       Hash: false,
     };
 
-    // Bind Fancybox к контейнеру с селектором
     Fancybox.bind(container as HTMLElement, actualSelector, fancyboxOptions);
     fancyboxInstanceRef.current = Fancybox;
 
@@ -171,6 +239,8 @@ export const useLightGallery = ({
     captionClassName,
     videoAutoplay,
     disableZoom,
+    captionPlacement,
+    slideWrapper,
   ]);
 
   const openGallery = (index: number) => {
