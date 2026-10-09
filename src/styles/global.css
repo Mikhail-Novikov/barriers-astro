@@ -56,7 +56,7 @@
   max-width: 1704px;
   padding-inline: 16px;
 
-  @media (max-width: 1600px) {
+  @media (max-width: 1920px) {
     max-width: calc(100% - 100px);
     padding-inline: 0;
   }
