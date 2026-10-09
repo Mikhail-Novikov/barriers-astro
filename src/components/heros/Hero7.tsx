@@ -195,7 +195,7 @@ function OptionCard({
             className={isActive ? "perco-icon-radio" : "perco-icon-no-radio"}
           />
         </span>
-        <span className="text-md/5">{item.title}</span>
+        <span className="text-sm/5 4xl:text-md/5">{item.title}</span>
       </span>
     </label>
   );
@@ -318,9 +318,9 @@ export default function Hero7(): JSX.Element {
       <div className="container">
         <h2 className="h2 mb-6 lg:mb-8">Комплектация</h2>
 
-        <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-12 mb-4 2xl:mb-0 grid grid-cols-1 gap-8 rounded-6 lg:mb-6 2xl:col-span-5 2xl:block 2xl:overflow-hidden">
-            {!screen["2xl"] && (
+        <div className="grid grid-cols-16 3xl:grid-cols-12 gap-4">
+          <div className="col-span-16 mb-4 xl:mb-0 grid grid-cols-1 gap-8 rounded-6 lg:mb-6 xl:col-span-6 3xl:col-span-4 2xl:block 2xl:overflow-hidden">
+            {!screen["xl"] && (
               <div className="grid grid-cols-1 gap-y-5 sm:grid-cols-2 mb-3">
                 <div>
                   <SelectionStepHeading
@@ -351,7 +351,7 @@ export default function Hero7(): JSX.Element {
               </div>
             )}
 
-            {screen["2xl"] && (
+            {screen["xl"] && (
               <div>
                 <div className="mb-8">
                   <SelectionStepHeading
@@ -395,7 +395,7 @@ export default function Hero7(): JSX.Element {
                           isActive={isActive}
                           name="design"
                           onSelect={() => setSelectedDesign(item.value)}
-                          className="md:h-[262px]"
+                          className="h-[230px] 4xl:h-[262px]"
                           size={item.size}
                         />
                       );
@@ -406,8 +406,8 @@ export default function Hero7(): JSX.Element {
             )}
           </div>
 
-          <div className="col-span-12 bg-white rounded-xl md:rounded-2xl overflow-x-auto 2xl:col-span-7 2xl:ml-11 mt-0 2xl:mt-13 3xl:mt-0">
-            <div className="relative px-4 pt-5 md:px-10 sm:pt-10 2xl:pt-30 3xl:pt-20 gap-4 w-full">
+          <div className="col-span-16 bg-white rounded-xl md:rounded-2xl overflow-x-auto xl:col-span-10 3xl:col-span-8 xl:ml-4 2xl:ml-5 4xl:ml-11 mt-0 xl:mt-13 3xl:mt-0">
+            <div className="relative px-0 pt-5 2xl:px-10 sm:pt-10 2xl:pt-30 3xl:pt-20 gap-4 w-full">
               <div
                 role="button"
                 tabIndex={0}

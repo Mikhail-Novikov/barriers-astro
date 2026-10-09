@@ -1,13 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback, useRef } from 'react';
 import Modal from './Modal';
 import FeedbackForm from './FeedbackForm';
 import WidthSlider from './WidthSlider';
 
 import FilterCheckbox from '@components/FilterCheckbox';
 import { publicAsset } from '@utils/publicAsset';
-import { useLightGallery } from '@hooks/useLightGallery';
 import useBarrierCatalogEffects from '@hooks/useBarrierCatalogEffects';
 import useDisabledOptions, { getMaxWidthLimit } from '@hooks/useDisabledOptions';
+import { useZoomModal } from '@hooks/useZoomModal';
 
 import barriers from '@content/barriers.json';
 
@@ -22,6 +22,7 @@ import type {
 } from '@shared-types/barrierFilters';
 
 import emptySearchImage from '../../assets/img/empty-search.png';
+import { ZoomModal, ZoomableImage } from './ZoomModal';
 
 const previewPath = publicAsset('/img/barriers/');
 const barrierMainImages = import.meta.glob('../../assets/img/barriers/*/main/*.{webp,jpg,jpeg,png}', {
@@ -29,6 +30,16 @@ const barrierMainImages = import.meta.glob('../../assets/img/barriers/*/main/*.{
   query: '?url',
   import: 'default',
 }) as Record<string, string>;
+const barrierThumbImages = import.meta.glob('../../assets/img/barriers/*/thumb/*.{webp,jpg,jpeg,png}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>;
+
+const normalizeBarrierImageName = (path: string): string => (path.split('/').pop() ?? path)
+  .replace(/\.[^.]+$/, '')
+  .replace(/-(?:prev|preview|full)$/, '')
+  .replace(/p$/, '');
 
 const TemperaturesOptions: readonly FilterSectionOption<TemperatureOption>[] = [
   ['standard', '−40 °C'],
@@ -196,36 +207,7 @@ export default function Hero6(): JSX.Element {
   const disabledOptions = useDisabledOptions({ maxWidth, temperatures, openingTimes, booms, fotoElement });
   const maxWidthLimit = getMaxWidthLimit(disabledOptions.get('maxWidth'));
 
-  /**
-   * Создает массив элементов галереи для Fancybox.
-   * @return {Array<{ src: string, alt: string }>} массив объектов с путями к изображениям и их альтернативным текстом
-   */
-  const barrierGalleryItems = useMemo(
-    () => Object.entries(barrierMainImages).map(([path, src]) => ({ src, alt: path })),
-    [],
-  );
-
-  const { galleryRef } = useLightGallery({
-    items: barrierGalleryItems,
-    selector: 'a[data-fancybox^="barrier-"]',
-    closeOnTap: true,
-    counter: false,
-    controls: false,
-    showToolbar: true,
-    showFullscreen: false,
-    showCloseIcon: true,
-    navigation: true,
-    hasArrows: false,
-    download: false,
-    mainClass: 'barrier-gallery',
-    disableZoom: true,
-    slideWrapper: {
-      tag: 'figure',
-      className: 'barrier-modal-wrapper',
-      attributes: { 'data-role': 'slide-content' },
-    },
-    captionPlacement: 'wrapper',
-  });
+  const galleryRef = useRef<HTMLDivElement>(null);
 
   useBarrierCatalogEffects({
     selectedMaxWidth: maxWidth,
@@ -334,6 +316,18 @@ export default function Hero6(): JSX.Element {
     </>
   );
 
+  const {
+    activeImage,
+    isOpen,
+    open: handleOpen,
+    selectImage: handleSelectImage,
+    close: handleClose,
+    thumbnailsRef,
+    thumbnailNavigation,
+    updateThumbnailNavigation,
+    scrollThumbnails,
+  } = useZoomModal<(typeof barriers)[number]>();
+
   return (
     <section id="catalog" aria-label="Модели шлагбаумов" className="relative bg-grey-200 pt-10 sm:pt-15 3xl:pt-20 pb-10 sm:pb-20 lg:pb-20">
       <div className="container">
@@ -344,6 +338,95 @@ export default function Hero6(): JSX.Element {
         >
           <FeedbackForm idPrefix="open-modal-sale-barrier" />
         </Modal>
+        <ZoomModal
+          isOpen={isOpen}
+          onClose={handleClose}
+          contentClassName="max-w-[1600px] h-full lg:h-[900px] overflow-hidden bg-white rounded-2xl"
+        >
+          {activeImage && (
+            <div className="flex flex-col lg:flex-row h-full px-4 sm:px-8 lg:px-[66px] lg:pt-[150px]">
+              <div className="flex min-h-0 min-w-0 lg:flex-1 flex-col bg-white">
+                <ZoomableImage
+                  src={activeImage.src}
+                  alt={activeImage.barrier.fullName}
+                  className="flex min-h-0 min-w-0 items-center mt-15 md:mt-0 h-[280px] sm:h-[500px] max-w-[800px] bg-white"
+                />
+                {activeImage.images.length > 0 && (
+                  <div className="flex shrink-0 items-center gap-2 p-3 sm:pt-4 lg:pb-[150px] sm:pl-10">
+                    {thumbnailNavigation.hasOverflow && (
+                      <button
+                        type="button"
+                        aria-label="Прокрутить миниатюры влево"
+                        disabled={!thumbnailNavigation.canScrollLeft}
+                        onClick={() => scrollThumbnails(-1)}
+                        className="perco-icons flex size-8 shrink-0 items-center justify-center rounded-full bg-grey-300 text-grey-800 transition-colors hover:bg-grey-400 disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        <span className="perco-icon-arrow-left-small" aria-hidden="true" />
+                      </button>
+                    )}
+                    <div
+                      ref={thumbnailsRef}
+                      onScroll={updateThumbnailNavigation}
+                      className="flex min-w-0 gap-x-4 overflow-x-auto"
+                    >
+                      {activeImage.images.map((image, index) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          aria-label={`Показать изображение ${index + 1}`}
+                          aria-pressed={activeImage.src === image.src}
+                          onClick={() => handleSelectImage(image.src)}
+                          className={`size-[76px] p-2 shrink-0 overflow-hidden rounded-lg border-2 bg-white transition-colors ${activeImage.src === image.src ? 'border-black' : 'border-transparent hover:border-grey-500'}`}
+                        >
+                          <img
+                            src={image.thumb}
+                            alt=""
+                            className="h-full w-full object-contain"
+                            loading="lazy"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                    {thumbnailNavigation.hasOverflow && (
+                      <button
+                        type="button"
+                        aria-label="Прокрутить миниатюры вправо"
+                        disabled={!thumbnailNavigation.canScrollRight}
+                        onClick={() => scrollThumbnails(1)}
+                        className="perco-icons flex size-8 shrink-0 items-center justify-center rounded-full bg-grey-300 text-grey-800 transition-colors hover:bg-grey-400 disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        <span className="perco-icon-arrow-left-small rotate-180" aria-hidden="true" />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+              <aside className="flex-1 overflow-y-auto pt-4 pb-10 sm:pt-8 lg:pt-15 lg:max-h-full md:max-w-[470px] bg-white text-left text-grey-1000 flex flex-col">
+                <h3 className="mb-4 md:mb-7 text-2xl xl:text-3xl/10 text-black font-manrope-semibold">{activeImage.barrier.fullName}</h3>
+                <div className="flex items-center gap-3">
+                  <div className="text-2xl/8 text-cta font-manrope-bold">{activeImage.barrier.price}</div>
+                  <div className="text-grey-800 text-sm/normal">Цена со склада<br /> в Москве и СПб</div>
+                </div>
+                <ul className="perco-icons mt-4 md:mt-7 space-y-2 pl-0">
+                  {activeImage.barrier.prodBenefits.map((benefit) => (
+                    <li key={benefit} className="flex items-start gap-x-2 text-md/6">
+                      <i className="perco-icon-check-tag mt-1 text-cta" aria-hidden="true" />
+                      <span>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  data-order-barrier={activeImage.barrier.fullName}
+                  onClick={handleClose}
+                  className="w-full md:max-w-[280px] rounded-2xl bg-cta px-6 py-3 text-lg font-manrope-semibold text-white transition-colors hover:bg-cta-hover cursor-pointer mt-auto md:mt-20"
+                >
+                  Заказать
+                </button>
+              </aside>
+            </div>
+          )}
+        </ZoomModal>
         <h2 className="h2 mb-6 lg:mb-8">Модели шлагбаумов</h2>
         <div className="perco-icons mb-4 lg:hidden">
           <button type="button" onClick={() => setIsFiltersOpen(true)} className="flex items-center gap-x-3 cursor-pointer text-cta hover:text-cta/90">
@@ -382,39 +465,46 @@ export default function Hero6(): JSX.Element {
               const folderName = barrier.imageNamePreview.replace(/-preview$/, '');
               const galleryImages = Object.entries(barrierMainImages)
                 .filter(([path]) => path.includes(`/barriers/${folderName}/main/`))
-                .map(([, src]) => src);
-              const caption = `
-                <div class="barrier-caption flex max-w-[520px] flex-col sm:gap-2 px-2 md:p-4 text-left">
-                  <h3 class="mb-4 md:mb-7 text-2xl xl:text-3xl/10 text-black font-manrope-semibold">${barrier.fullName}</h3>
-                  <div class="flex items-center gap-3">
-                    <div class="text-2xl/8 text-cta font-manrope-bold">${barrier.price}</div>
-                    <div class="text-grey-800 text-sm/normal">Цена со склада<br> в Москве и СПб</div>
-                  </div>
-                  <ul class="perco-icons mt-4 md:mt-7 space-y-1 list-none pl-0">
-                    ${barrier.prodBenefits
-                      .map((feature) => `<li class="text-md/normal">
-                        <div class="flex items-center gap-x-2 text-cta">
-                          <i class="perco-icon-check-tag"></i>
-                          <span class="text-grey-1000">${feature}</span>
-                        </div>
-                      </li>`)
-                      .join('')}
-                  </ul>
-                  <button type="button" data-order-barrier="${barrier.fullName}" class="mt-8 xl:mt-20 w-full md:max-w-[280px] rounded-2xl bg-cta px-6 py-3 font-manrope-semibold text-white text-lg transition-colors hover:bg-cta-hover cursor-pointer">Заказать</button>
-                </div>
-              `;
-
+                .map(([path, src]) => ({
+                  src,
+                  key: normalizeBarrierImageName(path),
+                }));
+              const thumbnails = Object.entries(barrierThumbImages)
+                .filter(([path]) => path.includes(`/barriers/${folderName}/thumb/`))
+                .map(([path, thumb]) => ({
+                  thumb,
+                  key: normalizeBarrierImageName(path),
+                }))
+                .sort((first, second) => first.key.localeCompare(second.key, undefined, { numeric: true }));
+              const barrierImages = thumbnails
+                .map(({ key, thumb }) => {
+                  const image = galleryImages.find((item) => item.key === key);
+                  return image ? { src: image.src, thumb } : null;
+                })
+                .filter((image): image is { src: string; thumb: string } => image !== null);
+              const images = barrierImages.length > 0
+                ? barrierImages
+                : galleryImages.map(({ src }) => ({ src, thumb: src }));
+              const initialImage = images[0]?.src ?? `${previewPath}${folderName}/preview.webp`;
               return (
               <article
                 key={barrier.fullName}
                 className="flex min-h-[340px] flex-col rounded-3xl bg-white border border-grey-400 transition-colors hover:border-cta cursor-pointer"
                 role="button"
                 tabIndex={0}
-                onClick={() => document.querySelector<HTMLAnchorElement>(`a[data-fancybox="barrier-${folderName}"]`)?.click()}
+                onClick={() => handleOpen(
+                  initialImage,
+                  barrier,
+                  images,
+                )}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
-                    document.querySelector<HTMLAnchorElement>(`a[data-fancybox="barrier-${folderName}"]`)?.click();
+                    handleOpen(
+                      initialImage,
+                      barrier,
+                      images,
+                    );
                   }
                 }}
               >
@@ -426,18 +516,6 @@ export default function Hero6(): JSX.Element {
                   <p className="mt-1 text-md/5 text-grey-800">{barrier.tag}</p>
                   <p className="mt-4 text-xl/7 text-cta">{barrier.price}</p>
                 </div>
-                {galleryImages.map((src, index) => (
-                  <a
-                    key={src}
-                    data-fancybox={`barrier-${folderName}`}
-                    href={src}
-                    data-caption={caption}
-                    data-counter="false"
-                    aria-label={`${barrier.fullName}, изображение ${index + 1}`}
-                    className="sr-only"
-                    onClick={(event) => event.stopPropagation()}
-                  />
-                ))}
               </article>
               );
             })}
