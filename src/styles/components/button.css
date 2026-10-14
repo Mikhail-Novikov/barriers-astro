@@ -14,6 +14,10 @@
   @apply bg-transparent border-2 px-8 rounded-[24px] text-white hover:bg-white hover:text-grey-1000 transition-colors cursor-pointer
 }
 
+.btn-primary--outline {
+  @apply bg-transparent border px-8 rounded-[20px] text-cta hover:bg-cta hover:text-white hover:border-cta transition-colors cursor-pointer
+}
+
 .link--underline {
   @apply relative after:content-[""] after:absolute after:-bottom-[3px] after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-white after:![transition:width_0.3s_ease-out] hover:after:w-full
 }

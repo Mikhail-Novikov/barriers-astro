@@ -23,6 +23,7 @@ import type {
 
 import emptySearchImage from '../../assets/img/empty-search.png';
 import { ZoomModal, ZoomableImage } from './ZoomModal';
+import { Button } from '@components/Button';
 
 const previewPath = publicAsset('/img/barriers/');
 const barrierMainImages = import.meta.glob('../../assets/img/barriers/*/main/*.{webp,jpg,jpeg,png}', {
@@ -310,9 +311,14 @@ export default function Hero6(): JSX.Element {
         </div>
       ))}
 
-      <button type="button" onClick={resetFilters} className="px-8 py-3 transition-colors border cursor-pointer lg:mt-4 shrink-0 w-fit rounded-2xl border-grey-600 text-md/6 font-manrope-semibold text-cta hover:border-cta">
+      <Button
+        className='w-full sm:w-fit'
+        type="button"
+        variant="primary-outline"
+        onClick={resetFilters}
+      >
         Сбросить все фильтры
-      </button>
+      </Button>
     </>
   );
 
@@ -332,9 +338,9 @@ export default function Hero6(): JSX.Element {
     <section
       id="catalog"
       aria-label="Модели шлагбаумов"
-      className="relative pt-10 pb-10 bg-grey-200 sm:pt-15 3xl:pt-20 sm:pb-20 lg:pb-20"
+      className="pt-10 pb-10 bg-grey-200 md:pt-15 4xl:pt-20 md:pb-20 xl:pb-20"
     >
-      <div className="container">
+      <div className="relative container">
         <Modal
           triggerId="open-modal-sale-barrier"
           triggerClassName="hidden"
@@ -345,19 +351,19 @@ export default function Hero6(): JSX.Element {
         <ZoomModal
           isOpen={isOpen}
           onClose={handleClose}
-          contentClassName="w-full max-w-[1600px] h-full lg:h-[900px] overflow-y-auto bg-white sm:rounded-2xl"
+          contentClassName="w-full max-w-[1600px] h-full xl:h-[900px] overflow-y-auto bg-white md:rounded-2xl"
         >
           {activeImage && (
-            <div className="flex flex-col items-center lg:flex-row h-full px-4 sm:px-8 lg:px-[66px]">
-              <div className="flex flex-col min-w-0 min-h-0 bg-white lg:flex-1 lg:pt-20">
+            <div className="flex flex-col items-center xl:flex-row h-full px-4 md:px-8 xl:px-[66px]">
+              <div className="flex flex-col min-w-0 min-h-0 bg-white xl:flex-1 xl:pt-20">
                 <ZoomableImage
                   src={activeImage.src}
                   alt={activeImage.barrier.fullName}
-                  className="w-full max-w-[800px] sm:h-[500px] bg-white mt-15 md:mt-0"
+                  className="w-full max-w-[800px] md:h-[500px] bg-white mt-15 lg:mt-0"
                   imgClassName="max-w-full"
                 />
                 {activeImage.images.length > 0 && (
-                  <div className="flex shrink-0 items-center gap-2 py-3 sm:pt-4 lg:pl-10">
+                  <div className="flex shrink-0 items-center gap-2 py-3 md:pt-4 xl:pl-10">
                     {thumbnailNavigation.hasOverflow && (
                       <button
                         type="button"
@@ -412,8 +418,8 @@ export default function Hero6(): JSX.Element {
                   </div>
                 )}
               </div>
-              <aside className="flex-1 overflow-y-auto pt-4 pb-10 sm:pt-8 lg:pt-15 lg:max-h-full md:max-w-[470px] bg-white text-left text-grey-1000 flex flex-col">
-                <h3 className="mb-4 text-2xl text-black md:mb-7 xl:text-3xl/10 font-manrope-semibold">
+              <aside className="flex-1 overflow-y-auto pt-4 pb-10 md:pt-8 xl:pt-15 xl:max-h-full lg:max-w-[470px] bg-white text-left text-grey-1000 flex flex-col">
+                <h3 className="mb-4 text-2xl text-black lg:mb-7 2xl:text-3xl/10 font-manrope-semibold">
                   {activeImage.barrier.fullName}
                 </h3>
                 <div className="flex items-center gap-3">
@@ -425,7 +431,7 @@ export default function Hero6(): JSX.Element {
                     <br /> в Москве и СПб
                   </div>
                 </div>
-                <ul className="pl-0 mt-4 mb-8 space-y-2 sm:mb-0 perco-icons md:mt-7">
+                <ul className="pl-0 mt-4 mb-8 space-y-2 md:mb-0 perco-icons lg:mt-7">
                   {activeImage.barrier.prodBenefits.map((benefit) => (
                     <li
                       key={benefit}
@@ -443,7 +449,7 @@ export default function Hero6(): JSX.Element {
                   type="button"
                   data-order-barrier={activeImage.barrier.fullName}
                   onClick={handleClose}
-                  className="w-full md:max-w-[280px] rounded-2xl bg-cta px-6 py-3 text-lg font-manrope-semibold text-white transition-colors hover:bg-cta-hover cursor-pointer mt-auto md:mt-20"
+                  className="w-full lg:max-w-[280px] rounded-2xl bg-cta px-6 py-3 text-lg font-manrope-semibold text-white transition-colors hover:bg-cta-hover cursor-pointer mt-auto lg:mt-20"
                 >
                   Заказать
                 </button>
@@ -451,8 +457,8 @@ export default function Hero6(): JSX.Element {
             </div>
           )}
         </ZoomModal>
-        <h2 className="mb-6 h2 lg:mb-8">Модели шлагбаумов</h2>
-        <div className="mb-4 perco-icons lg:hidden">
+        <h2 className="mb-6 h2 xl:mb-8">Модели шлагбаумов</h2>
+        <div className="mb-4 perco-icons xl:hidden">
           <button
             type="button"
             onClick={() => setIsFiltersOpen(true)}
@@ -467,12 +473,12 @@ export default function Hero6(): JSX.Element {
           </button>
         </div>
         <div
-          className={`fixed inset-0 z-50 bg-grey-1000/40 transition-opacity duration-300 lg:hidden ${isFiltersOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+          className={`fixed inset-0 z-50 bg-grey-1000/40 transition-opacity duration-300 xl:hidden ${isFiltersOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
           onClick={() => setIsFiltersOpen(false)}
           aria-hidden={!isFiltersOpen}
         />
         <aside
-          className={`absolute left-0 top-42 z-50 flex w-full max-w-[390px] flex-col rounded-2xl bg-white px-4 py-6 transition-transform duration-300 ease-out sm:px-8 lg:hidden ${isFiltersOpen ? "translate-x-0" : "-translate-x-full"}`}
+          className={`absolute left-0 top-42 z-50 flex w-full max-w-[390px] flex-col rounded-2xl bg-white px-4 py-6 transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
           onClick={(event) => event.stopPropagation()}
         >
           <div className="flex justify-end mb-2">
@@ -488,8 +494,8 @@ export default function Hero6(): JSX.Element {
           <div className="flex flex-col gap-7">{filtersContent}</div>
         </aside>
         <div className="grid items-start grid-cols-12 gap-5">
-          <div className="col-span-4 xl:col-span-3 flex-col gap-2 lg:sticky lg:top-[120px] hidden lg:flex">
-            <aside className="px-4 bg-white rounded-3xl 2xl:px-8 py-9">
+          <div className="col-span-4 2xl:col-span-3 flex-col gap-2 xl:sticky xl:top-[120px] hidden xl:flex">
+            <aside className="px-4 bg-white rounded-3xl 3xl:px-8 py-9">
               <h3 className="mb-8 text-xl/6 font-manrope-semibold text-grey-800">
                 Выберите условие эксплуатации
               </h3>
@@ -504,7 +510,7 @@ export default function Hero6(): JSX.Element {
           <div
             ref={galleryRef}
             style={{ overflowAnchor: "none" }}
-            className="grid grid-cols-1 col-span-12 gap-5 lg:col-span-8 xl:col-span-9 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+            className="grid col-span-12 gap-4 3xl:gap-5 xl:col-span-8 2xl:col-span-9 grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3"
           >
             {filteredBarriers.map((barrier) => {
               const folderName = barrier.imageNamePreview.replace(
@@ -550,7 +556,7 @@ export default function Hero6(): JSX.Element {
               return (
                 <article
                   key={barrier.fullName}
-                  className="flex min-h-[340px] flex-col rounded-3xl bg-white border border-grey-400 transition-colors hover:border-cta cursor-pointer"
+                  className="flex min-h-[260px] flex-col rounded-2xl bg-white border border-grey-400 transition-colors hover:border-cta cursor-pointer"
                   role="button"
                   tabIndex={0}
                   onClick={() => handleOpen(initialImage, barrier, images)}
@@ -561,28 +567,28 @@ export default function Hero6(): JSX.Element {
                     }
                   }}
                 >
-                  <div className="flex min-h-[230px] items-center justify-center">
+                  <div className="flex items-center justify-center">
                     <img
-                      className="max-h-[220px] w-full object-contain"
+                      className="max-h-[185px] sm:max-h-[132px] md:max-h-[162px] lg:max-h-[243px] 2xl:max-h-[198px] 3xl:max-h-[168px] 4xl:max-h-[180px] w-full object-contain"
                       src={`${previewPath}${barrier.imageNamePreview.replace(/-preview$/, "")}/preview.webp`}
                       alt={barrier.fullName}
                       loading="lazy"
                     />
                   </div>
                   <div className="mt-auto p-[8px_8px_20px_32px] font-manrope-semibold">
-                    <h3 className="text-xl/7 text-grey-1000">
+                    <h3 className="text-xl/7 sm:text-md/6 md:text-lg/6 lg:text-xl/7 text-grey-1000">
                       {barrier.baseModel}
                     </h3>
                     <p className="mt-1 text-md/5 text-grey-800">
                       {barrier.tag}
                     </p>
-                    <p className="mt-4 text-xl/7 text-cta">{barrier.price}</p>
+                    <p className="mt-3 3xl:mt-4 text-xl/7 text-cta">{barrier.price}</p>
                   </div>
                 </article>
               );
             })}
             {filteredBarriers.length === 0 && (
-              <div className="p-8 text-center bg-white md:col-span-2 xl:col-span-3 rounded-3xl text-lg/6 text-grey-800">
+              <div className="p-8 text-center bg-white lg:col-span-2 2xl:col-span-3 rounded-3xl text-lg/6 text-grey-800">
                 <img
                   className="mx-auto mb-8 shrink-0"
                   src={emptySearchImage.src}
@@ -598,7 +604,7 @@ export default function Hero6(): JSX.Element {
               </div>
             )}
           </div>
-          <p className="block col-span-12 pl-3 text-md/6 text-grey-900 lg:hidden">
+          <p className="block col-span-12 pl-3 text-md/6 text-grey-900 xl:hidden">
             Все цены указаны со&nbsp;склада в&nbsp;Москве
             и&nbsp;Санкт-Петербурге
           </p>
