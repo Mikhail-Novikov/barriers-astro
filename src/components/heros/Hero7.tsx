@@ -1,8 +1,8 @@
-import { useLightGallery } from "@hooks/useLightGallery";
 import { useBreakpoint } from "@hooks/useBreakpoint";
 import FilterCheckbox from "@components/FilterCheckbox";
 import { useMemo, useState } from "react";
 import { publicAsset } from "@utils/publicAsset";
+import { ZoomModal, ZoomableImage } from "./ZoomModal";
 
 type BodyStyle = "standard" | "premium";
 type BoomShape = "round" | "square" | "foldable" | "soft";
@@ -56,7 +56,7 @@ const illustrationItems: IllustrationItem[] = [
   {
     bodyStyle: "premium",
     boomShape: "foldable",
-    title: "Шлагбаум GS04.1&nbsp;со стрелой прямоугольного сечения",
+    title: "Шлагбаум GS04.1&nbsp;со складной стрелой прямоугольного сечения",
     img: `${imgPath}rezult/gs04-foldable.svg`,
   },
   {
@@ -181,7 +181,7 @@ function OptionCard({
         width={size?.width || 100}
         height={size?.height || 100}
       />
-      <span className="perco-icons flex items-center gap-2">
+      <span className="flex items-center gap-2 perco-icons">
         <input
           type="radio"
           name={name}
@@ -213,7 +213,7 @@ function CompactOptionList<T extends string>({
   onSelect: (value: T) => void;
 }): JSX.Element {
   return (
-    <ul className="list-none ml-6 space-y-4">
+    <ul className="ml-6 space-y-5 list-none">
       {items.map((item) => {
         const isActive = selectedValue === item.value;
 
@@ -270,6 +270,7 @@ export default function Hero7(): JSX.Element {
   const screen = useBreakpoint();
   const [selectedType, setSelectedType] = useState<BoomShape>("square");
   const [selectedDesign, setSelectedDesign] = useState<BodyStyle>("standard");
+  const [zoomedVariant, setZoomedVariant] = useState<IllustrationItem | null>(null);
 
   // Отфильтрованный список вариантов комплектации
   const currentVariant = useMemo(
@@ -281,52 +282,24 @@ export default function Hero7(): JSX.Element {
     [selectedType, selectedDesign],
   );
 
-  // Текущий элемент галереи
-  const currentGalleryItem = useMemo(
-    () => ({
-      ...currentVariant,
-      index: 0,
-      src: currentVariant.img,
-      thumb: currentVariant.img,
-      alt: currentVariant.title,
-    }),
-    [currentVariant],
-  );
-  const galleryItems = useMemo(
-    () => [currentGalleryItem],
-    [currentGalleryItem],
-  );
-
-  const { galleryRef, openGallery } = useLightGallery({
-    items: galleryItems,
-    closeOnTap: true,
-    counter: false,
-    controls: false,
-    showFullscreen: true,
-    navigation: false,
-    mainClass: "hero7-gallery",
-    captionClassName:
-      "inline-block md:mx-10 md:text-2xl text-white text-center",
-  });
-
   return (
     <section
       id="complectation"
       aria-label="Комплектация"
-      className="bg-grey-400 pt-10 sm:py-15 xl:pt-20 pb-10 lg:pb-20 xl:pb-25"
+      className="py-10 bg-grey-400 sm:py-15 xl:pt-20 lg:pb-20 xl:pb-25"
     >
       <div className="container">
-        <h2 className="h2 mb-6 lg:mb-8">Комплектация</h2>
+        <h2 className="mb-6 h2 lg:mb-8">Комплектация</h2>
 
-        <div className="grid grid-cols-16 3xl:grid-cols-12 gap-4">
-          <div className="col-span-16 mb-4 xl:mb-0 grid grid-cols-1 gap-8 rounded-6 lg:mb-6 xl:col-span-6 3xl:col-span-4 2xl:block 2xl:overflow-hidden">
+        <div className="grid gap-0 grid-cols-16 3xl:grid-cols-12">
+          <div className="mb-4 col-span-16 xl:mb-0 rounded-6 lg:mb-6 xl:col-span-6 3xl:col-span-4 2xl:block 2xl:overflow-hidden">
             {!screen["xl"] && (
-              <div className="grid grid-cols-1 gap-y-5 sm:grid-cols-2 mb-3">
+              <div className="grid grid-cols-1 mb-3 gap-y-5 sm:grid-cols-2">
                 <div>
                   <SelectionStepHeading
                     step={1}
                     title="Выберите тип стрелы"
-                    className="flex items-center gap-x-2 mb-4 font-manrope-semibold text-lg/6 lg:text-xl"
+                    className="flex items-center mb-4 gap-x-2 font-manrope-semibold text-lg/6 lg:text-xl"
                   />
                   <CompactOptionList
                     items={compactTypeItems}
@@ -339,7 +312,7 @@ export default function Hero7(): JSX.Element {
                   <SelectionStepHeading
                     step={2}
                     title="Выберите исполнение корпуса"
-                    className="flex items-center gap-x-2 mb-4 font-manrope-semibold text-lg/6 lg:text-xl"
+                    className="flex items-center mb-4 gap-x-2 font-manrope-semibold text-lg/6 lg:text-xl"
                   />
                   <CompactOptionList
                     items={compactDesignItems}
@@ -357,9 +330,9 @@ export default function Hero7(): JSX.Element {
                   <SelectionStepHeading
                     step={1}
                     title="Выберите тип стрелы"
-                    className="flex items-center gap-x-2 font-manrope-semibold text-xl mb-5"
+                    className="flex items-center mb-5 text-xl gap-x-2 font-manrope-semibold"
                   />
-                  <div className="grid grid-cols-2 grid-rows-2 gap-4">
+                  <div className="grid grid-cols-2 grid-rows-2 gap-3 4xl:gap-5">
                     {radioItemsType.map((item) => {
                       const isActive = selectedType === item.value;
 
@@ -382,9 +355,9 @@ export default function Hero7(): JSX.Element {
                   <SelectionStepHeading
                     step={2}
                     title="Выберите исполнение корпуса"
-                    className="flex items-center gap-x-2 font-manrope-semibold text-xl mb-5"
+                    className="flex items-center mb-5 text-xl gap-x-2 font-manrope-semibold"
                   />
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-3 4xl:gap-5">
                     {radioItemsDesign.map((item) => {
                       const isActive = selectedDesign === item.value;
 
@@ -406,51 +379,56 @@ export default function Hero7(): JSX.Element {
             )}
           </div>
 
-          <div className="col-span-16 bg-white rounded-xl md:rounded-2xl overflow-x-auto xl:col-span-10 3xl:col-span-8 xl:ml-4 2xl:ml-5 4xl:ml-11 mt-0 xl:mt-13 3xl:mt-0">
-            <div className="relative px-0 pt-5 2xl:px-10 sm:pt-10 2xl:pt-30 3xl:pt-20 gap-4 w-full">
+          <div className="p-[20px_8px] sm:p-[40px_20px] md:p-[40px_32px] lg:p-10 xl:p-5 2xl:p-8 3xl:p-[40px_40px_15px_40px] relative flex items-center mt-0 overflow-x-auto bg-white col-span-16 rounded-xl md:rounded-2xl xl:col-span-10 3xl:col-span-8 lg:ml-4 xl:ml-8 4xl:ml-15 xl:mt-8 2xl:mt-0">
+            <div className="w-full">
               <div
                 role="button"
                 tabIndex={0}
-                onClick={() => openGallery(0)}
+                onClick={() => setZoomedVariant(currentVariant)}
                 onKeyDown={(event) => {
                   if (event.key === "Enter" || event.key === " ") {
                     event.preventDefault();
-                    openGallery(0);
+                    setZoomedVariant(currentVariant);
                   }
                 }}
-                className="perco-icons absolute inset-3 md:inset-6 lg:h-13 text-2xl text-right text-grey-500 hover:text-grey-800 cursor-zoom-in transition-all duration-300 ease-out"
+                className="absolute text-2xl text-right transition-all duration-300 ease-out perco-icons inset-3 md:inset-6 lg:h-13 text-grey-500 hover:text-grey-800 cursor-zoom-in"
               >
                 <i className="!hidden md:!block perco-icon-control-fullscreen lg:float-right" />
-                <span className="md:hidden text-2xl text-grey-500">
+                <span className="text-2xl md:hidden text-grey-500">
                   <i className="perco-icon-control-fullscreen-mobile lg:float-right" />
                 </span>
               </div>
               <h4
-                className="pr-8 text-[12px]/4 md:text-lg/normal lg:text-xl font-manrope-semibold text-grey-700 text-center"
+                className="pr-8 mb-6 text-[12px]/4 md:text-lg/normal lg:text-xl font-manrope-semibold text-grey-700 text-center"
                 dangerouslySetInnerHTML={{ __html: currentVariant.title }}
               />
               <img
-                className="p-[0_0_20px] lg:p-[0_12px_40px] 2xl:p-0 object-contain"
+                className="object-contain shrink-0"
                 src={currentVariant.img}
                 alt={currentVariant.title}
-                title={currentVariant.title}
                 data-iframe-title={currentVariant.title}
+                width="1000"
+                height="520"
               />
             </div>
           </div>
         </div>
       </div>
-      <div className="lightgallery-backdrop" />
-      <div ref={galleryRef}>
-        <a
-          data-fancybox="hero7-gallery"
-          data-type="image"
-          data-caption={currentGalleryItem.title}
-          href={currentGalleryItem.src}
-          aria-label={currentGalleryItem.title}
-          className="sr-only"
-        />
-      </div>
+      <ZoomModal
+        isOpen={zoomedVariant !== null}
+        onClose={() => setZoomedVariant(null)}
+        contentClassName="flex sm:block max-w-[1600px] h-full sm:h-fit items-center justify-center overflow-hidden sm:rounded-2xl bg-white p-4 lg:px-18 shadow-2xl"
+      >
+        {zoomedVariant && (
+          <ZoomableImage
+            src={zoomedVariant.img}
+            alt={zoomedVariant.title.replace(/&nbsp;/g, " ")}
+            title={zoomedVariant.title.replace(/&nbsp;/g, " ")}
+            className="w-full h-full max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-4rem)] md:max-h-[calc(100dvh-2rem)] overflow-y-auto"
+            imgClassName="max-h-full max-w-full mx-auto sm:max-h-[312px] md:max-h-[426px] lg:max-h-[426px] xl:max-h-[478px] 2xl:max-h-[520px] 3xl:max-h-[624px] 4xl:max-h-[712px]"
+          />
+        )}
+      </ZoomModal>
     </section>
   );
 }

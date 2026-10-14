@@ -12,8 +12,10 @@ interface ZoomModalProps {
 interface ZoomableImageProps {
   src: string;
   alt?: string;
+  title?: string;
   showZoomControls?: boolean;
   className?: string;
+  imgClassName?: string;
 }
 
 export function ZoomModal({
@@ -42,7 +44,7 @@ export function ZoomModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 animate-[zmFade_250ms_ease] sm:p-8"
+      className="fixed inset-0 z-[9999] flex items-center justify-center md:p-4 animate-[fade_250ms_ease] sm:p-8"
       role="dialog"
       aria-modal="true"
     >
@@ -52,10 +54,10 @@ export function ZoomModal({
         aria-label="Закрыть окно просмотра"
         onClick={onClose}
       />
-      <div className={`relative z-10 ${contentClassName}`}>
+      <div className={`relative z-10 max-h-full ${contentClassName}`}>
         <button
           type="button"
-          className="perco-icons absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border-none bg-grey-100 text-3xl leading-none text-grey-600 transition-colors hover:text-grey-900 cursor-pointer"
+          className="absolute z-20 flex items-center justify-center text-3xl leading-none transition-colors border-none cursor-pointer top-2 right-2 md:right-4 perco-icons md:top-4 text-grey-600 hover:text-grey-900"
           aria-label="Закрыть"
           onClick={onClose}
         >
@@ -71,8 +73,10 @@ export function ZoomModal({
 export function ZoomableImage({
   src,
   alt = '',
+  title,
   showZoomControls = false,
   className = '',
+  imgClassName = '',
 }: ZoomableImageProps) {
   const imgRef = useRef<HTMLImageElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -96,11 +100,16 @@ export function ZoomableImage({
   return (
     <div
       ref={viewportRef}
-      className={`relative overflow-hidden touch-none ${className}`}
+      className={`flex sm:block min-h-0 min-w-0 flex-1 flex-col justify-center touch-pan-y ${className}`}
     >
+      {title && (
+        <h4 className="max-w-[95%] my-4 text-center sm:my-6 3xl:pt-10 font-manrope-semibold text-md/6 sm:text-lg/normal md:text-2xl xl:text-3xl text-grey-800">
+          {title}
+        </h4>
+      )}
       <img
         ref={imgRef}
-        className={`select-none object-contain [will-change:transform] origin-center ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`select-none object-contain [will-change:transform] origin-center ${imgClassName} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         src={src}
         alt={alt}
         style={{
@@ -140,7 +149,7 @@ function ToolbarButton({
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="flex h-10 w-10 items-center justify-center rounded-full bg-transparent text-xl text-white transition-colors hover:bg-white/20"
+      className="flex items-center justify-center w-10 h-10 text-xl text-white transition-colors bg-transparent rounded-full hover:bg-white/20"
     >
       {children}
     </button>

@@ -11,6 +11,7 @@ export default defineConfig({
   base: '/test/barriers/',
   vite: {
     resolve: {
+      dedupe: ['react', 'react-dom'],
       alias: {
         '@assets': path.resolve('./src/assets'),
         '@components': path.resolve('./src/components'),

@@ -27,6 +27,9 @@ const breakpoints = {
   '4xl': 1920,
 };
 
+const matchesBreakpoint = (breakpoint: Breakpoint): boolean =>
+  window.matchMedia(`(min-width: ${breakpoints[breakpoint]}px)`).matches;
+
 /**
  * Хук для определения текущего breakpoint экрана
  * @returns Объект с булевыми значениями для каждого breakpoint
@@ -53,18 +56,16 @@ export const useBreakpoint = (): BreakpointValue => {
 
   useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth;
-
       setBreakpoint({
-        mobile: width >= breakpoints.mobile,
-        xs: width >= breakpoints.xs,
-        sm: width >= breakpoints.sm,
-        md: width >= breakpoints.md,
-        lg: width >= breakpoints.lg,
-        xl: width >= breakpoints.xl,
-        '2xl': width >= breakpoints['2xl'],
-        '3xl': width >= breakpoints['3xl'],
-        '4xl': width >= breakpoints['4xl'],
+        mobile: matchesBreakpoint('mobile'),
+        xs: matchesBreakpoint('xs'),
+        sm: matchesBreakpoint('sm'),
+        md: matchesBreakpoint('md'),
+        lg: matchesBreakpoint('lg'),
+        xl: matchesBreakpoint('xl'),
+        '2xl': matchesBreakpoint('2xl'),
+        '3xl': matchesBreakpoint('3xl'),
+        '4xl': matchesBreakpoint('4xl'),
       });
     };
 
@@ -94,17 +95,16 @@ export const useCurrentBreakpoint = (): Breakpoint => {
 
   useEffect(() => {
     const handleResize = () => {
-      const width = window.innerWidth;
       let breakpoint: Breakpoint = 'xs';
 
-      if (width >= breakpoints['4xl']) breakpoint = '4xl';
-      else if (width >= breakpoints['3xl']) breakpoint = '3xl';
-      else if (width >= breakpoints['2xl']) breakpoint = '2xl';
-      else if (width >= breakpoints.xl) breakpoint = 'xl';
-      else if (width >= breakpoints.lg) breakpoint = 'lg';
-      else if (width >= breakpoints.md) breakpoint = 'md';
-      else if (width >= breakpoints.sm) breakpoint = 'sm';
-      else if (width >= breakpoints.xs) breakpoint = 'xs';
+      if (matchesBreakpoint('4xl')) breakpoint = '4xl';
+      else if (matchesBreakpoint('3xl')) breakpoint = '3xl';
+      else if (matchesBreakpoint('2xl')) breakpoint = '2xl';
+      else if (matchesBreakpoint('xl')) breakpoint = 'xl';
+      else if (matchesBreakpoint('lg')) breakpoint = 'lg';
+      else if (matchesBreakpoint('md')) breakpoint = 'md';
+      else if (matchesBreakpoint('sm')) breakpoint = 'sm';
+      else if (matchesBreakpoint('xs')) breakpoint = 'xs';
 
       setCurrent(breakpoint);
     };

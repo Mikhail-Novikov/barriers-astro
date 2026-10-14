@@ -310,7 +310,7 @@ export default function Hero6(): JSX.Element {
         </div>
       ))}
 
-      <button type="button" onClick={resetFilters} className="lg:mt-4 shrink-0 w-fit rounded-2xl border border-grey-600 px-8 py-3 text-md/6 font-manrope-semibold text-cta transition-colors hover:border-cta cursor-pointer">
+      <button type="button" onClick={resetFilters} className="px-8 py-3 transition-colors border cursor-pointer lg:mt-4 shrink-0 w-fit rounded-2xl border-grey-600 text-md/6 font-manrope-semibold text-cta hover:border-cta">
         Сбросить все фильтры
       </button>
     </>
@@ -329,7 +329,11 @@ export default function Hero6(): JSX.Element {
   } = useZoomModal<(typeof barriers)[number]>();
 
   return (
-    <section id="catalog" aria-label="Модели шлагбаумов" className="relative bg-grey-200 pt-10 sm:pt-15 3xl:pt-20 pb-10 sm:pb-20 lg:pb-20">
+    <section
+      id="catalog"
+      aria-label="Модели шлагбаумов"
+      className="relative pt-10 pb-10 bg-grey-200 sm:pt-15 3xl:pt-20 sm:pb-20 lg:pb-20"
+    >
       <div className="container">
         <Modal
           triggerId="open-modal-sale-barrier"
@@ -341,33 +345,37 @@ export default function Hero6(): JSX.Element {
         <ZoomModal
           isOpen={isOpen}
           onClose={handleClose}
-          contentClassName="max-w-[1600px] h-full lg:h-[900px] overflow-hidden bg-white rounded-2xl"
+          contentClassName="w-full max-w-[1600px] h-full lg:h-[900px] overflow-y-auto bg-white sm:rounded-2xl"
         >
           {activeImage && (
-            <div className="flex flex-col lg:flex-row h-full px-4 sm:px-8 lg:px-[66px] lg:pt-[150px]">
-              <div className="flex min-h-0 min-w-0 lg:flex-1 flex-col bg-white">
+            <div className="flex flex-col items-center lg:flex-row h-full px-4 sm:px-8 lg:px-[66px]">
+              <div className="flex flex-col min-w-0 min-h-0 bg-white lg:flex-1 lg:pt-20">
                 <ZoomableImage
                   src={activeImage.src}
                   alt={activeImage.barrier.fullName}
-                  className="flex min-h-0 min-w-0 items-center mt-15 md:mt-0 h-[280px] sm:h-[500px] max-w-[800px] bg-white"
+                  className="w-full max-w-[800px] sm:h-[500px] bg-white mt-15 md:mt-0"
+                  imgClassName="max-w-full"
                 />
                 {activeImage.images.length > 0 && (
-                  <div className="flex shrink-0 items-center gap-2 p-3 sm:pt-4 lg:pb-[150px] sm:pl-10">
+                  <div className="flex shrink-0 items-center gap-2 py-3 sm:pt-4 lg:pl-10">
                     {thumbnailNavigation.hasOverflow && (
                       <button
                         type="button"
                         aria-label="Прокрутить миниатюры влево"
                         disabled={!thumbnailNavigation.canScrollLeft}
                         onClick={() => scrollThumbnails(-1)}
-                        className="perco-icons flex size-8 shrink-0 items-center justify-center rounded-full bg-grey-300 text-grey-800 transition-colors hover:bg-grey-400 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="flex items-center justify-center transition-colors rounded-full perco-icons size-8 shrink-0 bg-grey-300 text-grey-800 hover:bg-grey-400 disabled:cursor-not-allowed disabled:opacity-40"
                       >
-                        <span className="perco-icon-arrow-left-small" aria-hidden="true" />
+                        <span
+                          className="perco-icon-arrow-left-small"
+                          aria-hidden="true"
+                        />
                       </button>
                     )}
                     <div
                       ref={thumbnailsRef}
                       onScroll={updateThumbnailNavigation}
-                      className="flex min-w-0 gap-x-4 overflow-x-auto"
+                      className="relative flex min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden gap-x-4"
                     >
                       {activeImage.images.map((image, index) => (
                         <button
@@ -376,12 +384,12 @@ export default function Hero6(): JSX.Element {
                           aria-label={`Показать изображение ${index + 1}`}
                           aria-pressed={activeImage.src === image.src}
                           onClick={() => handleSelectImage(image.src)}
-                          className={`size-[76px] p-2 shrink-0 overflow-hidden rounded-lg border-2 bg-white transition-colors ${activeImage.src === image.src ? 'border-black' : 'border-transparent hover:border-grey-500'}`}
+                          className={`size-[76px] p-2 shrink-0 overflow-hidden rounded-lg border-2 bg-white transition-colors ${activeImage.src === image.src ? "border-black" : "border-transparent hover:border-grey-500"}`}
                         >
                           <img
                             src={image.thumb}
                             alt=""
-                            className="h-full w-full object-contain"
+                            className="object-contain w-full h-full"
                             loading="lazy"
                           />
                         </button>
@@ -393,24 +401,40 @@ export default function Hero6(): JSX.Element {
                         aria-label="Прокрутить миниатюры вправо"
                         disabled={!thumbnailNavigation.canScrollRight}
                         onClick={() => scrollThumbnails(1)}
-                        className="perco-icons flex size-8 shrink-0 items-center justify-center rounded-full bg-grey-300 text-grey-800 transition-colors hover:bg-grey-400 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="flex items-center justify-center transition-colors rounded-full perco-icons size-8 shrink-0 bg-grey-300 text-grey-800 hover:bg-grey-400 disabled:cursor-not-allowed disabled:opacity-40"
                       >
-                        <span className="perco-icon-arrow-left-small rotate-180" aria-hidden="true" />
+                        <span
+                          className="rotate-180 perco-icon-arrow-left-small"
+                          aria-hidden="true"
+                        />
                       </button>
                     )}
                   </div>
                 )}
               </div>
               <aside className="flex-1 overflow-y-auto pt-4 pb-10 sm:pt-8 lg:pt-15 lg:max-h-full md:max-w-[470px] bg-white text-left text-grey-1000 flex flex-col">
-                <h3 className="mb-4 md:mb-7 text-2xl xl:text-3xl/10 text-black font-manrope-semibold">{activeImage.barrier.fullName}</h3>
+                <h3 className="mb-4 text-2xl text-black md:mb-7 xl:text-3xl/10 font-manrope-semibold">
+                  {activeImage.barrier.fullName}
+                </h3>
                 <div className="flex items-center gap-3">
-                  <div className="text-2xl/8 text-cta font-manrope-bold">{activeImage.barrier.price}</div>
-                  <div className="text-grey-800 text-sm/normal">Цена со склада<br /> в Москве и СПб</div>
+                  <div className="text-2xl/8 text-cta font-manrope-bold">
+                    {activeImage.barrier.price}
+                  </div>
+                  <div className="text-grey-800 text-sm/normal">
+                    Цена со склада
+                    <br /> в Москве и СПб
+                  </div>
                 </div>
-                <ul className="perco-icons mt-4 md:mt-7 space-y-2 pl-0">
+                <ul className="pl-0 mt-4 mb-8 space-y-2 sm:mb-0 perco-icons md:mt-7">
                   {activeImage.barrier.prodBenefits.map((benefit) => (
-                    <li key={benefit} className="flex items-start gap-x-2 text-md/6">
-                      <i className="perco-icon-check-tag mt-1 text-cta" aria-hidden="true" />
+                    <li
+                      key={benefit}
+                      className="flex items-start gap-x-2 text-md/6"
+                    >
+                      <i
+                        className="mt-1 perco-icon-check-tag text-cta"
+                        aria-hidden="true"
+                      />
                       <span>{benefit}</span>
                     </li>
                   ))}
@@ -427,106 +451,157 @@ export default function Hero6(): JSX.Element {
             </div>
           )}
         </ZoomModal>
-        <h2 className="h2 mb-6 lg:mb-8">Модели шлагбаумов</h2>
-        <div className="perco-icons mb-4 lg:hidden">
-          <button type="button" onClick={() => setIsFiltersOpen(true)} className="flex items-center gap-x-3 cursor-pointer text-cta hover:text-cta/90">
-            <span className="text-5xl"><i className="perco-icon-btn-filter" /></span>
-            <span className="text-md/5 font-manrope-semibold text-grey-1000 hover:text-cta/90">Фильтр ({appliedFiltersCount})</span>
+        <h2 className="mb-6 h2 lg:mb-8">Модели шлагбаумов</h2>
+        <div className="mb-4 perco-icons lg:hidden">
+          <button
+            type="button"
+            onClick={() => setIsFiltersOpen(true)}
+            className="flex items-center cursor-pointer gap-x-3 text-cta hover:text-cta/90"
+          >
+            <span className="text-5xl">
+              <i className="perco-icon-btn-filter" />
+            </span>
+            <span className="text-md/5 font-manrope-semibold text-grey-1000 hover:text-cta/90">
+              Фильтр ({appliedFiltersCount})
+            </span>
           </button>
         </div>
         <div
-          className={`fixed inset-0 z-50 bg-grey-1000/40 transition-opacity duration-300 lg:hidden ${isFiltersOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+          className={`fixed inset-0 z-50 bg-grey-1000/40 transition-opacity duration-300 lg:hidden ${isFiltersOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
           onClick={() => setIsFiltersOpen(false)}
           aria-hidden={!isFiltersOpen}
         />
-        <aside className={`absolute left-0 top-42 z-50 flex w-full max-w-[390px] flex-col rounded-2xl bg-white px-4 py-6 transition-transform duration-300 ease-out sm:px-8 lg:hidden ${isFiltersOpen ? 'translate-x-0' : '-translate-x-full'}`} onClick={(event) => event.stopPropagation()}>
+        <aside
+          className={`absolute left-0 top-42 z-50 flex w-full max-w-[390px] flex-col rounded-2xl bg-white px-4 py-6 transition-transform duration-300 ease-out sm:px-8 lg:hidden ${isFiltersOpen ? "translate-x-0" : "-translate-x-full"}`}
+          onClick={(event) => event.stopPropagation()}
+        >
           <div className="flex justify-end mb-2">
-            <button type="button" aria-label="Закрыть фильтры" onClick={() => setIsFiltersOpen(false)} className="perco-icons shrink-0 cursor-pointer text-2xl/6 text-grey-800 hover:text-cta">
+            <button
+              type="button"
+              aria-label="Закрыть фильтры"
+              onClick={() => setIsFiltersOpen(false)}
+              className="cursor-pointer perco-icons shrink-0 text-2xl/6 text-grey-800 hover:text-cta"
+            >
               <i className="perco-icon-close" />
             </button>
           </div>
-          <div className="flex flex-col gap-7">
-            {filtersContent}
-          </div>
+          <div className="flex flex-col gap-7">{filtersContent}</div>
         </aside>
-        <div className="grid grid-cols-12 items-start gap-5">
+        <div className="grid items-start grid-cols-12 gap-5">
           <div className="col-span-4 xl:col-span-3 flex-col gap-2 lg:sticky lg:top-[120px] hidden lg:flex">
-            <aside className="rounded-3xl bg-white px-4 2xl:px-8 py-9">
-              <h3 className="mb-8 text-xl/6 font-manrope-semibold text-grey-800">Выберите условие эксплуатации</h3>
+            <aside className="px-4 bg-white rounded-3xl 2xl:px-8 py-9">
+              <h3 className="mb-8 text-xl/6 font-manrope-semibold text-grey-800">
+                Выберите условие эксплуатации
+              </h3>
 
-              <div className="flex flex-col gap-7">
-                {filtersContent}
-              </div>
+              <div className="flex flex-col gap-7">{filtersContent}</div>
             </aside>
-            <p className="px-8 py-2 text-md/6 text-grey-900">Все цены указаны со&nbsp;склада в&nbsp;Москве и&nbsp;Санкт-Петербурге</p>
+            <p className="px-8 py-2 text-md/6 text-grey-900">
+              Все цены указаны со&nbsp;склада в&nbsp;Москве
+              и&nbsp;Санкт-Петербурге
+            </p>
           </div>
-          <div ref={galleryRef} style={{ overflowAnchor: 'none' }} className="col-span-12 lg:col-span-8 xl:col-span-9 grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+          <div
+            ref={galleryRef}
+            style={{ overflowAnchor: "none" }}
+            className="grid grid-cols-1 col-span-12 gap-5 lg:col-span-8 xl:col-span-9 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+          >
             {filteredBarriers.map((barrier) => {
-              const folderName = barrier.imageNamePreview.replace(/-preview$/, '');
+              const folderName = barrier.imageNamePreview.replace(
+                /-preview$/,
+                "",
+              );
               const galleryImages = Object.entries(barrierMainImages)
-                .filter(([path]) => path.includes(`/barriers/${folderName}/main/`))
+                .filter(([path]) =>
+                  path.includes(`/barriers/${folderName}/main/`),
+                )
                 .map(([path, src]) => ({
                   src,
                   key: normalizeBarrierImageName(path),
                 }));
               const thumbnails = Object.entries(barrierThumbImages)
-                .filter(([path]) => path.includes(`/barriers/${folderName}/thumb/`))
+                .filter(([path]) =>
+                  path.includes(`/barriers/${folderName}/thumb/`),
+                )
                 .map(([path, thumb]) => ({
                   thumb,
                   key: normalizeBarrierImageName(path),
                 }))
-                .sort((first, second) => first.key.localeCompare(second.key, undefined, { numeric: true }));
+                .sort((first, second) =>
+                  first.key.localeCompare(second.key, undefined, {
+                    numeric: true,
+                  }),
+                );
               const barrierImages = thumbnails
                 .map(({ key, thumb }) => {
                   const image = galleryImages.find((item) => item.key === key);
                   return image ? { src: image.src, thumb } : null;
                 })
-                .filter((image): image is { src: string; thumb: string } => image !== null);
-              const images = barrierImages.length > 0
-                ? barrierImages
-                : galleryImages.map(({ src }) => ({ src, thumb: src }));
-              const initialImage = images[0]?.src ?? `${previewPath}${folderName}/preview.webp`;
+                .filter(
+                  (image): image is { src: string; thumb: string } =>
+                    image !== null,
+                );
+              const images =
+                barrierImages.length > 0
+                  ? barrierImages
+                  : galleryImages.map(({ src }) => ({ src, thumb: src }));
+              const initialImage =
+                images[0]?.src ?? `${previewPath}${folderName}/preview.webp`;
               return (
-              <article
-                key={barrier.fullName}
-                className="flex min-h-[340px] flex-col rounded-3xl bg-white border border-grey-400 transition-colors hover:border-cta cursor-pointer"
-                role="button"
-                tabIndex={0}
-                onClick={() => handleOpen(
-                  initialImage,
-                  barrier,
-                  images,
-                )}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    handleOpen(
-                      initialImage,
-                      barrier,
-                      images,
-                    );
-                  }
-                }}
-              >
-                <div className="flex min-h-[230px] items-center justify-center">
-                  <img className="max-h-[220px] w-full object-contain" src={`${previewPath}${barrier.imageNamePreview.replace(/-preview$/, '')}/preview.webp`} alt={barrier.fullName} loading="lazy" />
-                </div>
-                <div className="mt-auto p-[8px_8px_20px_32px] font-manrope-semibold">
-                  <h3 className="text-xl/7 text-grey-1000">{barrier.baseModel}</h3>
-                  <p className="mt-1 text-md/5 text-grey-800">{barrier.tag}</p>
-                  <p className="mt-4 text-xl/7 text-cta">{barrier.price}</p>
-                </div>
-              </article>
+                <article
+                  key={barrier.fullName}
+                  className="flex min-h-[340px] flex-col rounded-3xl bg-white border border-grey-400 transition-colors hover:border-cta cursor-pointer"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => handleOpen(initialImage, barrier, images)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      handleOpen(initialImage, barrier, images);
+                    }
+                  }}
+                >
+                  <div className="flex min-h-[230px] items-center justify-center">
+                    <img
+                      className="max-h-[220px] w-full object-contain"
+                      src={`${previewPath}${barrier.imageNamePreview.replace(/-preview$/, "")}/preview.webp`}
+                      alt={barrier.fullName}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="mt-auto p-[8px_8px_20px_32px] font-manrope-semibold">
+                    <h3 className="text-xl/7 text-grey-1000">
+                      {barrier.baseModel}
+                    </h3>
+                    <p className="mt-1 text-md/5 text-grey-800">
+                      {barrier.tag}
+                    </p>
+                    <p className="mt-4 text-xl/7 text-cta">{barrier.price}</p>
+                  </div>
+                </article>
               );
             })}
             {filteredBarriers.length === 0 && (
-              <div className="md:col-span-2 xl:col-span-3 rounded-3xl bg-white p-8 text-lg/6 text-grey-800 text-center">
-                <img className="shrink-0 mx-auto mb-8" src={emptySearchImage.src} width="424" height="307" alt="не найдено"></img>
-                <p>Ничего не&nbsp;найдено.<br />Уменьшите количество фильтров.</p>
+              <div className="p-8 text-center bg-white md:col-span-2 xl:col-span-3 rounded-3xl text-lg/6 text-grey-800">
+                <img
+                  className="mx-auto mb-8 shrink-0"
+                  src={emptySearchImage.src}
+                  width="424"
+                  height="307"
+                  alt="не найдено"
+                ></img>
+                <p>
+                  Ничего не&nbsp;найдено.
+                  <br />
+                  Уменьшите количество фильтров.
+                </p>
               </div>
             )}
           </div>
-          <p className="col-span-12 pl-3 text-md/6 text-grey-900 block lg:hidden">Все цены указаны со&nbsp;склада в&nbsp;Москве и&nbsp;Санкт-Петербурге</p>
+          <p className="block col-span-12 pl-3 text-md/6 text-grey-900 lg:hidden">
+            Все цены указаны со&nbsp;склада в&nbsp;Москве
+            и&nbsp;Санкт-Петербурге
+          </p>
         </div>
       </div>
     </section>

@@ -56,9 +56,9 @@ const faqItems = [
     <h2 class="h2 mb-6 lg:mb-8">Что учесть при выборе шлагбаума?</h2>
 
     <div class="grid grid-cols-12 gap-4">
-      <div class="col-span-12 lg:col-span-5 pt-2 lg:pt-0 lg:mt-5 lg:ml-10 2xl:ml-15 3xl:ml-20 lg:order-1">
+      <div class="col-span-12 lg:col-span-6 pt-2 lg:pt-0 lg:mt-5 lg:ml-10 2xl:ml-15 3xl:ml-20 lg:order-1">
         <FaqAccordion client:load items={faqItems} />
-        <Modal client:load triggerLabel="Получить консультацию" title="Форма обратной связи" triggerClassName="mt-6 lg:mt-14 hidden lg:block" triggerVariant="primary">
+        <Modal client:load triggerLabel="Получить консультацию" title="Форма обратной связи" triggerClassName="mt-6 4xl:mt-14 hidden lg:block" triggerVariant="primary">
           <FeedbackForm client:load idPrefix="open-modal-sale-barrier" />
         </Modal>
       </div>

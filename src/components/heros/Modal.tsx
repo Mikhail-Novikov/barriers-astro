@@ -102,11 +102,11 @@ const Modal = ({
           >
             <button
               type="button"
-              className="absolute right-4 top-4 p-2 text-3xl leading-none text-grey-700 transition-colors hover:text-cta"
+              className="absolute p-2 text-xl leading-none transition-colors sm:text-3xl perco-icons shrink-0 top-2 right-2 sm:right-4 sm:top-4 text-grey-700 hover:text-cta"
               aria-label="Закрыть форму обратной связи"
               onClick={closeModal}
             >
-              <span aria-hidden="true">&times;</span>
+              <span className='perco-icon-close' aria-hidden="true" />
             </button>
             {isValidElement(children)
               ? cloneElement(children as ReactElement<{ initialMessage?: string }>, { initialMessage })
