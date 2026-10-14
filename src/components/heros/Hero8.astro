@@ -35,23 +35,23 @@ const cards = [
 ];
 ---
 
-<section id="management" aria-label="Способы управления шлагбаумом" class="bg-white pt-10 md:pt-15 xl:pt-20 pb-10 md:pb-15 lg:pb-20 xl:pb-25">
+<section id="management" aria-label="Способы управления шлагбаумом" class="bg-white pt-10 lg:pt-15 2xl:pt-20 pb-10 lg:pb-15 xl:pb-20 2xl:pb-25">
   <div class="container">
     <div class="flex flex-col gap-9">
       <h3 class="h2">Способы управления шлагбаумом</h3>
 
-      <div class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-10">
+      <div class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 xl:grid-cols-3 xl:gap-x-5 xl:gap-y-10">
         {cards.map((card) => (
           <article class="flex min-w-0 flex-col">
             <img
-              class="aspect-[1.94] w-full rounded-t-3xl object-cover"
+              class="w-full h-[180px] sm:h-[152px] md:h-[216px] lg:h-[152px] xl:h-[182px] 2xl:h-[216px] 3xl:h-[233px] 4xl:h-[280px] rounded-t-3xl object-cover"
               src={card.image}
               alt={card.title}
               loading="lazy"
             />
-            <div class="flex flex-1 flex-col gap-3 2xl:mr-10 pt-5 text-grey-1000">
+            <div class="flex flex-1 flex-col gap-3 3xl:mr-10 pt-5 text-grey-1000">
               <h4 class="h4" set:html={card.title} />
-              <p class="text-md/6" set:html={card.description} />
+              <p class="text-sm/5 2xl:text-md/6" set:html={card.description} />
             </div>
           </article>
         ))}
