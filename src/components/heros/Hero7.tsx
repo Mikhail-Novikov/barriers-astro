@@ -254,14 +254,14 @@ function SelectionStepHeading({
 }): JSX.Element {
   return (
     <h3 className={className}>
-      <span className="text-xl/normal sm:text-2xl/normal">{step}. </span>
+      <span className="text-xl/normal md:text-2xl/normal">{step}. </span>
       {title}
     </h3>
   );
 }
 
 /**
- * Компонент Hero3 представляет собой секцию с вариантами комплектации.
+ * Компонент Hero7 представляет собой секцию с вариантами комплектации.
  * Пользователь может выбрать тип стрелы и исполнение корпуса, после чего отображается соответствующая иллюстрация.
  *
  * @return {JSX.Element} JSX-элемент, представляющий секцию с вариантами комплектации.
@@ -286,20 +286,20 @@ export default function Hero7(): JSX.Element {
     <section
       id="complectation"
       aria-label="Комплектация"
-      className="py-10 bg-grey-400 sm:py-15 xl:pt-20 lg:pb-20 xl:pb-25"
+      className="py-10 bg-grey-400 md:py-15 2xl:pt-20 xl:pb-20 2xl:pb-25"
     >
       <div className="container">
-        <h2 className="mb-6 h2 lg:mb-8">Комплектация</h2>
+        <h2 className="mb-6 h2 xl:mb-8">Комплектация</h2>
 
-        <div className="grid gap-0 grid-cols-16 3xl:grid-cols-12">
-          <div className="mb-4 col-span-16 xl:mb-0 rounded-6 lg:mb-6 xl:col-span-6 3xl:col-span-4 2xl:block 2xl:overflow-hidden">
-            {!screen["xl"] && (
-              <div className="grid grid-cols-1 mb-3 gap-y-5 sm:grid-cols-2">
+        <div className="grid gap-0 grid-cols-16 4xl:grid-cols-12">
+          <div className="col-span-16 mb-5 sm:mb-6 lg:mb-8 2xl:mb-0 rounded-6 2xl:col-span-6 4xl:col-span-4 3xl:block 3xl:overflow-hidden">
+            {!screen["2xl"] && (
+              <div className="grid grid-cols-1 mb-3 gap-y-5 md:grid-cols-2">
                 <div>
                   <SelectionStepHeading
                     step={1}
                     title="Выберите тип стрелы"
-                    className="flex items-center mb-4 gap-x-2 font-manrope-semibold text-lg/6 lg:text-xl"
+                    className="flex items-center mb-4 gap-x-2 font-manrope-semibold text-lg/6 xl:text-xl"
                   />
                   <CompactOptionList
                     items={compactTypeItems}
@@ -312,7 +312,7 @@ export default function Hero7(): JSX.Element {
                   <SelectionStepHeading
                     step={2}
                     title="Выберите исполнение корпуса"
-                    className="flex items-center mb-4 gap-x-2 font-manrope-semibold text-lg/6 lg:text-xl"
+                    className="flex items-center mb-4 gap-x-2 font-manrope-semibold text-lg/6 xl:text-xl"
                   />
                   <CompactOptionList
                     items={compactDesignItems}
@@ -324,7 +324,7 @@ export default function Hero7(): JSX.Element {
               </div>
             )}
 
-            {screen["xl"] && (
+            {screen["2xl"] && (
               <div>
                 <div className="mb-8">
                   <SelectionStepHeading
@@ -379,7 +379,7 @@ export default function Hero7(): JSX.Element {
             )}
           </div>
 
-          <div className="p-[20px_8px] sm:p-[40px_20px] md:p-[40px_32px] lg:p-10 xl:p-5 2xl:p-8 3xl:p-[40px_40px_15px_40px] relative flex items-center mt-0 overflow-x-auto bg-white col-span-16 rounded-xl md:rounded-2xl xl:col-span-10 3xl:col-span-8 lg:ml-4 xl:ml-8 4xl:ml-15 xl:mt-8 2xl:mt-0">
+          <div className="p-[20px_8px] md:p-[40px_20px] lg:p-[40px_32px] xl:p-10 2xl:p-5 3xl:p-8 4xl:p-[40px_40px_15px_40px] relative flex items-center mt-0 overflow-x-auto bg-white col-span-16 rounded-xl md:rounded-2xl 2xl:col-span-10 4xl:col-span-8 lg:ml-4 2xl:ml-8 4xl:ml-15">
             <div className="w-full">
               <div
                 role="button"
@@ -391,15 +391,15 @@ export default function Hero7(): JSX.Element {
                     setZoomedVariant(currentVariant);
                   }
                 }}
-                className="absolute text-2xl text-right transition-all duration-300 ease-out perco-icons inset-3 md:inset-6 lg:h-13 text-grey-500 hover:text-grey-800 cursor-zoom-in"
+                className="absolute text-2xl text-right transition-all duration-300 ease-out perco-icons inset-3 md:inset-6 xl:h-13 text-grey-500 hover:text-grey-800 cursor-zoom-in"
               >
-                <i className="!hidden md:!block perco-icon-control-fullscreen lg:float-right" />
+                <i className="!hidden md:!block perco-icon-control-fullscreen xl:float-right" />
                 <span className="text-2xl md:hidden text-grey-500">
-                  <i className="perco-icon-control-fullscreen-mobile lg:float-right" />
+                  <i className="perco-icon-control-fullscreen-mobile xl:float-right" />
                 </span>
               </div>
               <h4
-                className="pr-8 mb-6 text-[12px]/4 md:text-lg/normal lg:text-xl font-manrope-semibold text-grey-700 text-center"
+                className="pr-8 mb-6 text-[12px]/4 md:text-lg/normal xl:text-xl font-manrope-semibold text-grey-700 text-center"
                 dangerouslySetInnerHTML={{ __html: currentVariant.title }}
               />
               <img
