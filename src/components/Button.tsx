@@ -17,7 +17,6 @@ export const Button = ({
   variant = 'primary',
   ...props
 }: ButtonProps) => {
-  console.log(variant);
   const variantClassName = (variant: ButtonVariant) => {
     switch (variant) {
       case 'primary':
