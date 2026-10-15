@@ -28,19 +28,26 @@ type SolutionOption = {
   label: string;
 };
 
+type SolutionPriceProps = {
+  price: string;
+  description: string;
+  classNameWrapper: string;
+};
+
 /**
  * Компонент SolutionPrice отображает цену и описание готового решения.
  *
  * @param price - Цена готового решения.
  * @param description - Описание готового решения.
+ * @param classNameWrapper - стилевые классы обертки.
  * @returns {JSX.Element} JSX-элемент, представляющий цену и описание готового решения.
  * @example
  * <SolutionPrice price="151 020 ₽" description="GS04.1: прямоугольная стрела 4,3 м, опорная стойка GBS1" />
  */
-function SolutionPrice({ price, description }: Pick<Solution, 'price' | 'description'>): JSX.Element {
+function SolutionPrice({ price, description, classNameWrapper }: SolutionPriceProps): JSX.Element {
   return (
-    <div className="mb-5 flex w-full items-center gap-5 rounded-3xl bg-grey-200 py-3 sm:px-6 sm:py-4 lg:px-5">
-      <strong className="shrink-0 ml-5 text-xl/8 font-manrope-bold text-cta lg:text-2xl/7">{price}</strong>
+    <div className={`mb-4 xl:mb-5 flex w-full items-center gap-5 rounded-[16px] xl:rounded-3xl bg-grey-200 py-3 md:py-4 px-5 ${classNameWrapper}`}>
+      <strong className="shrink-0 ml-5 text-xl/8 font-manrope-bold text-cta xl:text-2xl/7">{price}</strong>
       <span className="font-manrope-semibold text-md/5"><HtmlContent>{description}</HtmlContent></span>
     </div>
   );
@@ -56,8 +63,8 @@ function SolutionAdditions({ additions }: { additions?: string[] }): JSX.Element
 
   return (
     <>
-      <p className="mb-3 ml-4 text-lg/6 text-grey-800 font-manrope-semibold">Что можно добавить:</p>
-      <ul className="mb-6 sm:mb-10 list-disc marker:text-[12px] space-y-1 ml-3 pl-3 sm:pl-6 text-md/6">
+      <p className="mb-3 text-lg/6 text-grey-1000 4x:text-grey-800 font-manrope-semibold">Что можно добавить:</p>
+      <ul className="mb-6 lg:mb-10 list-disc marker:text-[12px] space-y-1 pl-3 md:pl-6 text-md/6">
         {additions.map((addition) => <li key={addition}><HtmlContent>{addition}</HtmlContent></li>)}
       </ul>
     </>
@@ -246,46 +253,47 @@ export default function Hero10(): JSX.Element {
   }, []);
 
   return (
-    <section aria-label="Готовые решения" className="bg-white pt-10 md:pt-15 xl:pt-20 pb-10 md:pb-15 lg:pb-20 xl:pb-25">
+    <section aria-label="Готовые решения" className="bg-white pt-10 lg:pt-15 2xl:pt-20 pb-10 sm:pb-15 md:pb-20 2xl:pb-25">
       <div className="container">
-        <h3 className="h2 mb-6 lg:mb-8">Готовые решения</h3>
+        <h3 className="h2 mb-6 xl:mb-8">Готовые решения</h3>
 
         {isMounted && (
-          <div className="md:hidden mb-6" aria-label="Варианты объектов">
+          <div className="lg:hidden mb-6" aria-label="Варианты объектов">
             <Select<SolutionOption, false>
-            instanceId="solution-select"
-            inputId="solution-select"
-            aria-label="Варианты объектов"
-            options={solutionOptions}
-            value={solutionOptions[activeIndex]}
-            onChange={handleSolutionChange}
-            isSearchable={false}
-            classNamePrefix="solution-select"
-            styles={{
-              control: (base) => ({
-                ...base,
-                minHeight: 44,
-                borderRadius: 8,
-                borderColor: '#AEAFBF',
-                backgroundColor: '#F3F4F8',
-                boxShadow: 'none',
-              }),
-              option: (base, state) => ({
-                ...base,
-                color: '#22252F',
-                backgroundColor: state.isSelected ? '#E2E3EA' : state.isFocused ? '#F3F4F8' : '#FFFFFF',
-                borderColor: state.isSelected ? '#003067' : '',
-              }),
-              indicatorSeparator: (base) => ({
-                ...base,
-                display: 'none',
-              }),
-            }}
+              instanceId="solution-select"
+              inputId="solution-select"
+              aria-label="Варианты объектов"
+              options={solutionOptions}
+              value={solutionOptions[activeIndex]}
+              onChange={handleSolutionChange}
+              isSearchable={false}
+              className='max-w-[340px]'
+              classNamePrefix="solution-select"
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  minHeight: 44,
+                  borderRadius: 8,
+                  borderColor: '#AEAFBF',
+                  backgroundColor: '#F3F4F8',
+                  boxShadow: 'none',
+                }),
+                option: (base, state) => ({
+                  ...base,
+                  color: '#22252F',
+                  backgroundColor: state.isSelected ? '#E2E3EA' : state.isFocused ? '#F3F4F8' : '#FFFFFF',
+                  borderColor: state.isSelected ? '#003067' : '',
+                }),
+                indicatorSeparator: (base) => ({
+                  ...base,
+                  display: 'none',
+                }),
+              }}
             />
           </div>
         )}
 
-        <div className="perco-icons hidden flex-wrap gap-2 mb-8 lg:gap-3 md:flex" role="tablist" aria-label="Варианты объектов">
+        <div className="perco-icons hidden flex-wrap gap-2 mb-8 xl:gap-3 lg:flex" role="tablist" aria-label="Варианты объектов">
           {solutions.map((solution, index) => {
             const isActive = index === activeIndex;
 
@@ -309,25 +317,32 @@ export default function Hero10(): JSX.Element {
           })}
         </div>
 
+        <div className='block lg:w-6/12 2xl:hidden'>
+          <h4 className="mb-4 xl:mb-5 font-manrope-bold text-2xl/normal xl:text-3xl">{activeSolution.title}</h4>
+          <SolutionPrice classNameWrapper="" price={activeSolution.price} description={activeSolution.description} />
+        </div>
+
         <div
           id={`solution-panel-${activeIndex}`}
-          className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-15"
+          className="flex flex-col lg:flex-row lg:gap-8 xl:gap-15"
           role="tabpanel"
           aria-labelledby={`solution-tab-${activeIndex}`}
         >
-          <div className="flex items-center justify-center overflow-hidden rounded-3xl bg-grey-200 lg:col-span-6 min-h-[360px] lg:min-h-[560px]">
+          <div className="lg:w-6/12 flex items-center justify-center overflow-hidden rounded-[16px] 2xl:rounded-2xl 3xl:rounded-3xl bg-grey-200 h-[280px] sm:h-[300px] xl:h-[376px] 2xl:h-[424px] 3xl:h-[512px]">
             <img className="h-full w-full object-contain" src={activeSolution.image} alt={activeSolution.description} />
           </div>
 
-          <div className="flex flex-col items-start max-w-[600px] text-grey-1000 lg:col-span-5">
-            <h4 className="mb-5 text-3xl/10 font-bold lg:text-3xl/10">{activeSolution.title}</h4>
-            <SolutionPrice price={activeSolution.price} description={activeSolution.description} />
+          <div className="flex flex-col items-start text-grey-1000 lg:w-5/12 mt-8 lg:mt-0">
+            <div className='hidden 2xl:block'>
+              <h4 className="h2 mb-5">{activeSolution.title}</h4>
+              <SolutionPrice classNameWrapper="" price={activeSolution.price} description={activeSolution.description} />
+            </div>
             <SolutionAdditions additions={activeSolution.additions} />
 
             <Modal
               triggerLabel="Заказать"
               title="Форма обратной связи"
-              triggerClassName="min-w-[232px]"
+              triggerClassName="w-full sm:w-[232px]"
               triggerVariant="primary"
               initialMessage={`Нужна консультация по готовому решению: <strong class="font-manrope-semibold">${activeSolution.title}</strong><br />Комплектация: <strong class="font-manrope-semibold">${activeSolution.description}</strong><br />${activeSolution.alternative ?` <strong class="font-manrope-semibold">${activeSolution.alternative.description}</strong>` : ''}`}
             >

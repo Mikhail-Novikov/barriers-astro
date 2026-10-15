@@ -40,7 +40,7 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
 
   return (
     <div className="flex min-w-0 w-full gap-2 lg:gap-5 overflow-hidden">
-      {screen.md && (
+      {screen.lg && (
         <CarouselControls
           onPrevious={() => move("-1")}
           onNext={() => move("+1")}
