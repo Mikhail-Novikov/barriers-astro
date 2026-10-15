@@ -417,7 +417,7 @@ export default function Hero7(): JSX.Element {
       <ZoomModal
         isOpen={zoomedVariant !== null}
         onClose={() => setZoomedVariant(null)}
-        contentClassName="flex sm:block max-w-[1600px] h-full sm:h-fit items-center justify-center overflow-hidden sm:rounded-2xl bg-white p-4 lg:px-18 shadow-2xl"
+        contentClassName="flex sm:block w-full sm:container h-full sm:h-fit items-center justify-center overflow-hidden sm:rounded-2xl bg-white p-4 sm:p-6 md:p-7 lg:p-10 3xl:p-24 shadow-2xl"
       >
         {zoomedVariant && (
           <ZoomableImage
