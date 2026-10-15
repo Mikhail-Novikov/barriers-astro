@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { useMemo, useRef, useState } from 'react';
 import { useLightGallery } from '@hooks/useLightGallery';
-import SliderArrow from '@components/SliderArrow';
+import AboutCarouselControls from '@components/AboutCarouselControls';
 import 'swiper/css';
 
 type AboutCarouselProps = {
@@ -26,8 +26,6 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
     captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
   });
 
-  const rangeStart = String(startIndex + 1).padStart(2, '0');
-  const rangeEnd = String(Math.min(startIndex + slidesPerPage, images.length)).padStart(2, '0');
   const move = (direction: 'prev' | 'next') => {
     const nextIndex = direction === 'next' ? startIndex + slidesPerPage : startIndex - slidesPerPage;
 
@@ -42,15 +40,14 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
 
   return (
     <div ref={galleryRef} className="about-gallery">
-      <div className="mb-8 flex items-center justify-between gap-4">
-        <span className="inline-flex rounded-full border border-grey-500 px-5 py-2 text-lg/7 text-grey-700">
-          {rangeStart} - {rangeEnd}
-        </span>
-        <div className="flex items-center gap-1" aria-label="Управление фотографиями">
-          <SliderArrow direction="left" onClick={() => move('prev')} disabled={isAtStart} />
-          <SliderArrow direction="right" onClick={() => move('next')} disabled={isAtEnd} />
-        </div>
-      </div>
+      <AboutCarouselControls
+        start={startIndex + 1}
+        end={Math.min(startIndex + slidesPerPage, images.length)}
+        onPrevious={() => move('prev')}
+        onNext={() => move('next')}
+        isAtStart={isAtStart}
+        isAtEnd={isAtEnd}
+      />
 
       <Swiper
         onSwiper={(swiper) => {

@@ -1,7 +1,11 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { useMemo, useRef, useState } from 'react';
+
 import { useLightGallery } from '@hooks/useLightGallery';
+
+import AboutCarouselControls from '@components/AboutCarouselControls';
+
 import 'swiper/css';
 
 type AboutCarouselStackedProps = {
@@ -16,6 +20,7 @@ type AboutCarouselStackedProps = {
  * @return {JSX.Element} JSX-элемент галереи.
  */
 export default function AboutCarouselStacked({ images }: AboutCarouselStackedProps): JSX.Element {
+  const slidesPerPage = 2;
   const [activePair, setActivePair] = useState(0);
   const swiperRef = useRef<SwiperInstance | null>(null);
   const galleryItems = useMemo(
@@ -32,8 +37,23 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
     controls: false,
   });
 
+  const move = (direction: 'prev' | 'next') => {
+    const nextIndex = direction === 'next' ? activePair + 1 : activePair - 1;
+
+    swiperRef.current?.slideTo(nextIndex);
+  };
+
   return (
     <div ref={galleryRef} className="about-gallery-stacked">
+      <AboutCarouselControls
+        className="hidden sm:flex"
+        start={activePair * slidesPerPage + 1}
+        end={Math.min((activePair + 1) * slidesPerPage, images.length)}
+        onPrevious={() => move('prev')}
+        onNext={() => move('next')}
+        isAtStart={activePair === 0}
+        isAtEnd={activePair >= imagePairs.length - 1}
+      />
       <Swiper
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
@@ -61,7 +81,7 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
                   <img
                     src={src}
                     alt={alt}
-                    className={`mb-1 sm:mb-4 aspect-[1.72] h-[172px] sm:h-[294px] w-full object-cover ${pair.length === 1 ? 'rounded-3xl' : imageIndex === 0 ? 'rounded-t-3xl' : 'rounded-b-3xl'}`}
+                    className={`mb-1 sm:mb-4 aspect-[1.72] h-[172px] sm:h-[294px] w-full object-cover ${pair.length === 1 ? 'rounded-2xl' : imageIndex === 0 ? 'rounded-t-2xl' : 'rounded-b-2xl'}`}
                     loading={index < 2 ? 'eager' : 'lazy'}
                   />
                 </a>
@@ -70,7 +90,7 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="mt-4 flex justify-center items-center gap-2" aria-label="Навигация по фотографиям">
+      <div className="mt-4 flex justify-center items-center gap-2 sm:hidden" aria-label="Навигация по фотографиям">
         {imagePairs.map((_, pairIndex) => (
           <button
             key={`about-pair-pagination-${pairIndex}`}
