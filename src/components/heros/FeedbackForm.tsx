@@ -177,8 +177,8 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
   const isFormValid = formData.email.trim() && formData.message.trim();
 
   return (
-    <div className="rounded-3xl max-w-[684px]">
-      <h3 className="text-center sm:text-left text-lg/6 sm:text-[38px]/[46px] font-manrope-semibold text-shadow-grey-800 sm:text-grey-1000 mb-6">Свяжитесь с&nbsp;нами</h3>
+    <>
+      <h3 className="text-center sm:text-left text-3xl/9 sm:text-[38px]/[46px] font-manrope-semibold text-shadow-grey-800 sm:text-grey-1000 mb-6">Свяжитесь с&nbsp;нами</h3>
 
       {submitSuccess && (
         <div className="mb-6 p-4 rounded-2xl bg-green-50 border border-green-200 text-green-800 text-sm">
@@ -261,12 +261,12 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
         <Button
           type="submit"
           disabled={!isFormValid || isSubmitting}
-          className={`mt-4 w-full h-12 sm:h-16 px-6 font-manrope-semibold ${!isFormValid || isSubmitting ? 'opacity-50' : ''}`}
+          className={`mt-4 w-full h-12 sm:h-16 px-6 font-manrope-semibold !rounded-3xl ${!isFormValid || isSubmitting ? 'opacity-50' : ''}`}
         >
           {isSubmitting ? 'Отправка...' : 'Отправить'}
         </Button>
       </form>
-    </div>
+    </>
   );
 };
 

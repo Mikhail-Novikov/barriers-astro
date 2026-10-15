@@ -3,19 +3,19 @@ import FeedbackForm from './FeedbackForm';
 import { publicAsset } from '../../utils/publicAsset';
 ---
 
-<section aria-label="Остались вопросы?" class="bg-grey-200 p-[40px_0_60px] lg:pt-20 lg:pb-[108px]">
+<section aria-label="Остались вопросы?" class="bg-grey-200 p-[40px_0_60px] sm:p-[60px_0_80px] 3xl:pt-20 3xl:pb-[108px]">
   <div class="container">
-    <div class="grid grid-cols-1 sm:gap-8 lg:grid-cols-2 items-start">
-      <div class="flex flex-col justify-center gap-6">
+    <div class="flex flex-col xl:flex-row sm:gap-8 sm:items-start items-center">
+      <div class="sm:w-1/2 flex-col justify-center gap-4 sm:gap-6 flex sm:hidden 2xl:flex mb-4 sm:mb-0">
         <img 
           src={publicAsset('/img/ill-feedback.webp')}
           alt="Техническая поддержка" 
           class="sm:order-1 block mt-0 sm:mt-20 m-auto sm:ml-19 h-auto w-full max-w-[127px] sm:max-w-md object-contain"
           loading="lazy"
         />
-        <h2 class="my-1 text-2xl/8 sm:text-[60px]/16 font-normal text-center sm:text-left sm:text-grey-700">Остались вопросы?</h2>
+        <h2 class="sm:my-1 text-lg/6 sm:text-[60px]/16 font-normal text-center sm:text-left sm:text-grey-700">Остались вопросы?</h2>
       </div>
-      <div class="lg:ml-3">
+      <div class="w-full max-w-[680px] m-auto 2xl:w-1/2 2xl:ml-3">
         <FeedbackForm client:load idPrefix="feedback-page" />
       </div>
     </div>

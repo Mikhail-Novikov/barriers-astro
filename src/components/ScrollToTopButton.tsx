@@ -9,10 +9,10 @@ export default function ScrollToTopButton(): JSX.Element {
   };
 
   return (
-    <button type="button" className="btn btn-up" onClick={scrollToTop} aria-label="Прокрутить страницу к началу">
-      <span className="text-up-button text-white">Наверх</span>
-      <span className="text-5xl">
-        <span className="perco-icon-arrow-up size-8 text-grey-700" />
+    <button type="button" className="btn-up group" onClick={scrollToTop} aria-label="Прокрутить страницу к началу">
+      <span className="text-up-button text-white hidden sm:block">Наверх</span>
+      <span className="text-4xl sm:text-5xl flex text-grey-700 group-hover:text-white transition-all">
+        <span className="perco-icon-arrow-up" />
       </span>
     </button>
   );

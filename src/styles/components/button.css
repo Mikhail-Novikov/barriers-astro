@@ -3,7 +3,19 @@
 }
 
 .btn-up {
-  @apply border-grey-700 hover:border-white cursor-pointer ![transition:all_0.3s] flex items-center bg-transparent w-auto px-6 gap-2 text-lg rounded-2xl h-13
+  @apply 
+  flex items-center justify-center
+  sm:px-6 gap-2 
+  w-12 h-12 
+  sm:w-auto
+  bg-transparent 
+  rounded-full
+  sm:rounded-2xl 
+  border-1 border-grey-700 hover:border-white 
+  transition-all
+  duration-300
+  cursor-pointer 
+  text-lg 
 }
 
 .btn--primary {
