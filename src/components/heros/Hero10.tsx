@@ -267,7 +267,7 @@ export default function Hero10(): JSX.Element {
               value={solutionOptions[activeIndex]}
               onChange={handleSolutionChange}
               isSearchable={false}
-              className='max-w-[340px]'
+              className='sm:max-w-[340px]'
               classNamePrefix="solution-select"
               styles={{
                 control: (base) => ({

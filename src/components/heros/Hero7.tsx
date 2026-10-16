@@ -213,7 +213,7 @@ function CompactOptionList<T extends string>({
   onSelect: (value: T) => void;
 }): JSX.Element {
   return (
-    <ul className="ml-6 space-y-5 list-none">
+    <ul className="sm:ml-6 space-y-4 sm:space-y-5 list-none">
       {items.map((item) => {
         const isActive = selectedValue === item.value;
 
@@ -253,7 +253,7 @@ function SelectionStepHeading({
   className: string;
 }): JSX.Element {
   return (
-    <h3 className={className}>
+    <h3 className={'flex items-center font-manrope-semibold ' + className}>
       <span className="text-xl/normal md:text-2xl/normal">{step}. </span>
       {title}
     </h3>
@@ -299,7 +299,7 @@ export default function Hero7(): JSX.Element {
                   <SelectionStepHeading
                     step={1}
                     title="Выберите тип стрелы"
-                    className="flex items-center mb-4 gap-x-2 font-manrope-semibold text-lg/6 xl:text-xl"
+                    className="mb-4 gap-x-2 text-xl/6"
                   />
                   <CompactOptionList
                     items={compactTypeItems}
@@ -312,7 +312,7 @@ export default function Hero7(): JSX.Element {
                   <SelectionStepHeading
                     step={2}
                     title="Выберите исполнение корпуса"
-                    className="flex items-center mb-4 gap-x-2 font-manrope-semibold text-lg/6 xl:text-xl"
+                    className="mb-4 gap-x-2 text-xl/6"
                   />
                   <CompactOptionList
                     items={compactDesignItems}
@@ -330,7 +330,7 @@ export default function Hero7(): JSX.Element {
                   <SelectionStepHeading
                     step={1}
                     title="Выберите тип стрелы"
-                    className="flex items-center mb-5 text-xl gap-x-2 font-manrope-semibold"
+                    className="mb-5 text-xl/6 gap-x-2"
                   />
                   <div className="grid grid-cols-2 grid-rows-2 gap-3 4xl:gap-5">
                     {radioItemsType.map((item) => {
@@ -355,7 +355,7 @@ export default function Hero7(): JSX.Element {
                   <SelectionStepHeading
                     step={2}
                     title="Выберите исполнение корпуса"
-                    className="flex items-center mb-5 text-xl gap-x-2 font-manrope-semibold"
+                    className="mb-5 text-xl/6 gap-x-2"
                   />
                   <div className="grid grid-cols-2 gap-3 4xl:gap-5">
                     {radioItemsDesign.map((item) => {
