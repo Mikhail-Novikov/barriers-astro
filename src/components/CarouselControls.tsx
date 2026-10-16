@@ -10,7 +10,7 @@ type CarouselControlsProps = {
 };
 
 const buttonClassName =
-  "flex size-7 items-center justify-center rounded-full bg-grey-300 text-grey-800 text-[10px] transition-colors hover:bg-grey-400 disabled:cursor-not-allowed disabled:opacity-40";
+  "flex size-7 items-center justify-center rounded-full bg-grey-300 text-grey-800 text-[10px] transition-colors hover:bg-grey-400";
 
 const CarouselControls = ({
   onPrevious,

@@ -54,7 +54,7 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
             swiperRef.current = swiper;
           }}
           aria-label="Дополнительное оборудование"
-          width={304}
+          width={270}
           breakpoints={{
             712: { width: 352 },
           }}
