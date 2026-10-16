@@ -286,7 +286,7 @@ export default function Hero7(): JSX.Element {
     <section
       id="complectation"
       aria-label="Комплектация"
-      className="py-10 bg-grey-400 md:py-15 2xl:pt-20 xl:pb-20 2xl:pb-25"
+      className="py-10 bg-grey-400 sm:py-15 xl:p-[80px_0_100px]"
     >
       <div className="container">
         <h2 className="mb-6 h2 xl:mb-8">Комплектация</h2>
