@@ -149,10 +149,14 @@ const layoutClasses = [
   "gallery-equipment__more item-gallery relative",
 ];
 
+// Добавляем индексы
 const galleryWithIndexes = galleryAll.map((item, index) => ({
   ...item,
   index,
 }));
+
+// Функция для форматирования счётчиков
+const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
  * Hero2 component
@@ -195,7 +199,7 @@ const Hero2 = () => {
     setGroupIndex((prev) => (prev - 1 + totalGroups) % totalGroups);
 
   return (
-    <div className="bg-grey-400 py-10 sm:py-15 lg:py-18 xl:pb-20 xl:pt-20">
+    <div className="bg-grey-400 py-10 sm:p-[40px_0_60px] xl:py-15 4xl:py-20">
       <div className="container">
         <h2 className="h2 mb-8">Примеры установок</h2>
         <div
@@ -268,8 +272,8 @@ const Hero2 = () => {
           ))}
         </div>
         <div className="mt-8 flex justify-between items-center">
-          <div className="min-w-[90px] h-10 p-2 text-grey-800 border border-grey-600 rounded-full text-center">
-            {firstPreviewIndex}/{totalItems}
+          <div className="min-w-[90px] h-10 p-2 text-grey-800 border border-grey-600 rounded-full text-lg/tight text-center">
+            {pad(firstPreviewIndex)}<span className="mx-[1px]">/</span>{pad(totalItems)}
           </div>
           <div className="flex items-center gap-1">
             <SliderArrow
