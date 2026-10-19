@@ -9,14 +9,46 @@ import CarouselControls from "./CarouselControls";
 
 import "swiper/css";
 
-type EquipmentCarouselProps = {
-  cards: { id: number; title: string }[];
+/**
+ * Описывает одну карточку дополнительного оборудования.
+ */
+type EquipmentCard = {
+  /**
+   * Уникальный идентификатор карточки.
+   */
+  id: number;
+
+  /**
+   * Название оборудования.
+   */
+  title: string;
 };
 
-const EquipmentCarousel = ({ cards }: EquipmentCarouselProps) => {
+/**
+ * Пропсы компонента карусели дополнительного оборудования.
+ */
+type EquipmentCarouselProps = {
+  /**
+   * Список карточек, которые нужно отрисовать в карусели.
+   */
+  cards: EquipmentCard[];
+};
+
+/**
+ * Карточка с горизонтальной каруселью дополнительного оборудования.
+ *
+ * @param props - Пропсы компонента.
+ * @returns Компонент карусели с контролами и слайдами.
+ */
+const EquipmentCarousel = ({ cards }: EquipmentCarouselProps): JSX.Element => {
   const screen = useBreakpoint();
   const swiperRef = useRef<SwiperInstance | null>(null);
 
+  /**
+   * Перемещает карусель влево или вправо.
+   *
+   * @param direction - Направление перемещения: "-1" назад, "+1" вперед.
+   */
   const move = (direction: "-1" | "+1") => {
     if (direction === "+1") {
       swiperRef.current?.slideNext();

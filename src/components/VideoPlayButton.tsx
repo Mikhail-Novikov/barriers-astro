@@ -1,16 +1,16 @@
-/**
- * VideoPlayButton component
- *
- * @param props - Component properties.
- * @param props.onClick - Click handler for the play button.
- * @param props.visibility - Whether the icon is visible on hover or always.
- * @returns {JSX.Element} The VideoPlayButton component.
- */
 type VideoPlayButtonProps = {
   onClick?: React.MouseEventHandler<HTMLSpanElement>;
   visibility?: 'hover' | 'always' | 'hidden';
 };
 
+/**
+ * Компонент кнопки воспроизведения видео.
+ *
+ * @param props - Параметры компонента.
+ * @param props.onClick - Обработчик клика по кнопке воспроизведения.
+ * @param props.visibility - Видимость иконки при наведении или всегда.
+ * @returns= {JSX.Element} Компонент VideoPlayButton.
+ */
 export default function VideoPlayButton({ onClick, visibility = 'hover' }: VideoPlayButtonProps): JSX.Element | null {
   if (visibility === 'hidden') {
     return null;

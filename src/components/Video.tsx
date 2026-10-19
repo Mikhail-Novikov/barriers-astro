@@ -15,9 +15,9 @@ type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
 };
 
 /**
- * Video component
+ * Компонент для отображения видео с возможностью открытия в полноэкранном режиме через light gallery.
  *
- * @param props - Component properties.
+ * @param props - Свойства компонента.
  * @param props.src - Исходный URL видео.
  * @param props.poster - URL постера для видео.
  * @param props.containerClassName - Дополнительные классы для контейнера.

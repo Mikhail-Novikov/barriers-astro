@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { publicAsset } from "@utils/publicAsset";
 import Video from "@components/Video";
 
-export default function Promo() {
+/**
+ * Компонент для отображения промо-видео с адаптивной загрузкой в зависимости от ширины экрана.
+ *
+ * @return {JSX.Element} Компонент Promo.
+ */
+export default function Promo(): JSX.Element {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
