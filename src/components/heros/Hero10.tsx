@@ -253,7 +253,7 @@ export default function Hero10(): JSX.Element {
   }, []);
 
   return (
-    <section aria-label="Готовые решения" className="bg-white pt-10 lg:pt-15 2xl:pt-20 pb-10 sm:pb-15 md:pb-20 2xl:pb-25">
+    <section aria-label="Готовые решения" className="bg-white p-[40px_0_60px] sm:p-[60px_0_80px] 4xl:pb-30">
       <div className="container">
         <h3 className="h2 mb-6 xl:mb-8">Готовые решения</h3>
 

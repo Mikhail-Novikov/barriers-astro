@@ -27,13 +27,13 @@ const cards = [
 ];
 ---
 
-<section aria-label="Надежность и безопасность" class="bg-grey-400 pt-10 lg:pt-15 2xl:pt-20 pb-10 lg:pb-15 xl:pb-20 2xl:pb-25">
+<section aria-label="Надежность и безопасность" class="bg-grey-400 py-10 sm:py-15 lg:p-[60px_0_80px] xl:p-[80px_0_100px]">
   <div class="container">
     <h2 class="h2 mb-6 xl:mb-8">Надежность и безопасность</h2>
 
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 xl:gap-5">
       {cards.map((card) => (
-        <article class="flex min-w-0 flex-col overflow-hidden rounded-3xl bg-grey-200">
+        <article class="flex min-w-0 flex-col overflow-hidden rounded-2xl lg:rounded-3xl bg-grey-200">
           <div class="relative aspect-[1.39] w-full">
             {!card.isVideo ? (
               <img
@@ -66,7 +66,7 @@ const cards = [
           </div>
           <div class="flex flex-1 flex-col gap-y-2 p-5 4xl:px-7 4xl:py-9 text-grey-1000">
             <h4 class="text-lg/6 md:text-xl/6 font-manrope-semibold">{card.title}</h4>
-            <div class="mb-5 font-normal text-sm/5 2xl:text-md/6" set:html={card.description} />
+            <div class="3xl:mb-5 font-normal text-sm/5 2xl:text-md/6" set:html={card.description} />
           </div>
         </article>
       ))}
