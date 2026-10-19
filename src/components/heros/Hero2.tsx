@@ -5,7 +5,7 @@ import SliderArrow from "@components/SliderArrow";
 import Video from "@components/Video";
 import { publicAsset } from "@utils/publicAsset";
 
-// Полный набор изображений из папки public/img/gallery
+/** Полный набор изображений и видео, доступных в галерее установок. */
 const galleryAll = [
   {
     thumb: "/img/gallery/preview/04-03.webp",
@@ -141,7 +141,7 @@ const galleryAll = [
   src: publicAsset(item.src),
 }));
 
-// Классы макета для каждой карточки grid сетки
+/** CSS-классы раскладки карточек на первой странице галереи. */
 const layoutClasses = [
   "item-gallery",
   "item-gallery",
@@ -149,22 +149,33 @@ const layoutClasses = [
   "gallery-equipment__more item-gallery relative",
 ];
 
-// Добавляем индексы
+/** Элементы галереи с индексами, используемыми для навигации лайтбокса. */
 const galleryWithIndexes = galleryAll.map((item, index) => ({
   ...item,
   index,
 }));
 
-// Функция для форматирования счётчиков
-const pad = (n: number) => String(n).padStart(2, "0");
+/**
+ * Дополняет число ведущим нулём для отображения счётчика галереи.
+ *
+ * @param value - Число для форматирования.
+ * @returns Двухзначное строковое представление числа.
+ */
+const pad = (value: number): string => String(value).padStart(2, "0");
 
 /**
  * Hero2 component
  *
  * Отображает галерею изображений с эффектом лайтбокса.
  */
-const Hero2 = () => {
-  const getPreviewSrc = (item: { thumb?: string; src?: string }) =>
+const Hero2 = (): JSX.Element => {
+  /**
+   * Возвращает URL миниатюры, используя URL основного изображения как запасной вариант.
+   *
+   * @param item - Элемент галереи с необязательными URL миниатюры и изображения.
+   * @returns URL для превью либо пустую строку.
+   */
+  const getPreviewSrc = (item: { thumb?: string; src?: string }): string =>
     item.thumb ?? item.src ?? "";
   const { galleryRef, openGallery, totalItems } = useLightGallery({
     items: galleryWithIndexes,
@@ -194,7 +205,9 @@ const Hero2 = () => {
   );
   const firstPreviewIndex = (previewItems[0]?.index ?? 0) + 1;
 
+  /** Переключает галерею на следующую группу карточек по кругу. */
   const goToNext = () => setGroupIndex((prev) => (prev + 1) % totalGroups);
+  /** Переключает галерею на предыдущую группу карточек по кругу. */
   const goToPrev = () =>
     setGroupIndex((prev) => (prev - 1 + totalGroups) % totalGroups);
 

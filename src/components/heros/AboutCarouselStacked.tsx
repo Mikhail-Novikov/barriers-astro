@@ -8,16 +8,31 @@ import AboutCarouselControls from '@components/AboutCarouselControls';
 
 import 'swiper/css';
 
+/**
+ * Описывает фотографию, отображаемую в галерее о компании.
+ */
+type AboutCarouselImage = {
+  /** URL изображения. */
+  src: string;
+  /** Альтернативное описание изображения. */
+  alt: string;
+  /** Подпись, показываемая в лайтбоксе. */
+  description: string;
+};
+
+/**
+ * Пропсы галереи фотографий, сгруппированных попарно.
+ */
 type AboutCarouselStackedProps = {
-  // массив изображений в галерее в формате { src: string; alt: string; description: string }
-  images: { src: string; alt: string; description: string }[];
+  /** Изображения, которые будут сгруппированы по два на слайд. */
+  images: AboutCarouselImage[];
 };
 
 /**
  * Компонент AboutCarouselStacked представляет собой галерею изображений в стеке.
  * 
- * @param {Array} props.images - Массив изображений в галерее в формате { src: string; alt: string; description: string }.
- * @return {JSX.Element} JSX-элемент галереи.
+ * @param props - Данные фотографий для галереи.
+ * @returns Галерея с парной группировкой изображений и лайтбоксом.
  */
 export default function AboutCarouselStacked({ images }: AboutCarouselStackedProps): JSX.Element {
   const slidesPerPage = 2;
@@ -37,6 +52,11 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
     controls: false,
   });
 
+  /**
+   * Перемещает карусель на одну пару изображений.
+   *
+   * @param direction - Направление перемещения.
+   */
   const move = (direction: 'prev' | 'next') => {
     const nextIndex = direction === 'next' ? activePair + 1 : activePair - 1;
 

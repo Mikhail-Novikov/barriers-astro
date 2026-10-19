@@ -3,27 +3,32 @@ import type { ReactElement, ReactNode } from 'react';
 import { Button } from '@components/Button';
 import type { ButtonVariant } from '@components/Button';
 
-interface ModalProps {
+/**
+ * Пропсы модального окна и кнопки, которая его открывает.
+ */
+type ModalProps = {
+  /** Содержимое модального окна. */
   children: ReactNode;
+  /** Заголовок модального окна для доступного имени диалога. */
   title?: string;
+  /** Текст кнопки, открывающей модальное окно. */
   triggerLabel?: string;
+  /** Дополнительные CSS-классы кнопки открытия. */
   triggerClassName?: string;
+  /** Визуальный вариант кнопки открытия. */
   triggerVariant?: ButtonVariant;
+  /** Начальное сообщение, передаваемое дочерней форме при открытии. */
   initialMessage?: string;
+  /** HTML-идентификатор кнопки открытия. */
   triggerId?: string;
+  /** Вызывается при закрытии модального окна. */
   onClose?: () => void;
-}
+};
 
 /**
  * Компонент модального окна
- * @param children - содержимое модального окна
- * @param title - заголовок модального окна
- * @param triggerLabel - текст кнопки, открывающей модальное окно
- * @param triggerClassName - класс кнопки, открывающей модальное окно
- * @param triggerVariant - вариант кнопки, открывающей модальное окно
- * @param triggerId - id кнопки, открывающей модальное окно
- * @param onClose - функция, вызываемая при закрытии модального окна
- * @return {JSX.Element} JSX-элемент, представляющий модальное окно
+ * @param props - Содержимое диалога, настройки кнопки открытия и обработчик закрытия.
+ * @returns Кнопка открытия и модальное окно при активном состоянии.
  */
 const Modal = ({
   children,
@@ -34,17 +39,19 @@ const Modal = ({
   initialMessage: initialMessageProp = '',
   triggerId,
   onClose,
-}: ModalProps) => {
+}: ModalProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [initialMessage, setInitialMessage] = useState('');
 
+  /** Открывает модальное окно и передаёт дочернему содержимому начальное сообщение. */
   const openModal = () => {
     setInitialMessage(initialMessageProp);
     setIsOpen(true);
     requestAnimationFrame(() => setIsVisible(true));
   };
 
+  /** Закрывает модальное окно и вызывает внешний обработчик закрытия. */
   const closeModal = () => {
     setIsVisible(false);
     setIsOpen(false);

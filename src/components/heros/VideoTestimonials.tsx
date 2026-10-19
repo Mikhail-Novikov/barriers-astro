@@ -13,10 +13,12 @@ import VideoPlayButton from '@components/VideoPlayButton';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
+/** URL превью изображений, соответствующих видеоотзывам. */
 const previewImages = [1, 2, 3, 4, 5].map((index) =>
   publicAsset(`/img/video-reviews/vr-${index}.webp`),
 );
 
+/** Данные видеоотзывов, отображаемых в карусели. */
 const testimonials = [
   {
     title: 'Парковочная система PERCo.Паркинг в деловом центре Sun City, Санкт-Петербург',
@@ -46,9 +48,9 @@ const testimonials = [
 ];
 
 /**
- * Компонент видео-ролликов
- * 
- * @return VideoTestimonials
+ * Отображает карусель видеоотзывов с просмотром видео в лайтбоксе.
+ *
+ * @returns Карусель видеоотзывов и элементы навигации.
  */
 export default function VideoTestimonials(): JSX.Element {
   const screen = useBreakpoint();
@@ -66,12 +68,22 @@ export default function VideoTestimonials(): JSX.Element {
     hasArrows: false,
   });
 
+  /**
+   * Перемещает карусель на один видеоотзыв.
+   *
+   * @param direction - Направление перемещения.
+   */
   const move = (direction: 'prev' | 'next') => {
     const nextIndex = direction === 'next' ? startIndex + 1 : startIndex - 1;
 
     swiperRef.current?.slideTo(nextIndex);
   };
 
+  /**
+   * Обновляет состояние текущего слайда и доступность стрелок навигации.
+   *
+   * @param swiper - Экземпляр карусели Swiper.
+   */
   const updateNavigation = (swiper: SwiperInstance) => {
     setStartIndex(swiper.activeIndex);
     setIsAtStart(swiper.isBeginning);

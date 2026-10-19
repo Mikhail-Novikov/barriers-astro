@@ -27,35 +27,42 @@ import emptySearchImage from '../../assets/img/empty-search.png';
 import { ZoomModal, ZoomableImage } from './ZoomModal';
 import { Button } from '@components/Button';
 
+/** Путь к публичному каталогу превью изображений шлагбаумов. */
 const previewPath = publicAsset('/img/barriers/');
+/** URL основных изображений галерей, загружаемых из папок main. */
 const barrierMainImages = import.meta.glob('../../assets/img/barriers/*/main/*.{webp,jpg,jpeg,png}', {
   eager: true,
   query: '?url',
   import: 'default',
 }) as Record<string, string>;
+/** URL миниатюр галерей, загружаемых из папок thumb. */
 const barrierThumbImages = import.meta.glob('../../assets/img/barriers/*/thumb/*.{webp,jpg,jpeg,png}', {
   eager: true,
   query: '?url',
   import: 'default',
 }) as Record<string, string>;
 
+/** Подписи и значения фильтра по минимальной температуре эксплуатации. */
 const TemperaturesOptions: readonly FilterSectionOption<TemperatureOption>[] = [
   ['standard', '−40 °C'],
   ['low', '−60 °C'],
 ] as const;
 
+/** Подписи и значения фильтра по времени открытия шлагбаума. */
 const openingTimeOptions: readonly FilterSectionOption<OpeningTimeFilterOption>[] = [
   ['lessThan1.5', 'меньше 1,5 секунд'],
   ['3-4', '3-4 секунд'],
   ['4-6', '4–6 секунд'],
 ] as const;
 
+/** Подписи и значения фильтра по форме стрелы шлагбаума. */
 const boomOptions: readonly FilterSectionOption<BoomOption>[] = [
   ['round', 'круглая'],
   ['square', 'прямоугольная'],
   ['folding', 'складная прямоугольная'],
 ] as const;
 
+/** Подписи и значения фильтра по наличию фотоэлемента. */
 const fotoElementOptions: readonly FilterSectionOption<FotoElementOption>[] = [
   ['with', 'встроенный'],
   ['without', 'место для установки'],

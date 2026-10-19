@@ -7,40 +7,64 @@ import FeedbackForm from '@components/heros/FeedbackForm';
 
 import { publicAsset } from '../../utils/publicAsset';
 
+/**
+ * Данные готового решения для объекта.
+ */
 type Solution = {
+  /** Краткое обозначение решения для вкладки и селектора. */
   tag: string;
+  /** Заголовок выбранного решения. */
   title: string;
+  /** URL иллюстрации решения. */
   image: string;
+  /** Цена комплектации. */
   price: string;
+  /** HTML-описание основного комплекта. */
   description: string;
+  /** Дополнительные сведения о применении решения. */
   specifics: string;
+  /** Важное замечание о доступе или эксплуатации, если есть. */
   important?: string;
+  /** Список оборудования, которое можно добавить к комплекту. */
   additions: string[];
+  /** Альтернативный вариант комплектации, если предусмотрен. */
   alternative?: {
+    /** Цена альтернативной комплектации. */
     price: string;
+    /** HTML-описание альтернативной комплектации. */
     description: string;
+    /** Дополнения к альтернативной комплектации. */
     additions?: string[];
   };
 };
 
+/**
+ * Опция готового решения в селекторе.
+ */
 type SolutionOption = {
+  /** Индекс решения в исходном списке. */
   value: number;
+  /** Подпись решения в списке выбора. */
   label: string;
 };
 
+/**
+ * Пропсы блока с ценой и описанием комплектации.
+ */
 type SolutionPriceProps = {
+  /** Цена комплектации. */
   price: string;
+  /** Описание комплектации; может содержать HTML-сущности. */
   description: string;
+  /** Дополнительные CSS-классы контейнера. */
   classNameWrapper: string;
 };
 
 /**
  * Компонент SolutionPrice отображает цену и описание готового решения.
  *
- * @param price - Цена готового решения.
- * @param description - Описание готового решения.
- * @param classNameWrapper - стилевые классы обертки.
- * @returns {JSX.Element} JSX-элемент, представляющий цену и описание готового решения.
+ * @param props - Цена, описание и дополнительные классы контейнера.
+ * @returns Блок с ценой и описанием готового решения.
  * @example
  * <SolutionPrice price="151 020 ₽" description="GS04.1: прямоугольная стрела 4,3 м, опорная стойка GBS1" />
  */
@@ -54,11 +78,20 @@ function SolutionPrice({ price, description, classNameWrapper }: SolutionPricePr
 }
 
 /**
- * Компонент SolutionAdditions отображает список дополнений для готового решения.
- * @param additions - Массив дополнений.
- * @returns {JSX.Element | null} JSX-элемент, представляющий список дополнений, или null, если дополнений нет.
+ * Пропсы списка дополнительных опций готового решения.
  */
-function SolutionAdditions({ additions }: { additions?: string[] }): JSX.Element | null {
+type SolutionAdditionsProps = {
+  /** Наименования дополнительных опций; при пустом списке блок не отображается. */
+  additions?: string[];
+};
+
+/**
+ * Отображает список дополнений для готового решения.
+ *
+ * @param props - Дополнительные опции выбранного решения.
+ * @returns Список дополнений или null, если дополнений нет.
+ */
+function SolutionAdditions({ additions }: SolutionAdditionsProps): JSX.Element | null {
   if (!additions?.length) return null;
 
   return (
@@ -71,6 +104,7 @@ function SolutionAdditions({ additions }: { additions?: string[] }): JSX.Element
   );
 }
 
+/** Готовые комплектации, отображаемые для разных типов объектов. */
 const solutions: Solution[] = [
   {
     tag: "Бизнес-центр, офис",
@@ -235,6 +269,11 @@ const solutions: Solution[] = [
   },
 ];
 
+/**
+ * Отображает готовые решения для разных типов объектов с выбором комплектации.
+ *
+ * @returns Секция готовых решений с описанием, ценой и формой заказа.
+ */
 export default function Hero10(): JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMounted, setIsMounted] = useState(false);

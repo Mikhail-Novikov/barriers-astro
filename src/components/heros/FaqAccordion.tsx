@@ -1,18 +1,27 @@
 import { useState } from "react";
 
+/**
+ * Элемент списка часто задаваемых вопросов.
+ */
 type FaqItem = {
+  /** Текст вопроса. */
   title: string;
+  /** Ответ на вопрос; допускает HTML-разметку. */
   answer: string;
 };
 
+/**
+ * Пропсы аккордеона часто задаваемых вопросов.
+ */
 type FaqAccordionProps = {
+  /** Вопросы и ответы, отображаемые в аккордеоне. */
   items: FaqItem[];
 };
 
 /**
  * Компонент аккордеона для FAQ
- * @param items - массив вопросов и ответов
- * @return {JSX.Element}
+ * @param props - Список вопросов и ответов для отображения.
+ * @returns Аккордеон с вопросами и ответами.
  */
 export default function FaqAccordion({ items }: FaqAccordionProps): JSX.Element {
   const [openIndex, setOpenIndex] = useState<number | null>(null);

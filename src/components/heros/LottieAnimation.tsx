@@ -1,7 +1,21 @@
 import { useEffect, useRef } from "react";
 import lottie from "lottie-web";
 
-const LottieAnimation = ({ animasi }: { animasi: any }) => {
+/**
+ * Пропсы анимации Lottie.
+ */
+type LottieAnimationProps = {
+  /** Данные Lottie-анимации, передаваемые библиотеке lottie-web. */
+  animasi: object;
+};
+
+/**
+ * Загружает и отображает зацикленную Lottie-анимацию.
+ *
+ * @param props - Данные анимации для отображения.
+ * @returns Контейнер, в который монтируется SVG-анимация.
+ */
+const LottieAnimation = ({ animasi }: LottieAnimationProps): JSX.Element => {
   const container = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

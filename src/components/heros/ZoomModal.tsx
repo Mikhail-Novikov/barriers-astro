@@ -2,29 +2,52 @@ import { useEffect, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { useZoom } from '@hooks/useZoom';
 
-interface ZoomModalProps {
+/**
+ * Пропсы полноэкранного модального окна просмотра.
+ */
+type ZoomModalProps = {
+  /** Определяет, отображается ли модальное окно. */
   isOpen: boolean;
+  /** Вызывается при закрытии модального окна. */
   onClose: () => void;
+  /** Содержимое модального окна. */
   children: ReactNode;
+  /** Дополнительные CSS-классы области содержимого. */
   contentClassName?: string;
-}
+};
 
-interface ZoomableImageProps {
+/**
+ * Пропсы изображения с поддержкой масштабирования и перетаскивания.
+ */
+type ZoomableImageProps = {
+  /** URL отображаемого изображения. */
   src: string;
+  /** Альтернативное описание изображения. */
   alt?: string;
+  /** Заголовок над изображением. */
   title?: string;
+  /** Показывает ли панель кнопок масштабирования. */
   showZoomControls?: boolean;
+  /** Дополнительные CSS-классы контейнера изображения. */
   className?: string;
+  /** Дополнительные CSS-классы самого изображения. */
   imgClassName?: string;
+  /** Вызывается при горизонтальном свайпе по изображению. */
   onSwipe?: (direction: 'prev' | 'next') => void;
-}
+};
 
+/**
+ * Отображает содержимое в полноэкранном модальном окне через React portal.
+ *
+ * @param props - Состояние открытия, содержимое и обработчик закрытия.
+ * @returns Модальное окно или null, если оно закрыто.
+ */
 export function ZoomModal({
   isOpen,
   onClose,
   children,
   contentClassName = '',
-}: ZoomModalProps) {
+}: ZoomModalProps): JSX.Element | null {
   useEffect(() => {
     if (!isOpen) return;
     const prev = document.body.style.overflow;
@@ -71,6 +94,12 @@ export function ZoomModal({
   );
 }
 
+/**
+ * Отображает изображение с масштабированием, перетаскиванием и поддержкой свайпов.
+ *
+ * @param props - Источник и подписи изображения, стили и обработчик свайпа.
+ * @returns Контейнер изображения с необязательными элементами управления масштабом.
+ */
 export function ZoomableImage({
   src,
   alt = '',
@@ -161,15 +190,29 @@ export function ZoomableImage({
   );
 }
 
+/**
+ * Пропсы кнопки панели масштабирования.
+ */
+type ToolbarButtonProps = {
+  /** Содержимое кнопки, например символ или иконка. */
+  children: ReactNode;
+  /** Вызывается при нажатии кнопки. */
+  onClick: () => void;
+  /** Доступное название кнопки для вспомогательных технологий. */
+  label: string;
+};
+
+/**
+ * Кнопка панели управления масштабированием.
+ *
+ * @param props - Содержимое, обработчик нажатия и доступная подпись.
+ * @returns Кнопка управления масштабом.
+ */
 function ToolbarButton({
   children,
   onClick,
   label,
-}: {
-  children: ReactNode;
-  onClick: () => void;
-  label: string;
-}) {
+}: ToolbarButtonProps): JSX.Element {
   return (
     <button
       type="button"

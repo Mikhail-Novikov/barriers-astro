@@ -5,12 +5,35 @@ import { useLightGallery } from '@hooks/useLightGallery';
 import AboutCarouselControls from '@components/AboutCarouselControls';
 import 'swiper/css';
 
-type AboutCarouselProps = {
-  images: { src: string; alt: string; description: string }[];
+/**
+ * Описывает фотографию, отображаемую в галерее о компании.
+ */
+type AboutCarouselImage = {
+  /** URL изображения. */
+  src: string;
+  /** Альтернативное описание изображения. */
+  alt: string;
+  /** Подпись, показываемая в лайтбоксе. */
+  description: string;
 };
 
+/**
+ * Пропсы карусели фотографий о компании.
+ */
+type AboutCarouselProps = {
+  /** Изображения для отображения в карусели и лайтбоксе. */
+  images: AboutCarouselImage[];
+};
+
+/** Количество изображений, отображаемых на одном слайде. */
 const slidesPerPage = 2;
 
+/**
+ * Отображает карусель фотографий о компании с лайтбоксом и навигацией.
+ *
+ * @param props - Данные изображений для галереи.
+ * @returns Карусель фотографий о компании.
+ */
 export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Element {
   const [startIndex, setStartIndex] = useState(0);
   const [isAtStart, setIsAtStart] = useState(true);
@@ -26,11 +49,21 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
     captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
   });
 
+  /**
+   * Перемещает карусель на одну страницу в указанном направлении.
+   *
+   * @param direction - Направление перемещения.
+   */
   const move = (direction: 'prev' | 'next') => {
     const nextIndex = direction === 'next' ? startIndex + slidesPerPage : startIndex - slidesPerPage;
 
     swiperRef.current?.slideTo(nextIndex);
   };
+  /**
+   * Обновляет номер текущего слайда и доступность навигации.
+   *
+   * @param swiper - Экземпляр карусели Swiper.
+   */
   const updateNavigation = (swiper: SwiperInstance) => {
     const slidesPerView = Number(swiper.params.slidesPerView);
     setStartIndex(swiper.activeIndex);

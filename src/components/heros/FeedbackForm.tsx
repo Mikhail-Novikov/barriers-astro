@@ -6,31 +6,43 @@ import { Button } from '@components/Button';
 const BITRIX_FORM_URL = 'https://www.perco.des/php/barriers-config-form.php';
 const BITRIX_FORM_PASSWORD = 'bae42d7d01c78bf32db83aadd036e2ca574203da';
 
-// интерфейсы для данных формы
-interface FormData {
+/**
+ * Значения полей формы обратной связи.
+ */
+type FormData = {
+  /** Имя отправителя. */
   name: string;
+  /** Адрес электронной почты отправителя. */
   email: string;
+  /** Текст сообщения. */
   message: string;
-}
-
-// интерфейсы для ошибок валидации
-interface FormErrors {
-  email?: string;
-  message?: string;
-}
-
-// интерфейсы пропсов компонента
-interface FeedbackFormProps {
-  // префикс id элементов формы
-  idPrefix?: string;
-  // начальное сообщение, которое будет установлено в поле сообщения
-  initialMessage?: string;
-}
+};
 
 /**
- * Компонент формы обратной связи
- * @param idPrefix - префикс для id элементов формы
- * @return {JSX.Element} JSX-элемент, представляющий форму обратной связи
+ * Ошибки валидации полей формы.
+ */
+type FormErrors = {
+  /** Ошибка проверки адреса электронной почты. */
+  email?: string;
+  /** Ошибка проверки текста сообщения. */
+  message?: string;
+};
+
+/**
+ * Пропсы формы обратной связи.
+ */
+type FeedbackFormProps = {
+  /** Префикс идентификаторов HTML-элементов формы. */
+  idPrefix?: string;
+  /** Начальный текст сообщения, отображаемый в поле формы. */
+  initialMessage?: string;
+};
+
+/**
+ * Отображает форму обратной связи с валидацией и отправкой данных.
+ *
+ * @param props - Префикс идентификаторов и начальный текст сообщения.
+ * @returns Форма обратной связи.
  */
 const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFormProps): JSX.Element => {
   const pendingMessage = idPrefix === 'open-modal-sale-barrier'
@@ -116,6 +128,11 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
     }
   };
 
+  /**
+   * Обновляет текст сообщения при редактировании поля contenteditable.
+   *
+   * @param event - Событие изменения содержимого поля сообщения.
+   */
   const handleMessageChange = (event: React.FormEvent<HTMLDivElement>) => {
     const message = event.currentTarget.innerHTML;
     setFormData((prev) => ({

@@ -4,18 +4,27 @@ import { useMemo, useState } from "react";
 import { publicAsset } from "@utils/publicAsset";
 import { ZoomModal, ZoomableImage } from "./ZoomModal";
 
+/** Доступные исполнения корпуса шлагбаума. */
 type BodyStyle = "standard" | "premium";
+/** Доступные формы стрелы шлагбаума. */
 type BoomShape = "round" | "square" | "foldable" | "soft";
 
+/** Иллюстрация результата для выбранного корпуса и формы стрелы. */
 type IllustrationItem = {
+  /** Выбранное исполнение корпуса. */
   bodyStyle: BodyStyle;
+  /** Выбранная форма стрелы. */
   boomShape: BoomShape;
+  /** Подпись выбранной конфигурации. */
   title: string;
+  /** URL иллюстрации конфигурации. */
   img: string;
 };
 
+/** Путь к каталогу изображений подборщика. */
 const imgPath = publicAsset("/img/picking/");
 
+/** Иллюстрации доступных сочетаний корпуса и формы стрелы. */
 const illustrationItems: IllustrationItem[] = [
   {
     bodyStyle: "standard",
@@ -67,13 +76,28 @@ const illustrationItems: IllustrationItem[] = [
   },
 ];
 
-// Для фильтра десктопа
-const radioItemsType: {
-  value: BoomShape;
+/** Размеры изображения опции в пикселях. */
+type OptionImageSize = {
+  /** Ширина изображения. */
+  width: number;
+  /** Высота изображения. */
+  height: number;
+};
+
+/** Данные радиоопции с иллюстрацией. */
+type RadioOption<T extends string> = {
+  /** Значение опции. */
+  value: T;
+  /** Подпись опции. */
   title: string;
+  /** URL изображения опции. */
   img: string;
-  size: { width: number; height: number };
-}[] = [
+  /** Размеры изображения опции. */
+  size: OptionImageSize;
+};
+
+/** Варианты формы стрелы для десктопного фильтра. */
+const radioItemsType: RadioOption<BoomShape>[] = [
   {
     value: "square",
     title: "Прямоугольная",
@@ -100,12 +124,8 @@ const radioItemsType: {
   },
 ];
 
-const radioItemsDesign: {
-  value: BodyStyle;
-  title: string;
-  img: string;
-  size: { width: number; height: number };
-}[] = [
+/** Варианты исполнения корпуса для десктопного фильтра. */
+const radioItemsDesign: RadioOption<BodyStyle>[] = [
   {
     value: "standard",
     title: "Стандартное",
@@ -120,48 +140,55 @@ const radioItemsDesign: {
   },
 ];
 
-// Для мобильной версии фильтр
+/** Варианты формы стрелы для компактного мобильного фильтра. */
 const compactTypeItems = [
   { value: "round", label: "круглая" },
   { value: "square", label: "прямоугольная с буферной накладкой" },
   { value: "foldable", label: "складная прямоугольная с буферной накладкой" },
 ] as const;
 
+/** Варианты исполнения корпуса для компактного мобильного фильтра. */
 const compactDesignItems = [
   { value: "standard", label: "стандартное" },
   { value: "premium", label: "премиум" },
 ] as const;
 
-/**
- * Типы свойств для компонента OptionCard.
- */
+/** Подпись и изображение, отображаемые в карточке опции. */
+type OptionCardItem = {
+  /** Название опции. */
+  title: string;
+  /** URL изображения опции. */
+  img: string;
+};
+
+/** Необязательные размеры изображения карточки. */
+type OptionCardSize = {
+  /** Ширина изображения. */
+  width?: number;
+  /** Высота изображения. */
+  height?: number;
+};
+
+/** Пропсы карточки радиоопции. */
 type OptionCardProps = {
-  item: {
-    title: string;
-    img: string;
-  };
+  /** Подпись и изображение опции. */
+  item: OptionCardItem;
+  /** Указывает, выбрана ли эта опция. */
   isActive: boolean;
+  /** Имя группы радиокнопок. */
   name: string;
+  /** Вызывается при выборе опции. */
   onSelect: () => void;
+  /** Дополнительные CSS-классы карточки. */
   className?: string;
-  size?: {
-    width?: number;
-    height?: number;
-  };
+  /** Необязательные размеры изображения. */
+  size?: OptionCardSize;
 };
 
 /**
  * Компонент OptionCard представляет собой карточку с опцией выбора.
- * @param {OptionCardProps} props - Свойства компонента.
- * @param {Object} props.item - Объект с данными опции.
- * @param {string} props.item.title - Заголовок опции.
- * @param {string} props.item.img - Путь к изображению опции.
- * @param {boolean} props.isActive - Флаг, указывающий, активна ли опция.
- * @param {string} props.name - Имя группы радио-кнопок.
- * @param {Function} props.onSelect - Функция, вызываемая при выборе опции.
- * @param {string} [props.className] - Дополнительные классы для стилизации.
- * @param {Object} [props.size] - Размеры изображения.
- * @return {JSX.Element} JSX-элемент, представляющий карточку с опцией выбора.
+ * @param props - Опция, её состояние, обработчик выбора и оформление.
+ * @returns Карточка с радиокнопкой, названием и изображением опции.
  */
 function OptionCard({
   item,
@@ -201,17 +228,30 @@ function OptionCard({
   );
 }
 
+/** Пропсы списка компактных радиоопций. */
+type CompactOptionListProps<T extends string> = {
+  /** Значения и подписи доступных опций. */
+  items: readonly { value: T; label: string }[];
+  /** Имя группы радиокнопок. */
+  name: string;
+  /** Текущее выбранное значение. */
+  selectedValue: T;
+  /** Вызывается с новым значением при выборе опции. */
+  onSelect: (value: T) => void;
+};
+
+/**
+ * Отображает компактный список радиоопций и сохраняет тип их значений.
+ *
+ * @param props - Опции, имя радиогруппы, выбранное значение и обработчик.
+ * @returns Список переключаемых опций.
+ */
 function CompactOptionList<T extends string>({
   items,
   name,
   selectedValue,
   onSelect,
-}: {
-  items: readonly { value: T; label: string }[];
-  name: string;
-  selectedValue: T;
-  onSelect: (value: T) => void;
-}): JSX.Element {
+}: CompactOptionListProps<T>): JSX.Element {
   return (
     <ul className="sm:ml-6 space-y-4 sm:space-y-5 list-none">
       {items.map((item) => {
@@ -234,24 +274,27 @@ function CompactOptionList<T extends string>({
   );
 }
 
-/**
- * Компонент SelectionStepHeading представляет собой заголовок с номером шага и названием.
- * @param param step - Номер шага.
- * @param param title - Название шага.
- * @param param className - Дополнительные классы для стилизации.
- * 
- * @return {JSX.Element} JSX-элемент, представляющий заголовок с номером шага и названием.
- */
+/** Пропсы заголовка шага выбора комплектации. */
+type SelectionStepHeadingProps = {
+  /** Порядковый номер шага. */
+  step: number;
+  /** Название шага. */
+  title: string;
+  /** CSS-классы заголовка. */
+  className: string;
+};
 
+/**
+ * Отображает заголовок шага с номером и названием.
+ *
+ * @param props - Номер шага, его название и CSS-классы заголовка.
+ * @returns Заголовок шага выбора комплектации.
+ */
 function SelectionStepHeading({
   step,
   title,
   className,
-}: {
-  step: number;
-  title: string;
-  className: string;
-}): JSX.Element {
+}: SelectionStepHeadingProps): JSX.Element {
   return (
     <h3 className={'flex items-center font-manrope-semibold ' + className}>
       <span className="text-xl/normal md:text-2xl/normal">{step}. </span>

@@ -1,11 +1,23 @@
 import type { CSSProperties } from 'react';
 
+/**
+ * Пропсы слайдера выбора ширины проезда.
+ */
 type WidthSliderProps = {
+  /** Текущее значение ширины проезда. */
   value: number;
+  /** Максимально допустимая ширина проезда. */
   max: number;
+  /** Вызывается при изменении значения слайдера. */
   onChange: (value: number) => void;
 };
 
+/**
+ * Отображает слайдер выбора максимальной ширины проезда.
+ *
+ * @param props - Текущее значение, предел и обработчик изменения.
+ * @returns Слайдер ширины с минимальным, текущим и максимальным значениями.
+ */
 export default function WidthSlider({ value, max, onChange }: WidthSliderProps): JSX.Element {
   const sliderPercentage = `${(value / max) * 100}%`;
   const isLimited = value < 0.1 || value > max - 0.1;
