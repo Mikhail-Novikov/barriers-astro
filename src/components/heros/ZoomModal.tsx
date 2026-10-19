@@ -16,6 +16,7 @@ interface ZoomableImageProps {
   showZoomControls?: boolean;
   className?: string;
   imgClassName?: string;
+  onSwipe?: (direction: 'prev' | 'next') => void;
 }
 
 export function ZoomModal({
@@ -77,9 +78,11 @@ export function ZoomableImage({
   showZoomControls = false,
   className = '',
   imgClassName = '',
+  onSwipe,
 }: ZoomableImageProps) {
   const imgRef = useRef<HTMLImageElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const {
     scale,
@@ -118,7 +121,30 @@ export function ZoomableImage({
         }}
         onLoad={onImageLoad}
         onDoubleClick={handleDoubleClick}
-        onTouchEnd={handleTouchEnd}
+        onTouchStart={(event) => {
+          const touch = event.changedTouches[0];
+          touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+        }}
+        onTouchEnd={(event) => {
+          const start = touchStartRef.current;
+          touchStartRef.current = null;
+
+          if (start && scale <= 1) {
+            const touch = event.changedTouches[0];
+            const deltaX = touch.clientX - start.x;
+            const deltaY = touch.clientY - start.y;
+
+            if (Math.abs(deltaX) >= 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
+              onSwipe?.(deltaX < 0 ? 'next' : 'prev');
+              return;
+            }
+          }
+
+          handleTouchEnd(event);
+        }}
+        onTouchCancel={() => {
+          touchStartRef.current = null;
+        }}
         draggable={false}
       />
       {showZoomControls && (
