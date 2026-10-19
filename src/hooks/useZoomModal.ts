@@ -96,7 +96,7 @@ type UseZoomModalResult<TBarrier> = {
   /**
    * Ссылка на контейнер миниатюр.
    */
-  thumbnailsRef: React.RefObject<HTMLDivElement | null>;
+  thumbnailsRef: React.RefObject<HTMLDivElement>;
 
   /**
    * Состояние навигации по миниатюрам.

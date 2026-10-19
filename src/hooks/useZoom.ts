@@ -13,12 +13,12 @@ type UseZoomProps = {
   /**
    * Ссылка на изображение, которое нужно масштабировать.
    */
-  imgRef: React.RefObject<HTMLImageElement | null>;
+  imgRef: React.RefObject<HTMLImageElement>;
 
   /**
    * Ссылка на контейнер, в котором отображается изображение.
    */
-  viewportRef: React.RefObject<HTMLDivElement | null>;
+  viewportRef: React.RefObject<HTMLDivElement>;
 
   /**
    * Включает или отключает поведение масштабирования.
