@@ -53,16 +53,10 @@ const faqItems = [
 
 <section aria-label="Что учесть при выборе шлагбаума?" class="bg-grey-200 p-[32px_0_40px] lg:p-[40px_0_60px] 2xl:p-[60px_0_80px] 3xl:p-[80px_0_100px]">
   <div class="container">
-    <h2 class="h2 mb-6 lg:mb-8">Что учесть при выборе шлагбаума?</h2>
+    <h2 class="mb-6 h2 2xl:mb-8">Что учесть при выборе шлагбаума?</h2>
 
-    <div class="grid grid-cols-12 gap-4">
-      <div class="col-span-12 lg:col-span-6 pt-2 lg:pt-0 lg:mt-5 lg:ml-10 2xl:ml-15 3xl:ml-20 lg:order-1">
-        <FaqAccordion client:load items={faqItems} />
-        <Modal client:load triggerLabel="Получить консультацию" title="Форма обратной связи" triggerClassName="mt-6 4xl:mt-14 hidden lg:block" triggerVariant="primary">
-          <FeedbackForm client:load idPrefix="open-modal-sale-barrier" />
-        </Modal>
-      </div>
-      <div class="col-span-12 lg:col-span-6 relative overflow-hidden lg:mt-0">
+    <div class="grid grid-cols-12 4xl:gap-4">
+      <div class="relative col-span-12 overflow-hidden order-0 sm:order-1 xl:col-span-6 lg:mt-0 xl:order-none">
         <Video
           client:load
           className="w-full rounded-3xl"
@@ -76,9 +70,12 @@ const faqItems = [
           playButtonVisibility="always"
         />
       </div>
+      <div class="flex flex-col col-span-12 pt-2 sm:items-start 4xl:justify-between sm:mb-10 xl:mb-0 xl:col-span-6 lg:pt-0 xl:mt-4 lg:ml-4 xl:ml-8 3xl:ml-15 4xl:ml-20">
+        <FaqAccordion client:load items={faqItems} />
+        <Modal client:load triggerLabel="Получить консультацию" title="Форма обратной связи" triggerClassName="mt-3 4xl:mt-0" triggerVariant="primary">
+          <FeedbackForm client:load idPrefix="open-modal-sale-barrier" />
+        </Modal>
+      </div>
     </div>
-    <Modal client:load triggerLabel="Получить консультацию" title="Форма обратной связи" triggerClassName="mt-8 lg:hidden" triggerVariant="primary">
-      <FeedbackForm client:load idPrefix="open-modal-sale-barrier" />
-    </Modal>
   </div>
 </section>

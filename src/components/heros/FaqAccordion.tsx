@@ -27,7 +27,7 @@ export default function FaqAccordion({ items }: FaqAccordionProps): JSX.Element 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className="lg:space-y-4">
+    <div>
       {items.map((item, index): JSX.Element => {
         const isOpen = openIndex === index;
 
@@ -35,10 +35,10 @@ export default function FaqAccordion({ items }: FaqAccordionProps): JSX.Element 
           <details
             key={item.title}
             open={isOpen}
-            className="flex w-full flex-col perco-icons text-left text-grey-1000 not-first:mt-6"
+            className="flex flex-col w-full text-left perco-icons text-grey-1000 not-first:my-3.5 2xl:not-first:my-5"
           >
             <summary
-              className={`collapse-header flex list-none items-center gap-4 border-b border-grey-500 pb-4 cursor-pointer ${
+              className={`collapse-header flex list-none items-center gap-4 border-b border-grey-500 pb-3.5 2xl:pb-5 cursor-pointer ${
                 index === items.length - 1 && !isOpen ? "border-b-0" : ""
               }`}
               onClick={(event) => {
@@ -46,10 +46,10 @@ export default function FaqAccordion({ items }: FaqAccordionProps): JSX.Element 
                 setOpenIndex(isOpen ? null : index);
               }}
             >
-              <span className="flex shrink-0 text-3xl text-grey-700">
+              <span className="flex text-3xl shrink-0 text-grey-700">
                 {isOpen ? <i className="perco-icon-minus-circle-outline" /> : <i className="perco-icon-plus-circle-outline" />}
               </span>
-              <span className="text-md/6 xl:text-lg/6 font-manrope-semibold" dangerouslySetInnerHTML={{__html: item.title}} />
+              <span className="text-md/6 2xl:text-lg/6 font-manrope-semibold" dangerouslySetInnerHTML={{__html: item.title}} />
             </summary>
 
             <div className="max-w-[690px] space-y-2 px-4 pb-3 pt-3 text-left text-md/6" dangerouslySetInnerHTML={{ __html: item.answer }} />
