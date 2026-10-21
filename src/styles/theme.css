@@ -54,6 +54,7 @@
 
     /* family font */
   --font-manrope: "Manrope", sans-serif;
+  --font-manrope-light: "Manrope-Light", sans-serif;
   --font-manrope-medium: "Manrope-Medium", sans-serif;
   --font-manrope-bold: "Manrope-Bold", sans-serif;
   --font-manrope-semibold: "Manrope-SemiBold", sans-serif;
