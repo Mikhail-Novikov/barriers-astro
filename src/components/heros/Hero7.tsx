@@ -423,18 +423,21 @@ export default function Hero7(): JSX.Element {
           </div>
 
           <div className="p-[20px_8px] md:p-[40px_20px] lg:p-[40px_32px] xl:p-10 2xl:p-5 3xl:p-8 4xl:p-[40px_40px_15px_40px] relative flex items-center mt-0 overflow-x-auto bg-white col-span-16 rounded-xl md:rounded-2xl 2xl:col-span-10 4xl:col-span-8 lg:ml-4 2xl:ml-8 4xl:ml-15">
-            <div className="w-full">
+            <div
+              className="group w-full cursor-zoom-in"
+              role="button"
+              tabIndex={0}
+              onClick={() => setZoomedVariant(currentVariant)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setZoomedVariant(currentVariant);
+                }
+              }}
+            >
               <div
-                role="button"
-                tabIndex={0}
-                onClick={() => setZoomedVariant(currentVariant)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    setZoomedVariant(currentVariant);
-                  }
-                }}
-                className="absolute text-2xl text-right transition-all duration-300 ease-out perco-icons inset-3 md:inset-6 xl:h-13 text-grey-500 hover:text-grey-800 cursor-zoom-in"
+                aria-hidden="true"
+                className="absolute text-2xl text-right transition-all duration-300 ease-out perco-icons inset-3 md:inset-6 xl:h-13 text-grey-500 group-hover:text-grey-800"
               >
                 <i className="!hidden md:!block perco-icon-control-fullscreen xl:float-right" />
                 <span className="text-2xl md:hidden text-grey-500">
