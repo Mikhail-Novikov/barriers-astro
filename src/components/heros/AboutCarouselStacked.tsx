@@ -5,6 +5,7 @@ import { useMemo, useRef, useState } from 'react';
 import { useLightGallery } from '@hooks/useLightGallery';
 
 import AboutCarouselControls from '@components/AboutCarouselControls';
+import PaginationDots from '@components/PaginationDots';
 
 import 'swiper/css';
 
@@ -110,18 +111,14 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="mt-4 flex justify-center items-center gap-2 sm:hidden" aria-label="Навигация по фотографиям">
-        {imagePairs.map((_, pairIndex) => (
-          <button
-            key={`about-pair-pagination-${pairIndex}`}
-            type="button"
-            aria-label={`Показать cлайд ${pairIndex + 1}`}
-            aria-current={activePair === pairIndex ? 'true' : undefined}
-            onClick={() => swiperRef.current?.slideTo(pairIndex)}
-            className={`rounded-full transition-colors ${activePair === pairIndex ? 'size-2 bg-grey-700' : 'size-1 bg-grey-500'}`}
-          />
-        ))}
-      </div>
+      <PaginationDots
+        className="mt-4 sm:hidden"
+        count={imagePairs.length}
+        activeIndex={activePair}
+        onSelect={(index) => swiperRef.current?.slideTo(index)}
+        ariaLabel="Навигация по фотографиям"
+        getItemLabel={(index) => `Показать слайд ${index + 1}`}
+      />
     </div>
   );
 }

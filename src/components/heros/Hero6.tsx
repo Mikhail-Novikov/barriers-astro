@@ -26,6 +26,7 @@ import type {
 import emptySearchImage from '../../assets/img/empty-search.png';
 import { ZoomModal, ZoomableImage } from './ZoomModal';
 import { Button } from '@components/Button';
+import PaginationDots from '@components/PaginationDots';
 
 /** Путь к публичному каталогу превью изображений шлагбаумов. */
 const previewPath = publicAsset('/img/barriers/');
@@ -379,23 +380,19 @@ export default function Hero6(): JSX.Element {
 
                 {activeImage.images.length > 0 && (
                   !screen.md ? (
-                    <div
-                      className="relative z-10 flex items-center justify-center gap-2 py-3 shrink-0 md:pt-4"
-                      role="tablist"
-                      aria-label="Выбор изображения"
-                    >
-                      {activeImage.images.map((image, index) => (
-                        <button
-                          key={image.src}
-                          type="button"
-                          role="tab"
-                          aria-label={`Показать изображение ${index + 1}`}
-                          aria-selected={activeImage.src === image.src}
-                          onClick={() => handleSelectImage(image.src)}
-                          className={`cursor-pointer rounded-full transition-colors ${activeImage.src === image.src ? 'size-2 bg-grey-700' : 'size-1 bg-grey-500'}`}
-                        />
-                      ))}
-                    </div>
+                    <PaginationDots
+                      className="relative z-10 shrink-0 py-3 md:pt-4"
+                      count={activeImage.images.length}
+                      activeIndex={activeImage.images.findIndex(
+                        (image) => image.src === activeImage.src,
+                      )}
+                      onSelect={(index) => {
+                        const image = activeImage.images[index];
+                        if (image) handleSelectImage(image.src);
+                      }}
+                      ariaLabel="Выбор изображения"
+                      getItemLabel={(index) => `Показать изображение ${index + 1}`}
+                    />
                   ) : (
                     <div className="flex items-center gap-2 py-3 shrink-0 md:pt-4 xl:pl-10">
                       {thumbnailNavigation.hasOverflow && (

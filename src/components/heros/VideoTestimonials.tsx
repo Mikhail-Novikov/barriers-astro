@@ -8,6 +8,7 @@ import { useBreakpoint } from '@hooks/useBreakpoint';
 import { publicAsset } from "@utils/publicAsset";
 
 import SliderArrow from '@components/SliderArrow';
+import PaginationDots from '@components/PaginationDots';
 import VideoPlayButton from '@components/VideoPlayButton';
 
 import 'swiper/css';
@@ -138,19 +139,14 @@ export default function VideoTestimonials(): JSX.Element {
 
       <div aria-label="Управление видеоотзывами">
         {!screen.sm ? (
-          <div className="flex items-center justify-center gap-2 mt-6" role="tablist" aria-label="Выбор видеоотзыва">
-            {testimonials.map(({ videoUrl, title }, index) => (
-              <button
-                key={videoUrl}
-                type="button"
-                role="tab"
-                aria-label={title}
-                aria-selected={startIndex === index}
-                onClick={() => swiperRef.current?.slideTo(index)}
-                className={`cursor-pointer rounded-full transition-colors ${startIndex === index ? 'size-2 bg-grey-700' : 'size-1 bg-grey-500'}`}
-              />
-            ))}
-          </div>
+          <PaginationDots
+            className="mt-6"
+            count={testimonials.length}
+            activeIndex={startIndex}
+            onSelect={(index) => swiperRef.current?.slideTo(index)}
+            ariaLabel="Выбор видеоотзыва"
+            getItemLabel={(index) => testimonials[index].title}
+          />
         ) : (
           <div className="flex items-center justify-end gap-1 mt-10" aria-label="Управление видеоотзывами">
             <SliderArrow direction="left" onClick={() => move('prev')} disabled={isAtStart} />

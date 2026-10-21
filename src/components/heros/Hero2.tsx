@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
 import { useLightGallery } from "@hooks/useLightGallery";
+import { useSwipe } from "@hooks/useSwipe";
 
 import SliderArrow from "@components/SliderArrow";
 import Video from "@components/Video";
+import PaginationDots from "@components/PaginationDots";
 import { publicAsset } from "@utils/publicAsset";
 
 /** Полный набор изображений и видео, доступных в галерее установок. */
@@ -219,6 +221,13 @@ const Hero2 = (): JSX.Element => {
    * returns void
   */
   const goToPrev = () => setGroupIndex((prev) => Math.max(prev - 1, 0));
+  const swipeHandlers = useSwipe<HTMLDivElement>({
+    onSwipe: (direction) => {
+      if (direction === "next") goToNext();
+      else goToPrev();
+    },
+    preventClickAfterSwipe: true,
+  });
 
   return (
     <div className="bg-grey-400 py-10 sm:p-[40px_0_60px] xl:py-15 4xl:py-20">
@@ -227,6 +236,8 @@ const Hero2 = (): JSX.Element => {
         <div
           ref={galleryRef}
           className="gallery-equipment"
+          style={{ touchAction: "pan-y" }}
+          {...swipeHandlers}
         >
           {previewItems.map((item, i) => {
             const absoluteIndex = item.index ?? groupIndex * groupSize + i;
@@ -293,21 +304,31 @@ const Hero2 = (): JSX.Element => {
             </a>
           ))}
         </div>
-        <div className="flex items-center justify-between mt-8">
-          <div className="min-w-[90px] h-10 p-2 text-grey-800 border border-grey-600 rounded-full text-lg/tight text-center">
-            {pad(firstPreviewIndex)}<span className="mx-[1px]">/</span>{pad(totalItems)}
-          </div>
-          <div className="flex items-center gap-1">
-            <SliderArrow
-              direction="left"
-              onClick={goToPrev}
-              disabled={groupIndex === 0}
-            />
-            <SliderArrow
-              direction="right"
-              onClick={goToNext}
-              disabled={groupIndex === totalGroups - 1}
-            />
+        <div className="flex items-center justify-center mt-8 sm:justify-between">
+          <PaginationDots
+            className="sm:hidden"
+            count={totalGroups}
+            activeIndex={groupIndex}
+            onSelect={setGroupIndex}
+            ariaLabel="Страницы галереи установок"
+            getItemLabel={(index) => `Страница ${index + 1}`}
+          />
+          <div className="items-center justify-between hidden sm:flex sm:w-full">
+            <div className="min-w-[90px] h-10 p-2 text-grey-800 border border-grey-600 rounded-full text-lg/tight text-center">
+              {pad(firstPreviewIndex)}<span className="mx-[1px]">/</span>{pad(totalItems)}
+            </div>
+            <div className="flex items-center gap-1">
+              <SliderArrow
+                direction="left"
+                onClick={goToPrev}
+                disabled={groupIndex === 0}
+              />
+              <SliderArrow
+                direction="right"
+                onClick={goToNext}
+                disabled={groupIndex === totalGroups - 1}
+              />
+            </div>
           </div>
         </div>
       </div>
