@@ -1,6 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { useZoom } from '@hooks/useZoom';
+import { useSwipe } from '@hooks/useSwipe';
 
 /**
  * Пропсы полноэкранного модального окна просмотра.
@@ -111,7 +112,6 @@ export function ZoomableImage({
 }: ZoomableImageProps) {
   const imgRef = useRef<HTMLImageElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
-  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const {
     scale,
@@ -124,6 +124,10 @@ export function ZoomableImage({
     handleDoubleClick,
     handleTouchEnd,
   } = useZoom({ imgRef, viewportRef });
+  const swipeHandlers = useSwipe<HTMLImageElement>({
+    onSwipe: (direction) => onSwipe?.(direction),
+    enabled: scale <= 1,
+  });
 
   useEffect(() => {
     reset();
@@ -150,30 +154,12 @@ export function ZoomableImage({
         }}
         onLoad={onImageLoad}
         onDoubleClick={handleDoubleClick}
-        onTouchStart={(event) => {
-          const touch = event.changedTouches[0];
-          touchStartRef.current = { x: touch.clientX, y: touch.clientY };
-        }}
+        onTouchStart={swipeHandlers.onTouchStart}
         onTouchEnd={(event) => {
-          const start = touchStartRef.current;
-          touchStartRef.current = null;
-
-          if (start && scale <= 1) {
-            const touch = event.changedTouches[0];
-            const deltaX = touch.clientX - start.x;
-            const deltaY = touch.clientY - start.y;
-
-            if (Math.abs(deltaX) >= 50 && Math.abs(deltaX) > Math.abs(deltaY)) {
-              onSwipe?.(deltaX < 0 ? 'next' : 'prev');
-              return;
-            }
-          }
-
-          handleTouchEnd(event);
+          const didSwipe = swipeHandlers.onTouchEnd(event);
+          if (!didSwipe) handleTouchEnd(event);
         }}
-        onTouchCancel={() => {
-          touchStartRef.current = null;
-        }}
+        onTouchCancel={swipeHandlers.onTouchCancel}
         draggable={false}
       />
       {showZoomControls && (
