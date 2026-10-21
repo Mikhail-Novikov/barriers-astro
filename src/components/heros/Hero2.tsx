@@ -205,16 +205,25 @@ const Hero2 = (): JSX.Element => {
   );
   const firstPreviewIndex = (previewItems[0]?.index ?? 0) + 1;
 
-  /** Переключает галерею на следующую группу карточек по кругу. */
-  const goToNext = () => setGroupIndex((prev) => (prev + 1) % totalGroups);
-  /** Переключает галерею на предыдущую группу карточек по кругу. */
-  const goToPrev = () =>
-    setGroupIndex((prev) => (prev - 1 + totalGroups) % totalGroups);
+  /** 
+   * Хендлер навигации по галерее - вперед
+   * Переключает галерею на следующую группу карточек, не выходя за конец. 
+   * returns void
+  */
+  const goToNext = () =>
+    setGroupIndex((prev) => Math.min(prev + 1, totalGroups - 1));
+
+  /** 
+   * Хендлер навигации по галерее - назад
+   * Переключает галерею на предыдущую группу карточек, не выходя за начало. 
+   * returns void
+  */
+  const goToPrev = () => setGroupIndex((prev) => Math.max(prev - 1, 0));
 
   return (
     <div className="bg-grey-400 py-10 sm:p-[40px_0_60px] xl:py-15 4xl:py-20">
       <div className="container">
-        <h2 className="h2 mb-8">Примеры установок</h2>
+        <h2 className="mb-8 h2">Примеры установок</h2>
         <div
           ref={galleryRef}
           className="gallery-equipment"
@@ -229,7 +238,7 @@ const Hero2 = (): JSX.Element => {
                 <div key={absoluteIndex} className={itemClassName}>
                   <Video
                     containerClassName="h-full w-full"
-                    className="h-full w-full object-cover"
+                    className="object-cover w-full h-full"
                     src={publicAsset('/video/examples-installations/installations.mp4')}
                     poster={publicAsset('/img/examples-installations/preview.webp')}
                     caption={item.alt}
@@ -257,7 +266,7 @@ const Hero2 = (): JSX.Element => {
                 className={itemClassName}
               >
                 <img
-                  className="w-full h-auto object-cover"
+                  className="object-cover w-full h-auto"
                   src={getPreviewSrc(item)}
                   alt={item.alt}
                   loading="lazy"
@@ -284,7 +293,7 @@ const Hero2 = (): JSX.Element => {
             </a>
           ))}
         </div>
-        <div className="mt-8 flex justify-between items-center">
+        <div className="flex items-center justify-between mt-8">
           <div className="min-w-[90px] h-10 p-2 text-grey-800 border border-grey-600 rounded-full text-lg/tight text-center">
             {pad(firstPreviewIndex)}<span className="mx-[1px]">/</span>{pad(totalItems)}
           </div>
@@ -292,10 +301,12 @@ const Hero2 = (): JSX.Element => {
             <SliderArrow
               direction="left"
               onClick={goToPrev}
+              disabled={groupIndex === 0}
             />
             <SliderArrow
               direction="right"
               onClick={goToNext}
+              disabled={groupIndex === totalGroups - 1}
             />
           </div>
         </div>
