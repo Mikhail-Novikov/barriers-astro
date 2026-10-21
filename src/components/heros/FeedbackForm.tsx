@@ -198,12 +198,12 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
       <h3 className="text-center sm:text-left text-3xl/9 sm:text-[38px]/[46px] font-manrope-semibold text-shadow-grey-800 sm:text-grey-1000 mb-6">Свяжитесь с&nbsp;нами</h3>
 
       {submitSuccess && (
-        <div className="mb-6 p-4 rounded-2xl bg-green-50 border border-green-200 text-green-800 text-sm">
+        <div className="p-4 mb-6 text-sm text-green-800 border border-green-200 rounded-2xl bg-green-50">
           Спасибо! Ваше сообщение отправлено. Мы&nbsp;свяжемся с&nbsp;вами в&nbsp;ближайшее время.
         </div>
       )}
       {submitError && (
-        <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm" role="alert">
+        <div className="p-4 mb-6 text-sm text-red-700 border border-red-200 rounded-2xl bg-red-50" role="alert">
           {submitError}
         </div>
       )}
@@ -211,7 +211,7 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
       <form onSubmit={handleSubmit} className="flex flex-col gap-6 text-sm sm:text-lg">
         {/* Имя */}
         <div>
-          <label htmlFor={`${idPrefix}-name`} className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
+          <label htmlFor={`${idPrefix}-name`} className="block mb-1 text-xs sm:text-md/6 font-manrope-semibold text-grey-1000">
             Имя
           </label>
           <input
@@ -227,7 +227,7 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
 
         {/* Email */}
         <div>
-          <label htmlFor={`${idPrefix}-email`} className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
+          <label htmlFor={`${idPrefix}-email`} className="block mb-1 text-xs sm:text-md/6 font-manrope-semibold text-grey-1000">
             Email<span className="text-cta">*</span>
           </label>
           <input
@@ -250,7 +250,7 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
 
         {/* Сообщение */}
         <div>
-          <label id={`${idPrefix}-message-label`} htmlFor={`${idPrefix}-message`} className="block text-xs sm:text-md/6 font-manrope-semibold text-grey-1000 mb-1">
+          <label id={`${idPrefix}-message-label`} htmlFor={`${idPrefix}-message`} className="block mb-1 text-xs sm:text-md/6 font-manrope-semibold text-grey-1000">
             Сообщение<span className="text-cta">*</span>
           </label>
           <div
@@ -277,8 +277,7 @@ const FeedbackForm = ({ idPrefix = 'feedback', initialMessage = '' }: FeedbackFo
         {/* Кнопка отправки */}
         <Button
           type="submit"
-          disabled={!isFormValid || isSubmitting}
-          className={`mt-4 w-full h-12 sm:h-16 px-6 font-manrope-semibold !rounded-3xl ${!isFormValid || isSubmitting ? 'opacity-50' : ''}`}
+          className="mt-4 w-full h-12 sm:h-16 px-6 font-manrope-semibold !rounded-3xl"
         >
           {isSubmitting ? 'Отправка...' : 'Отправить'}
         </Button>
