@@ -26,7 +26,7 @@ const galleryAll = [
   {
     thumb: "/img/gallery/preview/02-01.webp",
     src: "/img/gallery/full/02-01.webp",
-    alt: "Шлагбаум GS04, ЖК «Урбанист», Санкт-Петербург",
+    alt: "Шлагбаум GS04, ЖК «Урбанист», Мурино, Ленинградская область",
   },
   // дополнительные изображения для лайтбокса (не показаны на первой странице)
   {
@@ -108,7 +108,7 @@ const galleryAll = [
   {
     thumb: "/img/gallery/preview/05-03.webp",
     src: "/img/gallery/full/05-03.webp",
-    alt: "Шлагбаумы GS04, база отдыха Opushka house, Санкт-Петербург",
+    alt: "Шлагбаумы GS04, база отдыха Opushka house, Ленинградская область",
   },
   {
     thumb: "/img/gallery/preview/05-04.webp",

@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { useEffect, useRef } from "react";
 
+import { HtmlContent } from "@utils/HtmlContent";
 import { publicAsset } from "@utils/publicAsset";
 import { useBreakpoint } from "@hooks/useBreakpoint";
 
@@ -71,7 +72,7 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps): JSX.Element => {
   }, []);
 
   return (
-    <div className="flex min-w-0 w-full gap-2 lg:gap-5 overflow-hidden">
+    <div className="flex w-full min-w-0 gap-2 overflow-hidden lg:gap-5">
       {screen.lg && (
         <CarouselControls
           onPrevious={() => move("-1")}
@@ -80,7 +81,7 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps): JSX.Element => {
           nextLabel="Следующие товары"
         />
       )}
-      <div className="min-w-0 flex-1 overflow-hidden">
+      <div className="flex-1 min-w-0 overflow-hidden">
         <Swiper
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
@@ -97,7 +98,7 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps): JSX.Element => {
             <SwiperSlide key={`${card.id}-${card.title}`}>
               <article className="swiper-slide-transform">
                 <img
-                  className="rounded-3xl bg-grey-200 object-contain"
+                  className="object-contain rounded-3xl bg-grey-200"
                   src={publicAsset(
                     `/img/configuration-additional-equipment/gallery/dop-${card.id}.webp`,
                   )}
@@ -105,7 +106,7 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps): JSX.Element => {
                   loading="lazy"
                 />
                 <h4 className="pt-2 text-md/normal md:text-lg/6 font-manrope-semibold">
-                  {card.title}
+                  <HtmlContent>{card.title}</HtmlContent>
                 </h4>
               </article>
             </SwiperSlide>

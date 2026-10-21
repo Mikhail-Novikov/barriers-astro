@@ -6,7 +6,7 @@ const cards = [
   {
     image: sm1,
     title: 'Встроенный блок управления',
-    description: '<p>Удобный доступ к&nbsp;блоку управления позволяет легко его обслуживать (рыба).</p><p>Датчики вскрытия корпуса позволяют отслеживать несанкционированный доступ к внутренним элементам шлагбаума. Монтажные шпеклеры идут в комплекте.</p>',
+    description: '<p>Удобный доступ к&nbsp;блоку управления обеспечивает его простое обслуживание.</p><p>Датчик открытия дверцы позволяет отслеживать несанкционированный доступ к&nbsp;внутренним элементам шлагбаума, включая механизм ручного поднятия стрелы.<br>Монтажные шпеклеры идут в&nbsp;комплекте.</p>',
     imagePosition: 'left' as const,
   },
   {
@@ -23,11 +23,11 @@ const cards = [
     <div class="flex flex-col gap-9">
       <h2 class="h2">Удобство настройки и обслуживания</h2>
 
-      <div class="min-w-0 overflow-x-auto pb-2">
+      <div class="min-w-0 pb-2 overflow-x-auto">
         <div class="grid sm:min-w-[923px] sm:grid-cols-2 gap-5 3xl:gap-6">
           {cards.map((card) => (
             <article class={`flex min-w-0 flex-col gap-x-8 4xl:gap-x-10 overflow-hidden rounded-3xl bg-white p-6 3xl:p-8 4xl:p-10 2xl:flex-row ${card.imagePosition === 'right' ? '2xl:flex-row-reverse' : ''}`}>
-              <div class="flex-shrink-0 2xl:w-5/12 mb-8">
+              <div class="flex-shrink-0 mb-8 2xl:w-5/12">
                 <img
                   class="h-[310px] sm:h-auto rounded-2xl object-cover"
                   width="294"
@@ -37,9 +37,9 @@ const cards = [
                   loading="lazy"
                 />
               </div>
-              <div class="flex flex-1 flex-col gap-3 text-grey-1000 2xl:w-7/12">
-                <h3 class="4xl:mt-10 text-2xl/8 font-bold" set:html={card.title} />
-                <div class="flex flex-col gap-y-3 whitespace-pre-line text-md/6" set:html={card.description} />
+              <div class="flex flex-col flex-1 gap-3 text-grey-1000 2xl:w-7/12">
+                <h3 class="font-bold 4xl:mt-10 text-2xl/8" set:html={card.title} />
+                <div class="flex flex-col whitespace-pre-line gap-y-3 text-md/6" set:html={card.description} />
               </div>
             </article>
           ))}
