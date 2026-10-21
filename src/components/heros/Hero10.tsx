@@ -70,9 +70,9 @@ type SolutionPriceProps = {
  */
 function SolutionPrice({ price, description, classNameWrapper }: SolutionPriceProps): JSX.Element {
   return (
-    <div className={`mb-4 xl:mb-5 flex w-full items-center gap-5 rounded-[16px] xl:rounded-3xl bg-grey-200 py-3 md:py-4 px-5 ${classNameWrapper}`}>
-      <strong className="ml-5 shrink-0 text-xl/8 font-manrope-bold text-cta xl:text-2xl/7">{price}</strong>
-      <span className="font-manrope-semibold text-md/5"><HtmlContent>{description}</HtmlContent></span>
+    <div className={`xl:mb-5 sm:flex w-full items-center gap-5 rounded-[16px] xl:rounded-3xl bg-grey-200 py-3 md:py-4 px-5 ${classNameWrapper}`}>
+      <p className="order-1 mb-4 sm:mb-0 font-manrope-semibold text-md/5"><HtmlContent>{description}</HtmlContent></p>
+      <strong className="sm:ml-4 md:ml-5 shrink-0 text-xl/8 font-manrope-bold text-cta xl:text-2xl/7">{price}</strong>
     </div>
   );
 }
@@ -96,8 +96,8 @@ function SolutionAdditions({ additions }: SolutionAdditionsProps): JSX.Element |
 
   return (
     <>
-      <p className="mb-3 text-lg/6 text-grey-1000 4x:text-grey-800 font-manrope-semibold">Что можно добавить:</p>
-      <ul className="mb-6 lg:mb-10 list-disc marker:text-[12px] space-y-1 pl-3 md:pl-6 text-md/6">
+      <p className="mb-1 sm:mb-3 text-lg/6 text-grey-1000 xl:text-grey-800 font-manrope-semibold">Что можно добавить:</p>
+      <ul className="mb-7 lg:mb-10 list-disc marker:text-[12px] space-y-1 pl-3 sm:pl-6 text-md/6">
         {additions.map((addition) => <li key={addition}><HtmlContent>{addition}</HtmlContent></li>)}
       </ul>
     </>
@@ -313,7 +313,7 @@ export default function Hero10(): JSX.Element {
                   ...base,
                   minHeight: 44,
                   borderRadius: 8,
-                  borderColor: '#AEAFBF',
+                  borderColor: '#E1E3E6',
                   backgroundColor: '#F3F4F8',
                   boxShadow: 'none',
                 }),
@@ -356,37 +356,40 @@ export default function Hero10(): JSX.Element {
           })}
         </div>
 
-        <div className='block lg:w-6/12 2xl:hidden'>
-          <h4 className="mb-4 xl:mb-5 font-manrope-bold text-[20px]/6 lg:text-[24px]/7 xl:text-[32px]/10">{activeSolution.title}</h4>
-          <SolutionPrice classNameWrapper="" price={activeSolution.price} description={activeSolution.description} />
-        </div>
-
-        <div
-          id={`solution-panel-${activeIndex}`}
-          className="flex flex-col lg:flex-row lg:gap-8 xl:gap-15"
-          role="tabpanel"
-          aria-labelledby={`solution-tab-${activeIndex}`}
-        >
-          <div className="lg:w-6/12 flex items-center justify-center overflow-hidden rounded-[16px] 2xl:rounded-2xl 3xl:rounded-3xl bg-grey-200 h-[280px] sm:h-[300px] xl:h-[376px] 2xl:h-[424px] 3xl:h-[512px]">
-            <img className="object-contain w-full h-full" src={activeSolution.image} alt={activeSolution.description} />
+        <div className="md:max-w-[480px] lg:max-w-full">
+          <div className='block lg:w-6/12 2xl:hidden'>
+            <h4 className="mb-4 xl:mb-5 font-manrope-bold text-[20px]/6 lg:text-[24px]/7 xl:text-[32px]/10">{activeSolution.title}</h4>
+            <SolutionPrice classNameWrapper="mb-4 hidden sm:flex" price={activeSolution.price} description={activeSolution.description} />
           </div>
 
-          <div className="flex flex-col items-start mt-8 text-grey-1000 lg:w-5/12 lg:mt-0">
-            <div className='hidden 2xl:block'>
-              <h4 className="mb-4 xl:mb-5 h3">{activeSolution.title}</h4>
-              <SolutionPrice classNameWrapper="" price={activeSolution.price} description={activeSolution.description} />
+          <div
+            id={`solution-panel-${activeIndex}`}
+            className="flex flex-col lg:flex-row lg:gap-8 xl:gap-10"
+            role="tabpanel"
+            aria-labelledby={`solution-tab-${activeIndex}`}
+          >
+            <div className="lg:w-6/12 flex items-center justify-center overflow-hidden rounded-[16px] 2xl:rounded-2xl 3xl:rounded-3xl bg-grey-200 h-[280px] sm:h-[300px] xl:h-[376px] 2xl:h-[424px] 3xl:h-[512px]">
+              <img className="object-contain w-full h-full" src={activeSolution.image} alt={activeSolution.description} />
             </div>
-            <SolutionAdditions additions={activeSolution.additions} />
+            <SolutionPrice classNameWrapper="mt-1 pr-1 sm:hidden" price={activeSolution.price} description={activeSolution.description} />
 
-            <Modal
-              triggerLabel="Заказать"
-              title="Форма обратной связи"
-              triggerClassName="w-full sm:w-[232px]"
-              triggerVariant="primary"
-              initialMessage={`Нужна консультация по готовому решению: <strong class="font-manrope-semibold">${activeSolution.title}</strong><br />Комплектация: <strong class="font-manrope-semibold">${activeSolution.description}</strong><br />${activeSolution.alternative ?` <strong class="font-manrope-semibold">${activeSolution.alternative.description}</strong>` : ''}`}
-            >
-              <FeedbackForm idPrefix="open-modal-sale-barrier" />
-            </Modal>
+            <div className="flex flex-col items-start mt-8 text-grey-1000 lg:w-5/12 lg:mt-0">
+              <div className='hidden 2xl:block'>
+                <h4 className="mb-4 xl:mb-5 h3">{activeSolution.title}</h4>
+                <SolutionPrice classNameWrapper="mb-4" price={activeSolution.price} description={activeSolution.description} />
+              </div>
+              <SolutionAdditions additions={activeSolution.additions} />
+
+              <Modal
+                triggerLabel="Заказать"
+                title="Форма обратной связи"
+                triggerClassName="w-full sm:w-[232px]"
+                triggerVariant="primary"
+                initialMessage={`Нужна консультация по готовому решению: <strong class="font-manrope-semibold">${activeSolution.title}</strong><br />Комплектация: <strong class="font-manrope-semibold">${activeSolution.description}</strong><br />${activeSolution.alternative ?` <strong class="font-manrope-semibold">${activeSolution.alternative.description}</strong>` : ''}`}
+              >
+                <FeedbackForm idPrefix="open-modal-sale-barrier" />
+              </Modal>
+            </div>
           </div>
         </div>
       </div>
