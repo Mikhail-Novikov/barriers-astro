@@ -19,7 +19,7 @@ const BurgerIcon = ({ isOpen, onClick }: BurgerIconProps): JSX.Element => {
     <button
       type="button"
       onClick={onClick}
-      className="lg:hidden absolute top-1/2 -translate-y-1/2 right-0 text-white hover:text-grey-700 text-4xl cursor-pointer transition-all duration-300 ease-out"
+      className="lg:hidden absolute top-1/2 -translate-y-1/2 right-0 text-white hover:text-grey-700 text-2xl sm:text-[32px] cursor-pointer transition-all duration-300 ease-out"
       aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
       aria-expanded={isOpen}
     >

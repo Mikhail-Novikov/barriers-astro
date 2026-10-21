@@ -4,7 +4,7 @@ import Modal from './heros/Modal';
 import FeedbackForm from './heros/FeedbackForm';
 import { publicAsset } from '../utils/publicAsset';
 ---
-<header id="top" class="perco-icons bg-cta sticky z-20 top-0 left-0 right-0">
+<header id="top" class="sticky top-0 left-0 right-0 z-20 perco-icons bg-cta">
   <div class="container">
     <nav class="flex items-center justify-between h-[64px] sm:h-[90px] relative">
       <a href="#" class="flex shrink-0" aria-label="логотип PERCo">
@@ -14,7 +14,7 @@ import { publicAsset } from '../utils/publicAsset';
       <Modal client:load triggerLabel="Подобрать шлагбаум" title="Форма обратной связи">
         <FeedbackForm client:load idPrefix="open-modal-sale-barrier" />
       </Modal>
-      <button class="mr-8 p-4 lg:mr-0 lg:hidden text-4xl text-white hover:text-grey-700 cursor-pointer transition-all duration-300 ease-out"><i class="perco-icon-phone"></i></button>
+      <button class="mr-5 sm:mr-8 p-4 lg:mr-0 lg:hidden text-2xl sm:text-[32px] text-white hover:text-grey-700 cursor-pointer transition-all duration-300 ease-out"><i class="perco-icon-phone"></i></button>
     </nav>
   </div>
 </header>
