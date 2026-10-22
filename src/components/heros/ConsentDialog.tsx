@@ -70,14 +70,14 @@ export default function ConsentDialog({
         <Button
           type="button"
           variant="primary-outline"
-          className="px-6 py-3 rounded-2xl"
+          className="px-6 py-3"
           onClick={onReject}
         >
           Не принимаю
         </Button>
         <Button
           type="button"
-          className="px-6 py-3 rounded-2xl"
+          className="px-6 py-3"
           onClick={onAccept}
         >
           Принимаю

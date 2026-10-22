@@ -58,7 +58,7 @@ export default function ModalFeedbackForm({
   }, [form.submitSuccess, form.submitError]);
 
   return (
-    <div className="flex flex-col items-center bg-grey-200 text-center">
+    <div className="flex flex-col items-center text-center bg-grey-200">
       <img 
         src={publicAsset('/img/ill-feedback.webp')}
         alt="Техническая поддержка" 
@@ -88,7 +88,7 @@ export default function ModalFeedbackForm({
           submitButton={
             <Button
               type="submit"
-              className="w-full sm:h-16 px-6 mt-1 text-xl rounded-2xl font-manrope-semibold"
+              className="w-full px-6 mt-1 text-xl sm:h-16 font-manrope-semibold"
               disabled={form.isSubmitting}
             >
               {form.isSubmitting ? "Отправка..." : "Отправить"}

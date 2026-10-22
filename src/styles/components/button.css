@@ -1,5 +1,5 @@
 .btn {
-  @apply border-1 cursor-pointer ![transition:all_0.3s] font-manrope-semibold min-h-12 pl-9 pr-9 text-white
+  @apply border-1 rounded-btn cursor-pointer ![transition:all_0.3s] font-manrope-semibold min-h-12 pl-9 pr-9 text-white
 }
 
 .btn-up {
@@ -19,15 +19,15 @@
 }
 
 .btn--primary {
-  @apply bg-cta rounded-[16px] text-white text-lg hover:bg-cta-hover disabled:bg-cta-disabled
+  @apply bg-cta text-white text-lg hover:bg-cta-hover disabled:bg-cta-disabled
 }
 
 .btn--outline {
-  @apply bg-transparent border-2 px-8 rounded-[24px] text-white hover:bg-white hover:text-grey-1000 transition-colors cursor-pointer
+  @apply bg-transparent border-2 px-8 text-white hover:bg-white hover:text-grey-1000 transition-colors cursor-pointer
 }
 
 .btn-primary--outline {
-  @apply bg-transparent border px-8 rounded-[16px] text-cta hover:bg-cta hover:text-white hover:border-cta transition-colors cursor-pointer
+  @apply bg-transparent border px-8 text-cta hover:bg-cta hover:text-white hover:border-cta transition-colors cursor-pointer
 }
 
 .link--underline {

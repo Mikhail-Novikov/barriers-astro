@@ -3,6 +3,8 @@ import FilterCheckbox from "@components/FilterCheckbox";
 import { useMemo, useState } from "react";
 import { publicAsset } from "@utils/publicAsset";
 import { ZoomModal, ZoomableImage } from "./ZoomModal";
+import Modal from "./Modal";
+import ModalFeedbackForm from "./ModalFeedbackForm";
 
 /** Доступные исполнения корпуса шлагбаума. */
 type BodyStyle = "standard" | "premium";
@@ -253,7 +255,7 @@ function CompactOptionList<T extends string>({
   onSelect,
 }: CompactOptionListProps<T>): JSX.Element {
   return (
-    <ul className="sm:ml-6 space-y-4 sm:space-y-5 list-none">
+    <ul className="space-y-4 list-none sm:ml-6 sm:space-y-5">
       {items.map((item) => {
         const isActive = selectedValue === item.value;
 
@@ -335,7 +337,7 @@ export default function Hero7(): JSX.Element {
         <h2 className="mb-6 h2 xl:mb-8">Комплектация</h2>
 
         <div className="grid gap-0 grid-cols-16 4xl:grid-cols-12">
-          <div className="col-span-16 mb-5 sm:mb-6 lg:mb-8 2xl:mb-0 rounded-6 2xl:col-span-6 4xl:col-span-4 3xl:block 3xl:overflow-hidden">
+          <div className="mb-5 col-span-16 sm:mb-6 lg:mb-8 2xl:mb-0 rounded-6 2xl:col-span-6 4xl:col-span-4 3xl:block 3xl:overflow-hidden">
             {!screen["2xl"] && (
               <div className="grid grid-cols-1 mb-3 gap-y-5 md:grid-cols-2">
                 <div>
@@ -424,7 +426,7 @@ export default function Hero7(): JSX.Element {
 
           <div className="p-[20px_8px] md:p-[40px_20px] lg:p-[40px_32px] xl:p-10 2xl:p-5 3xl:p-8 4xl:p-[40px_40px_15px_40px] relative flex items-center mt-0 overflow-x-auto bg-white col-span-16 rounded-xl md:rounded-2xl 2xl:col-span-10 4xl:col-span-8 lg:ml-4 2xl:ml-8 4xl:ml-15">
             <div
-              className="group w-full cursor-zoom-in"
+              className="w-full group cursor-zoom-in"
               role="button"
               tabIndex={0}
               onClick={() => setZoomedVariant(currentVariant)}
@@ -459,6 +461,15 @@ export default function Hero7(): JSX.Element {
             </div>
           </div>
         </div>
+        <Modal
+          triggerLabel="Получить консультацию"
+          title="Форма обратной связи"
+          triggerClassName="mt-5 md:mt-8"
+          triggerVariant="primary"
+          initialMessage={`Интересует комплектация: ${currentVariant.title.replace(/&nbsp;/g, " ")}`}
+        >
+          <ModalFeedbackForm idPrefix="open-modal-sale-barrier" />
+        </Modal>
       </div>
       <ZoomModal
         isOpen={zoomedVariant !== null}
