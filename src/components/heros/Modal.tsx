@@ -4,7 +4,8 @@ import type { ReactElement, ReactNode } from 'react';
 import { Button } from '@components/Button';
 import type { ButtonVariant } from '@components/Button';
 
-import { publicAsset } from "@utils/publicAsset";
+import ModalStatusContent from './ModalStatusContent';
+import type { ModalSubmissionResult } from './ModalStatusContent';
 
 /**
  * Пропсы модального окна и кнопки, которая его открывает.
@@ -34,49 +35,10 @@ type ModalProps = {
   onClose?: () => void;
 };
 
-type ModalSubmissionResult = {
-  success: boolean;
-  message: string;
-};
-
 type ModalChildProps = {
   initialMessage?: string;
   onSubmitResult?: (result: ModalSubmissionResult) => void;
 };
-
-type ModalStatusContentProps = ModalSubmissionResult;
-
-const ModalStatusContent = ({ success, message }: ModalStatusContentProps): JSX.Element => (
-  <div className="p-10 sm:p-24 min-h-[70vh]">
-    <div className="mb-7 max-w-[400px]">
-      {success ? (
-        <img
-          src={publicAsset('/img/feedback-img-response.webp')}
-          alt="Успешная отправка сообщения"
-          className="object-contain h-auto"
-          width={400}
-          height={260}
-        /> 
-      ) : (
-        <img
-          src={publicAsset('/img/empty-search.webp')}
-          alt="Ошибка отправки сообщения"
-          className="object-contain h-auto"
-          width={424}
-          height={307}
-        />
-      )}
-    </div>
-    <div className="flex flex-col items-center">
-      <h3 className="mb-4 text-center text-[28px]/[32px] font-manrope-bold sm:text-grey-1000 xl:text-3xl/8">
-        {success ? (<>Спасибо за&nbsp;обращение!</>) : (<>Ошибка отправки сообщения</>)}
-      </h3>
-      <p className="text-center text-lg/6 font-manrope-semibold text-grey-800 sm:text-grey-700">
-        {success ? (<>Наш сотрудник свяжется с&nbsp;вами в&nbsp;ближайшее рабочее время</>) : (<>Попробуйте отправить сообщение позже</>)} 
-      </p>
-    </div>
-  </div>
-);
 
 /**
  * Компонент модального окна

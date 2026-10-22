@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 import { useFeedbackForm } from "@hooks/useFeedbackForm";
 import { Button } from "@components/Button";
 import FeedbackFormFields from "./FeedbackFormFields";
+import Modal from "./Modal";
+import ModalStatusContent from "./ModalStatusContent";
 
 type PageFeedbackFormProps = {
   /** Префикс идентификаторов HTML-элементов формы. */
@@ -11,28 +14,40 @@ type PageFeedbackFormProps = {
 
 /**
  * Форма обратной связи, отображаемая непосредственно на странице.
+ * @param props - Префикс идентификаторов и начальный текст сообщения.
+ * @returns JSX-элемент формы обратной связи с полями, кнопкой отправки и модальным окном для статуса.
  */
 export default function PageFeedbackForm({
   idPrefix = "feedback-page",
   initialMessage = "",
 }: PageFeedbackFormProps): JSX.Element {
   const form = useFeedbackForm({ idPrefix, initialMessage });
+  const [isStatusModalDismissed, setIsStatusModalDismissed] = useState(false);
+
+  useEffect(() => {
+    setIsStatusModalDismissed(false);
+  }, [form.submitSuccess, form.submitError]);
 
   return (
     <>
       <h3 className="mb-6 text-center text-[28px]/[32px] font-manrope-bold sm:text-left sm:text-3xl/10 sm:text-grey-1000 xl:text-[38px]/[45px]">
         Свяжитесь с нами
       </h3>
-      {form.submitSuccess && (
-        <div className="p-4 mb-6 text-sm text-green-800 border border-green-200 rounded-2xl bg-green-50">
-          Спасибо! Ваше сообщение отправлено. Мы свяжемся с вами в ближайшее время.
-        </div>
-      )}
-      {form.submitError && (
-        <div className="p-4 mb-6 text-sm text-red-700 border border-red-200 rounded-2xl bg-red-50" role="alert">
-          {form.submitError}
-        </div>
-      )}
+      <Modal
+        title={form.submitSuccess ? "Сообщение отправлено" : "Ошибка отправки сообщения"}
+        isOpen={(form.submitSuccess || Boolean(form.submitError)) && !isStatusModalDismissed}
+        showTrigger={false}
+        onClose={() => setIsStatusModalDismissed(true)}
+      >
+        <ModalStatusContent
+          success={form.submitSuccess}
+          message={
+            form.submitSuccess
+              ? "Спасибо! Ваше сообщение отправлено. Мы свяжемся с вами в ближайшее время."
+              : form.submitError
+          }
+        />
+      </Modal>
       <form
         noValidate
         onSubmit={form.handleSubmit}
