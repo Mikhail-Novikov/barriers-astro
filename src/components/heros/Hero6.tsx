@@ -316,15 +316,6 @@ export default function Hero6(): JSX.Element {
           {section}
         </div>
       ))}
-
-      <Button
-        className='w-full sm:w-fit 4xl:mt-3'
-        type="button"
-        variant="primary-outline"
-        onClick={resetFilters}
-      >
-        Сбросить все фильтры
-      </Button>
     </>
   );
 
@@ -381,7 +372,7 @@ export default function Hero6(): JSX.Element {
                 {activeImage.images.length > 0 && (
                   !screen.md ? (
                     <PaginationDots
-                      className="relative z-10 shrink-0 py-3 md:pt-4"
+                      className="relative z-10 py-3 shrink-0 md:pt-4"
                       count={activeImage.images.length}
                       activeIndex={activeImage.images.findIndex(
                         (image) => image.src === activeImage.src,
@@ -509,34 +500,53 @@ export default function Hero6(): JSX.Element {
           </button>
         </div>
         <div
-          className={`fixed inset-0 z-50 bg-grey-1000/40 transition-opacity duration-300 xl:hidden ${isFiltersOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+          className={`fixed perco-icons inset-0 z-50 bg-grey-1000/40 transition-opacity duration-300 xl:hidden ${isFiltersOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
           onClick={() => setIsFiltersOpen(false)}
           aria-hidden={!isFiltersOpen}
         />
+
         <aside
-          className={`absolute left-0 top-auto z-50 flex w-full max-w-[390px] flex-col rounded-2xl bg-white px-4 py-6 transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
+          className={`perco-icons fixed sm:absolute inset-0 sm:inset-auto sm:top-auto z-50 flex w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white px-4 py-6 transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className="flex justify-end mb-2">
+          <div className="flex justify-between p-4 mb-2 -mx-4 -mt-6 sm:justify-end sm:p-0 sm:mx-0 sm:mt-0 bg-grey-200 sm:bg-white">
             <button
               type="button"
               aria-label="Закрыть фильтры"
               onClick={() => setIsFiltersOpen(false)}
-              className="cursor-pointer perco-icons shrink-0 text-2xl/6 text-grey-800 hover:text-cta"
+              className="ml-4 text-black cursor-pointer shrink-0 text-2xl/6"
             >
-              <i className="perco-icon-close" />
+              <span className='sm:hidden text-grey-800 hover:text-cta'><i className="rotate-90 perco-icon-link-arrow" /></span>
+              <span className='hidden sm:block text-grey-800 hover:text-cta'><i className="perco-icon-close" /></span>
+            </button>
+            <p className='text-2xl font-manrope-semibold sm:hidden'>Фильтры</p>
+            <button
+              type="button"
+              aria-label="Сбросить фильтры"
+              onClick={resetFilters}
+              className="cursor-pointer block-inline shrink-0 text-2xl/6"
+            >
+              <span className='mr-4 block-inline sm:hidden text-red'><i className="perco-icon-mobile-no-filters" /></span>
             </button>
           </div>
           <div className="flex flex-col gap-7">{filtersContent}</div>
         </aside>
+
         <div className="grid items-start grid-cols-12 gap-5">
           <div className="col-span-4 2xl:col-span-3 flex-col gap-2 xl:sticky xl:top-[120px] hidden xl:flex">
             <aside className="px-4 bg-white rounded-3xl 4xl:px-8 py-9">
               <h3 className="mb-8 text-xl/6 font-manrope-semibold text-grey-800">
                 Выберите условие эксплуатации
               </h3>
-
               <div className="flex flex-col gap-7 4xl:gap-8">{filtersContent}</div>
+              <Button
+                className='w-full mt-8 xl:mt-10 sm:w-fit sm:block'
+                type="button"
+                variant="primary-outline"
+                onClick={resetFilters}
+              >
+                Сбросить все фильтры
+              </Button>
             </aside>
             <p className="px-8 py-2 text-md/6 text-grey-900">
               Все цены указаны со&nbsp;склада в&nbsp;Москве
