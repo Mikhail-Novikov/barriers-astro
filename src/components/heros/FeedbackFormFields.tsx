@@ -204,7 +204,7 @@ export default function FeedbackFormFields({
 
             setIsConsentDialogOpen(true);
           }}
-          className="gap-3 px-2 text-sm/5 text-grey-700 sm:text-md/6"
+          className="gap-3 px-2 text-sm/5 text-grey-700"
           label={
             <span className="text-grey-700">
               Нажимая на кнопку, вы подтверждаете, что ознакомились с&nbsp;
