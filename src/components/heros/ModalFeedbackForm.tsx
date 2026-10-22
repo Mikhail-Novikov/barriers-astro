@@ -74,7 +74,7 @@ export default function ModalFeedbackForm({
       <form
         noValidate
         onSubmit={form.handleSubmit}
-        className="flex flex-col gap-6 max-w-[500px] mt-7 rounded-3xl text-sm text-left sm:text-lg"
+        className="flex flex-col gap-4 max-w-[500px] mt-7 rounded-3xl text-sm text-left sm:text-lg"
       >
         <FeedbackFormFields
           idPrefix={idPrefix}

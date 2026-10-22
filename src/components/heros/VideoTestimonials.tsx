@@ -116,21 +116,21 @@ export default function VideoTestimonials(): JSX.Element {
                 href={videoUrl}
                 data-fancybox="video-testimonials"
                 data-caption={title}
-                className="group block cursor-zoom-in outline-none focus:outline-none focus-visible:outline-none"
+                className="block outline-none group cursor-zoom-in focus:outline-none focus-visible:outline-none"
               >
                 <span className="relative block aspect-[1.76] overflow-hidden rounded-2xl">
                   <img
                     src={image}
                     alt=""
-                    className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover transition-transform duration-300 size-full group-hover:scale-105"
                     loading={index < 3 ? 'eager' : 'lazy'}
                   />
-                  <span className="px-2 absolute bottom-2 right-2 bg-black/40 rounded-2xl font-manrope-medium text-white text-sm/7">
+                  <span className="absolute px-2 text-white bottom-2 right-2 bg-black/40 rounded-2xl font-manrope-medium text-sm/7">
                     {duration}
                   </span>
                   <VideoPlayButton />
                 </span>
-                <span className="mt-4 mr-6 block text-md/6 text-grey-1000">{title}</span>
+                <span className="block mt-3 mr-6 text-md/6 text-grey-1000">{title}</span>
               </a>
             </SwiperSlide>
           );

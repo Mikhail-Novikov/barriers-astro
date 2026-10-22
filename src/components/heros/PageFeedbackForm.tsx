@@ -51,7 +51,7 @@ export default function PageFeedbackForm({
       <form
         noValidate
         onSubmit={form.handleSubmit}
-        className="flex flex-col gap-6 text-sm rounded-3xl bg-grey-200 sm:text-lg"
+        className="flex flex-col gap-4 text-sm rounded-3xl bg-grey-200 sm:text-lg"
       >
         <FeedbackFormFields
           idPrefix={idPrefix}

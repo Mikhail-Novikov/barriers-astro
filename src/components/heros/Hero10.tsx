@@ -371,7 +371,7 @@ export default function Hero10(): JSX.Element {
             <div className="lg:w-6/12 flex items-center justify-center overflow-hidden rounded-[16px] 2xl:rounded-2xl 3xl:rounded-3xl bg-grey-200 h-[280px] sm:h-[300px] xl:h-[376px] 2xl:h-[424px] 3xl:h-[512px]">
               <img className="object-contain w-full h-full" src={activeSolution.image} alt={activeSolution.description} />
             </div>
-            <SolutionPrice classNameWrapper="mt-1 pr-1 sm:hidden" price={activeSolution.price} description={activeSolution.description} />
+            <SolutionPrice classNameWrapper="mt-1 sm:hidden" price={activeSolution.price} description={activeSolution.description} />
 
             <div className="flex flex-col items-start mt-8 text-grey-1000 lg:w-5/12 lg:mt-0">
               <div className='hidden 2xl:block'>
