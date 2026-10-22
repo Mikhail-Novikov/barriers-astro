@@ -105,11 +105,39 @@ const useBarrierCatalogEffects = ({
       event.stopPropagation();
 
       const barrierName = orderButton.getAttribute(ORDER_BUTTON_ATTR) ?? '';
-      const message = barrierName
-        ? `Нужна консультация:<br /> <strong class="font-manrope-semibold">${barrierName}</strong>`
-        : '';
+      const selectedOptions = [
+        `Ширина проезда: ${selectedMaxWidth > 0 ? `${selectedMaxWidth} м` : 'не ограничена'}`,
+        `Температура эксплуатации: ${
+          temperatures.length
+            ? temperatures.map((temperature) => temperature === 'low' ? '−60 °C' : '−40 °C').join(', ')
+            : 'не ограничена'
+        }`,
+        `Время открытия: ${
+          openingTimes.length
+            ? openingTimes.map((openingTime) => ({
+                'lessThan1.5': 'меньше 1,5 секунды',
+                '3-4': '3–4 секунды',
+                '4-6': '4–6 секунд',
+              })[openingTime]).join(', ')
+            : 'не ограничено'
+        }`,
+        `Тип стрелы: ${
+          booms.length
+            ? booms.map((boom) => ({
+                round: 'круглая',
+                square: 'прямоугольная',
+                folding: 'складная прямоугольная',
+              })[boom]).join(', ')
+            : 'не ограничен'
+        }`,
+        `Фотоэлемент: ${
+          fotoElement.length
+            ? fotoElement.map((foto) => foto === 'with' ? 'встроенный' : 'место для установки').join(', ')
+            : 'не ограничен'
+        }`,
+      ].join('\n');
 
-      barrierFeedback.set(message);
+      barrierFeedback.set(barrierName, selectedOptions);
       Fancybox.close();
       window.setTimeout(() => {
         document.querySelector<HTMLButtonElement>(MODAL_TRIGGER_SELECTOR)?.click();
@@ -118,7 +146,7 @@ const useBarrierCatalogEffects = ({
 
     document.addEventListener('click', handleOrderClick);
     return () => document.removeEventListener('click', handleOrderClick);
-  }, []);
+  }, [booms, fotoElement, openingTimes, selectedMaxWidth, temperatures]);
 
   // закрываем фильтры при изменении размера страницы
   useEffect(() => {
