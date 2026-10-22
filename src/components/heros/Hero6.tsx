@@ -1,6 +1,6 @@
 import { useMemo, useState, useRef } from 'react';
 import Modal from './Modal';
-import FeedbackForm from './FeedbackForm';
+import ModalFeedbackForm from './ModalFeedbackForm';
 import WidthSlider from './WidthSlider';
 
 import FilterCheckbox from '@components/FilterCheckbox';
@@ -352,7 +352,7 @@ export default function Hero6(): JSX.Element {
           triggerClassName="hidden"
           title="Заказать шлагбаум"
         >
-          <FeedbackForm idPrefix="open-modal-sale-barrier" />
+          <ModalFeedbackForm idPrefix="open-modal-sale-barrier" />
         </Modal>
         <ZoomModal
           isOpen={isOpen}

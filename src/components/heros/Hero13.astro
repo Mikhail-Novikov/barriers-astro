@@ -1,11 +1,11 @@
 ---
-import FeedbackForm from './FeedbackForm';
+import PageFeedbackForm from './PageFeedbackForm';
 import { publicAsset } from '../../utils/publicAsset';
 ---
 
 <section aria-label="Остались вопросы?" class="bg-grey-200 p-[40px_0_60px] sm:p-[60px_0_80px] 3xl:pt-20 3xl:pb-[108px]">
   <div class="container">
-    <div class="flex flex-col items-center xl:flex-row sm:gap-8 sm:items-start">
+    <div class="flex flex-col items-center xl:flex-row sm:items-start">
       <div class="flex flex-col justify-center gap-4 mb-4 sm:w-1/2 sm:gap-6 sm:hidden 2xl:flex sm:mb-0">
         <img 
           src={publicAsset('/img/ill-feedback.webp')}
@@ -16,7 +16,7 @@ import { publicAsset } from '../../utils/publicAsset';
         <h2 class="sm:my-1 text-lg/6 sm:text-[60px]/16 lg:font-manrope-light font-manrope-semibold text-center sm:text-left text-grey-800 sm:text-grey-700">Остались вопросы?</h2>
       </div>
       <div class="w-full max-w-[680px] 2xl:w-1/2 2xl:ml-3">
-        <FeedbackForm client:load idPrefix="feedback-page" />
+        <PageFeedbackForm client:load idPrefix="feedback-page" />
       </div>
     </div>
   </div>

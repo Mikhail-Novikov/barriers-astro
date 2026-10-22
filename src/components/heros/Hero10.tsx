@@ -3,7 +3,7 @@ import Select, { type SingleValue } from 'react-select';
 
 import { HtmlContent } from '@utils/HtmlContent';
 import Modal from '@components/heros/Modal';
-import FeedbackForm from '@components/heros/FeedbackForm';
+import ModalFeedbackForm from '@components/heros/ModalFeedbackForm';
 
 import { publicAsset } from '../../utils/publicAsset';
 
@@ -387,7 +387,7 @@ export default function Hero10(): JSX.Element {
                 triggerVariant="primary"
                 initialMessage={`Нужна консультация по готовому решению: <strong class="font-manrope-semibold">${activeSolution.title}</strong><br />Комплектация: <strong class="font-manrope-semibold">${activeSolution.description}</strong><br />${activeSolution.alternative ?` <strong class="font-manrope-semibold">${activeSolution.alternative.description}</strong>` : ''}`}
               >
-                <FeedbackForm idPrefix="open-modal-sale-barrier" />
+                <ModalFeedbackForm idPrefix="open-modal-sale-barrier" />
               </Modal>
             </div>
           </div>
