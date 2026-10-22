@@ -4,6 +4,9 @@ const BARRIERS_FIELD_NAME = 'form_text_1154';
 const BARRIERS_FIELD_EMAIL = 'form_email_1155';
 const BARRIERS_FIELD_PHONE = 'form_text_1156';
 const BARRIERS_FIELD_MESSAGE = 'form_textarea_1157';
+const BARRIERS_FIELD_ITEM = 'form_textarea_1158';
+const BARRIERS_FIELD_OPTIONS = 'form_textarea_1159';
+const BARRIERS_FIELD_QUERY_STRING = 'form_textarea_1166';
 const BARRIERS_FIELD_DATE = 'form_date_1160';
 
 require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php');
@@ -54,11 +57,25 @@ $safeRequest = $_GET;
 unset($safeRequest['pw']);
 $logData = date('c') . ' Request: ' . json_encode($safeRequest, JSON_UNESCAPED_UNICODE) . "\n";
 
+$getPlainText = static function ($value): string {
+    if (!is_scalar($value)) {
+        return '';
+    }
+
+    $decoded = html_entity_decode((string) $value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    return trim(strip_tags($decoded));
+};
+
 $arValues = array(
-    BARRIERS_FIELD_NAME => htmlspecialchars($_GET['name'] ?? ''),
-    BARRIERS_FIELD_EMAIL => htmlspecialchars($_GET['email'] ?? ''),
-    BARRIERS_FIELD_PHONE => htmlspecialchars($_GET['phone'] ?? ''),
-    BARRIERS_FIELD_MESSAGE => htmlspecialchars($_GET['message'] ?? ''),
+    BARRIERS_FIELD_NAME => $getPlainText($_GET['name'] ?? ''),
+    BARRIERS_FIELD_EMAIL => $getPlainText($_GET['email'] ?? ''),
+    BARRIERS_FIELD_PHONE => $getPlainText($_GET['phone'] ?? ''),
+    BARRIERS_FIELD_MESSAGE => $getPlainText($_GET['message'] ?? ''),
+    BARRIERS_FIELD_ITEM => $getPlainText(
+        $_GET[BARRIERS_FIELD_ITEM] ?? $_GET['barriers'] ?? ''
+    ),
+    BARRIERS_FIELD_OPTIONS => $getPlainText($_GET[BARRIERS_FIELD_OPTIONS] ?? ''),
+    BARRIERS_FIELD_QUERY_STRING => $getPlainText($_GET[BARRIERS_FIELD_QUERY_STRING] ?? ''),
     BARRIERS_FIELD_DATE => date('d.m.Y'),
 );
 
@@ -149,6 +166,9 @@ if ($smtpHost && $smtpUsername && $smtpPassword && $smtpRecipients) {
         );
         if (!empty($arValues[BARRIERS_FIELD_PHONE])) {
             $mailBody[] = 'Телефон: ' . $arValues[BARRIERS_FIELD_PHONE];
+        }
+        if (!empty($arValues[BARRIERS_FIELD_ITEM])) {
+            $mailBody[] = 'Интересует: ' . $arValues[BARRIERS_FIELD_ITEM];
         }
         $mailBody[] = 'Сообщение: ' . ($messageForEmail ?: '-');
         $mailBody[] = 'Дата: ' . $arValues[BARRIERS_FIELD_DATE];
