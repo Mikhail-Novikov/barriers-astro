@@ -121,7 +121,7 @@ export function useZoom({ imgRef, viewportRef, enabled = true }: UseZoomProps): 
   const scaleRef = useRef(scale);
   const posRef = useRef(position);
   const displaySize = useRef<DisplaySize>({ w: 0, h: 0 });
-  const dragStart = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
+  const dragStart = useRef({ x: 0, y: 0, posX: 0, posY: 0, pointerId: -1 });
   const isDraggingRef = useRef(false);
   const lastTap = useRef(0);
 
@@ -224,14 +224,17 @@ export function useZoom({ imgRef, viewportRef, enabled = true }: UseZoomProps): 
     const viewport = viewportRef.current;
     if (!img || !viewport) return;
 
+    const width = img.clientWidth;
+    const height = img.clientHeight;
+    if (width > 0 && height > 0) {
+      displaySize.current = { w: width, h: height };
+      return;
+    }
+
     const maxW = viewport.clientWidth * 0.9;
     const maxH = viewport.clientHeight * 0.9;
     const ratio = Math.min(maxW / img.naturalWidth, maxH / img.naturalHeight, 1);
-
-    displaySize.current = {
-      w: img.naturalWidth * ratio,
-      h: img.naturalHeight * ratio,
-    };
+    displaySize.current = { w: img.naturalWidth * ratio, h: img.naturalHeight * ratio };
   }, [imgRef, viewportRef]);
 
   useEffect(() => {
@@ -253,44 +256,44 @@ export function useZoom({ imgRef, viewportRef, enabled = true }: UseZoomProps): 
     const img = imgRef.current;
     if (!img) return;
 
-    const getPoint = (e: MouseEvent | TouchEvent) => (e instanceof TouchEvent ? e.touches[0] : e);
-
-    const onDown = (e: MouseEvent | TouchEvent) => {
-      if (scaleRef.current <= 1) return;
-      const p = getPoint(e);
+    const onDown = (e: PointerEvent) => {
+      if ((e.pointerType === 'mouse' && e.button !== 0) || scaleRef.current <= 1) return;
       dragStart.current = {
-        x: p.clientX,
-        y: p.clientY,
+        x: e.clientX,
+        y: e.clientY,
         posX: posRef.current.x,
         posY: posRef.current.y,
+        pointerId: e.pointerId,
       };
+      isDraggingRef.current = true;
       setIsDragging(true);
     };
 
-    const onMove = (e: MouseEvent | TouchEvent) => {
-      if (!isDraggingRef.current) return;
-      const p = getPoint(e);
-      const rawX = dragStart.current.posX + (p.clientX - dragStart.current.x);
-      const rawY = dragStart.current.posY + (p.clientY - dragStart.current.y);
+    const onMove = (e: PointerEvent) => {
+      if (!isDraggingRef.current || e.pointerId !== dragStart.current.pointerId) return;
+      e.preventDefault();
+      const rawX = dragStart.current.posX + (e.clientX - dragStart.current.x);
+      const rawY = dragStart.current.posY + (e.clientY - dragStart.current.y);
       setPosition(clampPosition(rawX, rawY));
     };
 
-    const onUp = () => setIsDragging(false);
+    const onUp = (e: PointerEvent) => {
+      if (e.pointerId !== dragStart.current.pointerId) return;
+      isDraggingRef.current = false;
+      dragStart.current.pointerId = -1;
+      setIsDragging(false);
+    };
 
-    img.addEventListener('mousedown', onDown);
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onUp);
-    img.addEventListener('touchstart', onDown, { passive: true });
-    window.addEventListener('touchmove', onMove, { passive: false });
-    window.addEventListener('touchend', onUp);
+    img.addEventListener('pointerdown', onDown);
+    window.addEventListener('pointermove', onMove, { passive: false });
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
 
     return () => {
-      img.removeEventListener('mousedown', onDown);
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseup', onUp);
-      img.removeEventListener('touchstart', onDown);
-      window.removeEventListener('touchmove', onMove);
-      window.removeEventListener('touchend', onUp);
+      img.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
     };
   }, [imgRef, enabled, clampPosition]);
 

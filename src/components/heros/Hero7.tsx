@@ -481,7 +481,7 @@ export default function Hero7(): JSX.Element {
             src={zoomedVariant.img}
             alt={zoomedVariant.title.replace(/&nbsp;/g, " ")}
             title={zoomedVariant.title.replace(/&nbsp;/g, " ")}
-            className="w-full h-full max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-4rem)] md:max-h-[calc(100dvh-2rem)] overflow-y-auto"
+            className="w-full h-full max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-4rem)] md:max-h-[calc(100dvh-2rem)] overflow-hidden"
             imgClassName="max-h-full max-w-full mx-auto sm:max-h-[312px] md:max-h-[426px] lg:max-h-[426px] xl:max-h-[478px] 2xl:max-h-[520px] 3xl:max-h-[624px] 4xl:max-h-[712px]"
           />
         )}

@@ -350,7 +350,7 @@ export default function Hero6(): JSX.Element {
         <ZoomModal
           isOpen={isOpen}
           onClose={handleClose}
-          contentClassName="w-full max-w-[1600px] h-full xl:h-[900px] overflow-y-auto bg-white md:rounded-2xl"
+          contentClassName="w-full max-w-[1600px] h-full xl:h-[900px] overflow-hidden bg-white md:rounded-2xl"
         >
           {activeImage && (
             <div className="flex flex-col items-center justify-between xl:flex-row h-full px-4 md:px-8 xl:px-[66px]">

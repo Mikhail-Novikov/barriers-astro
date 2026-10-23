@@ -51,9 +51,14 @@ export function ZoomModal({
 }: ZoomModalProps): JSX.Element | null {
   useEffect(() => {
     if (!isOpen) return;
-    const prev = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousBodyOverflow = document.body.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
+    return () => {
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+    };
   }, [isOpen]);
 
   useEffect(() => {
@@ -69,7 +74,7 @@ export function ZoomModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center md:p-4 animate-[fade_250ms_ease] sm:p-8"
+      className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden md:p-4 animate-[fade_250ms_ease] sm:p-8"
       role="dialog"
       aria-modal="true"
     >
@@ -136,7 +141,7 @@ export function ZoomableImage({
   return (
     <div
       ref={viewportRef}
-      className={`flex sm:block min-h-0 min-w-0 flex-1 flex-col justify-center touch-pan-y ${className}`}
+      className={`flex sm:block min-h-0 min-w-0 flex-1 flex-col justify-center overflow-hidden touch-pan-y ${className}`}
     >
       {title && (
         <h4 className="max-w-[95%] my-4 text-center sm:my-6 3xl:pt-10 font-manrope-semibold text-md/6 sm:text-lg/normal md:text-2xl xl:text-3xl text-grey-800">
@@ -145,7 +150,7 @@ export function ZoomableImage({
       )}
       <img
         ref={imgRef}
-        className={`select-none object-contain [will-change:transform] origin-center ${imgClassName} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`select-none object-contain [will-change:transform] origin-center bg-white ${imgClassName} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         src={src}
         alt={alt}
         style={{
