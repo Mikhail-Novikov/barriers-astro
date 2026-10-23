@@ -54,6 +54,8 @@
   --text-6xl: 52px;
 
     /* family font */
+  --font-roboto: "Roboto-Regular", sans-serif;
+  --font-roboto-semibold: "Roboto-SemiBold", sans-serif;
   --font-manrope: "Manrope", sans-serif;
   --font-manrope-light: "Manrope-Light", sans-serif;
   --font-manrope-medium: "Manrope-Medium", sans-serif;
