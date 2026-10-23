@@ -202,7 +202,7 @@ function OptionCard({
 }: OptionCardProps): JSX.Element {
   return (
     <label
-      className={`relative border bg-white rounded-2xl p-4 flex flex-col justify-between cursor-pointer ${className} ${isActive ? "border-grey-900" : "border-transparent"}`}
+      className={`relative border bg-white rounded-2xl p-4 flex flex-col justify-between cursor-pointer ${className} ${isActive ? "border-cta" : "border-transparent"}`}
     >
       <img
         src={item.img}
