@@ -464,7 +464,7 @@ export default function Hero7(): JSX.Element {
         <Modal
           triggerLabel="Получить консультацию"
           title="Форма обратной связи"
-          triggerClassName="mt-5 md:mt-8"
+          triggerClassName="w-full sm:w-fit mt-5 md:mt-8"
           triggerVariant="primary"
           initialMessage={`Интересует комплектация: ${currentVariant.title.replace(/&nbsp;/g, " ")}`}
         >
