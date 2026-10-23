@@ -311,11 +311,13 @@ export default function Hero6(): JSX.Element {
         <WidthSlider value={maxWidth} max={maxWidthLimit} onChange={setMaxWidth} />
       </fieldset>
 
-      {filterSections.map((section, index) => (
-        <div key={`filter-section-${index}`}>
-          {section}
-        </div>
-      ))}
+      <div className="mt-5 xl:mt-4 space-y-5 xl:space-y-7 4xl:space-y-8">
+        {filterSections.map((section, index) => (
+          <div key={`filter-section-${index}`}>
+            {section}
+          </div>
+        ))}
+      </div>
     </>
   );
 
@@ -506,15 +508,15 @@ export default function Hero6(): JSX.Element {
         />
 
         <aside
-          className={`perco-icons fixed sm:absolute inset-0 sm:inset-auto sm:top-auto z-50 flex w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white px-4 py-6 transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
+          className={`perco-icons fixed sm:absolute inset-0 sm:inset-auto sm:top-auto z-50 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white px-4 py-[20px_60px] transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className="flex justify-between p-4 mb-2 -mx-4 -mt-6 sm:justify-end sm:p-0 sm:mx-0 sm:mt-0 bg-grey-200 sm:bg-white">
+          <div className="flex shrink-0 justify-between p-4 mb-2 -mx-4 -mt-6 sm:justify-end sm:p-0 sm:mx-0 sm:mt-0 bg-grey-200 sm:bg-white">
             <button
               type="button"
               aria-label="Закрыть фильтры"
               onClick={() => setIsFiltersOpen(false)}
-              className="ml-4 text-black cursor-pointer shrink-0 text-2xl/6"
+              className="ml-4 sm:ml-0 md:-mr-3 text-black cursor-pointer shrink-0 text-2xl/6"
             >
               <span className='sm:hidden text-grey-800 hover:text-cta'><i className="rotate-90 perco-icon-link-arrow" /></span>
               <span className='hidden sm:block text-grey-800 hover:text-cta'><i className="perco-icon-close" /></span>
@@ -529,7 +531,7 @@ export default function Hero6(): JSX.Element {
               <span className='mr-4 block-inline sm:hidden text-red'><i className="perco-icon-mobile-no-filters" /></span>
             </button>
           </div>
-          <div className="flex flex-col gap-7">{filtersContent}</div>
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain">{filtersContent}</div>
         </aside>
 
         <div className="grid items-start grid-cols-12 gap-5">
@@ -538,7 +540,7 @@ export default function Hero6(): JSX.Element {
               <h3 className="mb-8 text-xl/6 font-manrope-semibold text-grey-800">
                 Выберите условие эксплуатации
               </h3>
-              <div className="flex flex-col gap-7 4xl:gap-8">{filtersContent}</div>
+              <div>{filtersContent}</div>
               <Button
                 className='w-full mt-8 xl:mt-10 sm:w-fit sm:block'
                 type="button"
