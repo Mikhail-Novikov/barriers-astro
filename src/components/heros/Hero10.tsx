@@ -294,7 +294,7 @@ export default function Hero10(): JSX.Element {
   return (
     <section aria-label="Готовые решения" className="bg-white p-[40px_0_60px] sm:p-[60px_0_80px] 4xl:pb-30">
       <div className="container">
-        <h3 className="mb-6 h2 xl:mb-8">Готовые решения</h3>
+        <h2 className="mb-6 h2 xl:mb-8">Готовые решения</h2>
 
         {isMounted && (
           <div className="mb-6 lg:hidden" aria-label="Варианты объектов">
