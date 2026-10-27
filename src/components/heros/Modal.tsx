@@ -161,7 +161,7 @@ const Modal = ({
           }}
         >
           <div
-            className={`relative my-auto sm:h-auto w-full max-w-[760px] sm:rounded-3xl bg-grey-200 p-[64px_16px_32px] transition-all duration-200 ease-out sm:p-[64px_40px] ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+            className={`relative my-auto h-full sm:h-fit w-full max-w-[760px] sm:rounded-3xl bg-grey-200 p-[64px_16px_32px] transition-all duration-200 ease-out sm:p-[64px_40px] overflow-y-auto ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
             role="dialog"
             aria-modal="true"
             aria-label={title}

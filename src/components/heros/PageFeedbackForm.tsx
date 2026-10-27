@@ -65,7 +65,7 @@ export default function PageFeedbackForm({
           submitButton={
             <Button
               type="submit"
-              className="w-full h-16 px-6 mt-4 text-xl font-manrope-semibold sm:text-2xl"
+              className="w-full sm:h-16 px-6 mt-4 text-xl font-manrope-semibold sm:text-2xl"
               disabled={form.isSubmitting}
             >
               {form.isSubmitting ? "Отправка..." : "Отправить"}

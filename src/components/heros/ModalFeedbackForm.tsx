@@ -12,6 +12,8 @@ type FeedbackSubmissionResult = {
 type ModalFeedbackFormProps = {
   /** Префикс идентификаторов HTML-элементов формы. */
   idPrefix?: string;
+  /** Заголовок формы. */
+  title?: string;
   /** Начальный текст сообщения. */
   initialMessage?: string;
   /** Вызывается с результатом отправки формы. */
@@ -23,6 +25,7 @@ type ModalFeedbackFormProps = {
  */
 export default function ModalFeedbackForm({
   idPrefix = "modal-feedback",
+  title = "Нужна помощь с выбором?",
   initialMessage = "",
   onSubmitResult,
 }: ModalFeedbackFormProps): JSX.Element {
@@ -66,7 +69,7 @@ export default function ModalFeedbackForm({
         loading="lazy"
       />
       <h3 className="mb-2 text-center text-[28px]/[32px] font-manrope-bold sm:text-left sm:text-grey-1000 xl:text-3xl/8">
-        Нужна помощь с&nbsp;выбором?
+        {title}
       </h3>
       <p className="text-lg/6 font-manrope-semibold sm:text-left text-grey-800 sm:text-grey-700">
         Мы&nbsp;свяжемся с&nbsp;вами в&nbsp;ближайшее рабочее время

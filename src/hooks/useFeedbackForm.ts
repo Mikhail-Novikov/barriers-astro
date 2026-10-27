@@ -40,7 +40,7 @@ export function useFeedbackForm({
     message:
       initialMessage ||
       (pendingBarrierFeedback.barrierType
-        ? `Нужна консультация:<br /> <strong class="font-manrope-semibold">${pendingBarrierFeedback.barrierType}</strong>`
+        ? `Здравствуйте!<br />Интересует модель <strong class="font-manrope-semibold">&ldquo;${pendingBarrierFeedback.barrierType}&rdquo;</strong>.`
         : ""),
   }));
   const [errors, setErrors] = useState<FeedbackFormErrors>({});
