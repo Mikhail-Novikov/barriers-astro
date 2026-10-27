@@ -2,7 +2,7 @@
   @apply not-italic -tracking-wide font-manrope-bold text-grey-1000
          text-[28px]/8        /* < 500px */
          sm:text-[32px]/10
-         2xl:text-[38px]/11
+         xl:text-[38px]/11
 }
 
 .h3 {
