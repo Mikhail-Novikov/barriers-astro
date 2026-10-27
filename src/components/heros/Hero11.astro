@@ -1,16 +1,19 @@
 ---
 import sm1 from '../../assets/img/setup-maintenance/sm-1.png';
+import sm1_mobile_1400 from '../../assets/img/setup-maintenance/sm-1-mobile.png';
 import sm2 from '../../assets/img/setup-maintenance/sm-2.png';
 
 const cards = [
   {
     image: sm1,
+    imageMobile1400: sm1_mobile_1400,
     title: 'Встроенный блок управления',
     description: '<p>Удобный доступ к&nbsp;блоку управления обеспечивает его простое обслуживание.</p><p>Датчик открытия дверцы позволяет отслеживать несанкционированный доступ к&nbsp;внутренним элементам шлагбаума, включая механизм ручного поднятия стрелы.<br>Монтажные швеллеры и&nbsp;пластины идут в&nbsp;комплекте.</p>',
     imagePosition: 'left' as const,
   },
   {
     image: sm2,
+    imageMobile1400: null,
     title: 'Настройка через<br>мобильное приложение',
     description: '<p>Мобильное приложение для настройки шлагбаума устанавливается на&nbsp;смартфон администратора, отвечающего за&nbsp;управление работой шлагбаума.</p><p>Для настройки шлагбаума используются технологии беспроводной передачи данных Bluetooth. Команды от&nbsp;приложения поступают в&nbsp;плату управления шлагбаума через модуль GSM&nbsp;/ BLE.</p>',
     imagePosition: 'right' as const,
@@ -26,14 +29,19 @@ const cards = [
       <div class="min-w-0 pb-2 overflow-x-auto">
         <div class="grid md:min-w-[923px] md:grid-cols-2 gap-5 3xl:gap-6">
           {cards.map((card) => (
-            <article class={`flex min-w-0 flex-col gap-x-8 4xl:gap-x-10 overflow-hidden rounded-3xl bg-white p-6 xl:p-8 4xl:p-10 2xl:flex-row ${card.imagePosition === 'right' ? '2xl:flex-row-reverse' : ''}`}>
+            <article class={`flex min-w-0 flex-col sm:gap-8 4xl:gap-10 overflow-hidden rounded-3xl bg-white p-6 xl:p-8 4xl:p-10 2xl:flex-row ${card.imagePosition === 'right' ? '2xl:flex-row-reverse' : ''}`}>
               <div class="flex-shrink-0 mb-8 md:mb-0 2xl:w-6/12">
-                <img
-                  class={`sm:h-[310px] 4xl:h-[380px] rounded-2xl object-cover ${card.imagePosition === 'right' ? 'm-auto h-[310px]' : 'h-[250px]'}`}
-                  src={card.image.src}
-                  alt={card.title}
-                  loading="lazy"
-                />
+                <picture>
+                  {card.imageMobile1400 && (
+                    <source media="(max-width: 1400px)" srcset={card.imageMobile1400.src} />
+                  )}
+                  <img
+                    class={`sm:h-[310px] 4xl:h-[380px] rounded-2xl object-cover ${card.imagePosition === 'right' ? 'm-auto h-[310px]' : 'h-[191px]'}`}
+                    src={card.image.src}
+                    alt={card.title}
+                    loading="lazy"
+                  />
+                </picture>
               </div>
               <div class="flex flex-col flex-1 gap-3 text-grey-1000 2xl:w-6/12">
                 <h3 class="font-bold 4xl:mt-10 text-2xl/8" set:html={card.title} />

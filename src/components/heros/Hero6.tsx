@@ -486,7 +486,7 @@ export default function Hero6(): JSX.Element {
           )}
         </ZoomModal>
 
-        <h2 className="mb-6 h2 xl:mb-8">Модели шлагбаумов</h2>
+        <h2 className="mb-5 sm:mb-6 h2 xl:mb-8">Модели шлагбаумов</h2>
         <div className="mb-4 perco-icons xl:hidden">
           <button
             type="button"
@@ -558,7 +558,7 @@ export default function Hero6(): JSX.Element {
           <div
             ref={galleryRef}
             style={{ overflowAnchor: "none" }}
-            className="grid grid-cols-1 col-span-12 gap-4 3xl:gap-5 xl:col-span-8 2xl:col-span-9 sm:grid-cols-2 2xl:grid-cols-3"
+            className="grid grid-cols-1 col-span-12 gap-3 sm:gap-4 3xl:gap-5 xl:col-span-8 2xl:col-span-9 sm:grid-cols-2 2xl:grid-cols-3"
           >
             {filteredBarriers.map((barrier) => {
               const folderName = barrier.imageNamePreview.replace(/-preview$/, "");
