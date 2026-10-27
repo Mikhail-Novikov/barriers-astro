@@ -7,7 +7,8 @@ export type BarrierFeedbackData = {
 };
 
 /**
- * Хранилище данных о выбранном типе шлагбаума и фильтрах для передачи между компонентами
+ * Внутреннее состояние модуля: данные о выбранном типе шлагбаума и фильтрах,
+ * передаваемые между компонентами
  */
 let pendingFeedback: BarrierFeedbackData = {
   barrierType: '',
@@ -19,30 +20,40 @@ let pendingFeedback: BarrierFeedbackData = {
  */
 export const barrierFeedback = {
   /**
-   * Установить сообщение
+   * Установить данные обратной связи
    * @param barrierType - выбранный тип шлагбаума
    * @param options - выбранные значения фильтров
-   * @return {void}
    */
   set: (barrierType: string, options: string): void => {
     pendingFeedback = { barrierType, options };
   },
-  peekData: (): BarrierFeedbackData => pendingFeedback,
+
+  /**
+   * Получить текущие данные обратной связи без очистки
+   * @returns копия выбранного типа шлагбаума и фильтров
+   */
+  peekData: (): BarrierFeedbackData => ({ ...pendingFeedback }),
+
+  /**
+   * Очистить хранилище данных (сбросить в пустые значения)
+   */
   clear: (): void => {
     pendingFeedback = { barrierType: '', options: '' };
   },
+
   /**
-   * Получить и очистить сообщение
-   * @return {BarrierFeedbackData} выбранный тип и фильтры
+   * Получить и очистить данные обратной связи
+   * @returns копия выбранного типа шлагбаума и фильтров
    */
   consume: (): BarrierFeedbackData => {
-    const feedback = pendingFeedback;
+    const feedback = { ...pendingFeedback };
     barrierFeedback.clear();
     return feedback;
   },
+
   /**
-   * Получить текущее сообщение
-   * @return {string} выбранный тип шлагбаума
-   */ 
+   * Получить текущий выбранный тип шлагбаума без очистки
+   * @returns выбранный тип шлагбаума
+   */
   peek: (): string => pendingFeedback.barrierType,
 };
