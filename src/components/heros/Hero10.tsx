@@ -113,14 +113,14 @@ const solutions: Solution[] = [
     price: "151 020 ₽",
     description: "Шлагбаум GS04.1&nbsp;с прямоугольной стрелой 4,3&nbsp;м и&nbsp;опорной стойкой GBS1",
     specifics:
-      "Презентабельный внешний вид, удобный доступ сотрудников и посетителей, средний поток, работа в составе СКУД или парковочной системы.",
-    important: "Доступ сотрудников и посетителей по картам и брелокам.",
+      "Презентабельный внешний вид, удобный доступ сотрудников и&nbsp;посетителей, средний поток, работа в&nbsp;составе СКУД или парковочной системы.",
+    important: "Доступ сотрудников и&nbsp;посетителей по&nbsp;картам и&nbsp;брелокам.",
     additions: [
       "Светодиодная лента GBL4.3 для дополнительной подсветки стрелы шлагбаума GBO4.3",
-      "Брелок-передатчик радиоуправления YET2129&nbsp;с динамическим кодом",
+      "Брелок-передатчик радиоуправления YET2129 с&nbsp;динамическим кодом",
       "Устройство радиоуправления YET404PC",
       "Считыватель дальнего действия RU5306T",
-      "Стойка для установки оборудования (2,2 м) BH04",
+      "Стойка для установки оборудования (2,2&nbsp;м) BH04",
       "Стойка для фотоэлемента безопасности GDS1",
       "Островок безопасности PI-01",
       "Ограждение для стойки шлагбаума GM3",
@@ -132,12 +132,12 @@ const solutions: Solution[] = [
     image: publicAsset("/img/ready‑made-solutions/residential-garage.webp"),
     price: "121 862 ₽",
     description:
-      "Шлагбаум GS14 с круглой стрелой 4,3&nbsp;м, опорной стойка GBS1 и комплектом фотоэлементов GD1",
+      "Шлагбаум GS14 с&nbsp;круглой стрелой 4,3&nbsp;м, опорной стойка GBS1 и&nbsp;комплектом фотоэлементов GD1",
     specifics: "Въезд для своих, бюджетное решение, низкий поток.",
     important:
       "Доступ по брелокам; GSM-модуль не используется, чтобы не провоцировать утечку номера.",
     additions: [
-      "Брелок-передатчик радиоуправления YET2129&nbsp;с динамическим кодом",
+      "Брелок-передатчик радиоуправления YET2129 с&nbsp;динамическим кодом",
       "Устройство радиоуправления YET404PC",
       "Лампа сигнальная со&nbsp;встроенной антенной SL-U",
       "Стойка для фотоэлемента безопасности GDS1",
@@ -152,14 +152,14 @@ const solutions: Solution[] = [
     image: publicAsset("/img/ready‑made-solutions/residential-garage.webp"),
     price: "121 862 ₽",
     description:
-      "Шлагбаум GS14 с круглой стрелой 4,3&nbsp;м, опорной стойкой GBS1 и комплектом фотоэлементов GD1",
+      "Шлагбаум GS14 с&nbsp;круглой стрелой 4,3&nbsp;м, опорной стойкой GBS1 и&nbsp;комплектом фотоэлементов GD1",
     specifics:
-      "Бюджетное решение, удобный доступ жильцам и возможность пропускать доставку в закрытый двор.",
+      "Бюджетное решение, удобный доступ жильцам и&nbsp;возможность пропускать доставку в&nbsp;закрытый двор.",
     additions: [
       "GSM / BLE модуль управления шлагбаумом GCM1",
-      "Брелок-передатчик радиоуправления YET2129&nbsp;с динамическим кодом",
+      "Брелок-передатчик радиоуправления YET2129 с&nbsp;динамическим кодом",
       "Устройство радиоуправления YET404PC",
-      "Лампа сигнальная со встроенной антенной SL-U",
+      "Лампа сигнальная со&nbsp;встроенной антенной SL-U",
       "Стойка для фотоэлемента безопасности GDS1",
       "Островок безопасности PI-01",
       "Ограждение для стойки шлагбаума GM3",
@@ -172,14 +172,14 @@ const solutions: Solution[] = [
     image: publicAsset("/img/ready‑made-solutions/snt.webp"),
     price: "141 871 ₽",
     description:
-      "Шлагбаум GS16 с круглой стрелой 6,3&nbsp;м, опорной стойкой GBS1 и комплектом фотоэлементов GD1",
+      "Шлагбаум GS16 с&nbsp;круглой стрелой 6,3&nbsp;м, опорной стойкой GBS1 и&nbsp;комплектом фотоэлементов GD1",
     specifics:
       "Бюджетное решение, удобный доступ жильцам и возможность пропускать доставку в закрытый двор.",
     additions: [
       "GSM / BLE модуль управления шлагбаумом GCM1",
-      "Брелок-передатчик радиоуправления YET2129&nbsp;с динамическим кодом",
+      "Брелок-передатчик радиоуправления YET2129 с&nbsp;динамическим кодом",
       "Устройство радиоуправления YET404PC",
-      "Лампа сигнальная со встроенной антенной SL-U",
+      "Лампа сигнальная со&nbsp;встроенной антенной SL-U",
       "Стойка для фотоэлемента безопасности GDS1",
       "Островок безопасности PI-01",
       "Ограждение для стойки шлагбаума GM3",
@@ -191,7 +191,7 @@ const solutions: Solution[] = [
     image: publicAsset("/img/ready‑made-solutions/underground-parking.webp"),
     price: "159 706 ₽",
     description:
-      "Шлагбаум GS04.1 с прямоугольной стрелой 3&nbsp;м и шарниром для складной стрелы GBF1",
+      "Шлагбаум GS04.1 с&nbsp;прямоугольной стрелой 3&nbsp;м и&nbsp;шарниром для складной стрелы GBF1",
     specifics:
       "Бюджетное решение, удобный доступ жильцам и возможность пропускать доставку в закрытый двор.",
     additions: [
@@ -207,7 +207,7 @@ const solutions: Solution[] = [
     image: publicAsset("/img/ready‑made-solutions/parking-space.webp"),
     price: "183 297 ₽",
     description:
-      "Шлагбаум GF03.1&nbsp;с круглой стрелой 3&nbsp;м и&nbsp;буфером",
+      "Шлагбаум GF03.1 с&nbsp;круглой стрелой 3&nbsp;м и&nbsp;буфером",
     specifics: "Бюджетное решение, широкий проезд для техники, низкий поток.",
     additions: [
       "Стойка для фотоэлемента безопасности GDS1",
@@ -221,7 +221,7 @@ const solutions: Solution[] = [
     image: publicAsset("/img/ready‑made-solutions/checkpoint.webp"),
     price: "164 186 ₽",
     description:
-      "Шлагбаум GS06.1 с круглой стрелой 6,3 м и опорной стойкой GBS1",
+      "Шлагбаум GS06.1 с&nbsp;круглой стрелой 6,3&nbsp;м и&nbsp;опорной стойкой GBS1",
     specifics:
       "Ограниченное пространство, работа в составе парковочной системы.",
     important: "Нужны элементы подсветки, чтобы избежать аварий.",
@@ -231,7 +231,7 @@ const solutions: Solution[] = [
       "Островок безопасности PI-01",
       "Ограждение для стойки шлагбаума GM3",
       "Стойка для считывателя GM5",
-      "Стойка для установки оборудования (2,2 м) BH04",
+      "Стойка для установки оборудования (2,2&nbsp;м) BH04",
     ],
   },
   {
@@ -239,17 +239,17 @@ const solutions: Solution[] = [
     title: "КПП — холодный климат",
     image: publicAsset("/img/ready‑made-solutions/checkpoint-north.webp"),
     price: "202 515 ₽",
-    description: "Шлагбаум GS14N с круглой стрелой 4,3&nbsp;м и опорной стойкой GBS1",
+    description: "Шлагбаум GS14N с&nbsp;круглой стрелой 4,3&nbsp;м и&nbsp;опорной стойкой GBS1",
     specifics:
-      "Широкий проезд, удобный доступ сотрудникам, высокий поток посетителей, работа в составе СКУД.",
+      "Широкий проезд, удобный доступ сотрудникам, высокий поток посетителей, работа в&nbsp;составе СКУД.",
     important:
-      "Возможна работа в регионах с экстремально низкими температурами.",
+      "Возможна работа в&nbsp;регионах с&nbsp;экстремально низкими температурами.",
     additions: [
       "Считыватель дальнего действия IR10.1 (EMM)",
       "Островок безопасности PI-01",
       "Ограждение для стойки шлагбаума GM3",
       "Стойка для считывателя GM5",
-      "Стойка для установки оборудования (2,2 м) BH04",
+      "Стойка для установки оборудования (2,2&nbsp;м) BH04",
     ],
   },
   {
@@ -257,11 +257,11 @@ const solutions: Solution[] = [
     title: "Открытая парковка — холодный климат",
     image: publicAsset("/img/ready‑made-solutions/parking-north.webp"),
     price: "252 017 ₽",
-    description: "Шлагбаум GF13N с круглой стрелой 3&nbsp;м и буфером",
+    description: "Шлагбаум GF13N с&nbsp;круглой стрелой 3&nbsp;м и&nbsp;буфером",
     specifics:
       "Широкий проезд, удобный доступ сотрудникам, высокий поток посетителей, работа в&nbsp;составе СКУД.",
     important:
-      "Возможна работа в регионах с экстремально низкими температурами.",
+      "Возможна работа в&nbsp;регионах с&nbsp;экстремально низкими температурами.",
     additions: [
       "Островок безопасности PI-01",
       "Ограждение для стойки шлагбаума GM3",
@@ -332,7 +332,7 @@ export default function Hero10(): JSX.Element {
           </div>
         )}
 
-        <div className="flex-wrap hidden gap-2 mb-8 perco-icons xl:gap-3 lg:flex" role="tablist" aria-label="Варианты объектов">
+        <div className="flex-wrap hidden gap-2 mb-8 perco-icons 2xl:gap-3 lg:flex" role="tablist" aria-label="Варианты объектов">
           {solutions.map((solution, index) => {
             const isActive = index === activeIndex;
 
@@ -341,7 +341,7 @@ export default function Hero10(): JSX.Element {
                 key={solution.tag}
                 type="button"
                 id={`solution-tab-${index}`}
-                className={`solution-tab flex cursor-pointer items-center rounded-xl border px-3 h-12 hover:bg-grey-300 font-manrope-semibold text-left text-lg/6 transition-colors ${isActive ? 'border-cta bg-grey-200 text-grey-1000' : 'border-transparent bg-grey-200 text-grey-800'}`}
+                className={`solution-tab flex cursor-pointer items-center rounded-xl border px-3 h-12 hover:bg-grey-300 font-manrope-semibold text-left 3xl:text-lg/6 transition-colors ${isActive ? 'border-cta bg-grey-200 text-grey-1000' : 'border-transparent bg-grey-200 text-grey-800'}`}
                 role="tab"
                 aria-selected={isActive}
                 aria-controls={`solution-panel-${index}`}
@@ -358,7 +358,7 @@ export default function Hero10(): JSX.Element {
 
         <div className="md:max-w-[480px] lg:max-w-full">
           <div className='block lg:w-6/12 2xl:hidden'>
-            <h4 className="mb-4 xl:mb-5 font-manrope-bold text-[20px]/6 lg:text-[24px]/7 xl:text-[32px]/10">{activeSolution.title}</h4>
+            <h4 className="mb-4 2xl:mb-5 font-manrope-semibold text-xl/6 sm:text-2xl/8 xl:text-3xl/10">{activeSolution.title}</h4>
             <SolutionPrice classNameWrapper="mb-4 hidden sm:flex" price={activeSolution.price} description={activeSolution.description} />
           </div>
 
@@ -385,9 +385,9 @@ export default function Hero10(): JSX.Element {
                 title="Форма обратной связи"
                 triggerClassName="w-full sm:w-[232px]"
                 triggerVariant="primary"
-                initialMessage={`Нужна консультация по готовому решению: <strong class="font-manrope-semibold">${activeSolution.title}</strong><br />Комплектация: <strong class="font-manrope-semibold">${activeSolution.description}</strong><br />${activeSolution.alternative ?` <strong class="font-manrope-semibold">${activeSolution.alternative.description}</strong>` : ''}`}
+                initialMessage={`Здравствуйте! <br />Мне нужна консультация по готовому решению <strong class="font-manrope-semibold">&ldquo;${activeSolution.title}&rdquo;</strong>.<br />Комплектация <strong class="font-manrope-semibold">&ldquo;${activeSolution.description}&rdquo;</strong>.<br />${activeSolution.alternative ?` <strong class="font-manrope-semibold">&ldquo;${activeSolution.alternative.description}&rdquo;</strong>` : ''}`}
               >
-                <ModalFeedbackForm idPrefix="open-modal-sale-barrier" />
+                <ModalFeedbackForm idPrefix="open-modal-sale-barrier" title="Оформить заказ" />
               </Modal>
             </div>
           </div>

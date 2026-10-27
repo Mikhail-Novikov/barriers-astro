@@ -68,10 +68,10 @@ const equipmentCards = [
       ))}
     </div>
 
-    <div class="lg:grid grid-cols-16 rounded-3xl bg-white border border-grey-400 xl:items-start gap-10 p-[20px_16px] xl:p-[52px_60px] mt-13 lg:mt-18 2xl:mt-23 text-grey-1000">
-      <div class="min-w-0 col-span-16 lg:col-span-5 xl:col-span-4 3xl:col-span-3">
-        <h4 class="mb-3 sm:mb-6 text-2xl/8 3xl:text-3xl/10 font-manrope-semibold">Дополнительное оборудование</h4>
-        <div class="flex flex-col-reverse gap-3 sm:flex-row-reverse mb-7 sm:mb-10">
+    <div class="lg:grid grid-cols-16 rounded-3xl bg-white border border-grey-400 xl:items-start gap-5 2xl:gap-10 3xl:gap-1 4xl:gap-4 p-[20px_0_20px_20px] xl:p-[52px_0_52px_60px] 4xl:p-[52px_60px] mt-13 lg:mt-18 2xl:mt-23 text-grey-1000">
+      <div class="min-w-0 col-span-16 lg:col-span-4 xl:col-span-5 2xl:col-span-4 3xl:col-span-4 4xl:col-span-3">
+        <h4 class="mb-3 sm:mb-5 lg:mb-10 xl:mb-6 2xl:mb-10 3xl:mb-6 text-xl/6 sm:text-2xl/8 xl:text-3xl/10 font-manrope-semibold xl:font-manrope-bold">Дополнительное оборудование</h4>
+        <div class="flex flex-col-reverse gap-3 sm:flex-row-reverse mb-7 sm:mb-10 mr-5">
           <CarouselControls
             client:load
             controlEvent="equipment-carousel"
@@ -82,7 +82,7 @@ const equipmentCards = [
           <p class="text-md/6">К&nbsp;шлагбауму можно подключить светофор, видеорегистратор, сирену и&nbsp;другое дополнительное оборудование.</p>
         </div>
       </div>
-      <div class="min-w-0 mt-2 col-span-16 lg:col-span-11 xl:col-span-12 3xl:col-span-13 lg:ml-11">
+      <div class="min-w-0 mt-2 col-span-16 lg:col-span-12 xl:col-span-11 2xl:col-span-12 3xl:col-span-12 4xl:col-span-13 3xl:ml-15 4xl:ml-10 4xl:mb-15">
         <EquipmentCarousel cards={equipmentCards} client:load />
       </div>
     </div>

@@ -462,11 +462,11 @@ export default function Hero7(): JSX.Element {
           </div>
         </div>
         <Modal
-          triggerLabel="Получить консультацию"
+          triggerLabel="Задать вопрос"
           title="Форма обратной связи"
           triggerClassName="w-full sm:w-fit mt-5 md:mt-8"
           triggerVariant="primary"
-          initialMessage={`Интересует комплектация: ${currentVariant.title.replace(/&nbsp;/g, " ")}`}
+          initialMessage={`Здравствуйте!<br />Интересует модель <strong class="font-manrope-semibold">&ldquo;${currentVariant.title.replace(/&nbsp;/g, " ")}&rdquo;</strong>.`}
         >
           <ModalFeedbackForm idPrefix="open-modal-sale-barrier" />
         </Modal>

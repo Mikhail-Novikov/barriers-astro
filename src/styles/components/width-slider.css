@@ -148,7 +148,7 @@
 .width-slider-label-min,
 .width-slider-label-max {
   color: var(--color-grey-600);
-  font-family: "Inter-Bold", sans-serif;
+  font-family: "Manrope-SemiBold", sans-serif;
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
@@ -156,17 +156,21 @@
 
 .width-slider-track.width-slider-track--limited ~ .width-slider-labels .width-slider-label-min,
 .width-slider-track.width-slider-track--limited ~ .width-slider-labels .width-slider-label-max {
-  color: var(--color-cta);
+  color: var(--color-grey-600);
 }
 
 .width-slider-value {
-  font-family: "Inter-Bold", sans-serif;
+  font-family: "Manrope-SemiBold", sans-serif;
   position: absolute;
   padding: 0.125rem 0.375rem;
   transform: translateX(-50%);
   background-color: var(--color-white);
-  color: var(--color-grey-900);
-  font-size: 18px;
+  color: var(--color-grey-1000);
+  font-size: 16px;
+  border-radius: 0.5rem;
+  @media screen and (min-width: 1601px) {
+    font-size: 18px;
+  }
   font-weight: 600;
   line-height: 1.5rem;
   pointer-events: none;

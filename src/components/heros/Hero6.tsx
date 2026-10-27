@@ -52,7 +52,7 @@ const TemperaturesOptions: readonly FilterSectionOption<TemperatureOption>[] = [
 /** Подписи и значения фильтра по времени открытия шлагбаума. */
 const openingTimeOptions: readonly FilterSectionOption<OpeningTimeFilterOption>[] = [
   ['lessThan1.5', 'меньше 1,5 секунды'],
-  ['3-4', '3-4 секунд'],
+  ['3-4', '3-4 секунды'],
   ['4-6', '4–6 секунд'],
 ] as const;
 
@@ -345,7 +345,7 @@ export default function Hero6(): JSX.Element {
           triggerClassName="hidden"
           title="Заказать шлагбаум"
         >
-          <ModalFeedbackForm idPrefix="open-modal-sale-barrier" />
+          <ModalFeedbackForm idPrefix="open-modal-sale-barrier" title="Оформить заказ" />
         </Modal>
         <ZoomModal
           isOpen={isOpen}

@@ -212,7 +212,7 @@ export default function FeedbackFormFields({
                 href="https://www.perco.ru/polzovatelskoe-soglashenie/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline underline-offset-2"
+                className="underline underline-offset-2 hover:text-cta"
               >
                 Пользовательским соглашением
               </a>{" "}
@@ -221,7 +221,7 @@ export default function FeedbackFormFields({
                 href="https://www.perco.ru/politika-konfidentsialnosti/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline underline-offset-2"
+                className="underline underline-offset-2 hover:text-cta"
               >
                 Политикой конфиденциальности
               </a>{" "}
