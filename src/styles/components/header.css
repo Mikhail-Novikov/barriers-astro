@@ -1,14 +1,14 @@
 .h2 {
   @apply not-italic -tracking-wide font-manrope-bold text-grey-1000
          text-[28px]/8        /* < 500px */
-         sm:text-[32px]/10
-         xl:text-[38px]/11
+         sm:text-[32px]/[120%]
+         xl:text-[38px]/[120%]
 }
 
 .h3 {
-  @apply not-italic font-manrope-bold text-grey-1000 text-[28px]/8 sm:text-[32px]/10;
+  @apply not-italic font-manrope-bold text-grey-1000 text-[20px]/[120%] sm:text-[24px]/[120%];
 }
 
 .h4 {
-  @apply not-italic font-manrope-semibold text-grey-1000 text-[20px]/6 lg:text-[24px]/8;
+  @apply not-italic font-manrope-bold text-grey-1000 text-[20px]/[120%] md:text-[24px]/[120%];
 }

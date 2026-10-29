@@ -46,7 +46,6 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
   const { galleryRef } = useLightGallery({
     items: galleryItems,
     selector: 'a[data-fancybox="about"]',
-    captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
   });
 
   /**
@@ -73,15 +72,6 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
 
   return (
     <div ref={galleryRef} className="about-gallery">
-      <AboutCarouselControls
-        start={startIndex + 1}
-        end={Math.min(startIndex + slidesPerPage, images.length)}
-        onPrevious={() => move('prev')}
-        onNext={() => move('next')}
-        isAtStart={isAtStart}
-        isAtEnd={isAtEnd}
-      />
-
       <Swiper
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
@@ -115,6 +105,15 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
           </SwiperSlide>
         ))}
       </Swiper>
+      <AboutCarouselControls
+        className="mt-10 !mb-0"
+        start={startIndex + 1}
+        end={Math.min(startIndex + slidesPerPage, images.length)}
+        onPrevious={() => move('prev')}
+        onNext={() => move('next')}
+        isAtStart={isAtStart}
+        isAtEnd={isAtEnd}
+      />
     </div>
   );
 }

@@ -62,7 +62,6 @@ export default function VideoTestimonials(): JSX.Element {
   const { galleryRef } = useLightGallery({
     items: testimonials.map(({ title, videoUrl }) => ({ src: videoUrl, subHtml: title })),
     selector: 'a[data-fancybox="video-testimonials"]',
-    captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
     mainClass: 'hero-video',
     controls: false,
     navigation: false,
@@ -130,7 +129,7 @@ export default function VideoTestimonials(): JSX.Element {
                   </span>
                   <VideoPlayButton />
                 </span>
-                <span className="block mt-3 mr-6 text-md/6 text-grey-1000">{title}</span>
+                <span className="block mt-3 mr-6 text-sm/5 4xl:text-md/6 text-grey-1000 font-manrope-semibold">{title}</span>
               </a>
             </SwiperSlide>
           );

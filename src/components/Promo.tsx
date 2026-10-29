@@ -54,7 +54,7 @@ export default function Promo(): JSX.Element {
 
       <div className="container">
         <div className="h-full sm:absolute top-0 pt-5 sm:pt-12 pb-10 xl:pt-18 2xl:pt-21 3xl:pt-[116px] max-w-[500px] text-left text-black sm:text-white">
-          <h1 className="text-[38px]/12 xl:text-6xl/14 font-manrope-bold">
+          <h1 className="text-[38px]/[120%] md:text-[44px]/[120%] xl:text-6xl/[110%] font-manrope-semibold">
             Шлагбаумы 
           </h1>
           <ul className="perco-icons flex flex-col gap-y-1.5 sm:gap-y-1 mt-6 xl:mt-8 2xl:mt-12 3xl:mt-14.5 font-manrope-semibold text-lg/5 text-grey-900 sm:text-white">

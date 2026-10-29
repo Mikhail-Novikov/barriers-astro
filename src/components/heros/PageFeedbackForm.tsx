@@ -30,9 +30,9 @@ export default function PageFeedbackForm({
 
   return (
     <>
-      <h3 className="mb-6 text-center text-[28px]/[32px] font-manrope-bold sm:text-left sm:text-3xl/10 sm:text-grey-1000 xl:text-[38px]/[45px]">
-        Свяжитесь с нами
-      </h3>
+      <h2 className="mb-6 text-center sm:text-left sm:text-grey-1000 h2">
+        Свяжитесь с&nbsp;нами
+      </h2>
       <Modal
         title={form.submitSuccess ? "Сообщение отправлено" : "Ошибка отправки сообщения"}
         isOpen={(form.submitSuccess || Boolean(form.submitError)) && !isStatusModalDismissed}

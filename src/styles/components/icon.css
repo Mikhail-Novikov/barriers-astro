@@ -2,8 +2,8 @@
 @font-face {
   font-family: 'Percoicon';
   src: local('Percoicon'), local('Percoicon'),
-      url('../../assets/fonts/Icons/barriers.ttf') format('truetype'),
       url('../../assets/fonts/Icons/barriers.woff2') format('woff2'),
+      url('../../assets/fonts/Icons/barriers.ttf') format('truetype'),
       url('../../assets/fonts/Icons/barriers.woff') format('woff');
   font-weight: normal;
   font-style: normal;

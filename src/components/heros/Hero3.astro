@@ -2,15 +2,17 @@
 import warrantyImage from '../../assets/img/5-years-warranty.jpg';
 import { publicAsset } from '../../utils/publicAsset';
 import Video from '@components/Video';
+
+const wrapperStyle = "sm:p-[12px_0_24px] md:p-[24px_32px_24px] lg:p-[32px_32px_40px] xl:p-[28px_28px_32px] 3xl:p-[32px_32px_40px] 4xl:p-[32px_40px]";
 ---
 
 <section id="execution" aria-label="Шлагбаум, который прослужит долго" class="pt-10 bg-grey-100 xl:pt-15 3xl:pt-20">
   <div class="container">
     <h2 class="mb-6 h2 xl:mb-8">Шлагбаум, который прослужит долго</h2>
 
-    <div class="flex flex-col gap-5 xl:flex-row 4xl:gap-8 ">
-      <div class="col-span-12 xl:w-1/2 p-0 md:p-[20px_24px] xl:p-[32px_32px_40px_32px] 3xl:p-[32px_40px_40px_40px] bg-white md:border border-grey-400 rounded-[24px]">
-        <div>
+    <div class="flex flex-col gap-5 xl:flex-row gap-y-1 md:gap-y-5">
+      <div class={`col-span-12 xl:w-1/2 p-0 bg-white md:border border-grey-400 rounded-[24px] sm:-mt-3 md:mt-0 ${wrapperStyle}`}>
+        <div class="max-w-[600px]">
           <Video
             client:load
             className="w-full min-h-full object-cover rounded-3xl cursor-pointer"
@@ -25,26 +27,26 @@ import Video from '@components/Video';
           />
         </div>
         <div class="mt-5 lg:mt-10 max-w-[600px]">
-          <h4 class="mb-4 h4">Качественное антикоррозийное покрытие</h4>
+          <h3 class="mb-4 h3">Качественное антикоррозийное покрытие</h3>
           <ul class="pl-0 space-y-4 list-none text-md/6 text-grey-1000">
             <li>
-              <div class="mb-2 text-md/6 font-manrope-semibold">Качество подготовки поверхности</div>
+              <div class="mb-1 text-md/6 font-manrope-semibold">Качество подготовки поверхности</div>
               <p class="m-0 text-md/6">Специальная линия химической подготовки работает в&nbsp;автоматическом режиме, что минимизирует возможность нарушения технологического процесса.</p>
             </li>
             <li>
-              <div class="mb-2 font-manrope-semibold">Качество краски</div>
+              <div class="mb-1 font-manrope-semibold">Качество краски</div>
               <p class="m-0 text-md/6">Для тумб шлагбаумов используется краска, предназначенная для многолетней эксплуатации на&nbsp;улице.</p>
             </li>
             <li>
-              <div class="mb-2 text-md/6 font-manrope-semibold">Соблюдение режимов полимеризации</div>
+              <div class="mb-1 text-md/6 font-manrope-semibold">Соблюдение режимов полимеризации</div>
               <p class="m-0 text-md/6">Окрашенные детали отправляются в&nbsp;камеру полимеризации, где порошковый слой оплавляется при температуре порядка +180 &deg;C&nbsp;и&nbsp;приобретает монолитность.</p>
             </li>
           </ul>
         </div>
       </div>
-      <div class="flex flex-col col-span-12 xl:w-1/2 gap-y-5 4xl:gap-8">
-        <div class="flex-1 p-0 md:p-[20px_24px] xl:p-[32px_32px_40px_32px] 3xl:p-[32px_40px_40px_40px] bg-white md:border border-grey-400 rounded-[24px]">
-          <h4 class="mb-4 h4">Встроенная система обогрева</h4>
+      <div class="flex flex-col col-span-12 xl:w-1/2 gap-y-1 md:gap-y-5 4xl:gap-7">
+        <div class={`flex-1 p-0 bg-white md:border border-grey-400 rounded-[24px] ${wrapperStyle}`}>
+          <h3 class="mb-4 h3">Встроенная система обогрева</h3>
           <ul class="pl-0 list-none text-md/6 text-grey-1000">
             <li class="mb-5">
               <p class="m-0 text-md/6">
@@ -68,11 +70,11 @@ import Video from '@components/Video';
             </li>
           </ul>
         </div>
-        <div class="flex-1 p-0 md:p-[20px_24px] xl:p-[32px_32px_40px_32px] 3xl:p-[32px_40px_40px_40px] bg-white md:border border-grey-400 rounded-[24px]">
-          <div class="flex items-start justify-between gap-x-15">
+        <div class={`flex-1 bg-white md:border border-grey-400 rounded-[24px] ${wrapperStyle}`}>
+          <div class="flex items-start justify-between gap-x-8 md:gap-x-15">
             <div>
-              <h4 class="mb-4 h4">Высокая долговечность в&nbsp;каждой детали</h4>
-              <img class="mb-4 shrink-0 md:hidden" src={warrantyImage.src} width="105" height="105" alt="">
+              <h3 class="mb-4 h3">Высокая долговечность в&nbsp;каждой детали</h3>
+              <img class="mb-4 shrink-0 sm:hidden" src={warrantyImage.src} width="105" height="105" alt="">
               <ul class="pl-0 space-y-2 list-none text-md/6 text-grey-1000 max-w-[600px]">
                 <li>
                   <p>Средняя наработка на&nbsp;отказ&nbsp;&mdash; не&nbsp;менее 3&nbsp;млн циклов.</p>
@@ -85,7 +87,7 @@ import Video from '@components/Video';
                 </li>
               </ul>
             </div>
-            <img class="hidden shrink-0 md:block" src={warrantyImage.src} width="105" height="105" alt="">
+            <img class="hidden shrink-0 sm:block" src={warrantyImage.src} width="105" height="105" alt="">
           </div>
         </div>
       </div>

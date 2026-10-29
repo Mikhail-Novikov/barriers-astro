@@ -184,7 +184,6 @@ const Hero2 = (): JSX.Element => {
     selector: "a[data-fancybox]",
     closeOnTap: false,
     controls: false,
-    captionClassName: "inline-block md:mx-10 md:text-2xl text-white text-center",
     mainClass: 'hero-video',
   });
   const [groupIndex, setGroupIndex] = useState(0);
@@ -258,6 +257,8 @@ const Hero2 = (): JSX.Element => {
                     playsInline
                     loop
                     playButtonVisibility="always"
+                    inlinePlayback
+                    showFullscreen={false}
                   />
                 </div>
               );

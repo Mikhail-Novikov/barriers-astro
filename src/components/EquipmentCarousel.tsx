@@ -105,7 +105,7 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps): JSX.Element => {
                   alt={card.title}
                   loading="lazy"
                 />
-                <h4 className="pt-2 text-md/normal md:text-lg/6 font-manrope-semibold">
+                <h4 className="pt-2 text-md/normal md:text-lg/5 xl:text-xl/6 font-manrope-semibold">
                   <HtmlContent>{card.title}</HtmlContent>
                 </h4>
               </article>

@@ -358,7 +358,7 @@ export default function Hero10(): JSX.Element {
 
         <div className="md:max-w-[480px] lg:max-w-full">
           <div className='block lg:w-6/12 2xl:hidden'>
-            <h4 className="mb-4 2xl:mb-5 font-manrope-semibold text-xl/6 sm:text-2xl/8 xl:text-3xl/10">{activeSolution.title}</h4>
+            <h3 className="mb-4 2xl:mb-5 h3">{activeSolution.title}</h3>
             <SolutionPrice classNameWrapper="mb-4 hidden sm:flex" price={activeSolution.price} description={activeSolution.description} />
           </div>
 
@@ -375,7 +375,7 @@ export default function Hero10(): JSX.Element {
 
             <div className="flex flex-col items-start mt-8 text-grey-1000 lg:w-5/12 lg:mt-0">
               <div className='hidden 2xl:block'>
-                <h4 className="mb-4 xl:mb-5 h3">{activeSolution.title}</h4>
+                <h3 className="mb-4 xl:mb-5 h3">{activeSolution.title}</h3>
                 <SolutionPrice classNameWrapper="mb-4" price={activeSolution.price} description={activeSolution.description} />
               </div>
               <SolutionAdditions additions={activeSolution.additions} />
