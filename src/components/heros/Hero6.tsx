@@ -534,7 +534,7 @@ export default function Hero6(): JSX.Element {
           <div className="flex-1 min-h-0 overflow-y-auto overscroll-y-contain">{filtersContent}</div>
         </aside>
 
-        <div className="grid items-start grid-cols-12 gap-5">
+        <div className="grid items-start grid-cols-12 gap-3 sm:gap-5">
           <div className="col-span-4 2xl:col-span-3 flex-col gap-2 xl:sticky xl:top-[120px] hidden xl:flex">
             <aside className="px-4 bg-white rounded-3xl 4xl:px-8 py-9">
               <h3 className="mb-8 text-xl/6 font-manrope-semibold text-grey-800">
@@ -591,9 +591,9 @@ export default function Hero6(): JSX.Element {
                     />
                   </div>
                   <div className="mt-auto p-[8px_8px_20px_32px] font-manrope-semibold">
-                    <h3 className="text-xl/7 sm:text-md/6 md:text-lg/6 lg:text-xl/7 text-grey-1000">
+                    <h5 className="text-xl/7 sm:text-md/6 md:text-lg/6 lg:text-xl/7 text-grey-1000 font-manrope-bold">
                       {barrier.baseModel}
-                    </h3>
+                    </h5>
                     <p className="mt-1 text-md/5 text-grey-800">
                       {barrier.tag}
                     </p>

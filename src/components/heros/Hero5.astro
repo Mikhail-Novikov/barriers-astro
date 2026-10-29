@@ -21,7 +21,7 @@ const cards = [
   },
   {
     isVideo: true,
-    title: 'Защита от наезда и механического воздействия',
+    title: 'Защита от наезда и&nbsp;механического воздействия',
     description: 'Стрела оснащена пластиковыми предохранителями: при критической нагрузке на&nbsp;стрелу они разрушаются, стрела отсоединяется, при этом механизм и&nbsp;тумба не&nbsp;повреждаются.',
   },
 ];
@@ -64,8 +64,8 @@ const cards = [
               </div>
             )}
           </div>
-          <div class="p-5 space-y-3 4xl:p-[40px_28px_48px_32px] text-grey-1000">
-            <h4 class="text-lg/6 md:text-xl/6 font-manrope-semibold">{card.title}</h4>
+          <div class="p-5 space-y-2 sm:space-y-3 4xl:p-[40px_28px_48px_32px] text-grey-1000">
+            <h3 class="h3" set:html={card.title} />
             <div class="font-normal 3xl:mb-5 text-sm/5 2xl:text-md/6" set:html={card.description} />
           </div>
         </article>

@@ -96,7 +96,7 @@ function FieldInput({
             : placeholder
       }
       aria-invalid={Boolean(error)}
-      className={`flex h-[52px] w-full self-stretch items-center rounded-[16px] border bg-white px-5 text-md text-grey-1000 transition-[border-color,box-shadow] focus:outline-none focus:shadow-sm ${
+      className={`flex h-[52px] w-full self-stretch items-center rounded-[16px] border bg-white px-5 text-sm sm:text-md text-grey-1000 transition-[border-color, box-shadow] focus:outline-none focus:shadow-sm ${
         error
           ? "border-red-500 placeholder-red-500 focus:border-red-500"
           : "border-grey-200 placeholder-grey-800 focus:border-cta"
@@ -180,7 +180,7 @@ export default function FeedbackFormFields({
           contentEditable
           suppressContentEditableWarning
           onInput={(event) => onMessageChange(event.currentTarget.innerHTML)}
-          className={`w-full px-4 py-2 sm:p-5 h-30 sm:h-[190px] rounded-[16px] border bg-grey-50 bg-white text-grey-1000 text-sm sm:text-lg focus:outline-none transition-colors resize-none empty:before:content-[attr(data-placeholder)] empty:before:text-grey-800 empty:before:pointer-events-none ${
+          className={`w-full px-4 py-2 sm:p-5 h-40 sm:h-[210px] rounded-[16px] border bg-grey-50 bg-white text-grey-1000 text-sm sm:text-md focus:outline-none transition-colors resize-none empty:before:content-[attr(data-placeholder)] empty:before:text-grey-800 empty:before:pointer-events-none ${
             errors.message
               ? "border-red-500 empty:before:text-red-500 focus:border-red-500"
               : "border-grey-200 focus:border-cta"
