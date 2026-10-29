@@ -7,5 +7,5 @@ return [
     'allow_self_signed' => true,
     'username' => 'noreply@perco.ru',
     'password' => '',
-    'to'       => ['novikov@perco.ru', 'profisevic2@yandex.ru'],
+    'to'       => ['novikov@perco.ru', 'kublanov@perco.ru'],
 ];
