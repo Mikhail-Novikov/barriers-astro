@@ -66,15 +66,6 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
 
   return (
     <div ref={galleryRef} className="about-gallery-stacked">
-      <AboutCarouselControls
-        className="hidden sm:flex"
-        start={activePair * slidesPerPage + 1}
-        end={Math.min((activePair + 1) * slidesPerPage, images.length)}
-        onPrevious={() => move('prev')}
-        onNext={() => move('next')}
-        isAtStart={activePair === 0}
-        isAtEnd={activePair >= imagePairs.length - 1}
-      />
       <Swiper
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
@@ -111,8 +102,17 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
           </SwiperSlide>
         ))}
       </Swiper>
+      <AboutCarouselControls
+        className="hidden lg:flex"
+        start={activePair * slidesPerPage + 1}
+        end={Math.min((activePair + 1) * slidesPerPage, images.length)}
+        onPrevious={() => move('prev')}
+        onNext={() => move('next')}
+        isAtStart={activePair === 0}
+        isAtEnd={activePair >= imagePairs.length - 1}
+      />
       <PaginationDots
-        className="mt-4 sm:hidden"
+        className="mt-4 lg:hidden"
         count={imagePairs.length}
         activeIndex={activePair}
         onSelect={(index) => swiperRef.current?.slideTo(index)}

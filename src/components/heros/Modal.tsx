@@ -152,7 +152,7 @@ const Modal = ({
 
       {isOpen && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-grey-1000/70 p-0 transition-opacity duration-200 ease-out sm:p-8 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+          className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto backdrop-blur-sm bg-black/90 p-0 transition-opacity duration-200 ease-out sm:p-8 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
           role="presentation"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) {
@@ -170,7 +170,7 @@ const Modal = ({
           >
             <button
               type="button"
-              className="absolute p-2 text-xl leading-none transition-colors sm:text-3xl perco-icons shrink-0 top-2 right-2 sm:right-4 sm:top-4 text-grey-700 hover:text-cta"
+              className="absolute p-2 text-3xl leading-none transition-colors sm:text-3xl perco-icons shrink-0 top-2 right-2 sm:right-4 sm:top-4 text-grey-700 hover:text-cta"
               aria-label="Закрыть форму обратной связи"
               onClick={closeModal}
             >

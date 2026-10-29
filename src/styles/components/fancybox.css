@@ -80,6 +80,35 @@
   color: var(--color-grey-1000);
 }
 
+.f-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.fancybox__slide.is-selected {
+  padding: 68px 110px;
+}
+
+.fancybox__dialog::backdrop, .fancybox__container {
+  opacity: 1;
+  background-color: #F3F4F8 !important;
+}
+
+.f-carousel__dots.is-dynamic, 
+.f-carousel__toolbar__column.is-left .f-counter {
+  display: none;
+}
+
+.f-carousel__dot.active:after
+{
+  transform: translate(-50%, -50%) scale(1.6);
+}
+
 @media (max-width: 1200px) {
   .barrier-gallery .barrier-modal-wrapper {
     border-radius: 16px;
@@ -96,6 +125,23 @@
   .barrier-gallery .barrier-modal-wrapper .barrier-caption__wrapper {
     max-width: 100%;
     padding: 0 16px 40px 16px;
+  }
+}
+
+/* На мобильных устройствах можно уменьшить отступы */
+@media (max-width: 600px) {
+  .fancybox__slide.is-selected {
+    padding: 16px;
+  }
+  .f-button.is-arrow {
+    display: none;
+  }
+  .f-caption {
+    bottom: 60px;
+  }
+  .f-carousel__dots.is-dynamic, 
+  .f-carousel__toolbar__column.is-left .f-counter {
+    display: flex;
   }
 }
 

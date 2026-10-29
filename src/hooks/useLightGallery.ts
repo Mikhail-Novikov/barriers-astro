@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { Fancybox } from '@fancyapps/ui/dist/fancybox/fancybox.js';
 import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
+import { Dots } from "@fancyapps/ui/dist/carousel/carousel.dots.js";
+import "@fancyapps/ui/dist/carousel/carousel.dots.css";
+
 /** Интерфейс для описания элемента галереи.*/
 interface GalleryItem {
   /** Источник изображения или объект с источником изображения. */
@@ -74,7 +77,7 @@ export const useLightGallery = ({
   navigation = true,
   hasArrows = true,
   mainClass,
-  captionClassName,
+  captionClassName = 'inline-block md:mx-10 md:text-[20px] font-manrope-semibold text-center',
   onClose,
   videoAutoplay = false,
   disableZoom = false,
@@ -162,10 +165,36 @@ export const useLightGallery = ({
         },
       },
       ...(mainClass ? { mainClass } : {}),
+      mainStyle: {
+        '--f-carousel-slide-bg': '#F3F4F8',
+        '--f-button-bg': '#F3F4F8',
+        '--f-button-color': '#7F808A',
+        '--f-button-hover-color': '#22252F',
+        '--f-caption-bg': '#F3F4F8',
+        '--f-caption-color': '#22252F',
+        '--f-arrow-bg': '#F3F4F8',
+        '--f-arrow-hover-bg': '#22252F',
+        '--f-arrow-color': '#7F808A',
+        '--f-carousel-dots-top': 'auto',
+        '--f-carousel-dots-bottom': '24px',
+        '--f-carousel-dot-bg': '#7F808A',
+        '--f-carousel-dot-hover-bg': '#22252F',
+        '--f-carousel-dot-selected-bg': '#8E8F9E',
+        '--f-carousel-dot-height': '4px',
+        '--f-carousel-dot-width': '4px',
+        '--f-carousel-dot-active-width': '8px',
+        '--f-carousel-dot-active-height': '8px',
+        '--f-carousel-dots-width': '12px',
+        '--f-toolbar-text-shadow': 'none',
+        '--f-toolbar-color': '#636C79',
+      },
       // Верхнеуровневая опция в Fancybox 6
       backdropClick: 'close',
       Carousel: {
+        plugins: { Dots },
+        Thumbs: false,
         adaptiveHeight: true,
+        transition: "slide",
         Toolbar: {
           enabled: showToolbar,
           display: {
