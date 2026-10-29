@@ -50,7 +50,7 @@ export default function ConsentDialog({
           dialogRef.current?.close();
         }
       }}
-      className="sm:m-auto h-md mt-auto sm:w-[calc(100%-2rem)] max-w-[600px] sm:rounded-2xl p-[32px_16px] text-left backdrop:bg-black/90 backdrop:blur-sm sm:p-10"
+      className="sm:m-auto h-md mt-auto sm:w-[calc(100%-2rem)] max-w-[600px] sm:rounded-2xl p-[32px_16px] text-left backdrop:bg-black/90 sm:p-10"
     >
       <h3
         id={titleId}

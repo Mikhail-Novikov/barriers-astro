@@ -1,3 +1,7 @@
+.h1 {
+  @apply text-[38px]/[120%] md:text-[44px]/[120%] xl:text-6xl/[110%] font-manrope-bold
+}
+
 .h2 {
   @apply not-italic -tracking-wide font-manrope-bold text-grey-1000
          text-[28px]/8        /* < 500px */

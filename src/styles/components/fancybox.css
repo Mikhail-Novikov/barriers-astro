@@ -100,6 +100,7 @@
 }
 
 .f-carousel__dots.is-dynamic, 
+.hero-video .f-carousel__dots, 
 .f-carousel__toolbar__column.is-left .f-counter {
   display: none;
 }
@@ -140,6 +141,7 @@
     bottom: 60px;
   }
   .f-carousel__dots.is-dynamic, 
+  .hero-video .f-carousel__dots,
   .f-carousel__toolbar__column.is-left .f-counter {
     display: flex;
   }

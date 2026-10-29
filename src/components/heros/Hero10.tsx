@@ -70,9 +70,9 @@ type SolutionPriceProps = {
  */
 function SolutionPrice({ price, description, classNameWrapper }: SolutionPriceProps): JSX.Element {
   return (
-    <div className={`xl:mb-5 sm:flex w-full items-center gap-5 rounded-[16px] xl:rounded-3xl bg-grey-200 py-3 md:py-4 px-5 ${classNameWrapper}`}>
+    <div className={`xl:mb-5 sm:flex w-full items-center gap-5 rounded-[16px] xl:rounded-3xl bg-grey-200 py-4 px-5 ${classNameWrapper}`}>
       <p className="order-1 mb-4 sm:mb-0 font-manrope-semibold text-md/5"><HtmlContent>{description}</HtmlContent></p>
-      <strong className="sm:ml-4 md:ml-5 shrink-0 text-xl/8 font-manrope-bold text-cta xl:text-2xl/7">{price}</strong>
+      <strong className="sm:ml-4 md:ml-5 shrink-0 text-lg/6 font-manrope-bold text-cta sm:text-2xl/7">{price}</strong>
     </div>
   );
 }
@@ -373,7 +373,7 @@ export default function Hero10(): JSX.Element {
             </div>
             <SolutionPrice classNameWrapper="mt-1 sm:hidden" price={activeSolution.price} description={activeSolution.description} />
 
-            <div className="flex flex-col items-start mt-8 text-grey-1000 lg:w-5/12 lg:mt-0">
+            <div className="flex flex-col items-start mt-7 sm:mt-8 text-grey-1000 lg:w-5/12 lg:mt-0">
               <div className='hidden 2xl:block'>
                 <h3 className="mb-4 xl:mb-5 h3">{activeSolution.title}</h3>
                 <SolutionPrice classNameWrapper="mb-4" price={activeSolution.price} description={activeSolution.description} />

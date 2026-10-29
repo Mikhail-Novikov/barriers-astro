@@ -87,7 +87,7 @@ export function ZoomModal({
       <div className={`relative z-10 max-h-full ${contentClassName}`}>
         <button
           type="button"
-          className="absolute z-20 flex items-center justify-center text-3xl leading-none transition-colors border-none cursor-pointer top-2 right-2 md:right-4 perco-icons md:top-4 text-grey-600 hover:text-grey-900"
+          className="absolute z-20 flex items-center justify-center text-3xl leading-none transition-colors border-none cursor-pointer top-3 right-3 md:right-4 perco-icons md:top-4 text-grey-600 hover:text-grey-900"
           aria-label="Закрыть"
           onClick={onClose}
         >

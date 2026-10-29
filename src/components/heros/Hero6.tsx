@@ -511,17 +511,17 @@ export default function Hero6(): JSX.Element {
           className={`perco-icons fixed sm:absolute inset-0 sm:inset-auto sm:top-auto z-50 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white px-4 py-[20px_60px] transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className="flex justify-between p-4 mb-2 -mx-4 -mt-6 shrink-0 sm:justify-end sm:p-0 sm:mx-0 sm:mt-0 bg-grey-200 sm:bg-white">
+          <div className="flex justify-between p-4 mb-2 -mx-4 -mt-5 shrink-0 sm:justify-end sm:p-0 sm:mx-0 sm:mt-0 bg-grey-200 sm:bg-white">
             <button
               type="button"
               aria-label="Закрыть фильтры"
               onClick={() => setIsFiltersOpen(false)}
-              className="ml-4 text-black cursor-pointer sm:ml-0 md:-mr-3 shrink-0 text-2xl/6"
+              className="ml-2 text-black cursor-pointer sm:ml-0 md:-mr-3 shrink-0 text-2xl/6"
             >
               <span className='sm:hidden text-grey-800 hover:text-cta'><i className="rotate-90 perco-icon-link-arrow" /></span>
               <span className='hidden sm:block text-grey-800 hover:text-cta'><i className="perco-icon-close" /></span>
             </button>
-            <p className='text-2xl font-manrope-semibold sm:hidden'>Фильтры</p>
+            <h3 className='text-2xl/7 font-manrope-bold sm:hidden'>Фильтр</h3>
             <button
               type="button"
               aria-label="Сбросить фильтры"
@@ -590,7 +590,7 @@ export default function Hero6(): JSX.Element {
                       loading="lazy"
                     />
                   </div>
-                  <div className="mt-auto p-[8px_8px_20px_32px] font-manrope-semibold">
+                  <div className="mt-auto p-[8px_8px_20px_28px] sm:pl-8 font-manrope-semibold">
                     <h5 className="text-xl/7 sm:text-md/6 md:text-lg/6 lg:text-xl/7 text-grey-1000 font-manrope-bold">
                       {barrier.baseModel}
                     </h5>
