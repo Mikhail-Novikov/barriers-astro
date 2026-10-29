@@ -34,7 +34,7 @@ export default function AboutCarouselControls({
 }: AboutCarouselControlsProps): JSX.Element {
   return (
     <div className={`flex mb-8 ${className} items-center justify-between gap-4`}>
-      <span className="inline-flex px-5 py-2 border rounded-full border-grey-500 text-lg/7 text-grey-700">
+      <span className="inline-flex px-5 py-2 border rounded-full border-grey-600 text-lg/7 text-grey-800 font-manrope-semibold">
         {String(start).padStart(2, '0')} - {String(end).padStart(2, '0')}
       </span>
       <div className="flex items-center gap-1" aria-label="Управление фотографиями">
