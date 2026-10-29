@@ -50,7 +50,7 @@ export default function ConsentDialog({
           dialogRef.current?.close();
         }
       }}
-      className="sm:m-auto h-md mt-auto sm:w-[calc(100%-2rem)] max-w-[600px] sm:rounded-2xl p-[32px_16px] text-left backdrop:bg-grey-1000/70 sm:p-10"
+      className="sm:m-auto h-md mt-auto sm:w-[calc(100%-2rem)] max-w-[600px] sm:rounded-2xl p-[32px_16px] text-left backdrop:bg-black/90 backdrop:blur-sm sm:p-10"
     >
       <h3
         id={titleId}
@@ -58,7 +58,7 @@ export default function ConsentDialog({
       >
         В&nbsp;соответствии с&nbsp;Федеральным законом &#8470;&nbsp;152-ФЗ
       </h3>
-      <p className="mb-8 text-grey-1000 text-xl/8">
+      <p className="mb-8 text-grey-1000 text-md/tight sm:text-xl/8">
         В соответствии с Федеральным законом № 152-ФЗ «О персональных данных» от
         27.07.2006 года свободно, своей волей и в своем интересе выражаю свое
         безусловное согласие на обработку моих персональных данных ООО «ПЭРКО»,
