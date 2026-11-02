@@ -34,8 +34,8 @@ const SliderArrow = ({
       aria-label={direction === "left" ? "Предыдущий слайд" : "Следующий слайд"}
     >
       <span
-        className={`flex items-center justify-center size-13 rounded-full bg-grey-800 transition-background duration-100 ${
-          disabled ? "" : "hover:bg-grey-500"
+        className={`flex items-center justify-center size-13 rounded-full bg-grey-700 transition-background duration-100 ${
+          disabled ? "" : "hover:bg-grey-800"
         } ${themeClass}`}
       >
         {direction === "left" ? (

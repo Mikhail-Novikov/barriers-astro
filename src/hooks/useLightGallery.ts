@@ -87,6 +87,7 @@ export const useLightGallery = ({
   const galleryRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const fancyboxInstanceRef = useRef<any>(null);
+  const fancyboxOptionsRef = useRef<Record<string, any>>({});
   const onCloseRef = useRef(onClose);
 
   useEffect(() => {
@@ -242,6 +243,7 @@ export const useLightGallery = ({
       Hash: false,
     };
 
+    fancyboxOptionsRef.current = fancyboxOptions;
     Fancybox.bind(container as HTMLElement, actualSelector, fancyboxOptions);
     fancyboxInstanceRef.current = Fancybox;
 
@@ -279,8 +281,31 @@ export const useLightGallery = ({
 
     if (container) {
       const actualSelector = selector || 'a[data-fancybox]';
-      const links = container.querySelectorAll(actualSelector);
-      const link = links[index] as HTMLElement;
+      const links = Array.from(
+        container.querySelectorAll<HTMLElement>(actualSelector),
+      );
+      const indexedLinks = links
+        .map((element) => ({
+          element,
+          dataIndex: Number(element.dataset.index),
+        }))
+        .filter(({ dataIndex }) => Number.isInteger(dataIndex))
+        .sort((left, right) => left.dataIndex - right.dataIndex);
+
+      if (indexedLinks.length === links.length) {
+        const startIndex = indexedLinks.findIndex(
+          ({ dataIndex }) => dataIndex === index,
+        );
+        if (startIndex === -1) return;
+
+        Fancybox.fromNodes(
+          indexedLinks.map(({ element }) => element),
+          { ...fancyboxOptionsRef.current, startIndex },
+        );
+        return;
+      }
+
+      const link = links[index];
       if (link) {
         link.click();
       }
