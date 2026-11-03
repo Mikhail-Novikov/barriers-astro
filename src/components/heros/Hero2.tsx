@@ -272,15 +272,24 @@ const pad = (value: number): string => String(value).padStart(2, "0");
  * Отображает галерею изображений с эффектом лайтбокса.
  */
 const Hero2 = (): JSX.Element => {
+  const swiperRef = useRef<SwiperInstance | null>(null);
   const { galleryRef, openGallery, totalItems } = useLightGallery({
     items: galleryWithIndexes,
     selector: "a[data-fancybox]",
     closeOnTap: false,
     controls: false,
     mainClass: 'hero-video',
+    placeFocusBack: false,
+    onClose: () => {
+      window.requestAnimationFrame(() => {
+        const swiper = swiperRef.current;
+        if (!swiper) return;
+
+        swiper.update();
+      });
+    },
   });
   const [groupIndex, setGroupIndex] = useState(0);
-  const swiperRef = useRef<SwiperInstance | null>(null);
   const wasDraggedRef = useRef(false);
 
   const groupSize = galleryGroupSize;
@@ -306,7 +315,7 @@ const Hero2 = (): JSX.Element => {
         <div ref={galleryRef}>
           <Swiper
             className="gallery-equipment"
-            loop
+            rewind
             slidesPerView={1}
             slidesPerGroup={1}
             onSwiper={(swiper) => {
@@ -393,7 +402,7 @@ const Hero2 = (): JSX.Element => {
             className="sm:hidden"
             count={totalGroups}
             activeIndex={groupIndex}
-            onSelect={(index) => swiperRef.current?.slideToLoop(index)}
+            onSelect={(index) => swiperRef.current?.slideTo(index)}
             ariaLabel="Страницы галереи установок"
             getItemLabel={(index) => `Страница ${index + 1}`}
           />

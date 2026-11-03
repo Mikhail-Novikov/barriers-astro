@@ -41,6 +41,7 @@ interface UseLightGalleryOptions {
   navigation?: boolean;
   hasArrows?: boolean;
   showCloseIcon?: boolean;
+  placeFocusBack?: boolean;
   mainClass?: string;
   captionClassName?: string;
   onClose?: () => void;
@@ -73,6 +74,7 @@ export const useLightGallery = ({
   showToolbar = true,
   showFullscreen = true,
   showCloseIcon = true,
+  placeFocusBack = true,
   download = false,
   navigation = true,
   hasArrows = true,
@@ -191,6 +193,7 @@ export const useLightGallery = ({
       },
       // Верхнеуровневая опция в Fancybox 6
       backdropClick: 'close',
+      placeFocusBack,
       Carousel: {
         plugins: { Dots },
         Thumbs: false,
@@ -264,6 +267,7 @@ export const useLightGallery = ({
     showToolbar,
     showFullscreen,
     showCloseIcon,
+    placeFocusBack,
     download,
     navigation,
     mainClass,
