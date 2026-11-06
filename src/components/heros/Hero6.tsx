@@ -472,7 +472,7 @@ export default function Hero6(): JSX.Element {
                   ))}
                 </ul>
                 <Button
-                  className='w-full lg:max-w-[280px] sm:mt-8 lg:mt-8'
+                  className='w-full lg:w-[232px] sm:mt-8 lg:mt-8'
                   type="button"
                   data-order-barrier={activeImage.barrier.fullName}
                   variant="primary"

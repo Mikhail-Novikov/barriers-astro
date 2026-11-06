@@ -464,7 +464,7 @@ export default function Hero7(): JSX.Element {
         <Modal
           triggerLabel="Задать вопрос"
           title="Форма обратной связи"
-          triggerClassName="w-full sm:w-fit mt-5 md:mt-8"
+          triggerClassName="w-full lg:w-[232px] mt-5 md:mt-8 3xl:mt-10"
           triggerVariant="primary"
           initialMessage={`Здравствуйте!<br />Интересует модель <strong class="font-manrope-semibold">&ldquo;${currentVariant.title.replace(/&nbsp;/g, " ")}&rdquo;</strong>.`}
         >

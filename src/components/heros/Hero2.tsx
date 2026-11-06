@@ -28,10 +28,10 @@ const galleryAll = ([
     "srcFull": "fullsize/01-01.webp",
     "id": "1",
     "ratio": "square",
-    "description": "Шлагбаум GS04, гостиница «Левитанъ», Владимир"
+    "description": "Шлагбаумы GS04, бизнес-центр Capital Tower, Москва"
   },
   {
-    "srcPreview": "",
+    "srcPreview": "preview/01-02.webp",
     "srcFull": "",
     "id": "1-video",
     "description": "Установки шлагбаумов",
@@ -39,25 +39,18 @@ const galleryAll = ([
     isVideo: true,
   },
   {
-    "srcPreview": "preview/01-02.webp",
-    "srcFull": "fullsize/01-02.webp",
-    "id": "2",
-    "ratio": "rectangle",
-    "description": "Шлагбаумы GS04, фитнес-клуб Opera Fitness, Тюмень"
-  },
-  {
     "srcPreview": "preview/01-03.webp",
     "srcFull": "fullsize/01-03.webp",
-    "id": "3",
+    "id": "2",
     "ratio": "square",
     "description": "Шлагбаум GS04, ЖК «Лахта», Санкт-Петербург"
   },
   {
     "srcPreview": "preview/01-04.webp",
     "srcFull": "fullsize/01-04.webp",
-    "id": "4",
+    "id": "3",
     "ratio": "square",
-    "description": "Шлагбаумы GS04, Российский научно-исследовательский нейрохирургический институт им. А.Л. Поленова, Санкт-Петербург"
+    "description": "Шлагбаум GS04, отель «Репинский курорт», Санкт-Петербург"
   },
 
   {
@@ -65,28 +58,28 @@ const galleryAll = ([
     "srcFull": "fullsize/02-01.webp",
     "id": "5",
     "ratio": "square",
-    "description": "Шлагбаум GS04, ЖК «Урбанист», Санкт-Петербург"
+    "description": "Шлагбаум GS04, гостиница «Левитанъ», Владимир"
   },
   {
     "srcPreview": "preview/02-02.webp",
     "srcFull": "fullsize/02-02.webp",
     "id": "6",
     "ratio": "rectangle",
-    "description": "Шлагбаумы GS14, парковка на Сенной площади, Великий Новгород"
+    "description": "Шлагбаумы GS04, фитнес-клуб Opera Fitness, Тюмень"
   },
   {
     "srcPreview": "preview/02-03.webp",
     "srcFull": "fullsize/02-03.webp",
     "id": "7",
     "ratio": "square",
-    "description": "Шлагбаум GS04, аквапарк, Суздаль"
+    "description": "Шлагбаум GS14, парковка у бизнес-центра, Санкт-Петербург"
   },
   {
     "srcPreview": "preview/02-04.webp",
     "srcFull": "fullsize/02-04.webp",
     "id": "8",
     "ratio": "square",
-    "description": "Шлагбаум GS04, городская усадьба Демидовых, Москва"
+    "description": "Шлагбаумы GS04, Российский научно-исследовательский нейрохирургический институт им. А.Л. Поленова, Санкт-Петербург"
   },
 
   {
@@ -94,28 +87,28 @@ const galleryAll = ([
     "srcFull": "fullsize/03-01.webp",
     "id": "9",
     "ratio": "square",
-    "description": "Шлагбаумы GS04 в составе парковочной системы PERCo.Паркинг, деловой центр Sun City, Красное Село"
+    "description": "Шлагбаум GS04, ЖК «Урбанист», Санкт-Петербург"
   },
   {
     "srcPreview": "preview/03-02.webp",
     "srcFull": "fullsize/03-02.webp",
     "id": "10",
-    "ratio": "square",
-    "description": "Шлагбаум GS04, отель «Репинский курорт», Санкт-Петербург"
+    "ratio": "rectangle",
+    "description": "Шлагбаумы GS14, парковка на Сенной площади, Великий Новгород"
   },
   {
     "srcPreview": "preview/03-03.webp",
     "srcFull": "fullsize/03-03.webp",
     "id": "11",
     "ratio": "square",
-    "description": "Шлагбаум GS04, завод PERCo, Псков"
+    "description": "Шлагбаум GS04, аквапарк, Суздаль"
   },
   {
     "srcPreview": "preview/03-04.webp",
     "srcFull": "fullsize/03-04.webp",
     "id": "12",
     "ratio": "square",
-    "description": "Шлагбаум GS04, ЖК «Город солнца», Санкт-Петербург"
+    "description": "Шлагбаум GS04, городская усадьба Демидовых, Москва"
   },
 
   {
@@ -123,28 +116,28 @@ const galleryAll = ([
     "srcFull": "fullsize/04-01.webp",
     "id": "13",
     "ratio": "square",
-    "description": "Шлагбаум GS14, парковка у офиса компании, Санкт-Петербург"
+    "description": "Шлагбаумы GS04 в составе парковочной системы PERCo.Паркинг, деловой центр Sun City, Красное Село"
   },
   {
     "srcPreview": "preview/04-02.webp",
     "srcFull": "fullsize/04-02.webp",
     "id": "14",
     "ratio": "rectangle",
-    "description": "Шлагбаум GS04, жилой комплекс, Москва"
+    "description": "Шлагбаум GS04, музей-парк «Россия — Моя история», Тверь"
   },
   {
     "srcPreview": "preview/04-03.webp",
     "srcFull": "fullsize/04-03.webp",
     "id": "15",
     "ratio": "square",
-    "description": "Шлагбаумы GS04, бизнес-центр Capital Tower, Москва"
+    "description": "Шлагбаум GS04, завод PERCo, Псков"
   },
   {
     "srcPreview": "preview/04-04.webp",
     "srcFull": "fullsize/04-04.webp",
     "id": "16",
     "ratio": "square",
-    "description": "Шлагбаум GS04, музей-парк «Россия — Моя история», Тверь"
+    "description": "Шлагбаум GS04, ЖК «Город солнца», Санкт-Петербург"
   },
 
   {
@@ -152,28 +145,28 @@ const galleryAll = ([
     "srcFull": "fullsize/05-01.webp",
     "id": "17",
     "ratio": "square",
-    "description": "Шлагбаум GS14, подземный паркинг компании, Санкт-Петербург"
+    "description": "Шлагбаум GS14, парковка у офиса компании, Санкт-Петербург"
   },
   {
     "srcPreview": "preview/05-02.webp",
     "srcFull": "fullsize/05-02.webp",
     "id": "18",
     "ratio": "rectangle",
-    "description": "Шлагбаум GS14, офис компании, Санкт-Петербург"
+    "description": "Шлагбаумы GS04, гостиница «Кранекс», Иваново"
   },
   {
     "srcPreview": "preview/05-03.webp",
     "srcFull": "fullsize/05-03.webp",
     "id": "19",
     "ratio": "square",
-    "description": "Шлагбаумы GS04, база отдыха Opushka house, Санкт-Петербург"
+    "description": "Шлагбаум GS04, жилой комплекс, Москва"
   },
   {
     "srcPreview": "preview/05-04.webp",
     "srcFull": "fullsize/05-04.webp",
     "id": "20",
     "ratio": "square",
-    "description": "Шлагбаум GS04, Сокольнический Вал, Москва"
+    "description": "Шлагбаум GS04, жилой комплекс, ул. Кедрова, Москва"
   },
 
   {
@@ -181,28 +174,28 @@ const galleryAll = ([
     "srcFull": "fullsize/06-01.webp",
     "id": "21",
     "ratio": "square",
-    "description": "Шлагбаумы GF13 в составе парковочной системы PERCo.Паркинг, Многофункциональный миграционный центр, Сахарово, Москва"
+    "description": "Шлагбаум GS14, подземный паркинг компании, Санкт-Петербург"
   },
   {
     "srcPreview": "preview/06-02.webp",
     "srcFull": "fullsize/06-02.webp",
     "id": "22",
     "ratio": "rectangle",
-    "description": "Шлагбаумы GS04, гостиница «Кранекс», Иваново"
+    "description": "Шлагбаум GS14, офис компании, Санкт-Петербург"
   },
   {
     "srcPreview": "preview/06-03.webp",
     "srcFull": "fullsize/06-03.webp",
     "id": "23",
     "ratio": "square",
-    "description": "Шлагбаум GS14, парковка у бизнес-центра, Санкт-Петербург"
+    "description": "Шлагбаумы GS04, база отдыха Opushka house, Санкт-Петербург"
   },
   {
     "srcPreview": "preview/06-04.webp",
     "srcFull": "fullsize/06-04.webp",
     "id": "24",
     "ratio": "square",
-    "description": "Шлагбаум GS04, жилой комплекс, ул. Кедрова, Москва"
+    "description": "Шлагбаум GS04, Сокольнический Вал, Москва"
   }
 ] satisfies GalleryItem[]).map((item) => ({
   ...item,
@@ -225,38 +218,10 @@ const layoutClasses = [
 const galleryGroupSize = 4;
 
 /** Элементы галереи с индексами, используемыми для навигации лайтбокса. */
-const squareItems = galleryAll.filter((item) => item.ratio === "square");
-const rectangleItems = galleryAll.filter((item) => item.ratio === "rectangle");
-const squareSlotsCount = Math.ceil(galleryAll.length / galleryGroupSize);
-const rectangleSlotsCount = Math.ceil((galleryAll.length - 1) / galleryGroupSize);
-if (squareItems.length < squareSlotsCount) {
-  throw new Error("Недостаточно квадратных изображений для сетки галереи.");
-}
-if (rectangleItems.length < rectangleSlotsCount) {
-  throw new Error("Недостаточно прямоугольных изображений для сетки галереи.");
-}
-
-const squareSlotItems = new Set(squareItems.slice(0, squareSlotsCount));
-const rectangleSlotItems = new Set(rectangleItems.slice(0, rectangleSlotsCount));
-const reservedItems = new Set([...squareSlotItems, ...rectangleSlotItems]);
-const remainingItems = galleryAll.filter((item) => !reservedItems.has(item));
-let squareSlotIndex = 0;
-let rectangleSlotIndex = 0;
-let remainingItemIndex = 0;
-const galleryWithIndexes = Array.from({ length: galleryAll.length }, (_, index) => {
-  const item =
-    index % galleryGroupSize === 0
-      ? squareItems[squareSlotIndex++]
-      : index % galleryGroupSize === 1
-        ? rectangleItems[rectangleSlotIndex++]
-        : remainingItems[remainingItemIndex++];
-
-  if (!item) {
-    throw new Error(`Не удалось сформировать элемент галереи с индексом ${index}.`);
-  }
-
-  return { ...item, index };
-});
+const galleryWithIndexes = galleryAll.map((item, index) => ({
+  ...item,
+  index,
+}));
 
 /**
  * Дополняет число ведущим нулём для отображения счётчика галереи.
@@ -347,7 +312,7 @@ const Hero2 = (): JSX.Element => {
                             containerClassName="h-full w-full"
                             className="object-cover w-full h-full"
                             src={publicAsset('/video/examples-installations/installations.mp4')}
-                            poster={publicAsset('/img/examples-installations/preview.webp')}
+                            poster={item.srcPreview}
                             caption={item.description}
                             muted
                             preload="auto"

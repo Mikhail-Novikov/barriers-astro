@@ -133,8 +133,7 @@
 @media (min-width: 1600px) {
   .gallery-equipment__grid {
     height: 585px;
-    gap: 20px;
-    grid-template-rows: 1fr 225px;
+    grid-template-rows: 1fr 232px;
   }
 }
 

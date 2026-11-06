@@ -357,7 +357,7 @@ export default function Hero10(): JSX.Element {
         </div>
 
         <div className="md:max-w-[480px] lg:max-w-full">
-          <div className='block lg:w-6/12 2xl:hidden'>
+          <div className='block lg:w-9/16 2xl:hidden'>
             <h3 className="mb-4 2xl:mb-5 h3">{activeSolution.title}</h3>
             <SolutionPrice classNameWrapper="mb-4 hidden sm:flex" price={activeSolution.price} description={activeSolution.description} />
           </div>
@@ -368,7 +368,7 @@ export default function Hero10(): JSX.Element {
             role="tabpanel"
             aria-labelledby={`solution-tab-${activeIndex}`}
           >
-            <div className="lg:w-6/12 flex items-center justify-center overflow-hidden rounded-[16px] 2xl:rounded-2xl 3xl:rounded-3xl bg-grey-200 h-[280px] sm:h-[300px] xl:h-[376px] 2xl:h-[424px] 3xl:h-[512px]">
+            <div className="lg:w-7/12 4xl:w-1/2 flex items-center justify-center overflow-hidden rounded-[16px] 2xl:rounded-2xl 3xl:rounded-3xl bg-grey-200 h-[280px] sm:h-[300px] xl:h-[376px] 2xl:h-[424px] 3xl:h-[512px]">
               <img className="object-contain w-full h-full" src={activeSolution.image} alt={activeSolution.description} />
             </div>
             <SolutionPrice classNameWrapper="mt-1 sm:hidden" price={activeSolution.price} description={activeSolution.description} />
