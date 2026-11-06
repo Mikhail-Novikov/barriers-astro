@@ -91,6 +91,7 @@ export const useLightGallery = ({
   const fancyboxInstanceRef = useRef<any>(null);
   const fancyboxOptionsRef = useRef<Record<string, any>>({});
   const onCloseRef = useRef(onClose);
+  const scrollPositionRef = useRef<number | null>(null);
 
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -122,6 +123,13 @@ export const useLightGallery = ({
         destroy: () => {
           onCloseRef.current?.();
           document.dispatchEvent(new Event('fancybox:destroy'));
+          const scrollPosition = scrollPositionRef.current;
+          if (scrollPosition !== null) {
+            window.requestAnimationFrame(() => {
+              window.scrollTo(0, scrollPosition);
+              scrollPositionRef.current = null;
+            });
+          }
         },
         'Carousel.ready': (fancybox: any) => {
           const index = fancybox.getIndex?.();
@@ -302,6 +310,7 @@ export const useLightGallery = ({
         );
         if (startIndex === -1) return;
 
+        scrollPositionRef.current = window.scrollY;
         Fancybox.fromNodes(
           indexedLinks.map(({ element }) => element),
           { ...fancyboxOptionsRef.current, startIndex },
@@ -311,6 +320,7 @@ export const useLightGallery = ({
 
       const link = links[index];
       if (link) {
+        scrollPositionRef.current = window.scrollY;
         link.click();
       }
     }
