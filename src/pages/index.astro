@@ -1,5 +1,6 @@
 ---
 import { Heroes } from '../components/Landing';
+import FloatingScrollToTopButton from '../components/FloatingScrollToTopButton';
 import Layout from '../layouts/Layout.astro';
 import Main from '@components/Main.astro';
 import Header from '@components/Header.astro';
@@ -47,6 +48,6 @@ import "../styles/global.css";
 		<Hero15 />
 		<Heroes client:load />
 	</Main>
+	<FloatingScrollToTopButton client:load />
 	<Footer />
 </Layout>
-

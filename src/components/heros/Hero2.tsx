@@ -274,7 +274,7 @@ const Hero2 = (): JSX.Element => {
   const goToPrev = () => swiperRef.current?.slidePrev();
 
   return (
-    <div className="bg-grey-400 py-10 sm:p-[40px_0_60px] xl:py-15 4xl:py-20">
+    <div data-scroll-to-top-trigger className="bg-grey-400 py-10 sm:p-[40px_0_60px] xl:py-15 4xl:py-20">
       <div className="container">
         <h2 className="mb-6 h2 xl:mb-8">Примеры установок</h2>
         <div ref={galleryRef}>
