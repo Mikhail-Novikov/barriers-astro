@@ -207,6 +207,12 @@
     },
     {
       "id": 35,
+      "src": "ofice.webp",
+      "alt": "Главный офис PERCo ",
+      "description": "Главный офис PERCo "
+    },
+    {
+      "id": 36,
       "src": "sklad_1000.webp",
       "alt": "Склад готовой продукции",
       "description": "Склад готовой продукции"
