@@ -47,6 +47,7 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
     () => Array.from({ length: Math.ceil(images.length / 2) }, (_, pairIndex) => images.slice(pairIndex * 2, pairIndex * 2 + 2)),
     [images],
   );
+  const isLoopEnabled = imagePairs.length > 1;
   const { galleryRef } = useLightGallery({
     items: galleryItems,
     selector: 'a[data-fancybox="about-stacked"]',
@@ -59,9 +60,11 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
    * @param direction - Направление перемещения.
    */
   const move = (direction: 'prev' | 'next') => {
-    const nextIndex = direction === 'next' ? activePair + 1 : activePair - 1;
-
-    swiperRef.current?.slideTo(nextIndex);
+    if (direction === 'next') {
+      swiperRef.current?.slideNext();
+    } else {
+      swiperRef.current?.slidePrev();
+    }
   };
 
   return (
@@ -69,12 +72,12 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
       <Swiper
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
-          setActivePair(swiper.activeIndex);
+          setActivePair(swiper.realIndex);
         }}
         slidesPerView={1}
         slidesPerGroup={1}
-        loop={false}
-        onSlideChange={(swiper) => setActivePair(swiper.activeIndex)}
+        loop={isLoopEnabled}
+        onSlideChange={(swiper) => setActivePair(swiper.realIndex)}
         className="about-gallery-stacked__slider"
       >
         {imagePairs.map((pair, pairIndex) => (
@@ -108,14 +111,14 @@ export default function AboutCarouselStacked({ images }: AboutCarouselStackedPro
         end={Math.min((activePair + 1) * slidesPerPage, images.length)}
         onPrevious={() => move('prev')}
         onNext={() => move('next')}
-        isAtStart={activePair === 0}
-        isAtEnd={activePair >= imagePairs.length - 1}
+        isAtStart={!isLoopEnabled && activePair === 0}
+        isAtEnd={!isLoopEnabled && activePair >= imagePairs.length - 1}
       />
       <PaginationDots
         className="mt-4 lg:hidden"
         count={imagePairs.length}
         activeIndex={activePair}
-        onSelect={(index) => swiperRef.current?.slideTo(index)}
+        onSelect={(index) => swiperRef.current?.slideToLoop(index)}
         ariaLabel="Навигация по фотографиям"
         getItemLabel={(index) => `Показать слайд ${index + 1}`}
       />

@@ -56,8 +56,6 @@ const testimonials = [
 export default function VideoTestimonials(): JSX.Element {
   const screen = useBreakpoint();
   const [startIndex, setStartIndex] = useState(0);
-  const [isAtStart, setIsAtStart] = useState(true);
-  const [isAtEnd, setIsAtEnd] = useState(false);
   const swiperRef = useRef<SwiperInstance | null>(null);
   const { galleryRef } = useLightGallery({
     items: testimonials.map(({ title, videoUrl }) => ({ src: videoUrl, subHtml: title })),
@@ -71,9 +69,11 @@ export default function VideoTestimonials(): JSX.Element {
    * @param direction - Направление перемещения.
    */
   const move = (direction: 'prev' | 'next') => {
-    const nextIndex = direction === 'next' ? startIndex + 1 : startIndex - 1;
-
-    swiperRef.current?.slideTo(nextIndex);
+    if (direction === 'next') {
+      swiperRef.current?.slideNext();
+    } else {
+      swiperRef.current?.slidePrev();
+    }
   };
 
   /**
@@ -82,9 +82,7 @@ export default function VideoTestimonials(): JSX.Element {
    * @param swiper - Экземпляр карусели Swiper.
    */
   const updateNavigation = (swiper: SwiperInstance) => {
-    setStartIndex(swiper.activeIndex);
-    setIsAtStart(swiper.isBeginning);
-    setIsAtEnd(swiper.isEnd);
+    setStartIndex(swiper.realIndex);
   };
 
   return (
@@ -100,7 +98,7 @@ export default function VideoTestimonials(): JSX.Element {
         slidesPerGroup={1}
         spaceBetween={4}
         freeMode={{ enabled: true, sticky: true }}
-        loop={false}
+        loop
         onSlideChange={updateNavigation}
       >
         {testimonials.map(({ title, duration, videoUrl }, index) => {
@@ -139,14 +137,14 @@ export default function VideoTestimonials(): JSX.Element {
             className="mt-6"
             count={testimonials.length}
             activeIndex={startIndex}
-            onSelect={(index) => swiperRef.current?.slideTo(index)}
+            onSelect={(index) => swiperRef.current?.slideToLoop(index)}
             ariaLabel="Выбор видеоотзыва"
             getItemLabel={(index) => testimonials[index].title}
           />
         ) : (
           <div className="flex items-center justify-end gap-1 mt-10" aria-label="Управление видеоотзывами">
-            <SliderArrow direction="left" onClick={() => move('prev')} disabled={isAtStart} />
-            <SliderArrow direction="right" onClick={() => move('next')} disabled={isAtEnd} />
+            <SliderArrow direction="left" onClick={() => move('prev')} />
+            <SliderArrow direction="right" onClick={() => move('next')} />
           </div>
         )}
       </div>

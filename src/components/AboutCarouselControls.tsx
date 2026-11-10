@@ -38,8 +38,8 @@ export default function AboutCarouselControls({
         {String(start).padStart(2, '0')} - {String(end).padStart(2, '0')}
       </span>
       <div className="flex items-center gap-1" aria-label="Управление фотографиями">
-        <SliderArrow direction="left" onClick={onPrevious} disabled={isAtStart} />
-        <SliderArrow direction="right" onClick={onNext} disabled={isAtEnd} />
+        <SliderArrow direction="left" onClick={onPrevious} />
+        <SliderArrow direction="right" onClick={onNext} />
       </div>
     </div>
   );

@@ -38,6 +38,7 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
   const [startIndex, setStartIndex] = useState(0);
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(images.length <= slidesPerPage);
+  const isLoopEnabled = images.length >= slidesPerPage * 2;
   const swiperRef = useRef<SwiperInstance | null>(null);
   const galleryItems = useMemo(
     () => images.map(({ src, alt }) => ({ src, alt })),
@@ -54,9 +55,11 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
    * @param direction - Направление перемещения.
    */
   const move = (direction: 'prev' | 'next') => {
-    const nextIndex = direction === 'next' ? startIndex + slidesPerPage : startIndex - slidesPerPage;
-
-    swiperRef.current?.slideTo(nextIndex);
+    if (direction === 'next') {
+      swiperRef.current?.slideNext();
+    } else {
+      swiperRef.current?.slidePrev();
+    }
   };
   /**
    * Обновляет номер текущего слайда и доступность навигации.
@@ -65,9 +68,9 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
    */
   const updateNavigation = (swiper: SwiperInstance) => {
     const slidesPerView = Number(swiper.params.slidesPerView);
-    setStartIndex(swiper.activeIndex);
-    setIsAtStart(swiper.isBeginning);
-    setIsAtEnd(swiper.isEnd || swiper.activeIndex >= swiper.slides.length - slidesPerView);
+    setStartIndex(swiper.realIndex);
+    setIsAtStart(!isLoopEnabled && swiper.isBeginning);
+    setIsAtEnd(!isLoopEnabled && (swiper.isEnd || swiper.realIndex >= images.length - slidesPerView));
   };
 
   return (
@@ -81,7 +84,7 @@ export default function AboutCarousel({ images }: AboutCarouselProps): JSX.Eleme
         slidesPerView={slidesPerPage}
         slidesPerGroup={slidesPerPage}
         spaceBetween={20}
-        loop={false}
+        loop={isLoopEnabled}
         breakpoints={{
           767: { slidesPerView: slidesPerPage, slidesPerGroup: slidesPerPage, spaceBetween: 16 },
         }}

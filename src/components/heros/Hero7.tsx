@@ -424,7 +424,7 @@ export default function Hero7(): JSX.Element {
             )}
           </div>
 
-          <div className="p-[20px_8px] md:p-[40px_20px] lg:p-[40px_32px] xl:p-10 2xl:p-5 3xl:p-8 4xl:p-[40px_40px_15px_40px] relative flex items-center mt-0 overflow-x-auto bg-white col-span-16 rounded-xl md:rounded-2xl 2xl:col-span-10 4xl:col-span-8 lg:ml-4 2xl:ml-8 4xl:ml-15">
+          <div className="p-[20px_8px] md:p-[40px_20px] lg:p-[40px_32px] xl:p-10 2xl:p-5 3xl:p-8 5xl:p-[40px_40px_15px_40px] relative flex items-center mt-0 overflow-x-auto bg-white col-span-16 rounded-xl md:rounded-2xl 2xl:col-span-10 4xl:col-span-8 lg:ml-4 2xl:ml-8 5xl:ml-15">
             <div
               className="w-full group cursor-zoom-in"
               role="button"
