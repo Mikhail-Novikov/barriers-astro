@@ -7,7 +7,6 @@ import type {
 } from "@components/heros/FeedbackFormFields";
 
 const BITRIX_FORM_URL = "https://www.perco.des/php/barriers-config-form.php";
-const BITRIX_FORM_PASSWORD = "bae42d7d01c78bf32db83aadd036e2ca574203da";
 
 /**
  * Параметры для хука useFeedbackForm.
@@ -106,8 +105,7 @@ export function useFeedbackForm({
 
     setIsSubmitting(true);
     try {
-      const params = new URLSearchParams({
-        pw: BITRIX_FORM_PASSWORD,
+      const body = new URLSearchParams({
         name: formData.name,
         email: formData.email,
         phone: "",
@@ -115,7 +113,13 @@ export function useFeedbackForm({
         barriers: pendingBarrierFeedback.barrierType,
         options: pendingBarrierFeedback.options,
       });
-      const response = await fetch(`${BITRIX_FORM_URL}?${params.toString()}`);
+      const response = await fetch(BITRIX_FORM_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body,
+      });
       const responseBody = await response.text();
 
       if (!response.ok || responseBody.trim() !== "ok") {

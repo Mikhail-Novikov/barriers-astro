@@ -9,53 +9,85 @@ const BARRIERS_FIELD_OPTIONS = 'form_textarea_1159';
 const BARRIERS_FIELD_QUERY_STRING = 'form_textarea_1166';
 const BARRIERS_FIELD_DATE = 'form_date_1160';
 
-require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php');
-
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Content-Type: text/plain; charset=UTF-8');
+header('Cache-Control: no-store');
 header('Access-Control-Allow-Headers: Content-Type');
+header('Vary: Origin');
+
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+$allowedOrigins = array_values(array_filter(array_map(
+    'trim',
+    explode(',', getenv('BARRIERS_ALLOWED_ORIGINS') ?: '')
+)));
+
+if ($origin === '' || !in_array($origin, $allowedOrigins, true)) {
+    http_response_code(403);
+    echo 'error: origin not allowed';
+    exit;
+}
+
+header('Access-Control-Allow-Origin: ' . $origin);
+header('Access-Control-Allow-Methods: POST, OPTIONS');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
 
-if ($_GET['pw'] != 'bae42d7d01c78bf32db83aadd036e2ca574203da') {
-    http_response_code(403);
-    echo 'error: unauthorized';
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Allow: POST, OPTIONS');
+    http_response_code(405);
+    echo 'error: method not allowed';
     exit;
 }
+
+if (empty($_POST) && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
+    http_response_code(400);
+    echo 'error: invalid form data';
+    exit;
+}
+
+$request = $_POST;
+$email = $request['email'] ?? '';
+$message = $request['message'] ?? '';
+
+if (
+    !is_string($email)
+    || !filter_var($email, FILTER_VALIDATE_EMAIL)
+    || !is_string($message)
+    || trim($message) === ''
+) {
+    http_response_code(400);
+    echo 'error: invalid form data';
+    exit;
+}
+
+require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php');
 
 // ============================================================
 //  Извлечение SMTP-конфига
 // ============================================================
 function getMailConfig(): array
 {
-    static $config = null;
-    if ($config !== null) return $config;
+    $getEnv = static function (string $name, string $default = ''): string {
+        $value = getenv($name);
+        return $value === false ? $default : trim($value);
+    };
 
-    $path = __DIR__ . '/mail-config.php';
-
-    if (!is_readable($path)) {
-        error_log('MAIL CONFIG ERROR: файл не найден или недоступен: ' . $path);
-        return $config = [];
-    }
-
-    $config = @include $path;
-
-    if (!is_array($config)) {
-        error_log('MAIL CONFIG ERROR: файл не вернул массив');
-        $config = [];
-    }
-
-    return $config;
+    return [
+        'host' => $getEnv('BARRIERS_SMTP_HOST'),
+        'port' => (int) $getEnv('BARRIERS_SMTP_PORT', '587'),
+        'secure' => strtolower($getEnv('BARRIERS_SMTP_SECURE', 'tls')),
+        'username' => $getEnv('BARRIERS_SMTP_USERNAME'),
+        'password' => $getEnv('BARRIERS_SMTP_PASSWORD'),
+        'from' => $getEnv('BARRIERS_SMTP_FROM'),
+        'to' => array_values(array_filter(array_map(
+            'trim',
+            explode(',', $getEnv('BARRIERS_SMTP_TO'))
+        ))),
+        'allow_self_signed' => strtolower($getEnv('BARRIERS_SMTP_ALLOW_SELF_SIGNED')) === 'true',
+    ];
 }
-
-// Логирование
-$logFile = __DIR__ . '/barrier_log.txt';
-$safeRequest = $_GET;
-unset($safeRequest['pw']);
-$logData = date('c') . ' Request: ' . json_encode($safeRequest, JSON_UNESCAPED_UNICODE) . "\n";
 
 $getPlainText = static function ($value): string {
     if (!is_scalar($value)) {
@@ -67,37 +99,25 @@ $getPlainText = static function ($value): string {
 };
 
 $arValues = array(
-    BARRIERS_FIELD_NAME => $getPlainText($_GET['name'] ?? ''),
-    BARRIERS_FIELD_EMAIL => $getPlainText($_GET['email'] ?? ''),
-    BARRIERS_FIELD_PHONE => $getPlainText($_GET['phone'] ?? ''),
-    BARRIERS_FIELD_MESSAGE => $getPlainText($_GET['message'] ?? ''),
+    BARRIERS_FIELD_NAME => $getPlainText($request['name'] ?? ''),
+    BARRIERS_FIELD_EMAIL => $getPlainText($request['email'] ?? ''),
+    BARRIERS_FIELD_PHONE => $getPlainText($request['phone'] ?? ''),
+    BARRIERS_FIELD_MESSAGE => $getPlainText($request['message'] ?? ''),
     BARRIERS_FIELD_ITEM => $getPlainText(
-        $_GET[BARRIERS_FIELD_ITEM] ?? $_GET['barriers'] ?? ''
+        $request[BARRIERS_FIELD_ITEM] ?? $request['barriers'] ?? ''
     ),
-    BARRIERS_FIELD_OPTIONS => $getPlainText($_GET[BARRIERS_FIELD_OPTIONS] ?? ''),
-    BARRIERS_FIELD_QUERY_STRING => $getPlainText($_GET[BARRIERS_FIELD_QUERY_STRING] ?? ''),
+    BARRIERS_FIELD_OPTIONS => $getPlainText($request[BARRIERS_FIELD_OPTIONS] ?? $request['options'] ?? ''),
+    BARRIERS_FIELD_QUERY_STRING => $getPlainText($request[BARRIERS_FIELD_QUERY_STRING] ?? ''),
     BARRIERS_FIELD_DATE => date('d.m.Y'),
 );
 
-$logData .= 'Values: ' . json_encode($arValues, JSON_UNESCAPED_UNICODE) . "\n";
-
 if (CModule::IncludeModule("form")) {
     $RESULT_ID = CFormResult::Add(BARRIERS_FORM_ID, $arValues);
-    $logData .= 'Module included, Result ID: ' . ($RESULT_ID ?: 'false') . "\n";
 } else {
-    $logData .= 'Module not included' . "\n";
-    @file_put_contents($logFile, $logData, FILE_APPEND);
+    error_log('Barrier form submission failed: Bitrix form module is unavailable.');
     http_response_code(500);
     echo 'error: module not included';
     exit;
-}
-
-if ($RESULT_ID) {
-    $logData .= "Result saved in Bitrix, Result ID: $RESULT_ID\n";
-} else {
-    $formError = $APPLICATION->GetException();
-    $formErrorText = $formError ? $formError->GetString() : 'No Bitrix error details';
-    $logData .= 'Error: Failed to add result. Bitrix: ' . $formErrorText . "\n";
 }
 
 $smtpSent = false;
@@ -151,8 +171,11 @@ if ($smtpHost && $smtpUsername && $smtpPassword && $smtpRecipients) {
         foreach ($smtpRecipients as $smtpRecipient) {
             $mail->addAddress($smtpRecipient);
         }
-        if (filter_var($_GET['email'] ?? '', FILTER_VALIDATE_EMAIL)) {
-            $mail->addReplyTo($_GET['email'], $_GET['name'] ?? '');
+        if (filter_var($request['email'] ?? '', FILTER_VALIDATE_EMAIL)) {
+            $mail->addReplyTo(
+                $arValues[BARRIERS_FIELD_EMAIL],
+                $arValues[BARRIERS_FIELD_NAME]
+            );
         }
 
         $mail->Subject = 'Новая заявка с сайта';
@@ -175,17 +198,8 @@ if ($smtpHost && $smtpUsername && $smtpPassword && $smtpRecipients) {
         $mail->Body = implode("\n", $mailBody);
         $mail->send();
         $smtpSent = true;
-        $logData .= "SMTP mail sent\n";
     } catch (\Throwable $error) {
-        $smtpDiagnostics = [
-            'exception' => $error->getMessage(),
-            'phpmailer' => isset($mail) ? $mail->ErrorInfo : '',
-            'smtp' => isset($mail) ? $mail->getSMTPInstance()->getError() : [],
-            'host' => $smtpHost,
-            'port' => $mailConfig['port'] ?? null,
-            'encryption' => $mailConfig['secure'] ?? null,
-        ];
-        $logData .= 'SMTP error: ' . json_encode($smtpDiagnostics, JSON_UNESCAPED_UNICODE) . "\n";
+        error_log('Barrier form SMTP delivery failed; see PHP mail-server logs for details.');
     }
 } else {
     $missingMailSettings = [];
@@ -194,15 +208,15 @@ if ($smtpHost && $smtpUsername && $smtpPassword && $smtpRecipients) {
             $missingMailSettings[] = $setting;
         }
     }
-    $logData .= 'SMTP error: missing config values: ' . implode(', ', $missingMailSettings) . "\n";
+    error_log('Barrier form SMTP configuration is missing: ' . implode(', ', $missingMailSettings));
 }
 
 if ($RESULT_ID && $smtpSent) {
-    $logData .= "Success: Result ID $RESULT_ID saved and SMTP mail sent\n";
-    @file_put_contents($logFile, $logData, FILE_APPEND);
     echo 'ok';
 } else {
-    @file_put_contents($logFile, $logData, FILE_APPEND);
+    if (!$RESULT_ID) {
+        error_log('Barrier form submission failed: Bitrix did not save the form result.');
+    }
     http_response_code(500);
     echo !$RESULT_ID ? 'error: failed to add' : 'error: failed to send email';
 }
