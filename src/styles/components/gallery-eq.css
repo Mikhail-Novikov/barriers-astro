@@ -139,6 +139,13 @@
 
 @media (min-width: 1920px) {
   .gallery-equipment__grid {
+    height: 638px;
+    grid-template-rows: 1fr 241px;
+  }
+}
+
+@media (min-width: 1921px) {
+  .gallery-equipment__grid {
     height: 690px;
     grid-template-rows: 1fr 270px;
   }
