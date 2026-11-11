@@ -1,5 +1,46 @@
+.width-slider-control {
+  width: 100%;
+}
+
+.width-slider-state {
+  width: fit-content;
+  margin-bottom: 20px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background-color: var(--color-grey-300);
+  color: var(--color-black);
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.width-slider-control[data-selected="true"] .width-slider-state {
+  padding: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--color-grey-1000);
+  font-family: "Manrope-SemiBold", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.width-slider-state-hover {
+  display: none;
+}
+
+.width-slider-control:not([data-selected="true"]):hover .width-slider-state-idle,
+.width-slider-control:not([data-selected="true"]):focus-within .width-slider-state-idle {
+  display: none;
+}
+
+.width-slider-control:not([data-selected="true"]):hover .width-slider-state-hover,
+.width-slider-control:not([data-selected="true"]):focus-within .width-slider-state-hover {
+  display: inline;
+}
 
 .width-slider {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   max-width: calc(100% - 1rem);
@@ -13,12 +54,22 @@
 
 .width-slider-track {
   --slider-percentage: 0%;
+  --slider-thumb-color: var(--color-cta);
 
   position: relative;
   width: 100%;
   height: 8px;
   background-color: var(--color-grey-400);
   border-radius: 0.5rem;
+}
+
+.width-slider-track--min {
+  --slider-thumb-color: var(--color-grey-400);
+}
+
+.width-slider-track:hover,
+.width-slider-track:focus-within {
+  --slider-thumb-color: var(--color-cta);
 }
 
 .width-slider-track::before,
@@ -110,23 +161,35 @@
   height: 20px;
   appearance: none;
   margin-top: -6px;
-  background-color: var(--color-cta);
+  background-color: var(--slider-thumb-color);
   border: 0;
   border-radius: 50%;
   cursor: pointer;
   position: relative;
   z-index: 5;
+  transition: background-color 0.3s;
 }
 
 .width-slider-input::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background-color: var(--color-cta);
+  background-color: var(--slider-thumb-color);
   border: 0;
   border-radius: 50%;
   cursor: pointer;
-    position: relative;
+  position: relative;
   z-index: 5;
+  transition: background-color 0.3s;
+}
+
+.width-slider-input::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: var(--slider-thumb-color);
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .width-slider-input::-ms-track {

@@ -20,7 +20,8 @@ type WidthSliderProps = {
  */
 export default function WidthSlider({ value, max, onChange }: WidthSliderProps): JSX.Element {
   const sliderPercentage = `${(value / max) * 100}%`;
-  const isLimited = value < 0.1 || value > max - 0.1;
+  const isLimited = value < 0.1 || value > max;
+  const isSelected = value > 0;
   const trackClasses = [
     'width-slider-track',
     value === 0 && 'width-slider-track--min',
@@ -29,33 +30,45 @@ export default function WidthSlider({ value, max, onChange }: WidthSliderProps):
   ].filter(Boolean).join(' ');
 
   return (
-    <div className="width-slider">
-      <div
-        className={trackClasses}
-        style={{ '--slider-percentage': sliderPercentage } as CSSProperties}
-      >
-        <div className="width-slider-pattern" />
-        <input
-          className="width-slider-input"
-          type="range"
-          name="width"
-          min="0"
-          max={max}
-          step="0.1"
-          value={value}
-          onChange={(event) => onChange(Number(event.target.value))}
-          aria-label="Максимальная ширина проезда"
-        />
+    <div className="width-slider-control" data-selected={isSelected}>
+      <div className="width-slider-state" aria-hidden="true">
+        {isSelected ? (
+          'Ширина проезда'
+        ) : (
+          <>
+            <span className="width-slider-state-idle">Ширина проезда: <span className="font-manrope-semibold">Не выбрана</span></span>
+            <span className="width-slider-state-hover">Выберите ширину проезда</span>
+          </>
+        )}
       </div>
-      <div className="width-slider-labels">
-        <span className="width-slider-label-min">0</span>
-        <span
-          className={`width-slider-value${isLimited ? ' is-hidden' : ''}`}
-          style={{ left: sliderPercentage }}
+      <div className="width-slider">
+        <div
+          className={trackClasses}
+          style={{ '--slider-percentage': sliderPercentage } as CSSProperties}
         >
-          {value.toLocaleString('ru-RU', { maximumFractionDigits: 1 })}
-        </span>
-        <span className="width-slider-label-max">{max}</span>
+          <div className="width-slider-pattern" />
+          <input
+            className="width-slider-input"
+            type="range"
+            name="width"
+            min="0"
+            max={max}
+            step="0.1"
+            value={value}
+            onChange={(event) => onChange(Number(event.target.value))}
+            aria-label="Максимальная ширина проезда"
+          />
+        </div>
+        <div className="width-slider-labels">
+          <span className="width-slider-label-min">0</span>
+          <span
+            className={`width-slider-value${isLimited ? ' is-hidden' : ''}`}
+            style={{ left: sliderPercentage }}
+          >
+            {value.toLocaleString('ru-RU', { maximumFractionDigits: 1 })}
+          </span>
+          <span className="width-slider-label-max">{max}</span>
+        </div>
       </div>
     </div>
   );
