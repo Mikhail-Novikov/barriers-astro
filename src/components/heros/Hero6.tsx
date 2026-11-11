@@ -118,21 +118,26 @@ const createFilterSection = <T extends string>(props: FilterSectionProps<T>): JS
 }
 
 /**
- * Возвращает длину барьера в зависимости от ширины дороги.
- * @param roadWidth - ширина дороги
- * @return {string} длина барьера
+ * Возвращает длину стрелы, соответствующую выбранной ширине проезда.
+ * Границы групп:
+ *  - 0              → null (фильтр по ширине отключён, показываем все)
+ *  - 0.1 … 3.0      → '3'   (дорога до 3 м — 3-метровая стрела)
+ *  - 3.1 … 4.3      → '4.3' (дорога 3,1–4,3 м — 4,3-метровая стрела)
+ *  - 4.4 … 6.0      → '6.3' (дорога 4,4–6 м — 6,3-метровая стрела)
+ * @param roadWidth - выбранная ширина проезда
+ * @return {string | null} требуемая длина стрелы или null, если фильтр не применён
  */
 const getRequiredBoomLength = (roadWidth: number): string | null => {
   if (roadWidth === 0) return null;
   if (roadWidth <= 3) return '3';
-  if (roadWidth <= 4) return '4.3';
+  if (roadWidth <= 4.3) return '4.3';
   return '6.3';
 };
 
 /**
  * Проверяет, соответствует ли барьер выбранным фильтрам по температуре.
  * @param selected - массив выбранных фильтров по температуре
- * @param isLowTemp - признак низкой температуры
+ * @param isLowTemp - признак низкой температуры
  * @return {boolean} true, если барьер соответствует фильтрам, иначе false
  */
 const matchesTemperatureFilter = (selected: TemperatureOption[], isLowTemp: boolean): boolean => {
@@ -307,7 +312,7 @@ export default function Hero6(): JSX.Element {
   const filtersContent = (
     <>
       <fieldset>
-        <legend className="mb-5 text-md/6 font-manrope-semibold text-grey-1000">Ширина проезда</legend>
+        <legend className="sr-only">Ширина проезда</legend>
         <WidthSlider value={maxWidth} max={maxWidthLimit} onChange={setMaxWidth} />
       </fieldset>
 
