@@ -5,6 +5,8 @@ import '@fancyapps/ui/dist/fancybox/fancybox.css';
 import { Dots } from "@fancyapps/ui/dist/carousel/carousel.dots.js";
 import "@fancyapps/ui/dist/carousel/carousel.dots.css";
 
+import { encodeHtmlText } from '@utils/encodeHtmlText';
+
 /** Интерфейс для описания элемента галереи.*/
 interface GalleryItem {
   /** Источник изображения или объект с источником изображения. */
@@ -236,10 +238,14 @@ export const useLightGallery = ({
         Navigation: navigation,
         Arrows: hasArrows,
         ...(videoAutoplay ? { Video: { autoplay: true } } : {}),
-        formatCaption: (caption: string, slide: any) =>
-          captionClassName
-            ? `<span class="${captionClassName}">${slide?.triggerEl?.dataset?.caption ?? caption}</span>`
-            : slide?.triggerEl?.dataset?.caption ?? caption,
+        formatCaption: (caption: string, slide: any) => {
+          const captionText = encodeHtmlText(
+            slide?.triggerEl?.dataset?.caption ?? caption,
+          );
+          return captionClassName
+            ? `<span class="${captionClassName}">${captionText}</span>`
+            : captionText;
+        },
         // Прячем штатную подпись, если она не нужна или переехала в обёртку
         ...(captionPlacement !== 'default'
           ? { formatCaption: () => '' }
