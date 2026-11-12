@@ -43,14 +43,14 @@ const galleryAll = ([
     "srcFull": "fullsize/01-03.webp",
     "id": "2",
     "ratio": "square",
-    "description": "Шлагбаум GS04, ЖК «Лахта», Санкт-Петербург"
+    "description": "Шлагбаум GS04, отель «Репинский курорт», Санкт-Петербург"
   },
   {
     "srcPreview": "preview/01-04.webp",
     "srcFull": "fullsize/01-04.webp",
     "id": "3",
     "ratio": "square",
-    "description": "Шлагбаум GS04, отель «Репинский курорт», Санкт-Петербург"
+    "description": "Шлагбаум GS04, ЖК «Урбанист», Мурино, Ленинградская область"
   },
 
   {
@@ -87,7 +87,7 @@ const galleryAll = ([
     "srcFull": "fullsize/03-01.webp",
     "id": "9",
     "ratio": "square",
-    "description": "Шлагбаум GS04, ЖК «Урбанист», Санкт-Петербург"
+    "description": "Шлагбаум GS04, городская усадьба Демидовых, Москва"
   },
   {
     "srcPreview": "preview/03-02.webp",
@@ -108,7 +108,7 @@ const galleryAll = ([
     "srcFull": "fullsize/03-04.webp",
     "id": "12",
     "ratio": "square",
-    "description": "Шлагбаум GS04, городская усадьба Демидовых, Москва"
+    "description": "Шлагбаум GS04, ЖК «Лахта», Санкт-Петербург"
   },
 
   {

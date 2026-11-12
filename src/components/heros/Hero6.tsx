@@ -542,7 +542,7 @@ export default function Hero6(): JSX.Element {
         <div className="grid items-start grid-cols-12 gap-3 sm:gap-5">
           <div className="col-span-4 2xl:col-span-3 flex-col gap-2 xl:sticky xl:top-[120px] hidden xl:flex">
             <aside className="px-4 bg-white rounded-3xl 4xl:px-8 py-9">
-              <h3 className="mb-8 text-xl/6 font-manrope-semibold text-grey-800">
+              <h3 className="mb-6 text-xl/6 font-manrope-semibold text-grey-800">
                 Выберите условия эксплуатации
               </h3>
               <div>{filtersContent}</div>
