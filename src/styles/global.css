@@ -72,7 +72,6 @@
 @font-face {
   font-family: 'Inter-Bold';
   src: local('Inter/Inter Bold'), local('Inter-Bold'),
-      url('../assets/fonts/Inter/Inter-Bold.eot') format('eot'),
       url('../assets/fonts/Inter/Inter-Bold.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
