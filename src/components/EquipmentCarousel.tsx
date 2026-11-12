@@ -87,18 +87,19 @@ const EquipmentCarousel = ({ cards }: EquipmentCarouselProps): JSX.Element => {
             swiperRef.current = swiper;
           }}
           aria-label="Дополнительное оборудование"
-          width={270}
-          breakpoints={{
-            712: { width: 352 },
-          }}
+          slidesPerView="auto"
+          loop
           spaceBetween={12}
           className="equipment-carousel"
         >
           {cards.map((card) => (
-            <SwiperSlide key={`${card.id}-${card.title}`}>
+            <SwiperSlide
+              key={`${card.id}-${card.title}`}
+              className="!w-[270px] md:!w-[352px]"
+            >
               <article className="swiper-slide-transform">
                 <img
-                  className="object-contain rounded-3xl bg-grey-200"
+                  className="object-contain rounded-3xl bg-grey-200 aspect-15/10"
                   src={publicAsset(
                     `/img/configuration-additional-equipment/gallery/dop-${card.id}.webp`,
                   )}
