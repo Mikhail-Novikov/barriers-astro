@@ -188,7 +188,7 @@ const galleryAll = ([
     "srcFull": "fullsize/06-03.webp",
     "id": "23",
     "ratio": "square",
-    "description": "Шлагбаумы GS04, база отдыха Opushka house, Санкт-Петербург"
+    "description": "Шлагбаумы GS04, база отдыха Opushka house, Ленинградская область"
   },
   {
     "srcPreview": "preview/06-04.webp",
