@@ -1,29 +1,21 @@
 ---
-import sm1 from '../../assets/img/setup-maintenance/sm-1.png';
-import sm1_1200 from '../../assets/img/setup-maintenance/sm-1-1200.png';
-import sm1_1400 from '../../assets/img/setup-maintenance/sm-1-1400.png';
-import sm1_1600 from '../../assets/img/setup-maintenance/sm-1-1600.png';
-import sm1_1921 from '../../assets/img/setup-maintenance/sm-1-1921.png';
-
-import sm1_mobile_1400 from '../../assets/img/setup-maintenance/sm-1-mobile.png';
-import sm2 from '../../assets/img/setup-maintenance/sm-2.png';
-import sm2_mobile_1400 from '../../assets/img/setup-maintenance/sm-2-mobile.png';
+import { publicAsset } from '../../utils/publicAsset';
 
 const cards = [
   {
-    image: sm1,
-    imageMobile1400: sm1_mobile_1400,
-    image1200: sm1_1200,
-    image1400: sm1_1400,
-    image1600: sm1_1600,
-    image1921: sm1_1921,
+    image: publicAsset('/img/setup-maintenance/sm-1.webp'),
+    imageMobile1400: publicAsset('/img/setup-maintenance/sm-1-mobile.webp'),
+    image1200: publicAsset('/img/setup-maintenance/sm-1-1200.webp'),
+    image1400: publicAsset('/img/setup-maintenance/sm-1-1400.webp'),
+    image1600: publicAsset('/img/setup-maintenance/sm-1-1600.webp'),
+    image1921: publicAsset('/img/setup-maintenance/sm-1-1921.webp'),
     title: 'Встроенный блок управления',
     description: '<p>Удобный доступ к&nbsp;блоку управления обеспечивает его простое обслуживание.</p><p>Датчик открытия дверцы позволяет отслеживать несанкционированный доступ к&nbsp;внутренним элементам шлагбаума, включая механизм ручного поднятия стрелы.<br>Монтажные швеллеры и&nbsp;пластины идут в&nbsp;комплекте.</p>',
     imagePosition: 'left' as const,
   },
   {
-    image: sm2,
-    image1400: sm2_mobile_1400,
+    image: publicAsset('/img/setup-maintenance/sm-2.webp'),
+    image1400: publicAsset('/img/setup-maintenance/sm-2-mobile.webp'),
     title: 'Настройка через<br>мобильное приложение',
     description: '<p>Мобильное приложение для настройки шлагбаума устанавливается на&nbsp;смартфон администратора, отвечающего за&nbsp;управление работой шлагбаума.</p><p>Для настройки шлагбаума используются технологии беспроводной передачи данных Bluetooth. Команды от&nbsp;приложения поступают в&nbsp;плату управления шлагбаума через модуль GSM&nbsp;/ BLE.</p>',
     imagePosition: 'right' as const,
@@ -43,23 +35,23 @@ const cards = [
               <div class="flex-shrink-0 mb-8 md:mb-0 2xl:w-6/12">
                 <picture>
                   {card.image1921 && (
-                    <source media="(min-width: 1921px)" srcset={card.image1921.src} />
+                    <source media="(min-width: 1921px)" srcset={card.image1921} />
                   )}
                   {card.image1600 && (
-                    <source media="(min-width: 1600px)" srcset={card.image1600.src} />
+                    <source media="(min-width: 1600px)" srcset={card.image1600} />
                   )}
                   {card.image1600 && (
-                    <source media="(min-width: 1600px)" srcset={card.image1600.src} />
+                    <source media="(min-width: 1600px)" srcset={card.image1600} />
                   )}
                   {card.image1400 && (
-                    <source media="(min-width: 1400px)" srcset={card.image1400.src} />
+                    <source media="(min-width: 1400px)" srcset={card.image1400} />
                   )}
                   {card.image1200 && (
-                    <source media="(min-width: 320px)" srcset={card.image1200.src} />
+                    <source media="(min-width: 320px)" srcset={card.image1200} />
                   )}
                   <img
                     class={`sm:h-[310px] 4xl:h-[380px] rounded-2xl object-cover shrink-0 ${card.imagePosition === 'right' ? 'm-auto h-[310px]' : 'h-[191px]'}`}
-                    src={card.image.src}
+                    src={card.image}
                     alt={card.title}
                     loading="lazy"
                   />
