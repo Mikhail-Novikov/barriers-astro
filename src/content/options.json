@@ -40,6 +40,12 @@
 		]
 	},
 	{
+  	"selected": { "name": "maxWidth", "value": ["0", "4"] },
+		"disables": [
+			{ "name": "openingTimes", "value": "4-6" }
+		]
+	},
+	{
 		"selected": { "name": "maxWidth", "value": ["3", "4"] },
 		"disables": [
 			{ "name": "openingTimes", "value": "lessThan1.5" }

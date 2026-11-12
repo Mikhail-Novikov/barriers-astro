@@ -122,15 +122,15 @@ const createFilterSection = <T extends string>(props: FilterSectionProps<T>): JS
  * Границы групп:
  *  - 0              → null (фильтр по ширине отключён, показываем все)
  *  - 0.1 … 3.0      → '3'   (дорога до 3 м — 3-метровая стрела)
- *  - 3.1 … 4.3      → '4.3' (дорога 3,1–4,3 м — 4,3-метровая стрела)
- *  - 4.4 … 6.0      → '6.3' (дорога 4,4–6 м — 6,3-метровая стрела)
+ *  - 3.1 … 4.      → '4.3' (дорога 3,1–4,3 м — 4,3-метровая стрела)
+ *  - 4.1 … 6.0      → '6.3' (дорога 4,4–6 м — 6,3-метровая стрела)
  * @param roadWidth - выбранная ширина проезда
  * @return {string | null} требуемая длина стрелы или null, если фильтр не применён
  */
 const getRequiredBoomLength = (roadWidth: number): string | null => {
   if (roadWidth === 0) return null;
   if (roadWidth <= 3) return '3';
-  if (roadWidth <= 4.3) return '4.3';
+  if (roadWidth <= 4) return '4.3';
   return '6.3';
 };
 
