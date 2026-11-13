@@ -27,7 +27,7 @@
 }
 
 .btn-primary--outline {
-  @apply bg-transparent border px-8 text-cta hover:bg-cta hover:text-white hover:border-cta transition-colors cursor-pointer
+  @apply bg-transparent border px-8 text-cta hover:bg-cta hover:text-white hover:border-cta transition-colors cursor-pointer disabled:border-grey-600 disabled:text-grey-900 disabled:hover:bg-transparent disabled:hover:text-grey-600 disabled:hover:border-grey-400 disabled:cursor-not-allowed
 }
 
 .link--underline {

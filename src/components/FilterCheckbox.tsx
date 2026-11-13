@@ -52,7 +52,7 @@ export default function FilterCheckbox({
   indicatorClassName = '',
 }: FilterCheckboxProps): JSX.Element {
   return (
-    <label className={`flex items-center gap-4 perco-icons text-md/6 ${disabled ? 'cursor-not-allowed text-grey-600' : 'cursor-pointer text-grey-1000'} ${className}`}>
+    <label className={`flex items-center gap-4 perco-icons text-md/6 text-grey-1000 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${className}`}>
       <input
         id={id}
         type={type}
@@ -65,7 +65,7 @@ export default function FilterCheckbox({
         onChange={onChange}
         className="sr-only peer"
       />
-      <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border border-grey-700 text-white peer-checked:border-cta peer-checked:bg-cta peer-disabled:border-grey-400 peer-disabled:bg-grey-200 peer-disabled:text-grey-600 peer-aria-invalid:border-red-500 peer-focus-visible:ring-2 peer-focus-visible:ring-cta text-md/5 ${indicatorClassName}`}>
+      <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border border-grey-600 text-white peer-checked:border-cta peer-checked:bg-cta peer-disabled:border-grey-600/40 peer-disabled:text-grey-600/20 peer-aria-invalid:border-red-500 peer-focus-visible:ring-2 peer-focus-visible:ring-cta text-md/5 ${indicatorClassName}`}>
         {checked && <span className="relative left-[0.5px] perco-icon-check-tag" />}
       </span>
       {label}

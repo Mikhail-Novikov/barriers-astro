@@ -1,4 +1,4 @@
-import { useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import Modal from './Modal';
 import ModalFeedbackForm from './ModalFeedbackForm';
 import WidthSlider from './WidthSlider';
@@ -84,15 +84,18 @@ function FilterSection<T extends string>({
   return (
     <fieldset className="flex flex-col gap-5">
       <legend className="mb-4 text-md/6 font-manrope-semibold text-grey-1000">{title}</legend>
-      {options.map(([value, label], index) => (
-        <FilterCheckbox
-          key={`${value}-${index}`}
-          checked={selected.includes(value)}
-          label={label}
-          onChange={() => onToggle(value)}
-          disabled={disabledValues?.has(value) ?? false}
-        />
-      ))}
+      {options.map(([value, label], index) => {
+        const disabled = disabledValues?.has(value) ?? false;
+        return (
+          <FilterCheckbox
+            key={`${value}-${index}`}
+            checked={selected.includes(value) && !disabled}
+            label={label}
+            onChange={() => onToggle(value)}
+            disabled={disabled}
+          />
+        );
+      })}
     </fieldset>
   );
 }
@@ -106,6 +109,19 @@ function FilterSection<T extends string>({
  */
 const toggleValue = <T,>(value: T, values: T[], setValues: (values: T[]) => void): void => {
   setValues(values.includes(value) ? values.filter((item) => item !== value) : [...values, value]);
+};
+
+/**
+ * Убирает отключённые значения из выбранных опций ппосле изменения ширины проезда.
+ * @param selected - Текущие выбранные значения.
+ * @param disabled - Множество отключённых значений (необязательно).
+ * @returns Новый массив без отключённых значений, либо исходный `selected`.
+ */
+const clearDisabledValues = <T extends string>(selected: T[], disabled?: ReadonlySet<string>): T[] => {
+  if (!disabled?.size) return selected;
+
+  const remaining = selected.filter((value) => !disabled.has(value));
+  return remaining.length === selected.length ? selected : remaining;
 };
 
 /**
@@ -218,6 +234,14 @@ export default function Hero6(): JSX.Element {
   // получаем отключенные опции для фильтров на основе текущих выбранных значений
   const disabledOptions = useDisabledOptions({ maxWidth, temperatures, openingTimes, booms, fotoElement });
   const maxWidthLimit = getMaxWidthLimit(disabledOptions.get('maxWidth'));
+
+  // следим за опциями и очищаем выбранные значения, если они стали недоступными
+  useEffect(() => {
+    setTemperatures((selected) => clearDisabledValues(selected, disabledOptions.get('temperatures')));
+    setOpeningTimes((selected) => clearDisabledValues(selected, disabledOptions.get('openingTimes')));
+    setBooms((selected) => clearDisabledValues(selected, disabledOptions.get('booms')));
+    setFotoElement((selected) => clearDisabledValues(selected, disabledOptions.get('fotoElement')));
+  }, [disabledOptions, setBooms, setFotoElement, setOpeningTimes, setTemperatures]);
 
   const galleryRef = useRef<HTMLDivElement>(null);
 
@@ -530,10 +554,11 @@ export default function Hero6(): JSX.Element {
             <button
               type="button"
               aria-label="Сбросить фильтры"
+              disabled={appliedFiltersCount === 0}
               onClick={resetFilters}
-              className="cursor-pointer block-inline shrink-0 text-2xl/6"
+              className={`block-inline shrink-0 text-2xl/6 ${appliedFiltersCount === 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
             >
-              <span className='mr-4 block-inline sm:hidden text-red'><i className="perco-icon-mobile-no-filters" /></span>
+              <span className={`mr-4 block-inline sm:hidden ${appliedFiltersCount === 0 ? 'text-grey-500' : 'text-red'}`}><i className="perco-icon-mobile-no-filters" /></span>
             </button>
           </div>
           <div className="flex-1 min-h-0 overflow-y-auto overscroll-y-contain">{filtersContent}</div>
@@ -550,6 +575,7 @@ export default function Hero6(): JSX.Element {
                 className='w-full mt-8 xl:mt-10 sm:w-fit sm:block'
                 type="button"
                 variant="primary-outline"
+                disabled={appliedFiltersCount === 0}
                 onClick={resetFilters}
               >
                 Сбросить все фильтры
