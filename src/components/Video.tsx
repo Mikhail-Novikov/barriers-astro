@@ -1,11 +1,15 @@
 import { forwardRef, useEffect, useMemo, useRef, useState, type VideoHTMLAttributes } from "react";
 import { useLightGallery } from "@hooks/useLightGallery";
+import { useDevice } from "@hooks/useDevice";
 import VideoPlayButton from "@components/VideoPlayButton";
 
 type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
   // Исходный URL видео.
   src: string;
-  // URL постера для видео.
+  // URL постеров для десктопа, мобильных устройств и экранов высокой плотности.
+  posterDesktop?: string;
+  posterMobile?: string;
+  posterRetina?: string;
   containerClassName?: string;
   // Показать ли опцию полноэкранного режима в light gallery.
   showFullscreen?: boolean;
@@ -22,7 +26,10 @@ type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
  *
  * @param props - Свойства компонента.
  * @param props.src - Исходный URL видео.
- * @param props.poster - URL постера для видео.
+ * @param props.poster - Запасной URL постера для обратной совместимости.
+ * @param props.posterDesktop - URL постера для десктопа.
+ * @param props.posterMobile - URL постера для мобильных устройств.
+ * @param props.posterRetina - URL постера для экранов высокой плотности.
  * @param props.containerClassName - Дополнительные классы для контейнера.
  * @param props.showFullscreen - Показать ли опцию полноэкранного режима.
  * @param props.inlinePlayback - Запускать видео в контейнере по кнопке воспроизведения.
@@ -32,6 +39,9 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
   {
     src,
     poster,
+    posterDesktop,
+    posterMobile,
+    posterRetina,
     caption,
     containerClassName = "",
     showFullscreen = true,
@@ -48,7 +58,12 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
   const [videoKey, setVideoKey] = useState(0);
   const [isPlayingInline, setIsPlayingInline] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const items = useMemo(() => [{ src, poster }], [src, poster]);
+  const { isMobile, isRetina } = useDevice();
+  const desktopPoster = posterDesktop ?? poster;
+  const responsivePoster = isMobile
+    ? posterMobile ?? (isRetina ? posterRetina : undefined) ?? desktopPoster
+    : (isRetina ? posterRetina : undefined) ?? desktopPoster;
+  const items = useMemo(() => [{ src, poster: responsivePoster }], [src, responsivePoster]);
 
   useEffect(() => {
     if (!autoPlay) return;
@@ -114,7 +129,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
         ref={handleVideoRef}
         src={src}
         {...props}
-        poster={poster}
+        poster={responsivePoster}
         autoPlay={inlinePlayback ? false : autoPlay}
         controls={inlinePlayback ? false : controls}
         onClick={inlinePlayback ? handleInlineVideoClick : undefined}
@@ -137,7 +152,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
           href={src}
           data-fancybox="video-player"
           data-type="html5video"
-          data-poster={poster}
+          data-poster={responsivePoster}
           data-caption={caption}
           aria-hidden="true"
           tabIndex={-1}
