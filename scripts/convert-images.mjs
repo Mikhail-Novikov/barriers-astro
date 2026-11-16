@@ -31,7 +31,7 @@ async function copyImageToPublic(filePath) {
   const outputFile = path.join(targetDir, `${path.basename(filePath, ext)}.webp`);
   await sharp(filePath)
     .resize({ width: 1600, withoutEnlargement: true })
-    .webp({ quality: 82 })
+    .webp({ quality: 100 })
     .toFile(outputFile);
 }
 
