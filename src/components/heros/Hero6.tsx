@@ -182,9 +182,13 @@ const matchesOpeningTimeFilter = (
     if (opening === 'lessThan1.5') return isHighSpeed;
     if (isHighSpeed) return false;
 
-    const [filterMin, filterMax] = opening === '3-4' ? [3, 4] : [4, 6];
+    // «3-4»: точное попадание в диапазон (время не должно выходить за 3–4)
+    if (opening === '3-4') {
+      return openingTime.from >= 3 && openingTime.to <= 4;
+    }
 
-    return openingTime.to > filterMin && openingTime.from < filterMax;
+    // «4-6»: отсекаем только тех, чьё время целиком меньше 4 (пересечение с 4–6)
+    return openingTime.to > 4 && openingTime.from < 6;
   });
 };
 

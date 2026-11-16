@@ -30,6 +30,14 @@
 		]
 	},
 	{
+		"selected": { "name": "openingTimes", "value": "4-6" },
+		"disables": [
+			{ "name": "temperatures", "value": "low" },
+			{ "name": "booms", "value": "square" },
+			{ "name": "booms", "value": "folding" }
+		]
+	},
+	{
 		"selected": { "name": "temperatures", "value": "low" },
 		"disables": [
 			{ "name": "fotoElement", "value": "with" },
