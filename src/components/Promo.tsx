@@ -41,7 +41,7 @@ export default function Promo(): JSX.Element {
       <Video
         ref={videoRef}
         key={src}
-        className="w-full h-[340px] max-h-[700px] sm:h-auto sm:min-h-[260px] object-cover"
+        className="w-full h-[340px] max-h-[900px] sm:h-auto sm:min-h-[260px] object-cover"
         src={src}
         poster={publicAsset("/img/preview-promo.webp")}
         muted
