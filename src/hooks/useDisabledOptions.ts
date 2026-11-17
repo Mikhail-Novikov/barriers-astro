@@ -39,16 +39,14 @@ const matchesSelection = (option: FilterOption, current: number | readonly strin
   return current.includes(option.value);
 };
 
-/** Секции, в которых возможен множественный выбор. */
-const MULTI_SELECT_SECTIONS = ['temperatures', 'openingTimes', 'booms', 'fotoElement'] as const;
+/** Секции фильтров с массивом выбранных значений. */
+const FILTER_SECTIONS = ['temperatures', 'openingTimes', 'booms', 'fotoElement'] as const;
 
 /**
  * Возвращает отключенные значения, сгруппированные по фильтрам.
  *
- * Для секций с множественным выбором (temperatures, openingTimes, booms, fotoElement)
- * дизейблы вычисляются как ПЕРЕСЕЧЕНИЕ ограничений по всем выбранным значениям:
- * если хотя бы одна выбранная опция совместима с каким-то значением, оно не блокируется.
- * Для maxWidth (одиночное значение) логика остаётся прежней.
+ * Ограничения выбранных значений объединяются: значение недоступно, если оно
+ * запрещено хотя бы одним текущим выбором.
  *
  * @param selections Объект, содержащий текущие выборы.
  * @returns Map с наборами отключенных значений по имени фильтра.
@@ -95,36 +93,18 @@ const useDisabledOptions = (selections: BarrierFilterSelections): ReadonlyMap<st
       disabledOptions.set(name, group);
     };
 
-    // Секции с множественным выбором: пересечение дизейблов по всем выбранным значениям.
-    for (const sectionName of MULTI_SELECT_SECTIONS) {
+    // Объединяем ограничения для всех выбранных значений каждой секции.
+    for (const sectionName of FILTER_SECTIONS) {
       const selectedValues = currentSelections[sectionName];
       if (!Array.isArray(selectedValues) || selectedValues.length === 0) continue;
 
       const perValue = disablesBySelection.get(sectionName);
       if (!perValue) continue;
 
-      let intersection: Set<string> | null = null;
-
       for (const value of selectedValues) {
         const group = perValue.get(value);
-
-        // Если у выбранного значения нет ограничений — пересечение пусто.
-        if (!group) {
-          intersection = null;
-          break;
-        }
-
-        if (intersection === null) {
-          intersection = new Set(group);
-        } else {
-          for (const item of Array.from(intersection)) {
-            if (!group.has(item)) intersection.delete(item);
-          }
-        }
-      }
-
-      if (intersection) {
-        for (const item of intersection) {
+        if (!group) continue;
+        for (const item of group) {
           const separatorIndex = item.indexOf(':');
           addDisabled(item.slice(0, separatorIndex), item.slice(separatorIndex + 1));
         }

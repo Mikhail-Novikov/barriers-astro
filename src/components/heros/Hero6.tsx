@@ -182,13 +182,9 @@ const matchesOpeningTimeFilter = (
     if (opening === 'lessThan1.5') return isHighSpeed;
     if (isHighSpeed) return false;
 
-    // «3-4»: точное попадание в диапазон (время не должно выходить за 3–4)
-    if (opening === '3-4') {
-      return openingTime.from >= 3 && openingTime.to <= 4;
-    }
-
-    // «4-6»: отсекаем только тех, чьё время целиком меньше 4 (пересечение с 4–6)
-    return openingTime.to > 4 && openingTime.from < 6;
+    // В каталоге интервал 3–6 секунд относится к категории «3–4».
+    if (opening === '3-4') return openingTime.from < 4;
+    return openingTime.from >= 4;
   });
 };
 
@@ -204,6 +200,7 @@ const matchesBoomFilter = (selected: BoomOption[], boomShape: string, isBoomFold
 
   return selected.some((boom) => {
     if (boom === 'folding') return isBoomFoldable;
+    if (boom === 'square') return boomShape === 'square' && !isBoomFoldable;
     return boom === boomShape;
   });
 };
