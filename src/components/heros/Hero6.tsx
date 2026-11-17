@@ -7,6 +7,7 @@ import FilterCheckbox from '@components/FilterCheckbox';
 import { publicAsset } from '@utils/publicAsset';
 import { useBreakpoint } from '@hooks/useBreakpoint';
 import useBarrierCatalogEffects from '@hooks/useBarrierCatalogEffects';
+import useFilterSidebarPositioning from '@hooks/useFilterSidebarPositioning';
 import useDisabledOptions, { getMaxWidthLimit } from '@hooks/useDisabledOptions';
 import { useZoomModal } from '@hooks/useZoomModal';
 import { buildBarrierGallery } from '@hooks/useBarrierGallery';
@@ -112,7 +113,7 @@ const toggleValue = <T,>(value: T, values: T[], setValues: (values: T[]) => void
 };
 
 /**
- * Убирает отключённые значения из выбранных опций ппосле изменения ширины проезда.
+ * Убирает отключённые значения из выбранных опций после изменения ширины проезда.
  * @param selected - Текущие выбранные значения.
  * @param disabled - Множество отключённых значений (необязательно).
  * @returns Новый массив без отключённых значений, либо исходный `selected`.
@@ -245,6 +246,10 @@ export default function Hero6(): JSX.Element {
   }, [disabledOptions, setBooms, setFotoElement, setOpeningTimes, setTemperatures]);
 
   const galleryRef = useRef<HTMLDivElement>(null);
+  const {
+    sidebarRef: filtersSidebarRef,
+    trackRef: filtersSidebarTrackRef,
+  } = useFilterSidebarPositioning();
 
   useBarrierCatalogEffects({
     selectedMaxWidth: maxWidth,
@@ -532,13 +537,13 @@ export default function Hero6(): JSX.Element {
           </button>
         </div>
         <div
-          className={`fixed perco-icons inset-0 z-50 bg-grey-1000/40 transition-opacity duration-300 xl:hidden ${isFiltersOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
+          className={`fixed perco-icons inset-0 z-10 bg-grey-1000/40 transition-opacity duration-300 xl:hidden ${isFiltersOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
           onClick={() => setIsFiltersOpen(false)}
           aria-hidden={!isFiltersOpen}
         />
 
         <aside
-          className={`perco-icons fixed sm:absolute inset-0 sm:inset-auto sm:top-auto z-50 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white px-4 py-[20px_60px] transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
+          className={`perco-icons fixed sm:absolute inset-0 top-16 sm:inset-auto sm:top-auto z-10 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white px-4 py-[20px_60px] transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
           onClick={(event) => event.stopPropagation()}
         >
           <div className="flex justify-between p-4 mb-2 -mx-4 -mt-5 shrink-0 sm:justify-end sm:p-0 sm:mx-0 sm:mt-0 bg-grey-200 sm:bg-white">
@@ -566,26 +571,31 @@ export default function Hero6(): JSX.Element {
         </aside>
 
         <div className="grid items-start grid-cols-12 gap-3 sm:gap-5">
-          <div className="col-span-4 2xl:col-span-3 flex-col gap-2 xl:sticky xl:top-[120px] hidden xl:flex">
-            <aside className="px-4 bg-white rounded-3xl 4xl:px-8 py-9">
-              <h3 className="mb-6 text-xl/6 font-manrope-semibold text-grey-800">
-                Выберите условия эксплуатации
-              </h3>
-              <div>{filtersContent}</div>
-              <Button
-                className='w-full mt-8 xl:mt-10 sm:w-fit sm:block'
-                type="button"
-                variant="primary-outline"
-                disabled={appliedFiltersCount === 0}
-                onClick={resetFilters}
-              >
-                Сбросить все фильтры
-              </Button>
-            </aside>
-            <p className="px-8 py-2 text-md/6 text-grey-900">
-              Все цены указаны со&nbsp;склада в&nbsp;Москве
-              и&nbsp;Санкт-Петербурге
-            </p>
+          <div
+            ref={filtersSidebarTrackRef}
+            className="col-span-4 2xl:col-span-3 hidden xl:block self-stretch"
+          >
+            <div ref={filtersSidebarRef} className="flex flex-col gap-2">
+              <aside className="px-4 bg-white rounded-2xl 4xl:px-8 py-9">
+                <h3 className="mb-6 text-xl/6 font-manrope-semibold text-grey-800">
+                  Выберите условия эксплуатации
+                </h3>
+                <div>{filtersContent}</div>
+                <Button
+                  className='w-full mt-8 xl:mt-10 sm:w-fit sm:block'
+                  type="button"
+                  variant="primary-outline"
+                  disabled={appliedFiltersCount === 0}
+                  onClick={resetFilters}
+                >
+                  Сбросить все фильтры
+                </Button>
+              </aside>
+              <p className="px-8 py-2 text-md/6 text-grey-900">
+                Все цены указаны со&nbsp;склада в&nbsp;Москве
+                и&nbsp;Санкт-Петербурге
+              </p>
+            </div>
           </div>
           <div
             ref={galleryRef}
