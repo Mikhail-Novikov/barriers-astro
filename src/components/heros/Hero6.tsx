@@ -290,13 +290,6 @@ export default function Hero6(): JSX.Element {
       onToggle: (value: BoomOption) => toggleValue(value, booms, setBooms),
       disabledValues: disabledOptions.get('booms'),
     }),
-    createFilterSection({
-      title: 'Фотоэлемент',
-      options: fotoElementOptions,
-      selected: fotoElement,
-      disabledValues: disabledOptions.get('fotoElement'),
-      onToggle: (value: FotoElementOption) => toggleValue(value, fotoElement, setFotoElement),
-    }),
   ];
 
   // Фильтрация
