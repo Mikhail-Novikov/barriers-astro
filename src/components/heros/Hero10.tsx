@@ -129,7 +129,7 @@ const solutions: Solution[] = [
     tag: "Гараж, ГСК",
     title: "Гараж или ГСК",
     image: publicAsset("/img/ready‑made-solutions/residential-garage.webp"),
-    price: "121 862 ₽",
+    price: "127 862 ₽",
     description:
       "Шлагбаум GS14 с&nbsp;круглой стрелой 4,3&nbsp;м, опорной стойка GBS1 и&nbsp;комплектом фотоэлементов GD1",
     specifics: "Въезд для своих, бюджетное решение, низкий поток.",
@@ -149,7 +149,7 @@ const solutions: Solution[] = [
     tag: "Двор ЖК",
     title: "Двор многоквартирного дома, ЖК",
     image: publicAsset("/img/ready‑made-solutions/residential-garage.webp"),
-    price: "121 862 ₽",
+    price: "127 862 ₽",
     description:
       "Шлагбаум GS14 с&nbsp;круглой стрелой 4,3&nbsp;м, опорной стойкой GBS1 и&nbsp;комплектом фотоэлементов GD1",
     specifics:
@@ -169,7 +169,7 @@ const solutions: Solution[] = [
     tag: "СНТ, коттеджный поселок",
     title: "Коттеджный поселок, СНТ, дача",
     image: publicAsset("/img/ready‑made-solutions/snt.webp"),
-    price: "141 871 ₽",
+    price: "147 871 ₽",
     description:
       "Шлагбаум GS16 с&nbsp;круглой стрелой 6,3&nbsp;м, опорной стойкой GBS1 и&nbsp;комплектом фотоэлементов GD1",
     specifics:
