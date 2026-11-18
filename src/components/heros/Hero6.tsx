@@ -429,7 +429,7 @@ export default function Hero6(): JSX.Element {
                           aria-label="Прокрутить миниатюры влево"
                           disabled={!thumbnailNavigation.canScrollLeft}
                           onClick={() => scrollThumbnails(-1)}
-                          className="flex items-center justify-center transition-colors rounded-full perco-icons size-8 shrink-0 bg-grey-300 text-grey-800 hover:bg-grey-400 disabled:cursor-not-allowed disabled:opacity-40"
+                          className="flex items-center justify-center transition-colors rounded-full perco-icons size-8 shrink-0 bg-grey-300 text-grey-800 hover:bg-grey-400 disabled:opacity-40"
                         >
                           <span
                             className="perco-icon-arrow-left-small"
@@ -466,7 +466,7 @@ export default function Hero6(): JSX.Element {
                           aria-label="Прокрутить миниатюры вправо"
                           disabled={!thumbnailNavigation.canScrollRight}
                           onClick={() => scrollThumbnails(1)}
-                          className="flex items-center justify-center transition-colors rounded-full perco-icons size-8 shrink-0 bg-grey-300 text-grey-800 hover:bg-grey-400 disabled:cursor-not-allowed disabled:opacity-40"
+                          className="flex items-center justify-center transition-colors rounded-full perco-icons size-8 shrink-0 bg-grey-300 text-grey-800 hover:bg-grey-400 disabled:opacity-40"
                         >
                           <span
                             className="rotate-180 perco-icon-arrow-left-small"
@@ -562,7 +562,7 @@ export default function Hero6(): JSX.Element {
               aria-label="Сбросить фильтры"
               disabled={appliedFiltersCount === 0}
               onClick={resetFilters}
-              className={`block-inline shrink-0 text-2xl/6 ${appliedFiltersCount === 0 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+              className={`block-inline shrink-0 text-2xl/6 ${appliedFiltersCount === 0 ? 'cursor-default' : 'cursor-pointer'}`}
             >
               <span className={`mr-4 block-inline sm:hidden ${appliedFiltersCount === 0 ? 'text-grey-500' : 'text-red'}`}><i className="perco-icon-mobile-no-filters" /></span>
             </button>
@@ -573,7 +573,7 @@ export default function Hero6(): JSX.Element {
         <div className="grid items-start grid-cols-12 gap-3 sm:gap-5">
           <div
             ref={filtersSidebarTrackRef}
-            className="col-span-4 2xl:col-span-3 hidden xl:block self-stretch"
+            className="self-stretch hidden col-span-4 2xl:col-span-3 xl:block"
           >
             <div ref={filtersSidebarRef} className="flex flex-col gap-2">
               <aside className="px-4 bg-white rounded-2xl 4xl:px-8 py-9">

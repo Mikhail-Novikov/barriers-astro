@@ -29,7 +29,7 @@ const SliderArrow = ({
       onClick={onClick}
       disabled={disabled}
       className={`perco-icons text-white text-sm focus:outline-none focus:ring-0 ${
-        disabled ? "cursor-not-allowed opacity-40" : "cursor-pointer"
+        disabled ? "cursor-default opacity-40" : "cursor-pointer"
       }`}
       aria-label={direction === "left" ? "Предыдущий слайд" : "Следующий слайд"}
     >
