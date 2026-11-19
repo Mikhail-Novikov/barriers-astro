@@ -1,13 +1,17 @@
 <?
-const BARRIERS_FORM_ID = 87;
-const BARRIERS_FIELD_NAME = 'form_text_1154';
-const BARRIERS_FIELD_EMAIL = 'form_email_1155';
-const BARRIERS_FIELD_PHONE = 'form_text_1156';
-const BARRIERS_FIELD_MESSAGE = 'form_textarea_1157';
-const BARRIERS_FIELD_ITEM = 'form_textarea_1158';
-const BARRIERS_FIELD_OPTIONS = 'form_textarea_1159';
-const BARRIERS_FIELD_QUERY_STRING = 'form_textarea_1166';
-const BARRIERS_FIELD_DATE = 'form_date_1160';
+
+require_once __DIR__ . '/../utils/env.php';
+loadEnv();
+
+define('BARRIERS_FORM_ID', envInt('BARRIERS_FORM_ID', 87));
+define('BARRIERS_FIELD_NAME', envValue('BARRIERS_FIELD_NAME', 'form_text_1154'));
+define('BARRIERS_FIELD_EMAIL', envValue('BARRIERS_FIELD_EMAIL', 'form_email_1155'));
+define('BARRIERS_FIELD_PHONE', envValue('BARRIERS_FIELD_PHONE', 'form_text_1156'));
+define('BARRIERS_FIELD_MESSAGE', envValue('BARRIERS_FIELD_MESSAGE', 'form_textarea_1157'));
+define('BARRIERS_FIELD_ITEM', envValue('BARRIERS_FIELD_ITEM', 'form_textarea_1158'));
+define('BARRIERS_FIELD_OPTIONS', envValue('BARRIERS_FIELD_OPTIONS', 'form_textarea_1159'));
+define('BARRIERS_FIELD_QUERY_STRING', envValue('BARRIERS_FIELD_QUERY_STRING', 'form_textarea_1166'));
+define('BARRIERS_FIELD_DATE', envValue('BARRIERS_FIELD_DATE', 'form_date_1160'));
 
 require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php');
 
@@ -20,7 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-if ($_GET['pw'] != 'bae42d7d01c78bf32db83aadd036e2ca574203da') {
+$formPassword = envValue('BARRIERS_FORM_PASSWORD');
+$providedPassword = (string) ($_GET['pw'] ?? '');
+
+if ($formPassword === '' || $providedPassword === '' || !hash_equals($formPassword, $providedPassword)) {
     http_response_code(403);
     echo 'error: unauthorized';
     exit;

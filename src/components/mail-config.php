@@ -1,11 +1,17 @@
 <?php
+
+require_once __DIR__ . '/../utils/env.php';
+loadEnv();
+
+$recipients = envList('BARRIERS_SMTP_TO');
+
 return [
-    'host'     => '89.108.108.212',
-    'port'     => 465,
-    'secure'   => 'ssl',
-    // разрешить самоподписанные сертификаты
-    'allow_self_signed' => true,
-    'username' => 'noreply@perco.ru',
-    'password' => '',
-    'to'       => ['novikov@perco.ru', 'kublanov@perco.ru'],
+    'host' => envValue('BARRIERS_SMTP_HOST'),
+    'port' => envInt('BARRIERS_SMTP_PORT', 465),
+    'secure' => envValue('BARRIERS_SMTP_SECURE', 'ssl'),
+    'allow_self_signed' => envBool('BARRIERS_SMTP_ALLOW_SELF_SIGNED', true),
+    'username' => envValue('BARRIERS_SMTP_USERNAME'),
+    'password' => envValue('BARRIERS_SMTP_PASSWORD'),
+    'from' => envValue('BARRIERS_SMTP_FROM'),
+    'to' => $recipients,
 ];

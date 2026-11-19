@@ -6,8 +6,11 @@ import type {
   FeedbackFormErrors,
 } from "@components/heros/FeedbackFormFields";
 
-const BITRIX_FORM_URL = "https://www.perco.des/php/barriers-config-form.php";
-const BITRIX_FORM_PASSWORD = "bae42d7d01c78bf32db83aadd036e2ca574203da";
+const BITRIX_FORM_URL =
+  import.meta.env.PUBLIC_BARRIERS_FORM_URL ??
+  "https://www.perco.des/php/barriers-config-form.php";
+const BITRIX_FORM_PASSWORD =
+  import.meta.env.PUBLIC_BARRIERS_FORM_PASSWORD ?? "";
 
 /**
  * Параметры для хука useFeedbackForm.
