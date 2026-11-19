@@ -13,7 +13,12 @@ define('BARRIERS_FIELD_OPTIONS', envValue('BARRIERS_FIELD_OPTIONS', 'form_textar
 define('BARRIERS_FIELD_QUERY_STRING', envValue('BARRIERS_FIELD_QUERY_STRING', 'form_textarea_1166'));
 define('BARRIERS_FIELD_DATE', envValue('BARRIERS_FIELD_DATE', 'form_date_1160'));
 
-require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php');
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php';
+
+register_shutdown_function(static function (): void {
+    require_once $_SERVER['DOCUMENT_ROOT']
+        . '/bitrix/modules/main/include/epilog_after.php';
+});
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -213,5 +218,3 @@ if ($RESULT_ID && $smtpSent) {
     http_response_code(500);
     echo !$RESULT_ID ? 'error: failed to add' : 'error: failed to send email';
 }
-
-require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/epilog_after.php");
