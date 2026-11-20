@@ -201,10 +201,10 @@ export default function FeedbackFormFields({
               onConsentChange(false);
               return;
             }
-
             setIsConsentDialogOpen(true);
           }}
           className="gap-3 px-2 text-sm/5 text-grey-700"
+          hoverColor="group-hover:bg-grey-300"
           label={
             <span className="text-grey-700">
               Нажимая на кнопку, вы подтверждаете, что ознакомились с&nbsp;

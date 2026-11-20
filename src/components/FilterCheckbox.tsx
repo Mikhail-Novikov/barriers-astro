@@ -13,6 +13,7 @@ type FilterCheckboxProps = {
   required?: boolean;
   className?: string;
   indicatorClassName?: string;
+  hoverColor?: string;
 };
 
 /**
@@ -35,6 +36,7 @@ type FilterCheckboxProps = {
  *   type="checkbox"
  *   name="option"
  *   value="value1"
+ *   hoverColor="group-hover:bg-blue-300" - для форм где требуется изменение цвета при наведении
  * />
  */
 export default function FilterCheckbox({
@@ -50,8 +52,9 @@ export default function FilterCheckbox({
   required = false,
   className = '',
   indicatorClassName = '',
+  hoverColor = 'group-hover:bg-grey-200',
 }: FilterCheckboxProps): JSX.Element {
-  const hoverClassName = !checked && !disabled ? 'group-hover:bg-grey-200' : '';
+  const hoverClassName = !checked && !disabled ? hoverColor : '';
 
   return (
     <label className={`group flex items-center gap-4 perco-icons text-md/6 ${disabled ? 'text-grey-800 cursor-default' : ' cursor-pointer'} ${className}`}>
