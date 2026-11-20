@@ -4,7 +4,6 @@ import type { Dispatch, RefObject, SetStateAction } from 'react';
 export type TemperatureOption = 'standard' | 'low';
 export type OpeningTimeFilterOption = 'lessThan1.5' | '3-4' | '4-6';
 export type BoomOption = 'round' | 'square' | 'folding';
-export type FotoElementOption = 'with' | 'without';
 
 // интервал открытия
 export type OpeningTimeOption = { from: number; to: number };
@@ -12,10 +11,9 @@ export type OpeningTimeOption = { from: number; to: number };
 // выбранные значения фильтров
 export type BarrierFilterSelections = {
 	maxWidth: number;
-	temperatures: readonly TemperatureOption[];
-	openingTimes: readonly OpeningTimeFilterOption[];
-	booms: readonly BoomOption[];
-	fotoElement: readonly FotoElementOption[];
+	temperatures: TemperatureOption | null;
+	openingTimes: OpeningTimeFilterOption | null;
+	booms: BoomOption | null;
 };
 
 // опция фильтрации
@@ -34,39 +32,23 @@ export type FilterRule = {
 	disables: FilterOption[];
 };
 
-// тип формы одной опции секции [value, label]
-export type FilterSectionOption<T extends string> = readonly [value: T, label: string];
-
-// Свойства одной секции фильтров
-export type FilterSectionProps<T extends string> = {
-	title: string;
-	name: string;
-	options: readonly FilterSectionOption<T>[];
-	selected: T[];
-	onSelect: (value: T, checked: boolean) => void;
-	disabledValues?: ReadonlySet<string>;
-};
-
 // параметры хуков
 export type UseBarrierCatalogEffectsParams = {
   /** выбранный диапазон ширины проезда */
 	selectedMaxWidth: number;
-  /** массив выбранных температур */
-	temperatures: TemperatureOption[];
-	/** выбранные интервалы времени открытия */
-	openingTimes: OpeningTimeFilterOption[];
-  /** массив выбранных типов стрел шлагбаумов */
-	booms: BoomOption[];
-  /** тип шлагбаума с фотоэлементом или без него */
-	fotoElement: FotoElementOption[];
+  /** выбранная температура */
+	temperatures: TemperatureOption | null;
+	/** выбранный интервал времени открытия */
+	openingTimes: OpeningTimeFilterOption | null;
+  /** выбранный тип стрелы шлагбаума */
+	booms: BoomOption | null;
   /** ссылка на галерею */
 	galleryRef: RefObject<HTMLDivElement>;
   /** функция для установки выбранного диапазона ширины */
 	setMaxWidth: Dispatch<SetStateAction<number>>;
-	setTemperatures: Dispatch<SetStateAction<TemperatureOption[]>>;
-	setOpeningTimes: Dispatch<SetStateAction<OpeningTimeFilterOption[]>>;
-	setBooms: Dispatch<SetStateAction<BoomOption[]>>;
-	setFotoElement: Dispatch<SetStateAction<FotoElementOption[]>>;
+	setTemperatures: Dispatch<SetStateAction<TemperatureOption | null>>;
+	setOpeningTimes: Dispatch<SetStateAction<OpeningTimeFilterOption | null>>;
+	setBooms: Dispatch<SetStateAction<BoomOption | null>>;
   /** функция для установки состояния открытия фильтров */
 	setIsFiltersOpen: Dispatch<SetStateAction<boolean>>;
 };

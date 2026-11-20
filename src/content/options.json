@@ -1,17 +1,11 @@
 [
 	{
-		"selected": { "name": "fotoElement", "value": "with" },
-		"disables": [
-			{ "name": "temperatures", "value": "low" }
-		]
-	},
-	{
 		"selected": { "name": "booms", "value": "square" },
 		"disables": [
 			{ "name": "openingTimes", "value": "lessThan1.5" },
 			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "temperatures", "value": "low" },
-			{ "name": "maxWidth", "value": "4" }
+			{ "name": "maxWidth", "value": "6" }
 		]
 	},
 	{
@@ -20,7 +14,7 @@
 			{ "name": "openingTimes", "value": "lessThan1.5" },
 			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "temperatures", "value": "low" },
-			{ "name": "maxWidth", "value": "4" }
+			{ "name": "maxWidth", "value": "6" }
 		]
 	},
 	{
@@ -37,16 +31,16 @@
 			{ "name": "temperatures", "value": "low" },
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "maxWidth", "value": "4" }
+			{ "name": "maxWidth", "value": "4" },
+			{ "name": "maxWidth", "value": "3" }
 		]
 	},
 	{
 		"selected": { "name": "temperatures", "value": "low" },
 		"disables": [
-			{ "name": "fotoElement", "value": "with" },
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "maxWidth", "value": "4" },
+			{ "name": "maxWidth", "value": "6" },
 			{ "name": "openingTimes", "value": "4-6" }
 		]
 	},

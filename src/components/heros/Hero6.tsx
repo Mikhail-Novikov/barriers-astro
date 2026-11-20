@@ -15,9 +15,6 @@ import barriers from '@content/barriers.json';
 
 import type {
   BoomOption,
-  FotoElementOption,
-  FilterSectionOption,
-  FilterSectionProps,
   OpeningTimeFilterOption,
   OpeningTimeOption,
   TemperatureOption,
@@ -27,6 +24,16 @@ import emptySearchImage from '../../assets/img/empty-search.png';
 import { ZoomModal, ZoomableImage } from './ZoomModal';
 import { Button } from '@components/Button';
 import PaginationDots from '@components/PaginationDots';
+
+type FilterSectionOption<T extends string> = readonly [value: T, label: string];
+type FilterSectionProps<T extends string> = {
+  title: string;
+  name: string;
+  options: readonly FilterSectionOption<T>[];
+  selected: T | null;
+  onSelect: (value: T, checked: boolean) => void;
+  disabledValues?: ReadonlySet<string>;
+};
 
 /** Путь к публичному каталогу превью изображений шлагбаумов. */
 const previewPath = publicAsset('/img/barriers/');
@@ -70,12 +77,6 @@ const boomOptions: readonly FilterSectionOption<BoomOption>[] = [
   ['folding', 'складная прямоугольная'],
 ] as const;
 
-/** Подписи и значения фильтра по наличию фотоэлемента. */
-const fotoElementOptions: readonly FilterSectionOption<FotoElementOption>[] = [
-  ['with', 'встроенный'],
-  ['without', 'место для установки'],
-] as const;
-
 /**
  * Создает секцию фильтрации.
  * @param props FilterSectionProps<T>- свойства секции фильтрации
@@ -92,12 +93,12 @@ function FilterSection<T extends string>({
   return (
     <fieldset className="flex flex-col gap-5">
       <legend className="mb-4 text-md/6 font-manrope-semibold text-grey-1000">{title}</legend>
-      {options.map(([value, label], index) => {
+      {options.map(([value, label]) => {
         const disabled = disabledValues?.has(value) ?? false;
         return (
           <FilterRadioBtn
-            key={`${value}-${index}`}
-            checked={selected.includes(value) && !disabled}
+            key={value}
+            checked={selected === value && !disabled}
             label={label}
             onChange={(checked) => onSelect(value, checked)}
             name={name}
@@ -111,26 +112,13 @@ function FilterSection<T extends string>({
 }
 
 /**
- * Убирает отключённые значения из выбранных опций после изменения ширины проезда.
- * @param selected - Текущие выбранные значения.
+ * Снимает выбранную опцию, если она стала недоступна.
+ * @param selected - Текущее значение.
  * @param disabled - Множество отключённых значений (необязательно).
- * @returns Новый массив без отключённых значений, либо исходный `selected`.
+ * @returns `null`, если значение недоступно, иначе исходный `selected`.
  */
-const clearDisabledValues = <T extends string>(selected: T[], disabled?: ReadonlySet<string>): T[] => {
-  if (!disabled?.size) return selected;
-
-  const remaining = selected.filter((value) => !disabled.has(value));
-  return remaining.length === selected.length ? selected : remaining;
-};
-
-/**
- * Создает секцию фильтрации.
- * @param props FilterSectionProps<T>- свойства секции фильтрации
- * @return {JSX.Element} JSX-элемент секции фильтрации
- */
-const createFilterSection = <T extends string>(props: FilterSectionProps<T>): JSX.Element => {
-  return <FilterSection {...props} />;
-}
+const clearDisabledValue = <T extends string>(selected: T | null, disabled?: ReadonlySet<string>): T | null =>
+  selected !== null && disabled?.has(selected) ? null : selected;
 
 /**
  * Возвращает длину стрелы, соответствующую выбранной ширине проезда.
@@ -151,72 +139,46 @@ const getRequiredBoomLength = (roadWidth: number): string | null => {
 
 /**
  * Проверяет, соответствует ли барьер выбранным фильтрам по температуре.
- * @param selected - массив выбранных фильтров по температуре
+ * @param selected - выбранный фильтр по температуре
  * @param isLowTemp - признак низкой температуры
  * @return {boolean} true, если барьер соответствует фильтрам, иначе false
  */
-const matchesTemperatureFilter = (selected: TemperatureOption[], isLowTemp: boolean): boolean => {
-  const hasStandard = selected.includes('standard');
-  const hasLow = selected.includes('low');
-
-  if (hasStandard === hasLow) return true;
-  return hasLow === isLowTemp;
-};
+const matchesTemperatureFilter = (selected: TemperatureOption | null, isLowTemp: boolean): boolean =>
+  selected === null || (selected === 'low') === isLowTemp;
 
 /**
  * Проверяет, соответствует ли барьер выбранным фильтрам по времени открытия.
- * @param selected - массив выбранных фильтров по времени открытия
+ * @param selected - выбранный фильтр по времени открытия
  * @param isHighSpeed - признак высокой скорости
  * @param openingTime - время открытия
  * @return {boolean} true, если барьер соответствует фильтрам, иначе false
  */
 const matchesOpeningTimeFilter = (
-  selected: OpeningTimeFilterOption[],
+  selected: OpeningTimeFilterOption | null,
   isHighSpeed: boolean,
   openingTime: OpeningTimeOption,
 ): boolean => {
-  if (selected.length === 0) return true;
+  if (selected === null) return true;
+  if (selected === 'lessThan1.5') return isHighSpeed;
+  if (isHighSpeed) return false;
 
-  return selected.some((opening) => {
-    if (opening === 'lessThan1.5') return isHighSpeed;
-    if (isHighSpeed) return false;
-
-    // В каталоге интервал 3–6 секунд относится к категории «3–4».
-    if (opening === '3-4') return openingTime.from < 4;
-    return openingTime.from >= 4;
-  });
+  // В каталоге интервал 3–6 секунд относится к категории «3–4».
+  if (selected === '3-4') return openingTime.from < 4;
+  return openingTime.from >= 4;
 };
 
 /**
  * Проверяет, соответствует ли барьер складываемому шлагбауму.
- * @param selected - массив выбранных фильтров по шлагбауму
+ * @param selected - выбранный фильтр по типу стрелы
  * @param boomShape - форма шлагбаума
  * @param isBoomFoldable - возможность складывать шлагбаум
  * @return {boolean} true, если барьер соответствует фильтрам, иначе false
  */
-const matchesBoomFilter = (selected: BoomOption[], boomShape: string, isBoomFoldable: boolean): boolean => {
-  if (selected.length === 0) return true;
-
-  return selected.some((boom) => {
-    if (boom === 'folding') return isBoomFoldable;
-    if (boom === 'square') return boomShape === 'square' && !isBoomFoldable;
-    return boom === boomShape;
-  });
-};
-
-/**
- * Проверяет, соответствует ли барьер выбранным фильтрам по фотоэлементу.
- * @param selected - массив выбранных фильтров по фотоэлементу
- * @param bodyStyle - стиль корпуса барьера
- * @return {boolean} true, если барьер соответствует фильтрам, иначе false
- */
-const matchesFotoElementFilter = (selected: FotoElementOption[], bodyStyle: string): boolean => {
-  if (selected.length === 0) return true;
-
-  return selected.some((fotoElement) => {
-    if (fotoElement === 'with') return bodyStyle === 'premium';
-    return bodyStyle === 'standard';
-  });
+const matchesBoomFilter = (selected: BoomOption | null, boomShape: string, isBoomFoldable: boolean): boolean => {
+  if (selected === null) return true;
+  if (selected === 'folding') return isBoomFoldable;
+  if (selected === 'square') return boomShape === 'square' && !isBoomFoldable;
+  return selected === boomShape;
 };
 
 /**
@@ -227,12 +189,16 @@ export default function Hero6(): JSX.Element {
   const screen = useBreakpoint();
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [maxWidth, setMaxWidth] = useState(0);
-  const [temperatures, setTemperatures] = useState<TemperatureOption[]>([]);
-  const [openingTimes, setOpeningTimes] = useState<OpeningTimeFilterOption[]>([]);
-  const [booms, setBooms] = useState<BoomOption[]>([]);
-  const [fotoElement, setFotoElement] = useState<FotoElementOption[]>([]);
+  const [temperature, setTemperature] = useState<TemperatureOption | null>(null);
+  const [openingTime, setOpeningTime] = useState<OpeningTimeFilterOption | null>(null);
+  const [boom, setBoom] = useState<BoomOption | null>(null);
   // получаем отключенные опции для фильтров на основе текущих выбранных значений
-  const disabledOptions = useDisabledOptions({ maxWidth, temperatures, openingTimes, booms, fotoElement });
+  const disabledOptions = useDisabledOptions({
+    maxWidth,
+    temperatures: temperature,
+    openingTimes: openingTime,
+    booms: boom,
+  });
 
   // следим за опциями и очищаем выбранные значения, если они стали недоступными
   useEffect(() => {
@@ -245,11 +211,10 @@ export default function Hero6(): JSX.Element {
         ? 0
         : selectedWidth;
     });
-    setTemperatures((selected) => clearDisabledValues(selected, disabledOptions.get('temperatures')));
-    setOpeningTimes((selected) => clearDisabledValues(selected, disabledOptions.get('openingTimes')));
-    setBooms((selected) => clearDisabledValues(selected, disabledOptions.get('booms')));
-    setFotoElement((selected) => clearDisabledValues(selected, disabledOptions.get('fotoElement')));
-  }, [disabledOptions, setBooms, setFotoElement, setMaxWidth, setOpeningTimes, setTemperatures]);
+    setTemperature((selected) => clearDisabledValue(selected, disabledOptions.get('temperatures')));
+    setOpeningTime((selected) => clearDisabledValue(selected, disabledOptions.get('openingTimes')));
+    setBoom((selected) => clearDisabledValue(selected, disabledOptions.get('booms')));
+  }, [disabledOptions, setBoom, setMaxWidth, setOpeningTime, setTemperature]);
 
   const galleryRef = useRef<HTMLDivElement>(null);
   const {
@@ -259,32 +224,28 @@ export default function Hero6(): JSX.Element {
 
   useBarrierCatalogEffects({
     selectedMaxWidth: maxWidth,
-    temperatures,
-    openingTimes,
-    booms,
-    fotoElement,
+    temperatures: temperature,
+    openingTimes: openingTime,
+    booms: boom,
     galleryRef,
     setMaxWidth,
-    setTemperatures,
-    setOpeningTimes,
-    setBooms,
-    setFotoElement,
+    setTemperatures: setTemperature,
+    setOpeningTimes: setOpeningTime,
+    setBooms: setBoom,
     setIsFiltersOpen,
   });
 
-  // Фильтры
   // Фильтрация
   const requiredBoomLength = getRequiredBoomLength(maxWidth);
   const filteredBarriers = useMemo(
     () => barriers.filter(
       (barrier) =>
         (requiredBoomLength === null || barrier.boomLength === requiredBoomLength) &&
-        matchesTemperatureFilter(temperatures, barrier.isLowTemp) &&
-        matchesOpeningTimeFilter(openingTimes, barrier.isHighSpeed, barrier.openingTime) &&
-        matchesBoomFilter(booms, barrier.boomShape, barrier.isBoomFoldable) &&
-        matchesFotoElementFilter(fotoElement, barrier.bodyStyle)
+        matchesTemperatureFilter(temperature, barrier.isLowTemp) &&
+        matchesOpeningTimeFilter(openingTime, barrier.isHighSpeed, barrier.openingTime) &&
+        matchesBoomFilter(boom, barrier.boomShape, barrier.isBoomFoldable)
     ),
-      [booms, fotoElement, openingTimes, requiredBoomLength, temperatures]
+      [boom, openingTime, requiredBoomLength, temperature]
   );
 
   /**
@@ -293,10 +254,9 @@ export default function Hero6(): JSX.Element {
    */
   const resetFilters = (): void => {
     setMaxWidth(0);
-    setTemperatures([]);
-    setOpeningTimes([]);
-    setBooms([]);
-    setFotoElement([]);
+    setTemperature(null);
+    setOpeningTime(null);
+    setBoom(null);
   };
 
   /**
@@ -304,10 +264,9 @@ export default function Hero6(): JSX.Element {
    * @return {number} количество примененных фильтров
    */
   const appliedFiltersCount = (maxWidth > 0 ? 1 : 0)
-    + temperatures.length
-    + openingTimes.length
-    + booms.length
-    + fotoElement.length;
+    + Number(temperature !== null)
+    + Number(openingTime !== null)
+    + Number(boom !== null);
 
   /**
    * Контент фильтров
@@ -338,30 +297,30 @@ export default function Hero6(): JSX.Element {
       </fieldset>
 
       <div className="mt-5 space-y-5 xl:mt-4 xl:space-y-7 4xl:space-y-8">
-        {createFilterSection({
-          title: 'Минимальная температура эксплуатации',
-          name: `temperatures-${groupSuffix}`,
-          options: TemperaturesOptions,
-          selected: temperatures,
-          onSelect: (value: TemperatureOption, checked: boolean) => setTemperatures(checked ? [value] : []),
-          disabledValues: disabledOptions.get('temperatures'),
-        })}
-        {createFilterSection({
-          title: 'Время открытия',
-          name: `openingTimes-${groupSuffix}`,
-          options: openingTimeOptions,
-          selected: openingTimes,
-          onSelect: (value: OpeningTimeFilterOption, checked: boolean) => setOpeningTimes(checked ? [value] : []),
-          disabledValues: disabledOptions.get('openingTimes'),
-        })}
-        {createFilterSection({
-          title: 'Тип стрелы',
-          name: `booms-${groupSuffix}`,
-          options: boomOptions,
-          selected: booms,
-          onSelect: (value: BoomOption, checked: boolean) => setBooms(checked ? [value] : []),
-          disabledValues: disabledOptions.get('booms'),
-        })}
+        <FilterSection<TemperatureOption>
+          title="Минимальная температура эксплуатации"
+          name={`temperatures-${groupSuffix}`}
+          options={TemperaturesOptions}
+          selected={temperature}
+          onSelect={(value, checked) => setTemperature(checked ? value : null)}
+          disabledValues={disabledOptions.get('temperatures')}
+        />
+        <FilterSection<OpeningTimeFilterOption>
+          title="Время открытия"
+          name={`openingTimes-${groupSuffix}`}
+          options={openingTimeOptions}
+          selected={openingTime}
+          onSelect={(value, checked) => setOpeningTime(checked ? value : null)}
+          disabledValues={disabledOptions.get('openingTimes')}
+        />
+        <FilterSection<BoomOption>
+          title="Тип стрелы"
+          name={`booms-${groupSuffix}`}
+          options={boomOptions}
+          selected={boom}
+          onSelect={(value, checked) => setBoom(checked ? value : null)}
+          disabledValues={disabledOptions.get('booms')}
+        />
       </div>
     </>
   );
