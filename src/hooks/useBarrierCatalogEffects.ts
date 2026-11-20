@@ -11,13 +11,12 @@ import type {
 
 /**
  * Хук для управления эффектами в каталоге барьеров.
- * 1. Устанавливает ограничение на максимальную ширину в соответствии с текущими фильтрами.
+ * 1. Восстанавливает и сохраняет состояние фильтров.
  * 2. Скроллит к галерее при изменении фильтров.
  * 3. Открывает модальное окно при клике на кнопку "Заказать".
  * 4. Закрывает фильтры при изменении размера страницы.
  * 
- * @param selectedMaxWidth - текущее значение слайдера максимальной ширины
- * @param maxWidthLimit - максимальная ширина, которую можно установить
+ * @param selectedMaxWidth - выбранный диапазон ширины проезда
  * @param temperatures - массив температур
  * @param openingTimes - выбранные интервалы времени открытия
  * @param booms - массив выстрелов
@@ -28,7 +27,6 @@ import type {
  */
 const useBarrierCatalogEffects = ({
   selectedMaxWidth,
-  maxWidthLimit,
   temperatures,
   openingTimes,
   booms,
@@ -67,11 +65,6 @@ const useBarrierCatalogEffects = ({
       fotoElement,
     });
   }, [booms, fotoElement, openingTimes, selectedMaxWidth, temperatures]);
-
-  // устанавливаем ограничение на максимальную ширину в соответствии с текущими фильтрами
-  useEffect(() => {
-    setMaxWidth((currentWidth) => Math.min(currentWidth, maxWidthLimit));
-  }, [maxWidthLimit, setMaxWidth]);
 
   // скроллим к галерее при изменении фильтров
   useEffect(() => {

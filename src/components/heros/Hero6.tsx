@@ -1,14 +1,13 @@
 import { useEffect, useMemo, useState, useRef } from 'react';
 import Modal from './Modal';
 import ModalFeedbackForm from './ModalFeedbackForm';
-import WidthSlider from './WidthSlider';
 
-import FilterCheckbox from '@components/FilterCheckbox';
+import FilterRadioBtn from '@components/FilterRadioBtn';
 import { publicAsset } from '@utils/publicAsset';
 import { useBreakpoint } from '@hooks/useBreakpoint';
 import useBarrierCatalogEffects from '@hooks/useBarrierCatalogEffects';
 import useFilterSidebarPositioning from '@hooks/useFilterSidebarPositioning';
-import useDisabledOptions, { getMaxWidthLimit } from '@hooks/useDisabledOptions';
+import useDisabledOptions from '@hooks/useDisabledOptions';
 import { useZoomModal } from '@hooks/useZoomModal';
 import { buildBarrierGallery } from '@hooks/useBarrierGallery';
 
@@ -46,8 +45,15 @@ const barrierThumbImages = import.meta.glob('../../assets/img/barriers/*/thumb/*
 
 /** Подписи и значения фильтра по минимальной температуре эксплуатации. */
 const TemperaturesOptions: readonly FilterSectionOption<TemperatureOption>[] = [
-  ['standard', '−40 °C'],
-  ['low', '−60 °C'],
+  ['standard', 'До −40 °C'],
+  ['low', 'До −60 °C'],
+] as const;
+
+/** Варианты фильтра по ширине проезда. */
+const widthOptions: readonly (readonly [number, number, string])[] = [
+  [0, 3, '2,3 - 3 метра'],
+  [3, 4, '3,1 - 4 метра'],
+  [4, 6, '4,1 - 6 метров'],
 ] as const;
 
 /** Подписи и значения фильтра по времени открытия шлагбаума. */
@@ -77,9 +83,10 @@ const fotoElementOptions: readonly FilterSectionOption<FotoElementOption>[] = [
  */
 function FilterSection<T extends string>({
   title,
+  name,
   options,
   selected,
-  onToggle,
+  onSelect,
   disabledValues,
 }: FilterSectionProps<T>): JSX.Element {
   return (
@@ -88,11 +95,13 @@ function FilterSection<T extends string>({
       {options.map(([value, label], index) => {
         const disabled = disabledValues?.has(value) ?? false;
         return (
-          <FilterCheckbox
+          <FilterRadioBtn
             key={`${value}-${index}`}
             checked={selected.includes(value) && !disabled}
             label={label}
-            onChange={() => onToggle(value)}
+            onChange={(checked) => onSelect(value, checked)}
+            name={name}
+            value={value}
             disabled={disabled}
           />
         );
@@ -100,17 +109,6 @@ function FilterSection<T extends string>({
     </fieldset>
   );
 }
-
-/**
- * Переключает значение в массиве.
- * @param value - значение, которое нужно переключить
- * @param values - массив значений
- * @param setValues - функция для установки нового массива значений
- * @return {void}
- */
-const toggleValue = <T,>(value: T, values: T[], setValues: (values: T[]) => void): void => {
-  setValues(values.includes(value) ? values.filter((item) => item !== value) : [...values, value]);
-};
 
 /**
  * Убирает отключённые значения из выбранных опций после изменения ширины проезда.
@@ -235,15 +233,23 @@ export default function Hero6(): JSX.Element {
   const [fotoElement, setFotoElement] = useState<FotoElementOption[]>([]);
   // получаем отключенные опции для фильтров на основе текущих выбранных значений
   const disabledOptions = useDisabledOptions({ maxWidth, temperatures, openingTimes, booms, fotoElement });
-  const maxWidthLimit = getMaxWidthLimit(disabledOptions.get('maxWidth'));
 
   // следим за опциями и очищаем выбранные значения, если они стали недоступными
   useEffect(() => {
+    setMaxWidth((selectedWidth) => {
+      const selectedOption = widthOptions.find(
+        ([lowerBound, value]) => selectedWidth > lowerBound && selectedWidth <= value,
+      );
+      if (!selectedOption) return selectedWidth;
+      return disabledOptions.get('maxWidth')?.has(String(selectedOption[1]))
+        ? 0
+        : selectedWidth;
+    });
     setTemperatures((selected) => clearDisabledValues(selected, disabledOptions.get('temperatures')));
     setOpeningTimes((selected) => clearDisabledValues(selected, disabledOptions.get('openingTimes')));
     setBooms((selected) => clearDisabledValues(selected, disabledOptions.get('booms')));
     setFotoElement((selected) => clearDisabledValues(selected, disabledOptions.get('fotoElement')));
-  }, [disabledOptions, setBooms, setFotoElement, setOpeningTimes, setTemperatures]);
+  }, [disabledOptions, setBooms, setFotoElement, setMaxWidth, setOpeningTimes, setTemperatures]);
 
   const galleryRef = useRef<HTMLDivElement>(null);
   const {
@@ -253,7 +259,6 @@ export default function Hero6(): JSX.Element {
 
   useBarrierCatalogEffects({
     selectedMaxWidth: maxWidth,
-    maxWidthLimit,
     temperatures,
     openingTimes,
     booms,
@@ -268,30 +273,6 @@ export default function Hero6(): JSX.Element {
   });
 
   // Фильтры
-  const filterSections = [
-    createFilterSection({
-      title: 'Минимальная температура эксплуатации',
-      options: TemperaturesOptions,
-      selected: temperatures,
-      onToggle: (value: TemperatureOption) => toggleValue(value, temperatures, setTemperatures),
-      disabledValues: disabledOptions.get('temperatures'),
-    }),
-    createFilterSection({
-      title: 'Время открытия',
-      options: openingTimeOptions,
-      selected: openingTimes,
-      onToggle: (value: OpeningTimeFilterOption) => toggleValue(value, openingTimes, setOpeningTimes),
-      disabledValues: disabledOptions.get('openingTimes'),
-    }),
-    createFilterSection({
-      title: 'Тип стрелы',
-      options: boomOptions,
-      selected: booms,
-      onToggle: (value: BoomOption) => toggleValue(value, booms, setBooms),
-      disabledValues: disabledOptions.get('booms'),
-    }),
-  ];
-
   // Фильтрация
   const requiredBoomLength = getRequiredBoomLength(maxWidth);
   const filteredBarriers = useMemo(
@@ -332,19 +313,55 @@ export default function Hero6(): JSX.Element {
    * Контент фильтров
    * @return {JSX.Element} JSX-элемент с контентом фильтров
    */
-  const filtersContent = (
+  const filtersContent = (groupSuffix: string): JSX.Element => (
     <>
       <fieldset>
-        <legend className="sr-only">Ширина проезда</legend>
-        <WidthSlider value={maxWidth} max={maxWidthLimit} onChange={setMaxWidth} />
+        <legend className="mb-4 text-md/6 font-manrope-semibold text-grey-1000">
+          Ширина проезда
+        </legend>
+        <div className="flex flex-col gap-5">
+          {widthOptions.map(([lowerBound, value, label]) => {
+            const disabled = disabledOptions.get('maxWidth')?.has(String(value)) ?? false;
+            return (
+              <FilterRadioBtn
+                key={value}
+                checked={maxWidth > lowerBound && maxWidth <= value && !disabled}
+                label={label}
+                onChange={(checked) => setMaxWidth(checked ? value : 0)}
+                name={`maxWidth-${groupSuffix}`}
+                value={String(value)}
+                disabled={disabled}
+              />
+            );
+          })}
+        </div>
       </fieldset>
 
       <div className="mt-5 space-y-5 xl:mt-4 xl:space-y-7 4xl:space-y-8">
-        {filterSections.map((section, index) => (
-          <div key={`filter-section-${index}`}>
-            {section}
-          </div>
-        ))}
+        {createFilterSection({
+          title: 'Минимальная температура эксплуатации',
+          name: `temperatures-${groupSuffix}`,
+          options: TemperaturesOptions,
+          selected: temperatures,
+          onSelect: (value: TemperatureOption, checked: boolean) => setTemperatures(checked ? [value] : []),
+          disabledValues: disabledOptions.get('temperatures'),
+        })}
+        {createFilterSection({
+          title: 'Время открытия',
+          name: `openingTimes-${groupSuffix}`,
+          options: openingTimeOptions,
+          selected: openingTimes,
+          onSelect: (value: OpeningTimeFilterOption, checked: boolean) => setOpeningTimes(checked ? [value] : []),
+          disabledValues: disabledOptions.get('openingTimes'),
+        })}
+        {createFilterSection({
+          title: 'Тип стрелы',
+          name: `booms-${groupSuffix}`,
+          options: boomOptions,
+          selected: booms,
+          onSelect: (value: BoomOption, checked: boolean) => setBooms(checked ? [value] : []),
+          disabledValues: disabledOptions.get('booms'),
+        })}
       </div>
     </>
   );
@@ -560,7 +577,7 @@ export default function Hero6(): JSX.Element {
               <span className={`mr-4 block-inline sm:hidden ${appliedFiltersCount === 0 ? 'text-grey-500' : 'text-red'}`}><i className="perco-icon-mobile-no-filters" /></span>
             </button>
           </div>
-          <div className="flex-1 min-h-0 overflow-y-auto overscroll-y-contain">{filtersContent}</div>
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-y-contain">{filtersContent('mobile')}</div>
         </aside>
 
         <div className="grid items-start grid-cols-12 gap-3 sm:gap-5">
@@ -573,7 +590,7 @@ export default function Hero6(): JSX.Element {
                 <h3 className="mb-6 text-xl/6 font-manrope-semibold text-grey-800">
                   Выберите условия эксплуатации
                 </h3>
-                <div>{filtersContent}</div>
+                <div>{filtersContent('desktop')}</div>
                 <Button
                   className='w-full mt-8 xl:mt-10 sm:w-fit sm:block'
                   type="button"

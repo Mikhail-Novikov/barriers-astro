@@ -2,8 +2,7 @@
 	{
 		"selected": { "name": "fotoElement", "value": "with" },
 		"disables": [
-			{ "name": "temperatures", "value": "low" },
-			{ "name": "fotoElement", "value": "without" }
+			{ "name": "temperatures", "value": "low" }
 		]
 	},
 	{
@@ -12,8 +11,7 @@
 			{ "name": "openingTimes", "value": "lessThan1.5" },
 			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "temperatures", "value": "low" },
-			{ "name": "maxWidth", "value": "4" },
-			{ "name": "booms", "value": ["round", "folding"] }
+			{ "name": "maxWidth", "value": "4" }
 		]
 	},
 	{
@@ -22,8 +20,7 @@
 			{ "name": "openingTimes", "value": "lessThan1.5" },
 			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "temperatures", "value": "low" },
-			{ "name": "maxWidth", "value": "4" },
-			{ "name": "booms", "value": ["round", "square"] }
+			{ "name": "maxWidth", "value": "4" }
 		]
 	},
 	{
@@ -31,8 +28,7 @@
 		"disables": [
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "maxWidth", "value": "3" },
-			{ "name": "openingTimes", "value": ["3-4", "4-6"] }
+			{ "name": "maxWidth", "value": ["4", "6"] }
 		]
 	},
 	{
@@ -41,7 +37,7 @@
 			{ "name": "temperatures", "value": "low" },
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "openingTimes", "value": ["lessThan1.5", "3-4"] }
+			{ "name": "maxWidth", "value": "4" }
 		]
 	},
 	{
@@ -51,19 +47,13 @@
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
 			{ "name": "maxWidth", "value": "4" },
-			{ "name": "openingTimes", "value": "4-6" },
-			{ "name": "temperatures", "value": "standard" }
-		]
-	},
-	{
-  	"selected": { "name": "maxWidth", "value": ["0", "4"] },
-		"disables": [
 			{ "name": "openingTimes", "value": "4-6" }
 		]
 	},
 	{
 		"selected": { "name": "maxWidth", "value": ["3", "4"] },
 		"disables": [
+			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "openingTimes", "value": "lessThan1.5" }
 		]
 	},
@@ -78,28 +68,9 @@
 		]
 	},
 	{
-		"selected": { "name": "fotoElement", "value": "without" },
-		"disables": [
-			{ "name": "fotoElement", "value": "with" }
-		]
-	},
-	{
-		"selected": { "name": "temperatures", "value": "standard" },
-		"disables": [
-			{ "name": "temperatures", "value": "low" }
-		]
-	},
-	{
 		"selected": { "name": "openingTimes", "value": "3-4" },
 		"disables": [
-			{ "name": "openingTimes", "value": ["lessThan1.5", "4-6"] },
-			{ "name": "maxWidth", "value": "4" }
-		]
-	},
-	{
-		"selected": { "name": "booms", "value": "round" },
-		"disables": [
-			{ "name": "booms", "value": ["square", "folding"] }
+			{ "name": "maxWidth", "value": "6" }
 		]
 	}
 ]

@@ -49,9 +49,9 @@ export const readBarrierCatalogFilters = (): BarrierFilterSelections | null => {
       maxWidth: typeof parsedFilters.maxWidth === 'number' && Number.isFinite(parsedFilters.maxWidth)
         ? Math.max(0, parsedFilters.maxWidth)
         : 0,
-      temperatures: getValidOptions(parsedFilters.temperatures, ['standard', 'low']),
-      openingTimes: getValidOptions(parsedFilters.openingTimes, ['lessThan1.5', '3-4', '4-6']),
-      booms: getValidOptions(parsedFilters.booms, ['round', 'square', 'folding']),
+      temperatures: getValidOptions(parsedFilters.temperatures, ['standard', 'low']).slice(0, 1),
+      openingTimes: getValidOptions(parsedFilters.openingTimes, ['lessThan1.5', '3-4', '4-6']).slice(0, 1),
+      booms: getValidOptions(parsedFilters.booms, ['round', 'square', 'folding']).slice(0, 1),
       fotoElement: getValidOptions(parsedFilters.fotoElement, ['with', 'without']),
     };
   } catch {

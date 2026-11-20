@@ -40,18 +40,17 @@ export type FilterSectionOption<T extends string> = readonly [value: T, label: s
 // Свойства одной секции фильтров
 export type FilterSectionProps<T extends string> = {
 	title: string;
+	name: string;
 	options: readonly FilterSectionOption<T>[];
 	selected: T[];
-	onToggle: (value: T) => void;
+	onSelect: (value: T, checked: boolean) => void;
 	disabledValues?: ReadonlySet<string>;
 };
 
 // параметры хуков
 export type UseBarrierCatalogEffectsParams = {
-  /** выбранная максимальная ширина проезда */
+  /** выбранный диапазон ширины проезда */
 	selectedMaxWidth: number;
-  /** максимальная ширина, которую можно установить в соответствии с текущими фильтрами */
-	maxWidthLimit: number;
   /** массив выбранных температур */
 	temperatures: TemperatureOption[];
 	/** выбранные интервалы времени открытия */
@@ -62,7 +61,7 @@ export type UseBarrierCatalogEffectsParams = {
 	fotoElement: FotoElementOption[];
   /** ссылка на галерею */
 	galleryRef: RefObject<HTMLDivElement>;
-  /** функция для установки максимальной ширины */
+  /** функция для установки выбранного диапазона ширины */
 	setMaxWidth: Dispatch<SetStateAction<number>>;
 	setTemperatures: Dispatch<SetStateAction<TemperatureOption[]>>;
 	setOpeningTimes: Dispatch<SetStateAction<OpeningTimeFilterOption[]>>;

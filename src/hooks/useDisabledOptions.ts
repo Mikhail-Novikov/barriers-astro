@@ -3,24 +3,6 @@ import options from '@content/options.json';
 import type { BarrierFilterSelections, FilterRule, FilterOption } from '@shared-types/barrierFilters';
 
 /**
- * Возвращает максимальное значение ширины барьера.
- * @param disabledValues Множество неактивных значений ширины барьера.
- * @returns Максимальное значение ширины барьера.
- */
-export const getMaxWidthLimit = (disabledValues?: ReadonlySet<string>): number => {
-  const configuredMaximum = (options as FilterRule[]).reduce((maximum, { selected }) => {
-    if (selected.name !== 'maxWidth') return maximum;
-    const values = Array.isArray(selected.value) ? selected.value : [selected.value];
-    return Math.max(maximum, ...values.map(Number));
-  }, 0);
-  const disabledMaximum = disabledValues
-    ? Math.min(...Array.from(disabledValues, Number).filter(Number.isFinite))
-    : configuredMaximum;
-
-  return Math.min(configuredMaximum, disabledMaximum);
-};
-
-/**
  * Проверяет, соответствует ли выбранная опция текущему выбору.
  * @param option Опция фильтра, которую нужно проверить.
  * @param current Текущее значение выбора.
@@ -45,8 +27,8 @@ const FILTER_SECTIONS = ['temperatures', 'openingTimes', 'booms', 'fotoElement']
 /**
  * Возвращает отключенные значения, сгруппированные по фильтрам.
  *
- * Ограничения выбранных значений объединяются: значение недоступно, если оно
- * запрещено хотя бы одним текущим выбором.
+ * Ограничения выбранных значений объединяются: значение другой секции недоступно,
+ * если оно запрещено хотя бы одним текущим выбором.
  *
  * @param selections Объект, содержащий текущие выборы.
  * @returns Map с наборами отключенных значений по имени фильтра.
@@ -78,6 +60,8 @@ const useDisabledOptions = (selections: BarrierFilterSelections): ReadonlyMap<st
       }
 
       for (const option of disables) {
+        if (option.name === selected.name) continue;
+
         const values = Array.isArray(option.value) ? option.value : [option.value];
         for (const value of values) {
           group.add(`${option.name}:${value}`);
