@@ -9,15 +9,13 @@ import type { BarrierFilterSelections, FilterRule, FilterOption } from '@shared-
  * @returns true, если опция соответствует текущему выбору, иначе false.
  */
 const matchesSelection = (option: FilterOption, current: number | string | null): boolean => {
-  if (option.name === 'maxWidth' && typeof current === 'number') {
-    if (Array.isArray(option.value)) {
-      return current > Number(option.value[0]) && current <= Number(option.value[1]);
-    }
-
-    return current === Number(option.value);
+  if (option.name === 'roadWidthLimit') {
+    if (typeof current !== 'number') return false;
+    const [lowerBound, upperBound] = option.value;
+    return current > Number(lowerBound) && current <= Number(upperBound);
   }
 
-  return typeof current === 'string' && typeof option.value === 'string' && current === option.value;
+  return typeof current === 'string' && current === option.value;
 };
 
 /**
@@ -30,10 +28,10 @@ const matchesSelection = (option: FilterOption, current: number | string | null)
  * @returns Map с наборами отключенных значений по имени фильтра.
  */
 const useDisabledOptions = (selections: BarrierFilterSelections): ReadonlyMap<string, ReadonlySet<string>> => {
-  const { maxWidth, temperatures, openingTimes, booms } = selections;
+  const { roadWidthLimit, temperatures, openingTimes, booms } = selections;
 
   return useMemo(() => {
-    const currentSelections: BarrierFilterSelections = { maxWidth, temperatures, openingTimes, booms };
+    const currentSelections: BarrierFilterSelections = { roadWidthLimit, temperatures, openingTimes, booms };
     const rules = options as FilterRule[];
     const disabledOptions = new Map<string, Set<string>>();
 
@@ -49,13 +47,13 @@ const useDisabledOptions = (selections: BarrierFilterSelections): ReadonlyMap<st
       for (const option of disables) {
         if (option.name === selected.name) continue;
 
-        const values = Array.isArray(option.value) ? option.value : [option.value];
-        for (const value of values) addDisabled(option.name, value);
+        const value = option.name === 'roadWidthLimit' ? option.value[1] : option.value;
+        addDisabled(option.name, value);
       }
     }
 
     return disabledOptions;
-  }, [booms, maxWidth, openingTimes, temperatures]);
+  }, [booms, openingTimes, roadWidthLimit, temperatures]);
 };
 
 export default useDisabledOptions;

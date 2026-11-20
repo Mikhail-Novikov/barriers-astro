@@ -10,19 +10,19 @@ export type OpeningTimeOption = { from: number; to: number };
 
 // выбранные значения фильтров
 export type BarrierFilterSelections = {
-	maxWidth: number;
+	roadWidthLimit: number;
 	temperatures: TemperatureOption | null;
 	openingTimes: OpeningTimeFilterOption | null;
 	booms: BoomOption | null;
 };
 
 // опция фильтрации
-export type FilterOption = {
-  // имя(ключ) фильтра, к которому относится опция
-	name: keyof BarrierFilterSelections;
-  // значение опции фильтра
-	value: string | string[];
-};
+export type FilterOption =
+	| { name: 'roadWidthLimit'; value: [lowerBound: string, upperBound: string] }
+	| {
+			name: Exclude<keyof BarrierFilterSelections, 'roadWidthLimit'>;
+			value: string;
+	  };
 
 // правило зависимости между фильтрами для деактивации
 export type FilterRule = {
@@ -35,7 +35,7 @@ export type FilterRule = {
 // параметры хуков
 export type UseBarrierCatalogEffectsParams = {
   /** выбранный диапазон ширины проезда */
-	selectedMaxWidth: number;
+	roadWidthLimit: number;
   /** выбранная температура */
 	temperatures: TemperatureOption | null;
 	/** выбранный интервал времени открытия */
@@ -45,7 +45,7 @@ export type UseBarrierCatalogEffectsParams = {
   /** ссылка на галерею */
 	galleryRef: RefObject<HTMLDivElement>;
   /** функция для установки выбранного диапазона ширины */
-	setMaxWidth: Dispatch<SetStateAction<number>>;
+	setRoadWidthLimit: Dispatch<SetStateAction<number>>;
 	setTemperatures: Dispatch<SetStateAction<TemperatureOption | null>>;
 	setOpeningTimes: Dispatch<SetStateAction<OpeningTimeFilterOption | null>>;
 	setBooms: Dispatch<SetStateAction<BoomOption | null>>;

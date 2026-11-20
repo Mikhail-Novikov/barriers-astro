@@ -14,64 +14,64 @@ import type { UseBarrierCatalogEffectsParams } from '@shared-types/barrierFilter
  * 3. Открывает модальное окно при клике на кнопку "Заказать".
  * 4. Закрывает фильтры при изменении размера страницы.
  * 
- * @param selectedMaxWidth - выбранный диапазон ширины проезда
+ * @param roadWidthLimit - верхняя граница выбранного диапазона ширины проезда
  * @param temperatures - выбранная температура
  * @param openingTimes - выбранное время открытия
  * @param booms - выбранный тип стрелы
  * @param galleryRef - ссылка на галерею
- * @param setMaxWidth - функция для установки максимальной ширины
+ * @param setRoadWidthLimit - функция установки верхней границы ширины проезда
  * @param setIsFiltersOpen - функция для установки состояния открытия фильтров
  */
 const useBarrierCatalogEffects = ({
-  selectedMaxWidth,
+  roadWidthLimit,
   temperatures,
   openingTimes,
   booms,
   galleryRef,
-  setMaxWidth,
+  setRoadWidthLimit,
   setTemperatures,
   setOpeningTimes,
   setBooms,
   setIsFiltersOpen,
 }: UseBarrierCatalogEffectsParams): void => {
-  const previousFilters = useRef({ selectedMaxWidth, temperatures, openingTimes, booms });
+  const previousFilters = useRef({ roadWidthLimit, temperatures, openingTimes, booms });
   const filtersRestored = useRef(false);
 
   useEffect(() => {
     const savedFilters = readBarrierCatalogFilters();
     if (savedFilters) {
-      setMaxWidth(savedFilters.maxWidth);
+      setRoadWidthLimit(savedFilters.roadWidthLimit);
       setTemperatures(savedFilters.temperatures);
       setOpeningTimes(savedFilters.openingTimes);
       setBooms(savedFilters.booms);
     }
     filtersRestored.current = true;
-  }, [setBooms, setMaxWidth, setOpeningTimes, setTemperatures]);
+  }, [setBooms, setRoadWidthLimit, setOpeningTimes, setTemperatures]);
 
   useEffect(() => {
     if (!filtersRestored.current) return;
 
     saveBarrierCatalogFilters({
-      maxWidth: selectedMaxWidth,
+      roadWidthLimit,
       temperatures,
       openingTimes,
       booms,
     });
-  }, [booms, openingTimes, selectedMaxWidth, temperatures]);
+  }, [booms, openingTimes, roadWidthLimit, temperatures]);
 
   // скроллим к галерее при изменении фильтров
   useEffect(() => {
     const previous = previousFilters.current;
-    const hasChanged = previous.selectedMaxWidth !== selectedMaxWidth
+    const hasChanged = previous.roadWidthLimit !== roadWidthLimit
       || previous.temperatures !== temperatures
       || previous.openingTimes !== openingTimes
       || previous.booms !== booms;
 
-    previousFilters.current = { selectedMaxWidth, temperatures, openingTimes, booms };
+    previousFilters.current = { roadWidthLimit, temperatures, openingTimes, booms };
     if (!hasChanged) return;
 
     scrollElementBelowStickyHeader(galleryRef.current, 120);
-  }, [booms, galleryRef, selectedMaxWidth, openingTimes, temperatures]);
+  }, [booms, galleryRef, openingTimes, roadWidthLimit, temperatures]);
 
   // открываем модальное окно при клике на кнопку "Заказать"
   useEffect(() => {
@@ -91,7 +91,7 @@ const useBarrierCatalogEffects = ({
 
       const barrierName = orderButton.getAttribute(ORDER_BUTTON_ATTR) ?? '';
       const selectedOptions = [
-        `Ширина проезда: ${selectedMaxWidth > 0 ? `${selectedMaxWidth} м` : 'не ограничена'}`,
+        `Ширина проезда: ${roadWidthLimit > 0 ? `${roadWidthLimit} м` : 'не ограничена'}`,
         `Температура эксплуатации: ${
           temperatures === 'low' ? '−60 °C' : temperatures === 'standard' ? '−40 °C' : 'не ограничена'
         }`,
@@ -124,7 +124,7 @@ const useBarrierCatalogEffects = ({
 
     document.addEventListener('click', handleOrderClick);
     return () => document.removeEventListener('click', handleOrderClick);
-  }, [booms, openingTimes, selectedMaxWidth, temperatures]);
+  }, [booms, openingTimes, roadWidthLimit, temperatures]);
 
   // закрываем фильтры при изменении размера страницы
   useEffect(() => {

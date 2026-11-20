@@ -127,13 +127,13 @@ const clearDisabledValue = <T extends string>(selected: T | null, disabled?: Rea
  *  - 0.1 … 3.0      → '3'   (дорога до 3 м — 3-метровая стрела)
  *  - 3.1 … 4.      → '4.3' (дорога 3,1–4,3 м — 4,3-метровая стрела)
  *  - 4.1 … 6.0      → '6.3' (дорога 4,4–6 м — 6,3-метровая стрела)
- * @param roadWidth - выбранная ширина проезда
+ * @param roadWidthLimit - верхняя граница выбранного диапазона ширины проезда
  * @return {string | null} требуемая длина стрелы или null, если фильтр не применён
  */
-const getRequiredBoomLength = (roadWidth: number): string | null => {
-  if (roadWidth === 0) return null;
-  if (roadWidth <= 3) return '3';
-  if (roadWidth <= 4) return '4.3';
+const getRequiredBoomLength = (roadWidthLimit: number): string | null => {
+  if (roadWidthLimit === 0) return null;
+  if (roadWidthLimit <= 3) return '3';
+  if (roadWidthLimit <= 4) return '4.3';
   return '6.3';
 };
 
@@ -188,13 +188,13 @@ const matchesBoomFilter = (selected: BoomOption | null, boomShape: string, isBoo
 export default function Hero6(): JSX.Element {
   const screen = useBreakpoint();
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [maxWidth, setMaxWidth] = useState(0);
+  const [roadWidthLimit, setRoadWidthLimit] = useState(0);
   const [temperature, setTemperature] = useState<TemperatureOption | null>(null);
   const [openingTime, setOpeningTime] = useState<OpeningTimeFilterOption | null>(null);
   const [boom, setBoom] = useState<BoomOption | null>(null);
   // получаем отключенные опции для фильтров на основе текущих выбранных значений
   const disabledOptions = useDisabledOptions({
-    maxWidth,
+    roadWidthLimit,
     temperatures: temperature,
     openingTimes: openingTime,
     booms: boom,
@@ -202,19 +202,19 @@ export default function Hero6(): JSX.Element {
 
   // следим за опциями и очищаем выбранные значения, если они стали недоступными
   useEffect(() => {
-    setMaxWidth((selectedWidth) => {
+    setRoadWidthLimit((selectedRoadWidthLimit) => {
       const selectedOption = widthOptions.find(
-        ([lowerBound, value]) => selectedWidth > lowerBound && selectedWidth <= value,
+        ([lowerBound, value]) => selectedRoadWidthLimit > lowerBound && selectedRoadWidthLimit <= value,
       );
-      if (!selectedOption) return selectedWidth;
-      return disabledOptions.get('maxWidth')?.has(String(selectedOption[1]))
+      if (!selectedOption) return selectedRoadWidthLimit;
+      return disabledOptions.get('roadWidthLimit')?.has(String(selectedOption[1]))
         ? 0
-        : selectedWidth;
+        : selectedRoadWidthLimit;
     });
     setTemperature((selected) => clearDisabledValue(selected, disabledOptions.get('temperatures')));
     setOpeningTime((selected) => clearDisabledValue(selected, disabledOptions.get('openingTimes')));
     setBoom((selected) => clearDisabledValue(selected, disabledOptions.get('booms')));
-  }, [disabledOptions, setBoom, setMaxWidth, setOpeningTime, setTemperature]);
+  }, [disabledOptions, setBoom, setOpeningTime, setRoadWidthLimit, setTemperature]);
 
   const galleryRef = useRef<HTMLDivElement>(null);
   const {
@@ -223,12 +223,12 @@ export default function Hero6(): JSX.Element {
   } = useFilterSidebarPositioning();
 
   useBarrierCatalogEffects({
-    selectedMaxWidth: maxWidth,
+    roadWidthLimit,
     temperatures: temperature,
     openingTimes: openingTime,
     booms: boom,
     galleryRef,
-    setMaxWidth,
+    setRoadWidthLimit,
     setTemperatures: setTemperature,
     setOpeningTimes: setOpeningTime,
     setBooms: setBoom,
@@ -236,7 +236,7 @@ export default function Hero6(): JSX.Element {
   });
 
   // Фильтрация
-  const requiredBoomLength = getRequiredBoomLength(maxWidth);
+  const requiredBoomLength = getRequiredBoomLength(roadWidthLimit);
   const filteredBarriers = useMemo(
     () => barriers.filter(
       (barrier) =>
@@ -253,7 +253,7 @@ export default function Hero6(): JSX.Element {
    * @return {void}
    */
   const resetFilters = (): void => {
-    setMaxWidth(0);
+    setRoadWidthLimit(0);
     setTemperature(null);
     setOpeningTime(null);
     setBoom(null);
@@ -263,7 +263,7 @@ export default function Hero6(): JSX.Element {
    * Количество примененных фильтров
    * @return {number} количество примененных фильтров
    */
-  const appliedFiltersCount = (maxWidth > 0 ? 1 : 0)
+  const appliedFiltersCount = (roadWidthLimit > 0 ? 1 : 0)
     + Number(temperature !== null)
     + Number(openingTime !== null)
     + Number(boom !== null);
@@ -280,14 +280,14 @@ export default function Hero6(): JSX.Element {
         </legend>
         <div className="flex flex-col gap-5">
           {widthOptions.map(([lowerBound, value, label]) => {
-            const disabled = disabledOptions.get('maxWidth')?.has(String(value)) ?? false;
+            const disabled = disabledOptions.get('roadWidthLimit')?.has(String(value)) ?? false;
             return (
               <FilterRadioBtn
                 key={value}
-                checked={maxWidth > lowerBound && maxWidth <= value && !disabled}
+                checked={roadWidthLimit > lowerBound && roadWidthLimit <= value && !disabled}
                 label={label}
-                onChange={(checked) => setMaxWidth(checked ? value : 0)}
-                name={`maxWidth-${groupSuffix}`}
+                onChange={(checked) => setRoadWidthLimit(checked ? value : 0)}
+                name={`roadWidthLimit-${groupSuffix}`}
                 value={String(value)}
                 disabled={disabled}
               />
@@ -512,10 +512,10 @@ export default function Hero6(): JSX.Element {
         />
 
         <aside
-          className={`perco-icons fixed sm:absolute inset-0 top-16 sm:inset-auto sm:top-auto z-10 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white px-4 py-[20px_60px] transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
+          className={`perco-icons fixed sm:absolute inset-0 top-16 sm:inset-auto sm:top-auto z-10 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white p-6 transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className="flex justify-between p-4 mb-2 -mx-4 -mt-5 shrink-0 sm:justify-end sm:p-0 sm:mx-0 sm:mt-0 bg-grey-200 sm:bg-white">
+          <div className="flex justify-between p-4 mb-4 -mx-6 -mt-6 shrink-0 sm:justify-end sm:p-0 sm:mx-0 sm:mt-0 bg-grey-200 sm:bg-white">
             <button
               type="button"
               aria-label="Закрыть фильтры"
@@ -536,7 +536,16 @@ export default function Hero6(): JSX.Element {
               <span className={`mr-4 block-inline sm:hidden ${appliedFiltersCount === 0 ? 'text-grey-500' : 'text-red'}`}><i className="perco-icon-mobile-no-filters" /></span>
             </button>
           </div>
-          <div className="flex-1 min-h-0 overflow-y-auto overscroll-y-contain">{filtersContent('mobile')}</div>
+          <div className="flex-1 min-h-0 sm:p-[0px_18px] overflow-y-auto overscroll-y-contain">{filtersContent('mobile')}</div>
+          <Button
+            className='w-fit mt-8 xl:mt-10 hidden sm:block m-[12px_18px_32px]'
+            type="button"
+            variant="primary-outline"
+            disabled={appliedFiltersCount === 0}
+            onClick={resetFilters}
+          >
+            Сбросить все фильтры
+          </Button>
         </aside>
 
         <div className="grid items-start grid-cols-12 gap-3 sm:gap-5">
@@ -545,7 +554,7 @@ export default function Hero6(): JSX.Element {
             className="self-stretch hidden col-span-4 2xl:col-span-3 xl:block"
           >
             <div ref={filtersSidebarRef} className="flex flex-col gap-2">
-              <aside className="px-4 bg-white rounded-2xl 4xl:px-8 py-9">
+              <aside className="px-4 bg-white rounded-2xl xl:px-6 2xl:px-8 py-10">
                 <h3 className="mb-6 text-xl/6 font-manrope-semibold text-grey-800">
                   Выберите условия эксплуатации
                 </h3>

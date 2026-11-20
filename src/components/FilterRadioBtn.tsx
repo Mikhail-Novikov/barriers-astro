@@ -43,7 +43,7 @@ export default function FilterRadioBtn({
   const hoverClassName = !checked && !disabled ? hoverColor : '';
 
   return (
-    <label className={`group flex items-center gap-4 perco-icons text-md/6 ${disabled ? 'text-grey-800 cursor-default' : ' cursor-pointer'}`}>
+    <label className={`group flex items-center gap-4 perco-icons text-md/6 select-none ${disabled ? 'text-grey-700 cursor-default' : ' cursor-pointer'}`}>
       <input
         type="radio"
         name={name}
@@ -59,7 +59,7 @@ export default function FilterRadioBtn({
         }}
         className="sr-only peer"
       />
-      <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full transition-colors ${hoverClassName} ${disabled ? 'text-grey-600/40' : checked ? 'text-cta' : 'text-grey-700'} peer-focus-visible:ring-2 peer-focus-visible:ring-cta text-xl`}>
+      <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full transition-colors ${hoverClassName} ${disabled ? 'text-grey-400' : checked ? 'text-cta' : 'text-grey-600'} peer-focus-visible:ring-2 peer-focus-visible:ring-cta text-xl`}>
         <i className={checked ? 'perco-icon-radio' : 'perco-icon-no-radio'} aria-hidden="true" />
       </span>
       {label}

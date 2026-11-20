@@ -5,7 +5,7 @@
 			{ "name": "openingTimes", "value": "lessThan1.5" },
 			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "temperatures", "value": "low" },
-			{ "name": "maxWidth", "value": "6" }
+			{ "name": "roadWidthLimit", "value": ["4", "6"] }
 		]
 	},
 	{
@@ -14,7 +14,7 @@
 			{ "name": "openingTimes", "value": "lessThan1.5" },
 			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "temperatures", "value": "low" },
-			{ "name": "maxWidth", "value": "6" }
+			{ "name": "roadWidthLimit", "value": ["4", "6"] }
 		]
 	},
 	{
@@ -22,7 +22,8 @@
 		"disables": [
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "maxWidth", "value": ["4", "6"] }
+			{ "name": "roadWidthLimit", "value": ["3", "4"] },
+			{ "name": "roadWidthLimit", "value": ["4", "6"] }
 		]
 	},
 	{
@@ -31,8 +32,8 @@
 			{ "name": "temperatures", "value": "low" },
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "maxWidth", "value": "4" },
-			{ "name": "maxWidth", "value": "3" }
+			{ "name": "roadWidthLimit", "value": ["3", "4"] },
+			{ "name": "roadWidthLimit", "value": ["0", "3"] }
 		]
 	},
 	{
@@ -40,19 +41,19 @@
 		"disables": [
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "maxWidth", "value": "6" },
+			{ "name": "roadWidthLimit", "value": ["4", "6"] },
 			{ "name": "openingTimes", "value": "4-6" }
 		]
 	},
 	{
-		"selected": { "name": "maxWidth", "value": ["3", "4"] },
+		"selected": { "name": "roadWidthLimit", "value": ["3", "4"] },
 		"disables": [
 			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "openingTimes", "value": "lessThan1.5" }
 		]
 	},
 	{
-		"selected": { "name": "maxWidth", "value": ["4", "6"] },
+		"selected": { "name": "roadWidthLimit", "value": ["4", "6"] },
 		"disables": [
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
@@ -64,7 +65,7 @@
 	{
 		"selected": { "name": "openingTimes", "value": "3-4" },
 		"disables": [
-			{ "name": "maxWidth", "value": "6" }
+			{ "name": "roadWidthLimit", "value": ["4", "6"] }
 		]
 	}
 ]
