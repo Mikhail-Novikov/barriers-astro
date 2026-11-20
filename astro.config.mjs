@@ -1,4 +1,6 @@
 // @ts-check
+import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import path from 'path';
 import { defineConfig } from 'astro/config';
 
@@ -6,9 +8,24 @@ import tailwindcss from '@tailwindcss/vite';
 
 import react from '@astrojs/react';
 
+const branchName = process.env.DEPLOY_BRANCH
+  || process.env.GITHUB_HEAD_REF
+  || process.env.GITHUB_REF_NAME
+  || process.env.VERCEL_GIT_COMMIT_REF
+  || process.env.BRANCH
+  || (existsSync('.git')
+    ? execFileSync('git', ['branch', '--show-current'], { encoding: 'utf8' }).trim()
+    : '');
+
+const branchBases = new Map([
+  ['main', '/test/barriers/'],
+  ['filter-with-checkboxes-ver.-A', '/test/barriers/a/'],
+  ['filter-with-checkboxes-ver.-B', '/test/barriers/b/'],
+]);
+
 // https://astro.build/config
 export default defineConfig({
-  base: '/test/barriers/',
+  base: branchBases.get(branchName) ?? '/test/barriers/',
   vite: {
     resolve: {
       dedupe: ['react', 'react-dom'],
