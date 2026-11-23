@@ -53,15 +53,15 @@ const barrierThumbImages = import.meta.glob('../../assets/img/barriers/*/thumb/*
 
 /** Подписи и значения фильтра по минимальной температуре эксплуатации. */
 const TemperaturesOptions: readonly FilterSectionOption<TemperatureOption>[] = [
-  ['standard', 'До −40 °C'],
-  ['low', 'До −60 °C'],
+  ['standard', 'До&nbsp;&minus;40 &deg;C'],
+  ['low', 'До&nbsp;&minus;60 &deg;C'],
 ] as const;
 
 /** Варианты фильтра по ширине проезда. */
 const widthOptions: readonly FilterSectionOption<RoadWidthOption>[] = [
-  ['3', '2,3 - 3 метра'],
-  ['4', '3,1 - 4 метра'],
-  ['6', '4,1 - 6 метров'],
+  ['3', '2,3&ndash;3 метра'],
+  ['4', '3,1&ndash;4 метра'],
+  ['6', '4,1&ndash;6 метров'],
 ] as const;
 
 const getSelectedRoadWidthOption = (roadWidthLimit: number): RoadWidthOption | null =>
@@ -72,8 +72,8 @@ const getSelectedRoadWidthOption = (roadWidthLimit: number): RoadWidthOption | n
 /** Подписи и значения фильтра по времени открытия шлагбаума. */
 const openingTimeOptions: readonly FilterSectionOption<OpeningTimeFilterOption>[] = [
   ['lessThan1.5', 'меньше 1,5 секунды'],
-  ['3-4', '3-4 секунды'],
-  ['4-6', '4–6 секунд'],
+  ['3-4', '3&ndash;4 секунды'],
+  ['4-6', '4&ndash;6 секунд'],
 ] as const;
 
 /** Подписи и значения фильтра по форме стрелы шлагбаума. */

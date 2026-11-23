@@ -46,6 +46,12 @@
 		]
 	},
 	{
+		"selected": { "name": "roadWidthLimit", "value": ["2", "3"] },
+		"disables": [
+			{ "name": "openingTimes", "value": "4-6" }
+		]
+	},
+	{
 		"selected": { "name": "roadWidthLimit", "value": ["3", "4"] },
 		"disables": [
 			{ "name": "openingTimes", "value": "4-6" },

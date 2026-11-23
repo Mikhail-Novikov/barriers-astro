@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 
+import { HtmlContent } from '@utils/HtmlContent';
+
 type FilterRadioBtnProps = {
   checked: boolean;
   label: ReactNode;
@@ -62,7 +64,7 @@ export default function FilterRadioBtn({
       <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full transition-colors ${hoverClassName} ${disabled ? 'text-grey-400' : checked ? 'text-cta' : 'text-grey-600'} peer-focus-visible:ring-2 peer-focus-visible:ring-cta text-xl`}>
         <i className={checked ? 'perco-icon-radio' : 'perco-icon-no-radio'} aria-hidden="true" />
       </span>
-      {label}
+      <HtmlContent>{label}</HtmlContent>
     </label>
   );
 }
