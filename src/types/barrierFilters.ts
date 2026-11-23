@@ -1,6 +1,7 @@
 import type { Dispatch, RefObject, SetStateAction } from 'react';
 
 // типы для фильтров каталога шлагбаумов
+export type RoadWidthOption = '3' | '4' | '6';
 export type TemperatureOption = 'standard' | 'low';
 export type OpeningTimeFilterOption = 'lessThan1.5' | '3-4' | '4-6';
 export type BoomOption = 'round' | 'square' | 'folding';
