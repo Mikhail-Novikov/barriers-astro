@@ -12,16 +12,15 @@ const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
 
 /**
- * Возвращает список допустимых опций.
+ * Возвращает первое допустимое значение, включая старый формат с массивом.
  * @param value Значение, которое нужно проверить.
  * @param allowedOptions Список допустимых опций.
- * @returns Список допустимых опций.
+ * @returns Допустимое значение или null.
  */
-const getValidOptions = <T extends string>(value: unknown, allowedOptions: readonly T[]): T[] => {
-  if (!Array.isArray(value)) return [];
-
-  return value.filter((option): option is T =>
-    typeof option === 'string' && allowedOptions.includes(option as T));
+const getValidOption = <T extends string>(value: unknown, allowedOptions: readonly T[]): T | null => {
+  const candidates = Array.isArray(value) ? value : [value];
+  return candidates.find((option): option is T =>
+    typeof option === 'string' && allowedOptions.includes(option as T)) ?? null;
 };
 
 /**
@@ -45,14 +44,19 @@ export const readBarrierCatalogFilters = (): BarrierFilterSelections | null => {
     const parsedFilters: unknown = JSON.parse(serializedFilters);
     if (!isObject(parsedFilters)) return null;
 
+    const savedRoadWidthLimit = parsedFilters.roadWidthLimit;
+    const legacyMaxWidth = parsedFilters.maxWidth;
+    const roadWidthLimit = typeof savedRoadWidthLimit === 'number' && Number.isFinite(savedRoadWidthLimit)
+      ? savedRoadWidthLimit
+      : typeof legacyMaxWidth === 'number' && Number.isFinite(legacyMaxWidth)
+        ? legacyMaxWidth
+        : 0;
+
     return {
-      maxWidth: typeof parsedFilters.maxWidth === 'number' && Number.isFinite(parsedFilters.maxWidth)
-        ? Math.max(0, parsedFilters.maxWidth)
-        : 0,
-      temperatures: getValidOptions(parsedFilters.temperatures, ['standard', 'low']),
-      openingTimes: getValidOptions(parsedFilters.openingTimes, ['lessThan1.5', '3-4', '4-6']),
-      booms: getValidOptions(parsedFilters.booms, ['round', 'square', 'folding']),
-      fotoElement: getValidOptions(parsedFilters.fotoElement, ['with', 'without']),
+      roadWidthLimit: Math.max(0, roadWidthLimit),
+      temperatures: getValidOption(parsedFilters.temperatures, ['standard', 'low']),
+      openingTimes: getValidOption(parsedFilters.openingTimes, ['lessThan1.5', '3-4', '4-6']),
+      booms: getValidOption(parsedFilters.booms, ['round', 'square', 'folding']),
     };
   } catch {
     return null;

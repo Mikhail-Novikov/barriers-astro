@@ -5,7 +5,6 @@
 @import "./components/header";
 @import "./components/gallery-eq";
 @import "./components/fancybox";
-@import "./components/width-slider";
 
 @font-face {
   font-family: 'Roboto-Regular';

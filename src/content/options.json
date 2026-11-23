@@ -1,19 +1,11 @@
 [
 	{
-		"selected": { "name": "fotoElement", "value": "with" },
-		"disables": [
-			{ "name": "temperatures", "value": "low" },
-			{ "name": "fotoElement", "value": "without" }
-		]
-	},
-	{
 		"selected": { "name": "booms", "value": "square" },
 		"disables": [
 			{ "name": "openingTimes", "value": "lessThan1.5" },
 			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "temperatures", "value": "low" },
-			{ "name": "maxWidth", "value": "4" },
-			{ "name": "booms", "value": ["round", "folding"] }
+			{ "name": "roadWidthLimit", "value": ["4", "6"] }
 		]
 	},
 	{
@@ -22,8 +14,7 @@
 			{ "name": "openingTimes", "value": "lessThan1.5" },
 			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "temperatures", "value": "low" },
-			{ "name": "maxWidth", "value": "4" },
-			{ "name": "booms", "value": ["round", "square"] }
+			{ "name": "roadWidthLimit", "value": ["4", "6"] }
 		]
 	},
 	{
@@ -31,8 +22,8 @@
 		"disables": [
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "maxWidth", "value": "3" },
-			{ "name": "openingTimes", "value": ["3-4", "4-6"] }
+			{ "name": "roadWidthLimit", "value": ["3", "4"] },
+			{ "name": "roadWidthLimit", "value": ["4", "6"] }
 		]
 	},
 	{
@@ -41,34 +32,28 @@
 			{ "name": "temperatures", "value": "low" },
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "openingTimes", "value": ["lessThan1.5", "3-4"] }
+			{ "name": "roadWidthLimit", "value": ["3", "4"] },
+			{ "name": "roadWidthLimit", "value": ["0", "3"] }
 		]
 	},
 	{
 		"selected": { "name": "temperatures", "value": "low" },
 		"disables": [
-			{ "name": "fotoElement", "value": "with" },
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
-			{ "name": "maxWidth", "value": "4" },
-			{ "name": "openingTimes", "value": "4-6" },
-			{ "name": "temperatures", "value": "standard" }
-		]
-	},
-	{
-  	"selected": { "name": "maxWidth", "value": ["0", "4"] },
-		"disables": [
+			{ "name": "roadWidthLimit", "value": ["4", "6"] },
 			{ "name": "openingTimes", "value": "4-6" }
 		]
 	},
 	{
-		"selected": { "name": "maxWidth", "value": ["3", "4"] },
+		"selected": { "name": "roadWidthLimit", "value": ["3", "4"] },
 		"disables": [
+			{ "name": "openingTimes", "value": "4-6" },
 			{ "name": "openingTimes", "value": "lessThan1.5" }
 		]
 	},
 	{
-		"selected": { "name": "maxWidth", "value": ["4", "6"] },
+		"selected": { "name": "roadWidthLimit", "value": ["4", "6"] },
 		"disables": [
 			{ "name": "booms", "value": "square" },
 			{ "name": "booms", "value": "folding" },
@@ -78,28 +63,9 @@
 		]
 	},
 	{
-		"selected": { "name": "fotoElement", "value": "without" },
-		"disables": [
-			{ "name": "fotoElement", "value": "with" }
-		]
-	},
-	{
-		"selected": { "name": "temperatures", "value": "standard" },
-		"disables": [
-			{ "name": "temperatures", "value": "low" }
-		]
-	},
-	{
 		"selected": { "name": "openingTimes", "value": "3-4" },
 		"disables": [
-			{ "name": "openingTimes", "value": ["lessThan1.5", "4-6"] },
-			{ "name": "maxWidth", "value": "4" }
-		]
-	},
-	{
-		"selected": { "name": "booms", "value": "round" },
-		"disables": [
-			{ "name": "booms", "value": ["square", "folding"] }
+			{ "name": "roadWidthLimit", "value": ["4", "6"] }
 		]
 	}
 ]

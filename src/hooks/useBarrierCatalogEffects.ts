@@ -5,88 +5,73 @@ import { barrierFeedback } from '@utils/barrierFeedback';
 import { readBarrierCatalogFilters, saveBarrierCatalogFilters } from '@utils/barrierFiltersStorage';
 import scrollElementBelowStickyHeader from '@utils/scrollElementBelowStickyHeader';
 
-import type {
-  UseBarrierCatalogEffectsParams,
-} from '@shared-types/barrierFilters';
+import type { UseBarrierCatalogEffectsParams } from '@shared-types/barrierFilters';
 
 /**
  * Хук для управления эффектами в каталоге барьеров.
- * 1. Устанавливает ограничение на максимальную ширину в соответствии с текущими фильтрами.
+ * 1. Восстанавливает и сохраняет состояние фильтров.
  * 2. Скроллит к галерее при изменении фильтров.
  * 3. Открывает модальное окно при клике на кнопку "Заказать".
  * 4. Закрывает фильтры при изменении размера страницы.
  * 
- * @param selectedMaxWidth - текущее значение слайдера максимальной ширины
- * @param maxWidthLimit - максимальная ширина, которую можно установить
- * @param temperatures - массив температур
- * @param openingTimes - выбранные интервалы времени открытия
- * @param booms - массив выстрелов
- * @param fotoElement - выбранные варианты фотоэлемента
+ * @param roadWidthLimit - верхняя граница выбранного диапазона ширины проезда
+ * @param temperatures - выбранная температура
+ * @param openingTimes - выбранное время открытия
+ * @param booms - выбранный тип стрелы
  * @param galleryRef - ссылка на галерею
- * @param setMaxWidth - функция для установки максимальной ширины
+ * @param setRoadWidthLimit - функция установки верхней границы ширины проезда
  * @param setIsFiltersOpen - функция для установки состояния открытия фильтров
  */
 const useBarrierCatalogEffects = ({
-  selectedMaxWidth,
-  maxWidthLimit,
+  roadWidthLimit,
   temperatures,
   openingTimes,
   booms,
-  fotoElement,
   galleryRef,
-  setMaxWidth,
+  setRoadWidthLimit,
   setTemperatures,
   setOpeningTimes,
   setBooms,
-  setFotoElement,
   setIsFiltersOpen,
 }: UseBarrierCatalogEffectsParams): void => {
-  const previousFilters = useRef({ selectedMaxWidth, temperatures, openingTimes, booms, fotoElement });
+  const previousFilters = useRef({ roadWidthLimit, temperatures, openingTimes, booms });
   const filtersRestored = useRef(false);
 
   useEffect(() => {
     const savedFilters = readBarrierCatalogFilters();
     if (savedFilters) {
-      setMaxWidth(savedFilters.maxWidth);
-      setTemperatures([...savedFilters.temperatures]);
-      setOpeningTimes([...savedFilters.openingTimes]);
-      setBooms([...savedFilters.booms]);
-      setFotoElement([...savedFilters.fotoElement]);
+      setRoadWidthLimit(savedFilters.roadWidthLimit);
+      setTemperatures(savedFilters.temperatures);
+      setOpeningTimes(savedFilters.openingTimes);
+      setBooms(savedFilters.booms);
     }
     filtersRestored.current = true;
-  }, [setBooms, setFotoElement, setMaxWidth, setOpeningTimes, setTemperatures]);
+  }, [setBooms, setRoadWidthLimit, setOpeningTimes, setTemperatures]);
 
   useEffect(() => {
     if (!filtersRestored.current) return;
 
     saveBarrierCatalogFilters({
-      maxWidth: selectedMaxWidth,
+      roadWidthLimit,
       temperatures,
       openingTimes,
       booms,
-      fotoElement,
     });
-  }, [booms, fotoElement, openingTimes, selectedMaxWidth, temperatures]);
-
-  // устанавливаем ограничение на максимальную ширину в соответствии с текущими фильтрами
-  useEffect(() => {
-    setMaxWidth((currentWidth) => Math.min(currentWidth, maxWidthLimit));
-  }, [maxWidthLimit, setMaxWidth]);
+  }, [booms, openingTimes, roadWidthLimit, temperatures]);
 
   // скроллим к галерее при изменении фильтров
   useEffect(() => {
     const previous = previousFilters.current;
-    const hasChanged = previous.selectedMaxWidth !== selectedMaxWidth
+    const hasChanged = previous.roadWidthLimit !== roadWidthLimit
       || previous.temperatures !== temperatures
       || previous.openingTimes !== openingTimes
-      || previous.booms !== booms
-      || previous.fotoElement !== fotoElement;
+      || previous.booms !== booms;
 
-    previousFilters.current = { selectedMaxWidth, temperatures, openingTimes, booms, fotoElement };
+    previousFilters.current = { roadWidthLimit, temperatures, openingTimes, booms };
     if (!hasChanged) return;
 
     scrollElementBelowStickyHeader(galleryRef.current, 120);
-  }, [booms, fotoElement, galleryRef, selectedMaxWidth, openingTimes, temperatures]);
+  }, [booms, galleryRef, openingTimes, roadWidthLimit, temperatures]);
 
   // открываем модальное окно при клике на кнопку "Заказать"
   useEffect(() => {
@@ -106,33 +91,26 @@ const useBarrierCatalogEffects = ({
 
       const barrierName = orderButton.getAttribute(ORDER_BUTTON_ATTR) ?? '';
       const selectedOptions = [
-        `Ширина проезда: ${selectedMaxWidth > 0 ? `${selectedMaxWidth} м` : 'не ограничена'}`,
+        `Ширина проезда: ${roadWidthLimit > 0 ? `${roadWidthLimit} м` : 'не ограничена'}`,
         `Температура эксплуатации: ${
-          temperatures.length
-            ? temperatures.map((temperature) => temperature === 'low' ? '−60 °C' : '−40 °C').join(', ')
-            : 'не ограничена'
+          temperatures === 'low' ? '−60 °C' : temperatures === 'standard' ? '−40 °C' : 'не ограничена'
         }`,
         `Время открытия: ${
-          openingTimes.length
-            ? openingTimes.map((openingTime) => ({
+          openingTimes
+            ? ({
                 'lessThan1.5': 'меньше 1,5 секунды',
                 '3-4': '3–4 секунды',
                 '4-6': '4–6 секунд',
-              })[openingTime]).join(', ')
+              })[openingTimes]
             : 'не ограничено'
         }`,
         `Тип стрелы: ${
-          booms.length
-            ? booms.map((boom) => ({
+          booms
+            ? ({
                 round: 'круглая',
                 square: 'прямоугольная',
                 folding: 'складная прямоугольная',
-              })[boom]).join(', ')
-            : 'не ограничен'
-        }`,
-        `Фотоэлемент: ${
-          fotoElement.length
-            ? fotoElement.map((foto) => foto === 'with' ? 'встроенный' : 'место для установки').join(', ')
+              })[booms]
             : 'не ограничен'
         }`,
       ].join('\n');
@@ -146,7 +124,7 @@ const useBarrierCatalogEffects = ({
 
     document.addEventListener('click', handleOrderClick);
     return () => document.removeEventListener('click', handleOrderClick);
-  }, [booms, fotoElement, openingTimes, selectedMaxWidth, temperatures]);
+  }, [booms, openingTimes, roadWidthLimit, temperatures]);
 
   // закрываем фильтры при изменении размера страницы
   useEffect(() => {
