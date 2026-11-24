@@ -332,6 +332,7 @@ const Hero2 = (): JSX.Element => {
                         data-fancybox="gallery"
                         data-index={absoluteIndex}
                         data-caption={item.description}
+                        data-alt={item.description}
                         data-id={item.id}
                         href={item.srcFull}
                         onClickCapture={(event) => {
