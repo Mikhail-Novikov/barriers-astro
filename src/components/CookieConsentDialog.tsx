@@ -69,14 +69,8 @@ export default function CookieConsentDialog({
       aria-labelledby={COOKIE_CONSENT_TITLE_ID}
       onCancel={(event) => event.preventDefault()}
       onClose={() => setIsOpen(false)}
-      className="m-auto w-[calc(100%-2rem)] max-w-[600px] rounded-2xl p-6 text-left backdrop:bg-black/50 sm:p-10"
+      className="mt-auto sm:m-auto sm:w-[calc(100%-2rem)] max-w-[600px] sm:rounded-2xl p-6 text-left backdrop:bg-black/50 sm:p-10"
     >
-      <h2
-        id={COOKIE_CONSENT_TITLE_ID}
-        className="mb-4 text-xl font-manrope-bold text-grey-1000 sm:text-2xl"
-      >
-        Использование файлов cookie
-      </h2>
       <p className="mb-8 text-md/6 text-grey-1000">
         Мы&nbsp;используем файлы cookie, чтобы улучшить работу сайта, повысить его
         эффективность и&nbsp;удобство. Используя этот сайт, вы&nbsp;соглашаетесь с{" "}
@@ -84,7 +78,7 @@ export default function CookieConsentDialog({
           href="https://www.perco.ru/politika-konfidentsialnosti/"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:text-cta"
+          className="underline underline-offset-2 hover:text-cta focus:outline-none focus-visible:outline-none"
         >
           Политикой конфиденциальности
         </a>{" "}
@@ -93,12 +87,12 @@ export default function CookieConsentDialog({
           href="https://new.perco.ru/politika-konfidentsialnosti/cookies.php"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:text-cta"
+          className="underline underline-offset-2 hover:text-cta focus:outline-none focus-visible:outline-none"
         >
           Политикой cookie
         </a>.
       </p>
-      <Button type="button" className="px-6 py-3 w-[200px]" onClick={acceptCookies}>
+      <Button type="button" className="w-full sm:w-[200px]" onClick={acceptCookies}>
         Принимаю
       </Button>
     </dialog>

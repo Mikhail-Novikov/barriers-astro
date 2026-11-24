@@ -36,7 +36,7 @@ export default function FloatingScrollToTopButton(): JSX.Element {
   return (
     <button
       type="button"
-      className={`perco-icons border-0 size-11 2xl:size-15 rounded-full flex place-items-center justify-center bg-grey-200 hover:bg-white px-0 group fixed bottom-4 right-5 z-50 2xl:bottom-8 2xl:right-8 cursor-pointer shadow-[0_2px_5px_0_rgba(134,135,140,0.3)] transition-all ${isVisible ? "opacity-100" : "invisible opacity-0 pointer-events-none"}`}
+      className={`perco-icons border-0 size-11 2xl:size-15 rounded-full flex place-items-center justify-center bg-grey-200 hover:bg-white px-0 group fixed bottom-4 right-5 z-9 2xl:bottom-8 2xl:right-8 cursor-pointer shadow-[0_2px_5px_0_rgba(134,135,140,0.3)] transition-all ${isVisible ? "opacity-100" : "invisible opacity-0 pointer-events-none"}`}
       onClick={scrollToTop}
       aria-label="Прокрутить страницу к началу"
       aria-hidden={!isVisible}

@@ -18,6 +18,7 @@ import type {
   OpeningTimeFilterOption,
   OpeningTimeOption,
   TemperatureOption,
+  RoadWidthOption,
 } from '@shared-types/barrierFilters';
 
 import emptySearchImage from '../../assets/img/empty-search.png';
@@ -52,22 +53,27 @@ const barrierThumbImages = import.meta.glob('../../assets/img/barriers/*/thumb/*
 
 /** Подписи и значения фильтра по минимальной температуре эксплуатации. */
 const TemperaturesOptions: readonly FilterSectionOption<TemperatureOption>[] = [
-  ['standard', 'До −40 °C'],
-  ['low', 'До −60 °C'],
+  ['standard', 'До&nbsp;&minus;40 &deg;C'],
+  ['low', 'До&nbsp;&minus;60 &deg;C'],
 ] as const;
 
 /** Варианты фильтра по ширине проезда. */
-const widthOptions: readonly (readonly [number, number, string])[] = [
-  [0, 3, '2,3 - 3 метра'],
-  [3, 4, '3,1 - 4 метра'],
-  [4, 6, '4,1 - 6 метров'],
+const widthOptions: readonly FilterSectionOption<RoadWidthOption>[] = [
+  ['3', '2,3&ndash;3 метра'],
+  ['4', '3,1&ndash;4 метра'],
+  ['6', '4,1&ndash;6 метров'],
 ] as const;
+
+const getSelectedRoadWidthOption = (roadWidthLimit: number): RoadWidthOption | null =>
+  roadWidthLimit === 0
+    ? null
+    : widthOptions.find(([value]) => roadWidthLimit <= Number(value))?.[0] ?? '6';
 
 /** Подписи и значения фильтра по времени открытия шлагбаума. */
 const openingTimeOptions: readonly FilterSectionOption<OpeningTimeFilterOption>[] = [
   ['lessThan1.5', 'меньше 1,5 секунды'],
-  ['3-4', '3-4 секунды'],
-  ['4-6', '4–6 секунд'],
+  ['3-4', '3&ndash;4 секунды'],
+  ['4-6', '4&ndash;6 секунд'],
 ] as const;
 
 /** Подписи и значения фильтра по форме стрелы шлагбаума. */
@@ -203,11 +209,9 @@ export default function Hero6(): JSX.Element {
   // следим за опциями и очищаем выбранные значения, если они стали недоступными
   useEffect(() => {
     setRoadWidthLimit((selectedRoadWidthLimit) => {
-      const selectedOption = widthOptions.find(
-        ([lowerBound, value]) => selectedRoadWidthLimit > lowerBound && selectedRoadWidthLimit <= value,
-      );
+      const selectedOption = getSelectedRoadWidthOption(selectedRoadWidthLimit);
       if (!selectedOption) return selectedRoadWidthLimit;
-      return disabledOptions.get('roadWidthLimit')?.has(String(selectedOption[1]))
+      return disabledOptions.get('roadWidthLimit')?.has(selectedOption)
         ? 0
         : selectedRoadWidthLimit;
     });
@@ -274,29 +278,15 @@ export default function Hero6(): JSX.Element {
    */
   const filtersContent = (groupSuffix: string): JSX.Element => (
     <>
-      <fieldset>
-        <legend className="mb-4 text-md/6 font-manrope-semibold text-grey-1000">
-          Ширина проезда
-        </legend>
-        <div className="flex flex-col gap-5">
-          {widthOptions.map(([lowerBound, value, label]) => {
-            const disabled = disabledOptions.get('roadWidthLimit')?.has(String(value)) ?? false;
-            return (
-              <FilterRadioBtn
-                key={value}
-                checked={roadWidthLimit > lowerBound && roadWidthLimit <= value && !disabled}
-                label={label}
-                onChange={(checked) => setRoadWidthLimit(checked ? value : 0)}
-                name={`roadWidthLimit-${groupSuffix}`}
-                value={String(value)}
-                disabled={disabled}
-              />
-            );
-          })}
-        </div>
-      </fieldset>
-
       <div className="mt-5 space-y-5 xl:mt-4 xl:space-y-7 4xl:space-y-8">
+        <FilterSection<RoadWidthOption>
+          title="Ширина проезда"
+          name={`roadWidthLimit-${groupSuffix}`}
+          options={widthOptions}
+          selected={getSelectedRoadWidthOption(roadWidthLimit)}
+          onSelect={(value, checked) => setRoadWidthLimit(checked ? Number(value) : 0)}
+          disabledValues={disabledOptions.get('roadWidthLimit')}
+        />
         <FilterSection<TemperatureOption>
           title="Минимальная температура эксплуатации"
           name={`temperatures-${groupSuffix}`}
@@ -538,7 +528,7 @@ export default function Hero6(): JSX.Element {
           </div>
           <div className="flex-1 min-h-0 sm:p-[0px_18px] overflow-y-auto overscroll-y-contain">{filtersContent('mobile')}</div>
           <Button
-            className='w-fit mt-8 xl:mt-10 hidden sm:block m-[12px_18px_32px]'
+            className='w-fit mt-5 xl:mt-8 hidden sm:block m-[12px_18px_32px]'
             type="button"
             variant="primary-outline"
             disabled={appliedFiltersCount === 0}
@@ -560,7 +550,7 @@ export default function Hero6(): JSX.Element {
                 </h3>
                 <div>{filtersContent('desktop')}</div>
                 <Button
-                  className='w-full mt-8 xl:mt-10 sm:w-fit sm:block'
+                  className='w-full mt-5 xl:mt-8 sm:w-fit sm:block'
                   type="button"
                   variant="primary-outline"
                   disabled={appliedFiltersCount === 0}
