@@ -6,6 +6,7 @@
     "dev": "astro dev --watch:scss --disable:toolbar",
     "build": "node scripts/convert-images.mjs && astro build",
     "preview": "astro preview",
+    "test:e2e": "playwright test",
     "astro": "astro",
     "compile:scss": "sass src/styles:dist/styles --style=compressed",
     "watch:scss": "sass --watch src/styles:dist/styles",
@@ -35,6 +36,7 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "baseline-browser-mapping": "^2.10.44",
     "glob": "^13.0.6",
     "sass": "^1.99.0",

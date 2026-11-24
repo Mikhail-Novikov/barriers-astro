@@ -36,6 +36,17 @@
 | `npm run dev` | Запуск локального dev-сервера на `http://localhost:4321` |
 | `npm run build` | Сборка production-версии в `dist/` |
 | `npm run preview` | Предпросмотр собранного сайта локально |
+| `npm run test:e2e` | E2E-проверка каталога шлагбаумов в Chromium |
+
+### Playwright
+
+После `npm install` установите браузер для Playwright один раз:
+
+```bash
+npx playwright install chromium
+```
+
+Запуск E2E-тестов поднимает локальный Astro-сервер на `http://127.0.0.1:4322` и проверяет выдачу фильтров каталога. Тестовые ожидания сверяются с [официальным каталогом шлагбаумов PERCo](https://www.perco.ru/products/shlagbaum/).
 
 ## Быстрый старт
 

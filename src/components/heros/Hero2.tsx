@@ -7,6 +7,7 @@ import SliderArrow from "@components/SliderArrow";
 import Video from "@components/Video";
 import PaginationDots from "@components/PaginationDots";
 import { publicAsset } from "@utils/publicAsset";
+import { encodeHtmlText } from "@utils/encodeHtmlText";
 
 import "swiper/css";
 
@@ -304,7 +305,7 @@ const Hero2 = (): JSX.Element => {
                     const absoluteIndex = item.index ?? pageIndex * groupSize + itemIndex;
                     const itemClassName =
                       (layoutClasses[itemIndex] ?? "item-gallery cursor-help") + " text-left";
-
+                    console.log(item.description, encodeHtmlText(item.description));
                     if (item.isVideo) {
                       return (
                         <div key={item.id} className={itemClassName}>
@@ -349,7 +350,7 @@ const Hero2 = (): JSX.Element => {
                         <img
                           className="object-cover w-full h-auto"
                           src={item.srcPreview}
-                          alt={item.description}
+                          alt={encodeHtmlText(item.description)}
                           data-id={item.id}
                           data-ratio={item.ratio}
                           loading="lazy"
