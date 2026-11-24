@@ -6,9 +6,7 @@ import type {
   FeedbackFormErrors,
 } from "@components/heros/FeedbackFormFields";
 
-const BITRIX_FORM_URL =
-  import.meta.env.PUBLIC_BARRIERS_FORM_URL ??
-  "https://www.perco.ru/php/barriers-config-form.php";
+const BITRIX_FORM_URL = "https://www.perco.ru/php/barriers-config-form.php";
 const BITRIX_FORM_PASSWORD =
   import.meta.env.PUBLIC_BARRIERS_FORM_PASSWORD ?? "";
 
