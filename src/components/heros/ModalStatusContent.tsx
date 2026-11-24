@@ -20,7 +20,7 @@ export default function ModalStatusContent({
   message,
 }: ModalSubmissionResult): JSX.Element {
   return (
-    <div className="p-10 sm:p-24 min-h-[70vh]">
+    <div className="p-10 sm:p-24">
       <div className="mb-7 max-w-[400px]">
         {success ? (
           <img

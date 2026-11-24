@@ -1,17 +1,22 @@
 <?
+$allowedOrigin = 'https://barrier.perco.ru';
+if (($_SERVER['HTTP_ORIGIN'] ?? '') === $allowedOrigin) {
+    header('Access-Control-Allow-Origin: ' . $allowedOrigin);
+    header('Vary: Origin');
+}
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
 
-require_once __DIR__ . '/../utils/env.php';
-loadEnv();
-
-define('BARRIERS_FORM_ID', envInt('BARRIERS_FORM_ID', 87));
-define('BARRIERS_FIELD_NAME', envValue('BARRIERS_FIELD_NAME', 'form_text_1154'));
-define('BARRIERS_FIELD_EMAIL', envValue('BARRIERS_FIELD_EMAIL', 'form_email_1155'));
-define('BARRIERS_FIELD_PHONE', envValue('BARRIERS_FIELD_PHONE', 'form_text_1156'));
-define('BARRIERS_FIELD_MESSAGE', envValue('BARRIERS_FIELD_MESSAGE', 'form_textarea_1157'));
-define('BARRIERS_FIELD_ITEM', envValue('BARRIERS_FIELD_ITEM', 'form_textarea_1158'));
-define('BARRIERS_FIELD_OPTIONS', envValue('BARRIERS_FIELD_OPTIONS', 'form_textarea_1159'));
-define('BARRIERS_FIELD_QUERY_STRING', envValue('BARRIERS_FIELD_QUERY_STRING', 'form_textarea_1166'));
-define('BARRIERS_FIELD_DATE', envValue('BARRIERS_FIELD_DATE', 'form_date_1160'));
+define('BARRIERS_FORM_ID', 89);
+define('BARRIERS_FORM_PASSWORD', 'bae42d7d01c78bf32db83aadd036e2ca574203da');
+define('BARRIERS_FIELD_NAME', 'form_text_1199');
+define('BARRIERS_FIELD_EMAIL', 'form_email_1200');
+define('BARRIERS_FIELD_PHONE', 'form_text_1246');
+define('BARRIERS_FIELD_MESSAGE', 'form_textarea_1202');
+define('BARRIERS_FIELD_ITEM', 'form_textarea_1210');
+define('BARRIERS_FIELD_OPTIONS', 'form_textarea_1211');
+define('BARRIERS_FIELD_QUERY_STRING', 'form_textarea_1213');
+define('BARRIERS_FIELD_DATE', 'form_date_1212');
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php';
 
@@ -20,47 +25,18 @@ register_shutdown_function(static function (): void {
         . '/bitrix/modules/main/include/epilog_after.php';
 });
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
 
-$formPassword = envValue('BARRIERS_FORM_PASSWORD');
+$formPassword = BARRIERS_FORM_PASSWORD;
 $providedPassword = (string) ($_GET['pw'] ?? '');
 
-if ($formPassword === '' || $providedPassword === '' || !hash_equals($formPassword, $providedPassword)) {
+if ($providedPassword === '' || !hash_equals($formPassword, $providedPassword)) {
     http_response_code(403);
     echo 'error: unauthorized';
     exit;
-}
-
-// ============================================================
-//  Извлечение SMTP-конфига
-// ============================================================
-function getMailConfig(): array
-{
-    static $config = null;
-    if ($config !== null) return $config;
-
-    $path = __DIR__ . '/mail-config.php';
-
-    if (!is_readable($path)) {
-        error_log('MAIL CONFIG ERROR: файл не найден или недоступен: ' . $path);
-        return $config = [];
-    }
-
-    $config = @include $path;
-
-    if (!is_array($config)) {
-        error_log('MAIL CONFIG ERROR: файл не вернул массив');
-        $config = [];
-    }
-
-    return $config;
 }
 
 // Логирование
@@ -112,105 +88,53 @@ if ($RESULT_ID) {
     $logData .= 'Error: Failed to add result. Bitrix: ' . $formErrorText . "\n";
 }
 
-$smtpSent = false;
-$mailConfig = getMailConfig();
-$smtpHost = $mailConfig['host'] ?? '';
-$smtpUsername = $mailConfig['username'] ?? '';
-$smtpPassword = $mailConfig['password'] ?? '';
-$smtpRecipients = (array) ($mailConfig['to'] ?? []);
-
-if ($smtpHost && $smtpUsername && $smtpPassword && $smtpRecipients) {
-    $phpMailerPath = $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/vendor/phpmailer/phpmailer/src/';
-
-    foreach (['Exception.php', 'PHPMailer.php', 'SMTP.php'] as $phpMailerFile) {
-        require_once $phpMailerPath . $phpMailerFile;
-    }
-
-    if (!class_exists('\PHPMailer\PHPMailer\PHPMailer')) {
-        error_log('SMTP ERROR: PHPMailer is not loaded');
-        throw new RuntimeException('PHPMailer is not loaded');
-    }
-
+$mailEventProcessed = false;
+if ($RESULT_ID) {
     try {
-        require_once $phpMailerPath . 'Exception.php';
-        require_once $phpMailerPath . 'PHPMailer.php';
-        require_once $phpMailerPath . 'SMTP.php';
+        CFormResult::SetEvent($RESULT_ID);
 
-        $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
-        $mail->isSMTP();
-        $mail->Host = $smtpHost;
-        $mail->SMTPAuth = true;
-        $mail->Username = $smtpUsername;
-        $mail->Password = $smtpPassword;
-        $mail->CharSet = 'UTF-8';
+        $formResult = CForm::GetByID(BARRIERS_FORM_ID);
+        $form = $formResult->Fetch();
+        $formSites = (array) CForm::GetSiteArray(BARRIERS_FORM_ID);
+        $formTemplateIds = (array) CForm::GetMailTemplateArray(BARRIERS_FORM_ID);
+        $hasActiveMailTemplate = false;
 
-        $smtpEncryption = strtolower($mailConfig['secure'] ?? 'tls');
-        $mail->SMTPSecure = $smtpEncryption === 'ssl'
-            ? \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS
-            : \PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = (int) ($mailConfig['port'] ?? ($smtpEncryption === 'ssl' ? 465 : 587));
-        if (!empty($mailConfig['allow_self_signed'])) {
-            $mail->SMTPOptions = [
-                'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true,
-                ],
-            ];
-        }
+        if (
+            $form
+            && !empty($form['MAIL_EVENT_TYPE'])
+            && defined('SITE_ID')
+            && in_array(SITE_ID, $formSites, true)
+            && $formTemplateIds
+        ) {
+            $eventMessages = CEventMessage::GetList('id', 'asc', [
+                'ACTIVE' => 'Y',
+                'SITE_ID' => SITE_ID,
+                'EVENT_NAME' => $form['MAIL_EVENT_TYPE'],
+            ]);
 
-        $mail->setFrom($mailConfig['from'] ?? $smtpUsername, 'PERCo');
-        foreach ($smtpRecipients as $smtpRecipient) {
-            $mail->addAddress($smtpRecipient);
-        }
-        if (filter_var($_GET['email'] ?? '', FILTER_VALIDATE_EMAIL)) {
-            $mail->addReplyTo($_GET['email'], $_GET['name'] ?? '');
+            while ($eventMessage = $eventMessages->Fetch()) {
+                if (in_array($eventMessage['ID'], $formTemplateIds)) {
+                    $hasActiveMailTemplate = true;
+                    break;
+                }
+            }
         }
 
-        $mail->Subject = 'Новая заявка с сайта';
-        $messageForEmail = html_entity_decode($arValues[BARRIERS_FIELD_MESSAGE], ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        $messageForEmail = preg_replace('~<br\s*/?>~i', "\n", $messageForEmail);
-        $messageForEmail = preg_replace('~</(?:p|div|li|h[1-6])\s*>~i', "\n", $messageForEmail);
-        $messageForEmail = trim(strip_tags($messageForEmail));
-        $mailBody = array(
-            'Имя: ' . ($arValues[BARRIERS_FIELD_NAME] ?: '-'),
-            'E-mail: ' . ($arValues[BARRIERS_FIELD_EMAIL] ?: '-'),
-        );
-        if (!empty($arValues[BARRIERS_FIELD_PHONE])) {
-            $mailBody[] = 'Телефон: ' . $arValues[BARRIERS_FIELD_PHONE];
+        if ($hasActiveMailTemplate) {
+            $mailEventProcessed = CFormResult::Mail($RESULT_ID);
+            $logData .= 'Bitrix form mail event processed: '
+                . ($mailEventProcessed ? 'true' : 'false')
+                . "\n";
+        } else {
+            $logData .= "Bitrix mail event skipped: no active template assigned to the form/site\n";
         }
-        if (!empty($arValues[BARRIERS_FIELD_ITEM])) {
-            $mailBody[] = 'Интересует: ' . $arValues[BARRIERS_FIELD_ITEM];
-        }
-        $mailBody[] = 'Сообщение: ' . ($messageForEmail ?: '-');
-        $mailBody[] = 'Дата: ' . $arValues[BARRIERS_FIELD_DATE];
-        $mail->Body = implode("\n", $mailBody);
-        $mail->send();
-        $smtpSent = true;
-        $logData .= "SMTP mail sent\n";
     } catch (\Throwable $error) {
-        $smtpDiagnostics = [
-            'exception' => $error->getMessage(),
-            'phpmailer' => isset($mail) ? $mail->ErrorInfo : '',
-            'smtp' => isset($mail) ? $mail->getSMTPInstance()->getError() : [],
-            'host' => $smtpHost,
-            'port' => $mailConfig['port'] ?? null,
-            'encryption' => $mailConfig['secure'] ?? null,
-        ];
-        $logData .= 'SMTP error: ' . json_encode($smtpDiagnostics, JSON_UNESCAPED_UNICODE) . "\n";
+        $logData .= 'Bitrix mail event error: ' . $error->getMessage() . "\n";
     }
-} else {
-    $missingMailSettings = [];
-    foreach (['host', 'username', 'password', 'to'] as $setting) {
-        if (empty($mailConfig[$setting])) {
-            $missingMailSettings[] = $setting;
-        }
-    }
-    $logData .= 'SMTP error: missing config values: ' . implode(', ', $missingMailSettings) . "\n";
 }
 
-if ($RESULT_ID && $smtpSent) {
-    $logData .= "Success: Result ID $RESULT_ID saved and SMTP mail sent\n";
+if ($RESULT_ID && $mailEventProcessed) {
+    $logData .= "Success: Result ID $RESULT_ID saved and Bitrix mail event processed\n";
     @file_put_contents($logFile, $logData, FILE_APPEND);
     echo 'ok';
 } else {
