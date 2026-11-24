@@ -305,7 +305,6 @@ const Hero2 = (): JSX.Element => {
                     const absoluteIndex = item.index ?? pageIndex * groupSize + itemIndex;
                     const itemClassName =
                       (layoutClasses[itemIndex] ?? "item-gallery cursor-help") + " text-left";
-                    console.log(item.description, encodeHtmlText(item.description));
                     if (item.isVideo) {
                       return (
                         <div key={item.id} className={itemClassName}>
@@ -333,6 +332,7 @@ const Hero2 = (): JSX.Element => {
                         data-fancybox="gallery"
                         data-index={absoluteIndex}
                         data-caption={item.description}
+                        data-alt={item.description}
                         data-id={item.id}
                         href={item.srcFull}
                         onClickCapture={(event) => {
@@ -350,7 +350,7 @@ const Hero2 = (): JSX.Element => {
                         <img
                           className="object-cover w-full h-auto"
                           src={item.srcPreview}
-                          alt={encodeHtmlText(item.description)}
+                          alt={item.description}
                           data-id={item.id}
                           data-ratio={item.ratio}
                           loading="lazy"
