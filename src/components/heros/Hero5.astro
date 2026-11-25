@@ -44,7 +44,8 @@ const cards = [
               />
             ) : (
               <Video client:load containerClassName="h-full w-full" className="h-full w-full object-cover"
-                src={publicAsset('/video/reliability-security/rs4-video.mp4')}
+                srcDesktop={publicAsset('/video/reliability-security/rs4-video.mp4')}
+                srcMobile={publicAsset('/video/reliability-security/rs4-video-mobile.mp4')}
                 poster={publicAsset("/img/reliability-security/rs-4.webp")}
                 muted
                 autoPlay

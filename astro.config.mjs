@@ -18,6 +18,7 @@ const branchName = process.env.DEPLOY_BRANCH
     : '');
 
 const branchBases = new Map([
+  ['production', '/'],
   ['main', '/test/barriers/'],
   ['filter-with-radiobutton-ver.-A', '/test/barriers/a/'],
   ['filter-with-checkboxes-ver.-B', '/test/barriers/b/'],

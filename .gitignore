@@ -20,6 +20,7 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+/src/components/barriers-config-form.php
 
 # macOS-specific files
 .DS_Store
