@@ -278,7 +278,7 @@ export default function Hero6(): JSX.Element {
    */
   const filtersContent = (groupSuffix: string): JSX.Element => (
     <>
-      <div className="mt-5 space-y-5 xl:mt-4 xl:space-y-7 4xl:space-y-8">
+      <div className="mt-4 sm:mt-0 space-y-5 xl:mt-4 lg:space-y-8 4xl:space-y-8">
         <FilterSection<RoadWidthOption>
           title="Ширина проезда"
           name={`roadWidthLimit-${groupSuffix}`}
@@ -502,18 +502,18 @@ export default function Hero6(): JSX.Element {
         />
 
         <aside
-          className={`perco-icons fixed sm:absolute inset-0 top-16 sm:inset-auto sm:top-auto z-10 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white p-6 transition-all duration-300 ease-out md:px-8 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
+          className={`perco-icons fixed sm:absolute inset-0 top-10 sm:inset-auto sm:top-auto z-10 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white p-6 transition-all duration-300 ease-out md:px-6 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className="flex justify-between p-4 mb-4 -mx-6 -mt-6 shrink-0 sm:justify-end sm:p-0 sm:mx-0 sm:mt-0 bg-grey-200 sm:bg-white">
+          <div className="flex items-center justify-between px-4 h-13 sm:h-fit -mx-6 shrink-0 sm:justify-end sm:p-0 sm:mx-0 bg-grey-200 sm:bg-white">
             <button
               type="button"
               aria-label="Закрыть фильтры"
               onClick={() => setIsFiltersOpen(false)}
-              className="ml-2 text-black cursor-pointer sm:ml-0 md:-mr-3 shrink-0 text-2xl/6"
+              className="relative z-1 ml-5 mt-1 text-black cursor-pointer sm:ml-0 md:-mr-0 shrink-0"
             >
-              <span className='sm:hidden text-grey-800 hover:text-cta'><i className="rotate-90 perco-icon-link-arrow" /></span>
-              <span className='hidden sm:block text-grey-800 hover:text-cta'><i className="perco-icon-close" /></span>
+              <span className='sm:hidden text-grey-800 text-xl/6 hover:text-cta'><i className="rotate-90 perco-icon-link-arrow" /></span>
+              <span className='hidden sm:block text-grey-800 text-2xl/6 hover:text-cta'><i className="perco-icon-close" /></span>
             </button>
             <h3 className='text-2xl/7 font-manrope-bold sm:hidden'>Фильтр</h3>
             <button
@@ -523,12 +523,23 @@ export default function Hero6(): JSX.Element {
               onClick={resetFilters}
               className={`block-inline shrink-0 text-2xl/6 ${appliedFiltersCount === 0 ? 'cursor-default' : 'cursor-pointer'}`}
             >
-              <span className={`mr-4 block-inline sm:hidden ${appliedFiltersCount === 0 ? 'text-grey-500' : 'text-red'}`}><i className="perco-icon-mobile-no-filters" /></span>
+              <span className={`mr-4 block-inline sm:hidden ${appliedFiltersCount === 0 ? 'text-grey-500' : 'text-cta'}`}><i className="perco-icon-mobile-no-filters" /></span>
             </button>
           </div>
-          <div className="flex-1 min-h-0 sm:p-[0px_18px] overflow-y-auto overscroll-y-contain">{filtersContent('mobile')}</div>
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-y-contain mb-7 sm:-mt-4 ">{filtersContent('mobile')}</div>
+          {appliedFiltersCount > 0 && (
+            <Button
+              className='mb-3'
+              type="button"
+              aria-label="Закрыть фильтры"
+              variant="primary"
+              onClick={() => setIsFiltersOpen(false)}
+            >
+              Посмотреть
+            </Button>
+          )}
           <Button
-            className='w-fit mt-5 xl:mt-8 hidden sm:block m-[12px_18px_32px]'
+            className='xl:mt-8 mb-4 hidden sm:block'
             type="button"
             variant="primary-outline"
             disabled={appliedFiltersCount === 0}
