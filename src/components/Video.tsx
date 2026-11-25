@@ -4,8 +4,12 @@ import { useDevice } from "@hooks/useDevice";
 import VideoPlayButton from "@components/VideoPlayButton";
 
 type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
-  // Исходный URL видео.
-  src: string;
+  // Общий URL видео для обратной совместимости.
+  src?: string;
+  // URL видео для десктопа.
+  srcDesktop?: string;
+  // URL видео для мобильных устройств.
+  srcMobile?: string;
   // URL постеров для десктопа, мобильных устройств и экранов высокой плотности.
   posterDesktop?: string;
   posterMobile?: string;
@@ -26,6 +30,8 @@ type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
  *
  * @param props - Свойства компонента.
  * @param props.src - Исходный URL видео.
+ * @param props.srcDesktop - URL видео для десктопа.
+ * @param props.srcMobile - URL видео для мобильных устройств.
  * @param props.poster - Запасной URL постера для обратной совместимости.
  * @param props.posterDesktop - URL постера для десктопа.
  * @param props.posterMobile - URL постера для мобильных устройств.
@@ -38,6 +44,8 @@ type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
 const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
   {
     src,
+    srcDesktop,
+    srcMobile,
     poster,
     posterDesktop,
     posterMobile,
@@ -59,11 +67,17 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
   const [isPlayingInline, setIsPlayingInline] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { isMobile, isRetina } = useDevice();
+  const responsiveSrc = isMobile
+    ? srcMobile ?? srcDesktop ?? src
+    : srcDesktop ?? srcMobile ?? src;
   const desktopPoster = posterDesktop ?? poster;
   const responsivePoster = isMobile
     ? posterMobile ?? (isRetina ? posterRetina : undefined) ?? desktopPoster
     : (isRetina ? posterRetina : undefined) ?? desktopPoster;
-  const items = useMemo(() => [{ src, poster: responsivePoster }], [src, responsivePoster]);
+  const items = useMemo(
+    () => [{ src: responsiveSrc, poster: responsivePoster }],
+    [responsiveSrc, responsivePoster],
+  );
 
   useEffect(() => {
     if (!autoPlay) return;
@@ -127,7 +141,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
       <video
         key={videoKey}
         ref={handleVideoRef}
-        src={src}
+        src={responsiveSrc}
         {...props}
         poster={responsivePoster}
         autoPlay={inlinePlayback ? false : autoPlay}
@@ -149,7 +163,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
       {showFullscreen && !inlinePlayback && (
         <a
           className="hidden"
-          href={src}
+          href={responsiveSrc}
           data-fancybox="video-player"
           data-type="html5video"
           data-poster={responsivePoster}
