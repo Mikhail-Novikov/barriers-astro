@@ -7,6 +7,10 @@ import "@fancyapps/ui/dist/carousel/carousel.dots.css";
 
 import { encodeHtmlText } from '@utils/encodeHtmlText';
 
+const HTML5_VIDEO_TEMPLATE_WITHOUT_INLINE =
+  '<video class="f-html5video" controls controlsList="nodownload" poster="{{poster}}">\n' +
+  '    <source src="{{src}}" type="{{format}}" />К сожалению, ваш браузер не поддерживает встроенные видео.</video>';
+
 /** Интерфейс для описания элемента галереи.*/
 interface GalleryItem {
   /** Источник изображения или объект с источником изображения. */
@@ -49,6 +53,8 @@ interface UseLightGalleryOptions {
   onClose?: () => void;
   videoAutoplay?: boolean;
   fullscreenAutoStart?: boolean;
+  /** Отключает inline-режим HTML5-видео внутри Fancybox. */
+  lightboxVideoPlaysInline?: boolean;
   /** Отключает увеличение/уменьшение изображения (Panzoom) */
   disableZoom?: boolean;
   /**
@@ -86,6 +92,7 @@ export const useLightGallery = ({
   onClose,
   videoAutoplay = false,
   fullscreenAutoStart = false,
+  lightboxVideoPlaysInline = true,
   disableZoom = false,
   captionPlacement = 'default',
   slideWrapper = false,
@@ -239,8 +246,17 @@ export const useLightGallery = ({
           : {},
         Navigation: navigation,
         Arrows: hasArrows,
-        ...(videoAutoplay ? { Video: { autoplay: true } } : {}),
         Fullscreen: { autoStart: fullscreenAutoStart },
+        ...(videoAutoplay || !lightboxVideoPlaysInline
+          ? {
+              Video: {
+                ...(videoAutoplay ? { autoplay: true } : {}),
+                ...(!lightboxVideoPlaysInline
+                  ? { html5videoTpl: HTML5_VIDEO_TEMPLATE_WITHOUT_INLINE }
+                  : {}),
+              },
+            }
+          : {}),
         formatCaption: (caption: string, slide: any) => {
           const captionText = encodeHtmlText(
             slide?.triggerEl?.dataset?.caption ?? caption,
@@ -291,6 +307,7 @@ export const useLightGallery = ({
     captionClassName,
     videoAutoplay,
     fullscreenAutoStart,
+    lightboxVideoPlaysInline,
     disableZoom,
     captionPlacement,
     slideWrapper,

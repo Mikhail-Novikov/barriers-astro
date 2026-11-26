@@ -19,6 +19,8 @@ type VideoProps = VideoHTMLAttributes<HTMLVideoElement> & {
   showFullscreen?: boolean;
   // Автоматически открыть видео в полноэкранном режиме light gallery.
   fullscreenAutoStart?: boolean;
+  // Включить ли inline-режим видео внутри light gallery.
+  lightboxVideoPlaysInline?: boolean;
   // Запускать видео в контейнере вместо открытия light gallery.
   inlinePlayback?: boolean;
   // Режим видимости иконки воспроизведения: по наведению, постоянно или скрыта.
@@ -56,6 +58,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
     containerClassName = "",
     showFullscreen = true,
     fullscreenAutoStart = false,
+    lightboxVideoPlaysInline = true,
     inlinePlayback = false,
     playButtonVisibility = 'hover',
     autoPlay,
@@ -128,6 +131,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
     showFullscreen,
     videoAutoplay: true,
     fullscreenAutoStart,
+    lightboxVideoPlaysInline,
     controls: false,
     mainClass: 'hero-video',
   });
