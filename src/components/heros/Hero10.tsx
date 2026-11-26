@@ -71,7 +71,9 @@ type SolutionPriceProps = {
 function SolutionPrice({ price, description, classNameWrapper }: SolutionPriceProps): JSX.Element {
   return (
     <div className={`xl:mb-5 sm:flex w-full items-center gap-5 rounded-[16px] xl:rounded-3xl bg-grey-200 py-4 px-5 ${classNameWrapper}`}>
-      <p className="order-1 mb-4 sm:mb-0 font-manrope-semibold text-md/5"><HtmlContent>{description}</HtmlContent></p>
+      <p className="order-1 mb-4 sm:mb-0 font-manrope-semibold text-md/5">
+        <HtmlContent>{description}</HtmlContent>
+      </p>
       <strong className="sm:ml-4 md:ml-5 shrink-0 text-lg/6 font-manrope-bold text-cta sm:text-2xl/7">{price}</strong>
     </div>
   );
@@ -98,11 +100,28 @@ function SolutionAdditions({ additions }: SolutionAdditionsProps): JSX.Element |
     <>
       <p className="mb-1 sm:mb-3 text-lg/6 text-grey-1000 xl:text-grey-800 font-manrope-semibold">Что можно добавить:</p>
       <ul className="mb-7 lg:mb-10 list-disc marker:text-[12px] space-y-1 pl-3 sm:pl-6 text-md/6">
-        {additions.map((addition) => <li key={addition}><HtmlContent>{addition}</HtmlContent></li>)}
+        {additions.map((addition) => (
+          <li key={addition}>
+            <HtmlContent>{addition}</HtmlContent>
+          </li>
+        ))}
       </ul>
     </>
   );
 }
+
+const ADDITION_TEXT = {
+  remoteKey: "Брелок-передатчик радиоуправления <span class='whitespace-nowrap'>YET2129</span> с&nbsp;динамическим кодом",
+  radioController: "Устройство радиоуправления <span class='whitespace-nowrap'>YET404PC</span>",
+  signalLamp: "Лампа сигнальная со&nbsp;встроенной антенной <span class='whitespace-nowrap'>SL-U</span>",
+  photoelectricStand: "Стойка для фотоэлемента безопасности <span class='whitespace-nowrap'>GDS1</span>",
+  safetyIsland: "Островок безопасности <span class='whitespace-nowrap'>PI-01</span>",
+  barrierFence: "Ограждение для стойки шлагбаума <span class='whitespace-nowrap'>GM3</span>",
+  readerStand: "Стойка для считывателя <span class='whitespace-nowrap'>GM5</span>",
+  equipmentStand: "Стойка для установки оборудования (2,2&nbsp;м) <span class='whitespace-nowrap'>BH04</span>",
+  longRangeReader: "Считыватель дальнего действия <span class='whitespace-nowrap'>IR10.1 (EMM)</span>",
+  radioControlModule: "<span class='whitespace-nowrap'>GSM / BLE</span> модуль управления шлагбаумом <span class='whitespace-nowrap'>GCM1</span>",
+} as const;
 
 /** Готовые комплектации, отображаемые для разных типов объектов. */
 const solutions: Solution[] = [
@@ -111,77 +130,77 @@ const solutions: Solution[] = [
     title: "Бизнес-центр или офис",
     image: publicAsset("/img/ready‑made-solutions/business-center.webp"),
     price: "151 020 ₽",
-    description: "Шлагбаум GS04.1&nbsp;с прямоугольной стрелой 4,3&nbsp;м и&nbsp;опорной стойкой GBS1",
+    description: "Шлагбаум <span class='whitespace-nowrap'>GS04.1</span>&nbsp;с прямоугольной стрелой 4,3&nbsp;м и&nbsp;опорной стойкой <span class='whitespace-nowrap'>GBS1</span>",
     specifics:
       "Презентабельный внешний вид, удобный доступ сотрудников и&nbsp;посетителей, средний поток, работа в&nbsp;составе СКУД или парковочной системы.",
     important: "Доступ сотрудников и&nbsp;посетителей по&nbsp;картам и&nbsp;брелокам.",
     additions: [
-      "Брелок-передатчик радиоуправления YET2129 с&nbsp;динамическим кодом",
-      "Устройство радиоуправления YET404PC",
-      "Считыватель дальнего действия RU5306T",
-      "Стойка для установки оборудования (2,2&nbsp;м) BH04",
-      "Стойка для фотоэлемента безопасности GDS1",
-      "Островок безопасности PI-01",
-      "Ограждение для стойки шлагбаума GM3",
+      ADDITION_TEXT.remoteKey,
+      ADDITION_TEXT.radioController,
+      "Считыватель дальнего действия <span class='whitespace-nowrap'>RU5306T</span>",
+      ADDITION_TEXT.equipmentStand,
+      ADDITION_TEXT.photoelectricStand,
+      ADDITION_TEXT.safetyIsland,
+      ADDITION_TEXT.barrierFence,
     ],
   },
   {
-    tag: "Гараж, ГСК",
-    title: "Гараж или ГСК",
+    tag: "Гараж, <span class='whitespace-nowrap'>ГСК</span>",
+    title: "Гараж или <span class='whitespace-nowrap'>ГСК</span>",
     image: publicAsset("/img/ready‑made-solutions/residential-garage.webp"),
     price: "127 862 ₽",
     description:
-      "Шлагбаум GS14 с&nbsp;круглой стрелой 4,3&nbsp;м, опорной стойка GBS1 и&nbsp;комплектом фотоэлементов GD1",
+      "Шлагбаум <span class='whitespace-nowrap'>GS14</span> с&nbsp;круглой стрелой 4,3&nbsp;м, опорной стойка <span class='whitespace-nowrap'>GBS1</span> и&nbsp;комплектом фотоэлементов <span class='whitespace-nowrap'>GD1</span>",
     specifics: "Въезд для своих, бюджетное решение, низкий поток.",
     important:
       "Доступ по брелокам; GSM-модуль не используется, чтобы не провоцировать утечку номера.",
     additions: [
-      "Брелок-передатчик радиоуправления YET2129 с&nbsp;динамическим кодом",
-      "Устройство радиоуправления YET404PC",
-      "Лампа сигнальная со&nbsp;встроенной антенной SL-U",
-      "Стойка для фотоэлемента безопасности GDS1",
-      "Островок безопасности PI-01",
-      "Ограждение для стойки шлагбаума GM3",
-      "Стойка для считывателя GM5",
+      ADDITION_TEXT.remoteKey,
+      ADDITION_TEXT.radioController,
+      ADDITION_TEXT.signalLamp,
+      ADDITION_TEXT.photoelectricStand,
+      ADDITION_TEXT.safetyIsland,
+      ADDITION_TEXT.barrierFence,
+      ADDITION_TEXT.readerStand,
     ],
   },
   {
-    tag: "Двор ЖК",
-    title: "Двор многоквартирного дома, ЖК",
+    tag: "Двор <span class='whitespace-nowrap'>ЖК</span>",
+    title: "Двор многоквартирного дома, <span class='whitespace-nowrap'>ЖК</span>",
     image: publicAsset("/img/ready‑made-solutions/residential-garage.webp"),
     price: "127 862 ₽",
     description:
-      "Шлагбаум GS14 с&nbsp;круглой стрелой 4,3&nbsp;м, опорной стойкой GBS1 и&nbsp;комплектом фотоэлементов GD1",
+      "Шлагбаум <span class='whitespace-nowrap'>GS14</span> с&nbsp;круглой стрелой 4,3&nbsp;м, опорной стойкой <span class='whitespace-nowrap'>GBS1</span> и&nbsp;комплектом фотоэлементов <span class='whitespace-nowrap'>GD1</span>",
     specifics:
       "Бюджетное решение, удобный доступ жильцам и&nbsp;возможность пропускать доставку в&nbsp;закрытый двор.",
     additions: [
-      "GSM / BLE модуль управления шлагбаумом GCM1",
-      "Брелок-передатчик радиоуправления YET2129 с&nbsp;динамическим кодом",
-      "Устройство радиоуправления YET404PC",
-      "Лампа сигнальная со&nbsp;встроенной антенной SL-U",
-      "Стойка для фотоэлемента безопасности GDS1",
-      "Островок безопасности PI-01",
-      "Ограждение для стойки шлагбаума GM3",
-      "Стойка для считывателя GM5",
+      ADDITION_TEXT.radioControlModule,
+      ADDITION_TEXT.remoteKey,
+      ADDITION_TEXT.radioController,
+      ADDITION_TEXT.signalLamp,
+      ADDITION_TEXT.photoelectricStand,
+      ADDITION_TEXT.safetyIsland,
+      ADDITION_TEXT.barrierFence,
+      ADDITION_TEXT.readerStand,
     ],
   },
   {
-    tag: "СНТ, коттеджный поселок",
-    title: "Коттеджный поселок, СНТ, дача",
+    tag: "<span class='whitespace-nowrap'>СНТ</span>, коттеджный поселок",
+    title: "Коттеджный поселок, <span class='whitespace-nowrap'>СНТ</span>, дача",
     image: publicAsset("/img/ready‑made-solutions/snt.webp"),
     price: "147 871 ₽",
     description:
-      "Шлагбаум GS16 с&nbsp;круглой стрелой 6,3&nbsp;м, опорной стойкой GBS1 и&nbsp;комплектом фотоэлементов GD1",
+      "Шлагбаум <span class='whitespace-nowrap'>GS16</span> с&nbsp;круглой стрелой 6,3&nbsp;м, опорной стойкой <span class='whitespace-nowrap'>GBS1</span> и&nbsp;комплектом фотоэлементов <span class='whitespace-nowrap'>GD1</span>",
     specifics:
       "Бюджетное решение, удобный доступ жильцам и возможность пропускать доставку в закрытый двор.",
     additions: [
-      "GSM / BLE модуль управления шлагбаумом GCM1",
-      "Брелок-передатчик радиоуправления YET2129 с&nbsp;динамическим кодом",
-      "Устройство радиоуправления YET404PC",
-      "Лампа сигнальная со&nbsp;встроенной антенной SL-U",
-      "Стойка для фотоэлемента безопасности GDS1",
-      "Островок безопасности PI-01",
-      "Ограждение для стойки шлагбаума GM3",
+      ADDITION_TEXT.radioControlModule,
+      ADDITION_TEXT.remoteKey,
+      ADDITION_TEXT.radioController,
+      ADDITION_TEXT.signalLamp,
+      ADDITION_TEXT.photoelectricStand,
+      ADDITION_TEXT.safetyIsland,
+      ADDITION_TEXT.barrierFence,
     ],
   },
   {
@@ -190,13 +209,13 @@ const solutions: Solution[] = [
     image: publicAsset("/img/ready‑made-solutions/underground-parking.webp"),
     price: "159 706 ₽",
     description:
-      "Шлагбаум GS04.1 с&nbsp;прямоугольной стрелой 3&nbsp;м и&nbsp;шарниром для складной стрелы GBF1",
+      "Шлагбаум <span class='whitespace-nowrap'>GS04.1</span> с&nbsp;прямоугольной стрелой 3&nbsp;м и&nbsp;шарниром для складной стрелы <span class='whitespace-nowrap'>GBF1</span>",
     specifics:
       "Бюджетное решение, удобный доступ жильцам и возможность пропускать доставку в закрытый двор.",
     additions: [
-      "Стойка для фотоэлемента безопасности GDS1",
-      "Островок безопасности PI-01",
-      "Ограждение для стойки шлагбаума GM3",
+      ADDITION_TEXT.photoelectricStand,
+      ADDITION_TEXT.safetyIsland,
+      ADDITION_TEXT.barrierFence,
     ],
   },
   {
@@ -205,49 +224,49 @@ const solutions: Solution[] = [
     image: publicAsset("/img/ready‑made-solutions/parking-space.webp"),
     price: "183 297 ₽",
     description:
-      "Шлагбаум GF03.1 с&nbsp;круглой стрелой 3&nbsp;м и&nbsp;буфером",
+      "Шлагбаум <span class='whitespace-nowrap'>GF03.1</span> с&nbsp;круглой стрелой 3&nbsp;м и&nbsp;буфером",
     specifics: "Бюджетное решение, широкий проезд для техники, низкий поток.",
     additions: [
-      "Стойка для фотоэлемента безопасности GDS1",
-      "Островок безопасности PI-01",
-      "Ограждение для стойки шлагбаума GM3",
+      ADDITION_TEXT.photoelectricStand,
+      ADDITION_TEXT.safetyIsland,
+      ADDITION_TEXT.barrierFence,
     ],
   },
   {
-    tag: "КПП",
-    title: "КПП, транспортная проходная",
+    tag: "<span class='whitespace-nowrap'>КПП</span>",
+    title: "<span class='whitespace-nowrap'>КПП</span>, транспортная проходная",
     image: publicAsset("/img/ready‑made-solutions/checkpoint.webp"),
     price: "164 186 ₽",
     description:
-      "Шлагбаум GS06.1 с&nbsp;круглой стрелой 6,3&nbsp;м и&nbsp;опорной стойкой GBS1",
+      "Шлагбаум <span class='whitespace-nowrap'>GS06.1</span> с&nbsp;круглой стрелой 6,3&nbsp;м и&nbsp;опорной стойкой <span class='whitespace-nowrap'>GBS1</span>",
     specifics:
       "Ограниченное пространство, работа в составе парковочной системы.",
     important: "Нужны элементы подсветки, чтобы избежать аварий.",
     additions: [
-      "Считыватель дальнего действия IR10.1 (EMM)",
-      "Стойка для фотоэлемента безопасности GDS1",
-      "Островок безопасности PI-01",
-      "Ограждение для стойки шлагбаума GM3",
-      "Стойка для считывателя GM5",
-      "Стойка для установки оборудования (2,2&nbsp;м) BH04",
+      ADDITION_TEXT.longRangeReader,
+      ADDITION_TEXT.photoelectricStand,
+      ADDITION_TEXT.safetyIsland,
+      ADDITION_TEXT.barrierFence,
+      ADDITION_TEXT.readerStand,
+      ADDITION_TEXT.equipmentStand,
     ],
   },
   {
-    tag: "КПП — холодный климат",
-    title: "КПП — холодный климат",
+    tag: "<span class='whitespace-nowrap'>КПП</span> — холодный климат",
+    title: "<span class='whitespace-nowrap'>КПП</span> — холодный климат",
     image: publicAsset("/img/ready‑made-solutions/checkpoint-north.webp"),
     price: "202 515 ₽",
-    description: "Шлагбаум GS14N с&nbsp;круглой стрелой 4,3&nbsp;м и&nbsp;опорной стойкой GBS1",
+    description: "Шлагбаум <span class='whitespace-nowrap'>GS14N</span> с&nbsp;круглой стрелой 4,3&nbsp;м и&nbsp;опорной стойкой <span class='whitespace-nowrap'>GBS1</span>",
     specifics:
       "Широкий проезд, удобный доступ сотрудникам, высокий поток посетителей, работа в&nbsp;составе СКУД.",
     important:
       "Возможна работа в&nbsp;регионах с&nbsp;экстремально низкими температурами.",
     additions: [
-      "Считыватель дальнего действия IR10.1 (EMM)",
-      "Островок безопасности PI-01",
-      "Ограждение для стойки шлагбаума GM3",
-      "Стойка для считывателя GM5",
-      "Стойка для установки оборудования (2,2&nbsp;м) BH04",
+      ADDITION_TEXT.longRangeReader,
+      ADDITION_TEXT.safetyIsland,
+      ADDITION_TEXT.barrierFence,
+      ADDITION_TEXT.readerStand,
+      ADDITION_TEXT.equipmentStand,
     ],
   },
   {
@@ -255,14 +274,14 @@ const solutions: Solution[] = [
     title: "Открытая парковка — холодный климат",
     image: publicAsset("/img/ready‑made-solutions/parking-north.webp"),
     price: "252 017 ₽",
-    description: "Шлагбаум GF13N с&nbsp;круглой стрелой 3&nbsp;м и&nbsp;буфером",
+    description: "Шлагбаум <span class='whitespace-nowrap'>GF13N</span> с&nbsp;круглой стрелой 3&nbsp;м и&nbsp;буфером",
     specifics:
       "Широкий проезд, удобный доступ сотрудникам, высокий поток посетителей, работа в&nbsp;составе СКУД.",
     important:
       "Возможна работа в&nbsp;регионах с&nbsp;экстремально низкими температурами.",
     additions: [
-      "Островок безопасности PI-01",
-      "Ограждение для стойки шлагбаума GM3",
+      ADDITION_TEXT.safetyIsland,
+      ADDITION_TEXT.barrierFence,
     ],
   },
 ];
@@ -303,9 +322,13 @@ export default function Hero10(): JSX.Element {
               options={solutionOptions}
               value={solutionOptions[activeIndex]}
               onChange={handleSolutionChange}
+              getOptionLabel={(option) => option.label.replace(/<[^>]*>/g, "")}
               isSearchable={false}
               className='sm:max-w-[340px]'
               classNamePrefix="solution-select"
+              formatOptionLabel={(option) => (
+                <HtmlContent>{option.label}</HtmlContent>
+              )}
               styles={{
                 control: (base) => ({
                   ...base,
@@ -348,7 +371,7 @@ export default function Hero10(): JSX.Element {
                 <span aria-hidden="true" className={`mr-1 text-xl/4 ${isActive ? ' text-cta' : ''}`}>
                   <i className={isActive ? 'perco-icon-check-tag' : 'perco-icon-plus-tag'} />
                 </span>
-                {solution.tag}
+                <HtmlContent>{solution.tag}</HtmlContent>
               </button>
             );
           })}
@@ -356,7 +379,9 @@ export default function Hero10(): JSX.Element {
 
         <div className="md:max-w-[480px] lg:max-w-full">
           <div className='block lg:w-9/16 2xl:hidden'>
-            <h3 className="mb-4 2xl:mb-5 h3">{activeSolution.title}</h3>
+            <h3 className="mb-4 2xl:mb-5 h3">
+              <HtmlContent>{activeSolution.title}</HtmlContent>
+            </h3>
             <SolutionPrice classNameWrapper="mb-4 hidden sm:flex" price={activeSolution.price} description={activeSolution.description} />
           </div>
 
@@ -367,13 +392,19 @@ export default function Hero10(): JSX.Element {
             aria-labelledby={`solution-tab-${activeIndex}`}
           >
             <div className="lg:w-7/12 4xl:w-1/2 flex items-center justify-center overflow-hidden rounded-[16px] 2xl:rounded-2xl 3xl:rounded-3xl bg-grey-200 h-[280px] sm:h-[300px] xl:h-[376px] 2xl:h-[424px] 3xl:h-[512px]">
-              <img className="object-contain w-full h-full" src={activeSolution.image} alt={activeSolution.description} />
+              <img
+                className="object-contain w-full h-full"
+                src={activeSolution.image}
+                alt={activeSolution.description.replace(/<[^>]*>/g, "")}
+              />
             </div>
             <SolutionPrice classNameWrapper="mt-1 sm:hidden" price={activeSolution.price} description={activeSolution.description} />
 
             <div className="flex flex-col items-start mt-7 sm:mt-8 text-grey-1000 lg:w-5/12 lg:mt-0">
               <div className='hidden 2xl:block'>
-                <h3 className="mb-4 xl:mb-5 h3">{activeSolution.title}</h3>
+                <h3 className="mb-4 xl:mb-5 h3">
+                  <HtmlContent>{activeSolution.title}</HtmlContent>
+                </h3>
                 <SolutionPrice classNameWrapper="mb-4" price={activeSolution.price} description={activeSolution.description} />
               </div>
               <SolutionAdditions additions={activeSolution.additions} />
