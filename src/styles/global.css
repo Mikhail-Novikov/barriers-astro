@@ -138,6 +138,10 @@ body {
   overflow-x: hidden;
 }
 
+.collapse-header::-webkit-details-marker {
+  display: none;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
