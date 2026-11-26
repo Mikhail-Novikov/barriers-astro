@@ -84,7 +84,7 @@ export default function CookieConsentDialog({
         </a>{" "}
         и&nbsp;
         <a
-          href="https://new.perco.ru/politika-konfidentsialnosti/cookies.php"
+          href="https://www.perco.ru/politika-konfidentsialnosti/cookies.php"
           target="_blank"
           rel="noopener noreferrer"
           className="underline underline-offset-2 hover:text-cta focus:outline-none focus-visible:outline-none"
