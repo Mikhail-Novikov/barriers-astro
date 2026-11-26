@@ -502,7 +502,7 @@ export default function Hero6(): JSX.Element {
         />
 
         <aside
-          className={`perco-icons fixed sm:absolute inset-0 top-10 sm:inset-auto sm:top-auto z-10 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white p-6 transition-all duration-300 ease-out md:px-6 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
+          className={`perco-icons fixed sm:absolute inset-0 top-0 sm:inset-auto sm:top-auto z-30 sm:z-10 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white p-[0_24px_12px] sm:pt-5 transition-all duration-300 ease-out md:px-6 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
           onClick={(event) => event.stopPropagation()}
         >
           <div className="flex items-center justify-between px-4 h-13 sm:h-fit -mx-6 shrink-0 sm:justify-end sm:p-0 sm:mx-0 bg-grey-200 sm:bg-white">
@@ -526,7 +526,15 @@ export default function Hero6(): JSX.Element {
               <span className={`mr-4 block-inline sm:hidden ${appliedFiltersCount === 0 ? 'text-grey-500' : 'text-cta'}`}><i className="perco-icon-mobile-no-filters" /></span>
             </button>
           </div>
-          <div className="flex-1 min-h-0 overflow-y-auto overscroll-y-contain mb-7 sm:-mt-4 ">{filtersContent('mobile')}</div>
+          <div className="relative flex-1 min-h-0 sm:-mt-4 overflow-y-auto">
+            <div className="h-full overflow-y-auto overscroll-y-contain pb-4 sm:pb-6">{filtersContent('mobile')}</div>
+            {appliedFiltersCount > 0 && (
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-5 sm:h-4 bg-gradient-to-b from-transparent via-white/70 to-white"
+              />
+            )}
+          </div>
           {appliedFiltersCount > 0 && (
             <Button
               className='mb-3'
