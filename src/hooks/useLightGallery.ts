@@ -48,6 +48,7 @@ interface UseLightGalleryOptions {
   captionClassName?: string;
   onClose?: () => void;
   videoAutoplay?: boolean;
+  fullscreenAutoStart?: boolean;
   /** Отключает увеличение/уменьшение изображения (Panzoom) */
   disableZoom?: boolean;
   /**
@@ -84,6 +85,7 @@ export const useLightGallery = ({
   captionClassName = 'inline-block md:mx-10 md:text-[20px] font-manrope-semibold text-center',
   onClose,
   videoAutoplay = false,
+  fullscreenAutoStart = false,
   disableZoom = false,
   captionPlacement = 'default',
   slideWrapper = false,
@@ -238,6 +240,7 @@ export const useLightGallery = ({
         Navigation: navigation,
         Arrows: hasArrows,
         ...(videoAutoplay ? { Video: { autoplay: true } } : {}),
+        Fullscreen: { autoStart: fullscreenAutoStart },
         formatCaption: (caption: string, slide: any) => {
           const captionText = encodeHtmlText(
             slide?.triggerEl?.dataset?.caption ?? caption,
@@ -287,6 +290,7 @@ export const useLightGallery = ({
     mainClass,
     captionClassName,
     videoAutoplay,
+    fullscreenAutoStart,
     disableZoom,
     captionPlacement,
     slideWrapper,

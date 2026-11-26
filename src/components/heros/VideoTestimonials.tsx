@@ -61,6 +61,7 @@ export default function VideoTestimonials(): JSX.Element {
     items: testimonials.map(({ title, videoUrl }) => ({ src: videoUrl, subHtml: title })),
     selector: 'a[data-fancybox="video-testimonials"]',
     mainClass: 'hero-video',
+    fullscreenAutoStart: true,
   });
 
   /**
