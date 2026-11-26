@@ -65,6 +65,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
 ) {
   const [videoKey, setVideoKey] = useState(0);
   const [isPlayingInline, setIsPlayingInline] = useState(false);
+  const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { isMobile, isRetina } = useDevice();
   const responsiveSrc = isMobile
@@ -86,6 +87,37 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
     document.addEventListener("fancybox:destroy", handleGalleryClose);
     return () => document.removeEventListener("fancybox:destroy", handleGalleryClose);
   }, [autoPlay]);
+
+  useEffect(() => {
+    if (!autoPlay || inlinePlayback) {
+      setIsAutoplayBlocked(false);
+      return;
+    }
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    let isActive = true;
+    void video.play().then(
+      () => {
+        if (isActive) setIsAutoplayBlocked(false);
+      },
+      (error: unknown) => {
+        if (!isActive) return;
+
+        if (error instanceof DOMException && error.name === "AbortError") return;
+
+        setIsAutoplayBlocked(true);
+        if (!(error instanceof DOMException && error.name === "NotAllowedError")) {
+          console.error("Failed to start video autoplay.", error);
+        }
+      },
+    );
+
+    return () => {
+      isActive = false;
+    };
+  }, [autoPlay, inlinePlayback, responsiveSrc, videoKey]);
 
   const { galleryRef, openGallery } = useLightGallery({
     items,
@@ -148,6 +180,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
         controls={inlinePlayback ? false : controls}
         onClick={inlinePlayback ? handleInlineVideoClick : undefined}
         onPlay={(event) => {
+          setIsAutoplayBlocked(false);
           if (inlinePlayback) setIsPlayingInline(true);
           onPlay?.(event);
         }}
@@ -178,8 +211,11 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(function Video(
           visibility={isPlayingInline ? 'hidden' : 'always'}
         />
       ) : (
-        showFullscreen && (
-          <VideoPlayButton onClick={handleOpenGallery} visibility={playButtonVisibility} />
+        (showFullscreen || isAutoplayBlocked) && (
+          <VideoPlayButton
+            onClick={isAutoplayBlocked ? handlePlayInline : handleOpenGallery}
+            visibility={isAutoplayBlocked ? 'always' : playButtonVisibility}
+          />
         )
       )}
     </div>
