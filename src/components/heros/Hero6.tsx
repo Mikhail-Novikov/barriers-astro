@@ -487,9 +487,15 @@ export default function Hero6(): JSX.Element {
             onClick={() => setIsFiltersOpen(true)}
             className="flex items-center cursor-pointer gap-x-3 text-cta hover:text-cta/90"
           >
-            <span className="text-5xl">
-              <i className="perco-icon-btn-filter" />
-            </span>
+            {appliedFiltersCount > 0 ? (
+              <span className="text-5xl">
+                <i className="perco-icon-btn-filter-fill" />
+              </span>
+            ) : (
+              <span className="text-5xl">
+                <i className="perco-icon-btn-filter" />
+              </span>
+            )}
             <span className="text-md/5 font-manrope-semibold text-grey-1000 hover:text-cta/90">
               Фильтр ({appliedFiltersCount})
             </span>

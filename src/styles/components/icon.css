@@ -35,6 +35,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.perco-icon-btn-filter-fill:before {
+  content: "\f027";
+}
+
+.perco-icon-filter-fill:before {
+  content: "\f026";
+}
+
 .perco-icon-mobile-no-filters-2:before {
   content: "\f025";
 }
