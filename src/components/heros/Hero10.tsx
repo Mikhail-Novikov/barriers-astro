@@ -414,7 +414,7 @@ export default function Hero10(): JSX.Element {
                 title="Форма обратной связи"
                 triggerClassName="w-full sm:w-[232px]"
                 triggerVariant="primary"
-                initialMessage={`Здравствуйте! <br />Мне нужна консультация по готовому решению <strong class="font-manrope-semibold">&ldquo;${activeSolution.title}&rdquo;</strong>.<br />Комплектация <strong class="font-manrope-semibold">&ldquo;${activeSolution.description}&rdquo;</strong>.<br />${activeSolution.alternative ?` <strong class="font-manrope-semibold">&ldquo;${activeSolution.alternative.description}&rdquo;</strong>` : ''}`}
+                initialMessage={`Здравствуйте! <br />Мне нужна консультация по готовому решению <strong class="font-manrope-semibold">&ldquo;${activeSolution.title}&rdquo;</strong>.`}
               >
                 <ModalFeedbackForm idPrefix="open-modal-sale-barrier" title="Оформить заказ" />
               </Modal>
