@@ -5,6 +5,7 @@ type ItemsProps = {
   isMobile?: boolean;
   isOpen?: boolean;
   onItemClick?: () => void;
+  onConsultationClick?: () => void;
 };
 
 /**
@@ -13,7 +14,7 @@ type ItemsProps = {
  * @param isOpen - признак открытости меню
  * @param onItemClick - коллбек при клике на пункт меню
  */
-const Items = ({ isMobile, isOpen, onItemClick }: ItemsProps) => {
+const Items = ({ isMobile, isOpen, onItemClick, onConsultationClick }: ItemsProps) => {
   const handleItemClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href.startsWith("#")) {
       event.preventDefault();
@@ -32,21 +33,48 @@ const Items = ({ isMobile, isOpen, onItemClick }: ItemsProps) => {
     onItemClick?.();
   };
 
-  return (
-    <ul className={isMobile ? `lg:hidden fixed z-10 w-full top-15 sm:top-20 left-0 bg-grey-1000 p-8 md:pl-12 flex flex-col gap-4 transition-all duration-300 ease-out ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none -translate-y-2"}` : "hidden lg:flex items-center gap-x-8 xl:gap-20"}>
-      {MENU_ITEMS.map((item) => (
-        <li key={item.href} className="transition-transform duration-300 ease-out">
+  const menuItems = MENU_ITEMS.map((item) => {
+    if (!isMobile && item.isMobileOnly) {
+      return null;
+    }
+
+    return (
+      <li key={item.href} className={isMobile ? "border-b border-grey-400 last:border-b-0 transition-transform duration-300 ease-out" : "transition-transform duration-300 ease-out"}>
+        {item.isMobileOnly ? (
+          <button
+            type="button"
+            className="block w-full py-3.5 text-left cursor-pointer text-md/6 text-grey-1000 font-manrope-semibold"
+            onClick={() => {
+              onConsultationClick?.();
+              onItemClick?.();
+            }}
+          >
+            {item.label}
+          </button>
+        ) : (
           <a
             href={item.href}
-            className="text-white font-manrope-semibold link--underline"
+            className={isMobile ? "block py-3.5 text-md/6 text-grey-1000 font-manrope-semibold" : "text-white font-manrope-semibold link--underline"}
             onClick={(event) => handleItemClick(event, item.href)}
           >
             {item.label}
           </a>
-        </li>
-      ))}
-    </ul>
-  );
+        )}
+      </li>
+    );
+  });
+
+  if (isMobile) {
+    return (
+      <div className={`lg:hidden fixed z-10 w-full top-[64px] sm:top-[90px] left-0 bg-white shadow-[0_2px_2px_0_rgba(0,0,0,0.06),0_0_2px_0_rgba(0,0,0,0.03)] transition-all duration-300 ease-out ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 pointer-events-none -translate-y-2"}`}>
+        <ul className="container flex flex-col py-2">
+          {menuItems}
+        </ul>
+      </div>
+    );
+  }
+
+  return <ul className="hidden lg:flex items-center gap-x-8 xl:gap-20">{menuItems}</ul>;
 };
 
 export default Items;

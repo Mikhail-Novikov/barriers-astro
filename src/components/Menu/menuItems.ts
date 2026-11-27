@@ -6,4 +6,5 @@ export const MENU_ITEMS = [
   { href: "#complectation", label: "Комплектация" },
   { href: "#execution", label: "Исполнение" },
   { href: "#management", label: "Способы управления" },
+  { href: "#consultation", label: "Получить консультацию", isMobileOnly: true },
 ];
