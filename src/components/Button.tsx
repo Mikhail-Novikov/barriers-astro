@@ -1,4 +1,4 @@
-export type ButtonVariant = 'primary' | 'outline' | 'primary-outline';
+export type ButtonVariant = 'primary' | 'outline' | 'primary-outline' | 'button-link';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -8,7 +8,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
  * Компонент кнопки
  * @param param children - Содержимое кнопки
  * @param param className - Дополнительные классы для стилизации.
- * @param param variant - Вариант кнопки ('primary' | 'outline')
+ * @param param variant - Вариант кнопки ('primary' | 'outline' | 'primary-outline' | 'button-link')
  * @return {JSX.Element} JSX-элемент, представляющий кнопку
  */
 export const Button = ({
@@ -25,6 +25,8 @@ export const Button = ({
         return 'btn--outline';
       case 'primary-outline':
         return 'btn-primary--outline';
+      case 'button-link':
+        return 'btn--button-link';
       default:
         return 'btn--primary';
     }

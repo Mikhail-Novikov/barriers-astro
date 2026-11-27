@@ -278,7 +278,7 @@ export default function Hero6(): JSX.Element {
    */
   const filtersContent = (groupSuffix: string): JSX.Element => (
     <>
-      <div className="mt-4 sm:mt-0 space-y-5 xl:mt-4 lg:space-y-8 4xl:space-y-8">
+      <div className="mt-4 space-y-5 sm:mt-0 xl:mt-4 lg:space-y-8 4xl:space-y-8">
         <FilterSection<RoadWidthOption>
           title="Ширина проезда"
           name={`roadWidthLimit-${groupSuffix}`}
@@ -481,7 +481,7 @@ export default function Hero6(): JSX.Element {
         </ZoomModal>
 
         <h2 className="mb-5 sm:mb-6 h2 xl:mb-8">Модели шлагбаумов</h2>
-        <div className="mb-4 perco-icons xl:hidden">
+        <div className="flex items-center justify-between mb-4 perco-icons xl:hidden">
           <button
             type="button"
             onClick={() => setIsFiltersOpen(true)}
@@ -494,6 +494,16 @@ export default function Hero6(): JSX.Element {
               Фильтр ({appliedFiltersCount})
             </span>
           </button>
+          {appliedFiltersCount > 0 && (
+            <Button
+              className='xl:mt-8'
+              type="button"
+              variant="button-link"
+              onClick={resetFilters}
+            >
+              Сбросить все
+            </Button>
+          )}
         </div>
         <div
           className={`fixed perco-icons inset-0 z-10 bg-grey-1000/40 transition-opacity duration-300 xl:hidden ${isFiltersOpen ? "opacity-100" : "pointer-events-none opacity-0"}`}
@@ -505,12 +515,12 @@ export default function Hero6(): JSX.Element {
           className={`perco-icons fixed sm:absolute inset-0 top-0 sm:inset-auto sm:top-auto z-30 sm:z-10 flex max-h-[100dvh] w-full sm:max-w-[390px] flex-col sm:rounded-2xl bg-white p-[0_24px_12px] sm:pt-5 transition-all duration-300 ease-out md:px-6 xl:hidden ${isFiltersOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}`}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className="flex items-center justify-between px-4 h-13 sm:h-fit -mx-6 shrink-0 sm:justify-end sm:p-0 sm:mx-0 bg-grey-200 sm:bg-white">
+          <div className="flex items-center justify-between px-4 -mx-6 h-13 sm:h-fit shrink-0 sm:justify-end sm:p-0 sm:mx-0 bg-grey-200 sm:bg-white">
             <button
               type="button"
               aria-label="Закрыть фильтры"
               onClick={() => setIsFiltersOpen(false)}
-              className="relative z-1 ml-5 mt-1 text-black cursor-pointer sm:ml-0 md:-mr-0 shrink-0"
+              className="relative mt-1 ml-5 text-black cursor-pointer z-1 sm:ml-0 md:-mr-0 shrink-0"
             >
               <span className='sm:hidden text-grey-800 text-xl/6 hover:text-cta'><i className="rotate-90 perco-icon-link-arrow" /></span>
               <span className='hidden sm:block text-grey-800 text-2xl/6 hover:text-cta'><i className="perco-icon-close" /></span>
@@ -526,12 +536,12 @@ export default function Hero6(): JSX.Element {
               <span className={`mr-4 block-inline sm:hidden ${appliedFiltersCount === 0 ? 'text-grey-500' : 'text-cta'}`}><i className="perco-icon-mobile-no-filters-2" /></span>
             </button>
           </div>
-          <div className="relative flex-1 min-h-0 sm:-mt-4 overflow-y-auto">
-            <div className="h-full overflow-y-auto overscroll-y-contain pb-4 sm:pb-6">{filtersContent('mobile')}</div>
+          <div className="relative flex-1 min-h-0 overflow-y-auto sm:-mt-4">
+            <div className="h-full pb-4 overflow-y-auto overscroll-y-contain sm:pb-6">{filtersContent('mobile')}</div>
             {appliedFiltersCount > 0 && (
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-5 sm:h-4 bg-gradient-to-b from-transparent via-white/70 to-white"
+                className="absolute inset-x-0 bottom-0 h-5 pointer-events-none sm:h-4 bg-gradient-to-b from-transparent via-white/70 to-white"
               />
             )}
           </div>
@@ -547,7 +557,7 @@ export default function Hero6(): JSX.Element {
             </Button>
           )}
           <Button
-            className='xl:mt-8 mb-4 hidden sm:block'
+            className='hidden mb-4 xl:mt-8 sm:block'
             type="button"
             variant="primary-outline"
             disabled={appliedFiltersCount === 0}
@@ -563,7 +573,7 @@ export default function Hero6(): JSX.Element {
             className="self-stretch hidden col-span-4 2xl:col-span-3 xl:block"
           >
             <div ref={filtersSidebarRef} className="flex flex-col gap-2">
-              <aside className="px-4 bg-white rounded-2xl xl:px-6 2xl:px-8 py-10">
+              <aside className="px-4 py-10 bg-white rounded-2xl xl:px-6 2xl:px-8">
                 <h3 className="mb-6 text-xl/6 font-manrope-semibold text-grey-800">
                   Выберите условия эксплуатации
                 </h3>

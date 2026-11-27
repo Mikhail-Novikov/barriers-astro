@@ -33,3 +33,7 @@
 .link--underline {
   @apply relative after:content-[""] after:absolute after:-bottom-[3px] after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[1px] after:bg-white after:![transition:width_0.3s_ease-out] hover:after:w-full
 }
+
+.btn--button-link {
+  @apply bg-transparent px-3 border-0 text-cta text-md/6 hover:text-cta-hover
+}
