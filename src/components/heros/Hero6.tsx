@@ -523,7 +523,7 @@ export default function Hero6(): JSX.Element {
               onClick={resetFilters}
               className={`block-inline shrink-0 text-2xl/6 ${appliedFiltersCount === 0 ? 'cursor-default' : 'cursor-pointer'}`}
             >
-              <span className={`mr-4 block-inline sm:hidden ${appliedFiltersCount === 0 ? 'text-grey-500' : 'text-cta'}`}><i className="perco-icon-mobile-no-filters" /></span>
+              <span className={`mr-4 block-inline sm:hidden ${appliedFiltersCount === 0 ? 'text-grey-500' : 'text-cta'}`}><i className="perco-icon-mobile-no-filters-2" /></span>
             </button>
           </div>
           <div className="relative flex-1 min-h-0 sm:-mt-4 overflow-y-auto">
